@@ -1,0 +1,22 @@
+{
+  "LanguageSwitcher": {
+    "y1Z3or": "اللغة"
+  },
+  "TyYyh3": "تطبيق دردشة ويب مبني باستخدام Next.js و Tailwind CSS.",
+  "EheUi0": "Web Chat Smith",
+  "VgH3tb": "انظر، بدون مفاتيح!",
+  "wafoOY": "مرحبًا {name}!",
+  "hNm84b": "{count, plural, zero {لم تنقر} one {نقرت مرة واحدة} two {نقرت مرتين} few {نقرت # مرات} many {نقرت # مرة} other {نقرت # مرة}}.",
+  "a8UnD_": "الحالة: {status, select, online {🟢 متصل} offline {⚪ غير متصل} other {غير معروف}}.",
+  "lcNWLc": "يرجى الرجوع إلى <link>الإرشادات</link>.",
+  "ExtractionDemo": {
+    "cta": "انقر هنا",
+    "design-system": {
+      "tQLRmz": "زيادة"
+    }
+  },
+  "kX235w": "المشروع جاهز!",
+  "i2Dojj": "يمكنك الآن إضافة المكوّنات والبدء في البناء.",
+  "IHwlxa": "لقد أضفنا لك مكوّن الزر بالفعل.",
+  "KP63fg": "زر"
+}

@@ -1,0 +1,60 @@
+{
+  "spacing": {
+    "0": {
+      "$type": "number",
+      "$value": 0
+    },
+    "1": {
+      "$type": "number",
+      "$value": 4
+    },
+    "2": {
+      "$type": "number",
+      "$value": 8
+    },
+    "3": {
+      "$type": "number",
+      "$value": 12
+    },
+    "4": {
+      "$type": "number",
+      "$value": 16
+    },
+    "5": {
+      "$type": "number",
+      "$value": 20
+    },
+    "6": {
+      "$type": "number",
+      "$value": 24
+    },
+    "7": {
+      "$type": "number",
+      "$value": 32
+    },
+    "8": {
+      "$type": "number",
+      "$value": 40
+    },
+    "9": {
+      "$type": "number",
+      "$value": 48
+    },
+    "10": {
+      "$type": "number",
+      "$value": 64
+    },
+    "11": {
+      "$type": "number",
+      "$value": 80
+    },
+    "12": {
+      "$type": "number",
+      "$value": 96
+    },
+    "13": {
+      "$type": "number",
+      "$value": 128
+    }
+  }
+}

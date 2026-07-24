@@ -1,0 +1,24 @@
+{
+  "extends": "@cs/ts-config/nextjs.json",
+  "compilerOptions": {
+    "incremental": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["bun", "node"],
+    "customConditions": ["development"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/public/*": ["./public/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "svgr.d.ts",
+    "mdst.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.mts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "**/*.md"]
+}

@@ -1,0 +1,128 @@
+{
+  "yourBenefits": "Your Benefits",
+  "features": "Features",
+  "upcomingFeatures": "Upcoming Features",
+  "humanizeText": "Humanize Text",
+  "AIAgents": "AI Agents",
+  "videoGeneration": "Video Generation",
+  "aiCompanion": "AI companion",
+  "desktop": {
+    "features": {
+      "1": {
+        "title": "GPT-5 nano, Gemini 2.5 Flash Lite, Claude Haiku 4.5",
+        "description": "Access to AI Chat messages"
+      },
+      "2": {
+        "title": "GPT-5.2, Gemini 3 Pro, Claude Sonnet 4.6",
+        "description": "Access to other advanced AI Models"
+      },
+      "3": {
+        "title": "Deep Research, Realtime Search",
+        "description": "Tackle your complex research tasks"
+      },
+      "4": {
+        "title": "Web-Mobile Sync",
+        "description": "One subscription with seamless chat hist,ory sync across all devices"
+      },
+      "5": {
+        "title": "File Uploads",
+        "description": "Access to File Uploads (png, jpg, jpeg, pdf, etc)"
+      },
+      "6": {
+        "title": "Art Generation",
+        "description": "A new way to turn your imagination into reality"
+      }
+    },
+    "featureV2": {
+      "1": {
+        "title": "Latest Models",
+        "description": "GPT-5.2, Gemini 3 Pro, Claude Sonnet 4.6"
+      },
+      "2": {
+        "title": "Complex Tasks",
+        "description": "With Deep Research and Realtime Search"
+      },
+      "3": {
+        "title": "Cross Platform",
+        "description": "One subscription for Web, iOS & Android"
+      },
+      "4": {
+        "title": "Files Upload",
+        "description": "Access to File Uploads (png, jpg, jpeg, pdf, etc)"
+      },
+      "5": {
+        "title": "Art Generation",
+        "description": "A new way to turn your imagination into reality"
+      }
+    }
+  },
+  "builtOn": "All-in-one AI",
+  "getFullAccess": "Get Full Access To <break></break> <brand>Chat Smith PRO</brand>",
+  "proBenefits": "<brand>Chat Smith Pro</brand> Benefits",
+  "proFeatures": "<brand>Pro</brand> Features",
+  "brandProFeatures": "<brand>Chat Smith Pro</brand> Features",
+  "getPro": "Get <brand>Chat Smith PRO</brand>",
+  "moreFeature": "And more incoming features, update every season",
+  "safeAndSecure": "Pay safe & secure",
+  "cancelAnytime": "Cancel Anytime",
+  "policy": "By continuing, you agree with our <breakMobile></breakMobile><terms>Terms of use</terms>, <privacy>Privacy Policy</privacy> and <refund>Refund Policy</refund>",
+  "submit": "Continue",
+  "threeDayTrial": "3-day trial",
+  "trialSubmit": "Try It Free For 3 Days",
+  "backToPlans": "Back to Plans",
+  "badge": {
+    "save": "Save <desktop>{percent}%</desktop><mobile>-{percent}%</mobile>",
+    "saveText": "Save"
+  },
+  "manageSubscription": {
+    "title": "Manage Your Subscription",
+    "description": "To manage your subscription, please use the mobile app. <strong>The web version does not currently support subscription changes.</strong> In the mobile app, you can easily subscribe, cancel, or modify your plan.",
+    "helpBtn": "Need Help",
+    "textBtn": "Got it"
+  },
+  "pricing": {
+    "freeTrial": "Free Trial",
+    "startForFree": "Start for free",
+    "dayFree": "3 days free",
+    "due": "Due",
+    "dayTrial": "3-day free trial",
+    "thenMonthly": "then {price}/month",
+    "thenWeekly": "then {price}/week"
+  },
+  "chooseYourPlan": "Choose Your Plan",
+  "chooseOtherPlan": "Choose other Plan",
+  "yourCurrentPlan": "Your Current plan",
+  "onlyPerWeek": "Only <strong>{price}</strong> per week",
+  "info": {
+    "billingDetails": "Billing Details",
+    "plan": "Plan",
+    "untilYouCancel": "Until you cancel",
+    "upgradeDate": "Upgrade Date",
+    "validUtil": "Valid Until",
+    "nextPayment": "Next Payment",
+    "totalPayment": "Total Payment",
+    "due": "Due",
+    "dueToday": "Due today"
+  },
+  "paywall": {
+    "title": "Unlock <highlight>PRO Access</highlight><break></break> On Mobile App",
+    "subTitle": "To continue using PRO features, please purchase the subscription on our mobile app",
+    "purchasing": "After purchasing, <highlight>please login on web with the same account</highlight> to sync your PRO benefits instantly"
+  },
+  "purchase": {
+    "success": "Subscription purchased successfully"
+  },
+  "unlimitedChat": "Unlimited Chat",
+  "topTierModels": "Top-tier Models",
+  "imageGeneration": "Image Generation",
+  "deepResearch": "Deep Research",
+  "voiceInteraction": "Voice Interaction",
+  "syncAcrossDevices": "Sync Across Devices",
+  "limited": "Limited",
+  "userJoinDescription": "1M+ users joined us this month",
+  "bestOffer": "Best offer",
+  "expressDescription": "Get the best out of unlimited chats, multi Al models, image gen, web & mobile sync and even more.",
+  "benefits": "Benefits",
+  "allInOneAI": "All in one",
+  "andMore": "And more..."
+}

@@ -1,0 +1,100 @@
+{
+  "aria": {
+    "section": "요금",
+    "breadcrumb": "이동 경로"
+  },
+  "breadcrumb": {
+    "home": "홈",
+    "current": "요금"
+  },
+  "hero": {
+    "titleHighlight": "요금",
+    "titleRest": " 및 플랜",
+    "subtitle": "나에게 맞는 플랜을 선택하세요"
+  },
+  "title": {
+    "prefix": "",
+    "highlight": "Chat Smith PRO"
+  },
+  "benefits": {
+    "sectionTitle": "혜택",
+    "free": "무료",
+    "pro": "PRO",
+    "limited": "제한",
+    "rows": {
+      "everydayModels": {
+        "title": "GPT-5 Nano, Gemini 2.5 Flash Lite",
+        "description": "일상적인 질문에 빠른 답변"
+      },
+      "proModels": {
+        "title": "GPT-5.2, Claude Sonnet 4.6, Gemini 3 Pro, Grok-4, DeepSeek",
+        "description": "세계 최고의 AI로 더 어려운 작업 해결"
+      },
+      "imageGen": {
+        "title": "Image Generation with ChatGPT Images 2.0 and Nano Banana Pro",
+        "description": "어떤 아이디어든 몇 초 만에 놀라운 AI 이미지 생성"
+      },
+      "sync": {
+        "title": "Sync Across Devices",
+        "description": "휴대폰, 태블릿, 브라우저 어디서나 대화 이어가기"
+      },
+      "research": {
+        "title": "Deep Research, Realtime Search",
+        "description": "실시간 웹 데이터로 더 스마트한 답변"
+      },
+      "uploads": {
+        "title": "File Uploads",
+        "description": "파일 업로드 지원 (png, jpg, jpeg, pdf 등)"
+      },
+      "grammar": {
+        "title": "Grammar & Writing",
+        "description": "문법 교정, 텍스트 재작성, 맞춤 톤과 스타일로 콘텐츠 생성"
+      },
+      "study": {
+        "title": "Study Assistant",
+        "description": "몇 초 만에 노트, 요약, 숙제 답변 생성"
+      },
+      "languages": {
+        "title": "Multi-language Support",
+        "description": "영어, 일본어, 아랍어 등 다양한 언어로 채팅"
+      }
+    }
+  },
+  "plansHero": {
+    "prefix": "전체 이용",
+    "highlight": "Chat Smith PRO"
+  },
+  "plans": {
+    "free": "무료",
+    "pro": "Pro",
+    "currentPlan": "(현재 플랜)",
+    "features": "기능",
+    "monthly": "월간",
+    "yearly": "연간",
+    "oneMonth": "1개월",
+    "twelveMonths": "12개월",
+    "save": "33% 절약",
+    "save67": "67% 절약",
+    "save75": "75% 절약",
+    "perWeek": "주당"
+  },
+  "userState": {
+    "currentPlanTitle": "내 플랜",
+    "managePlan": "플랜 관리"
+  },
+  "cta": {
+    "guest": "계속",
+    "upgrade": "업그레이드",
+    "viewMyPlan": "내 플랜 보기"
+  },
+  "checkout": {
+    "aria": "결제 요약",
+    "total": "오늘 결제 금액",
+    "billedMonthly": "월 단위 결제. 언제든 취소 가능.",
+    "continue": "계속",
+    "cancelAnytime": "언제든 취소",
+    "paymentMethods": "이용 가능한 결제 수단",
+    "paySafe": "안전한 결제",
+    "policyNote": "계속하면 이용약관 및 개인정보 처리방침에 동의하는 것으로 간주됩니다."
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@cs/firebase",
+  "version": "0.0.1",
+  "private": true,
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/app.ts",
+    "./auth": "./src/auth/index.ts",
+    "./config": "./src/config.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules .turbo .cache"
+  },
+  "dependencies": {
+    "@cs/core": "workspace:*",
+    "@cs/env": "workspace:*"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/bun": "catalog:tools",
+    "firebase": "catalog:integrations"
+  },
+  "peerDependencies": {
+    "firebase": "catalog:integrations"
+  }
+}

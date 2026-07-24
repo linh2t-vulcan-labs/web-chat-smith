@@ -1,0 +1,128 @@
+{
+  "status": {
+    "active": "활성",
+    "cancelled": "취소됨",
+    "expired": "만료됨"
+  },
+  "paymentTransactionStatus": {
+    "unspecified": "미지정",
+    "processing": "처리 중",
+    "succeeded": "성공",
+    "failed": "실패",
+    "cancelled": "취소됨",
+    "expired": "만료됨",
+    "refunded": "환불됨",
+    "partiallyRefunded": "부분 환불됨",
+    "pending": "대기 중",
+    "disputed": "분쟁 중",
+    "reversed": "역방향"
+  },
+  "actions": {
+    "cancelPlan": "플랜 취소",
+    "dontCancelPlan": "플랜 유지",
+    "updatePlan": "플랜 업데이트",
+    "update": "업데이트",
+    "renew": "갱신",
+    "manageSubscription": "구독 관리",
+    "showLess": "접기",
+    "cancel": "취소",
+    "confirm": "확인",
+    "back": "뒤로",
+    "yesContinue": "예, 계속",
+    "gotIt": "확인",
+    "continue": "계속",
+    "needHelp": "도움이 필요하신가요",
+    "getPro": "Pro 받기",
+    "addPaymentMethod": "결제 수단 추가",
+    "viewInvoice": "청구서 보기"
+  },
+  "billing": {
+    "paymentMethodTitle": "결제 수단",
+    "billingHistoryTitle": "결제 내역",
+    "invoicesCount": "{count, plural, one {청구서 #개} other {청구서 #개}}",
+    "noInvoices": "청구서 없음",
+    "period": "기간",
+    "type": "유형"
+  },
+  "subscription": {
+    "currentPeriodLabel": "현재 기간",
+    "nextBillingDateLabel": "다음 결제일",
+    "expiredDateLabel": "만료일",
+    "scheduledToCancelOn": "{date}에 취소 예정"
+  },
+  "accordion": {
+    "manageSubscription": "구독 관리",
+    "showLess": "접기"
+  },
+  "cancel": {
+    "modalTitle": "플랜 취소",
+    "reviewDescription": "플랜을 취소할 경우 어떤 일이 발생하는지 잠시 검토해 주세요.",
+    "loseAccessDescription": "AI 경험을 향상시키는 Pro 전용 도구 및 인사이트에 대한 접근이 상실됩니다. 모든 PRO 기능에 대한 접근은 <strong>{date}</strong>에 종료됩니다.",
+    "limitedHistory": "Pro 대화 및 기록이 제한됩니다",
+    "noAiModels": "AI 모델과 빠른 응답을 더 이상 이용할 수 없습니다",
+    "removeCustomizations": "맞춤 스타일, 테마, 우선 이용 권한이 제거됩니다",
+    "loseUpcomingFeatures": "출시 예정 Premium 기능에 대한 접근이 상실됩니다",
+    "uncancelTitle": "플랜 유지",
+    "uncancelDescription": "이 작업을 실행하면 예약된 취소가 제거됩니다"
+  },
+  "successCancel": {
+    "title": "구독이 성공적으로 취소되었습니다",
+    "description": "모든 PRO 기능에 대한 접근은 <strong>{date}</strong>에 종료됩니다.<break></break>구독 관리에 도움이 필요하시면 언제든지 <contact>문의해 주세요</contact>!"
+  },
+  "successUpdate": {
+    "title": "플랜이 성공적으로 업데이트되었습니다",
+    "description": "{planDuration} 플랜이 <strong>{activationDate}</strong>부터 활성화되었습니다.<break></break>구독 관리에 도움이 필요하시면 언제든지 <contact>문의해 주세요</contact>!",
+    "downgradeDesc": "<strong>{activationDate}</strong>부터 {planDuration} 플랜으로 변경됩니다.<break></break>구독 관리에 도움이 필요하시면 언제든지 <contact>문의해 주세요</contact>!"
+  },
+  "previewChange": {
+    "proratedCreditLabel": "{planDuration} 플랜의 일할 계산 크레딧",
+    "newPlanLabel": "{planDuration} 플랜",
+    "amountDueTodayLabel": "오늘 결제할 금액",
+    "nextBillingCycleLabel": "다음 결제 주기 ({date})",
+    "switchingPlanDescription": "{planDuration} 플랜으로 전환 중입니다.",
+    "additionalChargeNowDescription": "오늘 ({date}) 추가로 {amount}가 청구되며, 새 플랜이 즉시 적용됩니다.",
+    "chargeNextCycleDescription": "{date} 다음 결제 주기부터 {amount}가 청구됩니다.",
+    "confirmYourUpdatesTitle": "변경 사항 확인",
+    "pickPlanDescription": "다음 Chat Smith Pro 플랜 중 하나를 선택하세요"
+  },
+  "notice": {
+    "headerTitle": "Chat Smith",
+    "badgeFree": "무료",
+    "badgePro": "Pro",
+    "featuresTitle": "포함된 기능:",
+    "limitedDailyAccess": "고급 AI 모델에 대한 일일 제한적 접근",
+    "basicWritingAssistant": "글쓰기 어시스턴트 기본 이용",
+    "limitedFileUploads": "제한적 파일 업로드",
+    "standardSecurityPrivacy": "표준 보안 및 개인정보 보호",
+    "mobileOnlyDescription": "구독을 관리하려면 모바일 앱을 이용해 주세요. 현재 웹 버전은 구독 변경을 지원하지 않습니다. 모바일에서 구독, 취소, 플랜 변경을 쉽게 할 수 있습니다"
+  },
+  "paymentCard": {
+    "expiredDateLabel": "만료일: {date}",
+    "actions": {
+      "markAsDefault": "기본값으로 설정",
+      "edit": "편집",
+      "delete": "삭제"
+    }
+  },
+  "trial": {
+    "info": "이 구독은 현재 체험 중입니다. 이 체험은 {endDate}에 종료되며, 이후 {amount}/{unit}가 청구됩니다."
+  },
+  "invoice": {
+    "title": "청구서",
+    "newPurchase": "신규 구매",
+    "billingDate": "청구일",
+    "paymentMethod": "결제 수단",
+    "product": "제품",
+    "qty": "수량",
+    "gst": "GST",
+    "amountExclTax": "금액 세금 별도",
+    "subtotal": "소계",
+    "total": "총액 세금 포함"
+  },
+  "historyStatus": {
+    "newPurchase": "신규 구매",
+    "paymentMethodUpdate": "결제 수단 업데이트",
+    "recurringPayment": "정기 결제",
+    "subscriptionUpdate": "구독 업데이트"
+  }
+}

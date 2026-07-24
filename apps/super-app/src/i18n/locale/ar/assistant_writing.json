@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "روبوت الدردشة الذكي: الكتابة الأكاديمية"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "resetCta": "إعادة تعيين",
+    "submitCta": "إرسال",
+    "length": {
+      "title": "الطول",
+      "short": "قصير",
+      "medium": "متوسط",
+      "long": "طويل"
+    },
+    "tone": {
+      "title": "النبرة",
+      "friendly": "ودود",
+      "formal": "رسمي",
+      "informal": "غير رسمي",
+      "optimistic": "متفائل",
+      "worried": "قلق",
+      "curious": "فضولي",
+      "assertive": "حازم",
+      "encouraging": "مشجع",
+      "surprised": "متفاجئ",
+      "cooperative": "متعاون"
+    },
+    "technique": {
+      "title": "باستخدام التقنية",
+      "none": "لا شيء",
+      "framework": "إطار الاعتراضات الخمسة الأساسي",
+      "aida": "كتابة نصوص AIDA",
+      "pas": "كتابة نصوص PAS",
+      "webinar": "صيغة الويبينار المثالي بواسطة Russell Brunson",
+      "pastor": "إطار PASTOR"
+    },
+    "feedback": {
+      "label": "ملاحظاتك <span>(اختياري)</span>",
+      "placeholder": "يرجى تقديم ملاحظاتك…"
+    }
+  },
+  "cta": {
+    "stop": "إيقاف الإنشاء",
+    "regenerate": "إعادة التوليد"
+  },
+  "result": {
+    "placeholder": "عن أي موضوع ترغب بالكتابة؟",
+    "loading": "جاري الإنشاء",
+    "suggestion": {
+      "title": "قد ترغب في معرفة"
+    }
+  },
+  "toast": {
+    "error": {
+      "reachedLimit": "لقد وصلت إلى الحد الأقصى للاستخدام المتقدم. قم بالترقية للاستمرار في تجربة أسرع وأحدث الميزات"
+    }
+  },
+  "promoteSignIn": "سجل الدخول للوصول إلى الرسائل المجانية المتبقية",
+  "usage": {
+    "remaining": "تبقى {count, plural, one {# رسالة مجانية} other {# رسائل مجانية}}.",
+    "getPremium": "احصل على بريميوم"
+  },
+  "title": "الكتابة الأكاديمية"
+}

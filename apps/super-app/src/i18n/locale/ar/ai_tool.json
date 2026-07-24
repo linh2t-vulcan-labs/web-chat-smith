@@ -1,0 +1,321 @@
+{
+  "brand": {
+    "name": "Chat Smith"
+  },
+  "languages": {
+    "en": "English (US)",
+    "zh": "Chinese (简体)",
+    "th": "Thai (ไทย)",
+    "ar": "Arabic (العربية)",
+    "es": "Spanish (Español)",
+    "ko": "Korean (한국어)",
+    "ja": "Japanese (日本語)",
+    "hi": "Hindi (हिंदी)"
+  },
+  "header": {
+    "nav": {
+      "home": "الرئيسية",
+      "products": "الميزات",
+      "blog": "المدونة",
+      "pricing": "الأسعار"
+    },
+    "sections": {
+      "features": "الميزات",
+      "useCases": "حالات الاستخدام"
+    },
+    "search": {
+      "placeholder": "البحث في الفئات",
+      "noResults": "لا توجد فئات تطابق بحثك.",
+      "ariaLabel": "تصفية الفئات حسب الاسم"
+    },
+    "auth": {
+      "signIn": "تسجيل الدخول"
+    },
+    "fallback": {
+      "untitled": "بدون عنوان"
+    },
+    "aria": {
+      "toggleMenu": "تبديل القائمة",
+      "navigationDrawer": "قائمة الموقع",
+      "closeMenu": "إغلاق القائمة",
+      "toggleTheme": "تبديل المظهر",
+      "language": "اللغة",
+      "account": "الحساب"
+    }
+  },
+  "banner": {
+    "title": {
+      "muted": "الذكاء الاصطناعي",
+      "image": "مولّد",
+      "generator": "الصور"
+    },
+    "subtitle": "اكتشف أقوى أداة لتوليد الصور بالذكاء الاصطناعي. من الأفكار الاحترافية إلى الفن الإبداعي، يقوم Chat Smith بكل شيء في ثوانٍ.",
+    "promptPlaceholder": "مكتبة مستقبلية تطفو في الفضاء بإضاءة سينمائية ...",
+    "promptPlaceholderTranslate": "ترجم النص التالي إلى نبرة أعمال احترافية باللغة الصينية",
+    "promptPlaceholderQa": "اكتب سؤالك، أو اسحب وارفع صورة أو PDF، أو الصق باستخدام Ctrl+V",
+    "promptPlaceholderQaSimple": "اكتب سؤالك...",
+    "modelLabel": "GPT-5 Nano",
+    "tryTheseOptional": "جرّب هذه (اختياري)",
+    "tryThese": {
+      "label": "جرّب هذه",
+      "optional": "(اختياري)"
+    },
+    "cta": {
+      "generate": "إنشاء",
+      "translate": "ترجمة",
+      "getAnswer": "احصل على الإجابة"
+    },
+    "uploadFile": {
+      "title": "رفع الملفات",
+      "instructionPrefix": "اسحب وأفلت أو ",
+      "chooseFiles": "اختر الملفات",
+      "instructionSuffix": " للرفع",
+      "supportedTypes": "أنواع الملفات المدعومة: pdf وpng وjpg وjpeg. الحد الأقصى لحجم الملف: 20 ميجابايت.",
+      "aria": {
+        "chooseFiles": "اختر الملفات للرفع"
+      }
+    },
+    "qaCards": {
+      "selectedAttachments": "المرفقات المحددة",
+      "removeAttachment": "إزالة {name}"
+    },
+    "loading": {
+      "artStyles": "جاري تحميل الأنماط الفنية",
+      "savingDraft": "جاري حفظ المسودة…"
+    },
+    "breadcrumb": {
+      "home": "الرئيسية",
+      "current": "مولد الصور بالذكاء الاصطناعي"
+    },
+    "referenceStyle": {
+      "label": "النمط المرجعي",
+      "optional": "(اختياري)"
+    },
+    "aria": {
+      "section": "مولد الصور بالذكاء الاصطناعي",
+      "breadcrumb": "مسار التنقل",
+      "referenceImages": "الصور المرجعية",
+      "removeReference": "إزالة المرجع",
+      "addReference": "إضافة صورة مرجعية من جهازك",
+      "generate": "إنشاء"
+    }
+  },
+  "groupPage": {
+    "aria": {
+      "tools": "أدوات الذكاء الاصطناعي في هذه المجموعة"
+    },
+    "groups": {
+      "image": "صورة",
+      "text": "نص",
+      "study": "دراسة",
+      "model": "نموذج",
+      "code": "كود",
+      "doc": "مستند"
+    }
+  },
+  "metrics": {
+    "title": {
+      "prefix": "انضم إلى أكثر من",
+      "highlight": "50 مليون",
+      "suffix": "من معجبي AI Chat"
+    },
+    "fallback": [
+      {
+        "value": "+43M",
+        "text": "مستخدم نشط"
+      },
+      {
+        "value": "#1",
+        "text": "AI Chat"
+      },
+      {
+        "value": "236",
+        "text": "دولة تستخدمه"
+      }
+    ],
+    "aria": {
+      "section": "الإنجازات",
+      "list": "المقاييس"
+    }
+  },
+  "hero": {
+    "title": {
+      "prefix": "أفضل",
+      "highlight": "نماذج الذكاء الاصطناعي",
+      "suffix": ""
+    },
+    "subtitle": "اكتشف أقوى أداة لتوليد الصور بالذكاء الاصطناعي. من الأفكار الاحترافية إلى الفن الإبداعي، يقوم Chat Smith بكل شيء في ثوانٍ.",
+    "fallbackItems": [
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      },
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      },
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      }
+    ],
+    "cta": {
+      "generate": "ابدأ الإنشاء",
+      "tryNow": "جرب الآن"
+    },
+    "aria": {
+      "section": "نماذج الذكاء الاصطناعي",
+      "list": "قائمة نماذج الذكاء الاصطناعي"
+    }
+  },
+  "steps": {
+    "title": {
+      "prefix": "This is how to create picture using",
+      "highlight": "AI Imagine Generator?",
+      "suffix": ""
+    },
+    "subtitle": "Experience the most powerful AI image generation tool. From professional concepts, to creative art, Chat Smith does it all in seconds.",
+    "fallbackItems": [
+      {
+        "title": "Step 1",
+        "description": "Switch between DALL-E, Gemini, and custom Stable Diffusion models to get the exact style you need."
+      },
+      {
+        "title": "Step 2",
+        "description": "Switch between DALL-E, Gemini, and custom Stable Diffusion models to get the exact style you need."
+      },
+      {
+        "title": "Step 3",
+        "description": "Switch between DALL-E, Gemini, and custom Stable Diffusion models to get the exact style you need."
+      }
+    ],
+    "cta": {
+      "generate": "ابدأ الإنشاء",
+      "generateShort": "إنشاء"
+    },
+    "aria": {
+      "section": "How it works",
+      "list": "Steps"
+    }
+  },
+  "feature": {
+    "title": {
+      "prefix": "Unlimited Creativity.",
+      "highlight": "Simplified.",
+      "suffix": ""
+    },
+    "subtitle": "Professional tool designed for everyone, from hobbyists to brand designers.",
+    "fallbackItems": [
+      {
+        "title": "Multi-model Fusion",
+        "description": "Switch between models to get the exact look and mood you want."
+      },
+      {
+        "title": "Fast, High-quality Outputs",
+        "description": "Generate sharp results in seconds, ready to share or iterate."
+      },
+      {
+        "title": "Designed for Creators",
+        "description": "From quick ideas to polished visuals—simple controls, powerful results."
+      }
+    ],
+    "aria": {
+      "section": "Key benefits",
+      "list": "Benefits list"
+    }
+  },
+  "horizontalCards": {
+    "title": {
+      "prefix": "Ideas to images,",
+      "highlight": "in one scroll.",
+      "suffix": ""
+    },
+    "subtitle": "Swipe through real-style examples—each card pairs a preview with a short explanation.",
+    "defaults": {
+      "main": "افتح آفاقًا جديدة مع الذكاء الاصطناعي",
+      "subtitle": "أطلق العنان لمجموعة متجددة من أدوات الذكاء الاصطناعي لتغطية الكتابة الذكية، الإبداع الملهم، العصف الذهني، والعمل المرن، لرفع كفاءتك إلى أقصى حد."
+    },
+    "imageFallbackAlt": "Example preview",
+    "fallbackItems": [
+      {
+        "title": "Product shots",
+        "description": "Clean lighting and crisp detail for listings, ads, and social posts."
+      },
+      {
+        "title": "Concept art",
+        "description": "Explore moods fast—iterate compositions before you commit to a final render."
+      },
+      {
+        "title": "Social creatives",
+        "description": "Bold visuals sized for feeds—keep copy space and brand color in mind."
+      }
+    ],
+    "aria": {
+      "section": "Example gallery",
+      "list": "Horizontal cards",
+      "previous": "Previous cards",
+      "next": "Next cards"
+    }
+  },
+  "resourceBlog": {
+    "title": {
+      "prefix": "المزيد من ",
+      "highlight": "الموارد",
+      "suffix": ""
+    },
+    "seeMore": "عرض المزيد",
+    "fallbackCategory": "المدونة",
+    "fallbackAuthor": "Chat Smith",
+    "aria": {
+      "section": "المزيد من موارد المدونة",
+      "blogList": "أحدث منشورات المدونة",
+      "seeMoreLink": "عرض المزيد من منشورات المدونة"
+    }
+  },
+  "footer": {
+    "aria": {
+      "section": "تذييل الموقع"
+    },
+    "legalNavAria": "السياسات القانونية",
+    "featureColumnTitle": "المميزات",
+    "productNavAria": "روابط المنتجات",
+    "logoAlt": "Chat Smith",
+    "brandName": "Chat Smith",
+    "aboutTitle": "من نحن",
+    "aboutDescription": "تم بناء Chat Smith لمساعدة المستخدمين على إطلاق إمكاناتهم — من خلال تقليل الاحتكاك في تفكيرهم، وتسريع مهامهم، وتعزيز إبداعهم",
+    "followTitle": "تابعنا",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "subscribeCta": "اشترك",
+    "copyright": "© حقوق النشر {year} Vulcan Labs. جميع الحقوق محفوظة",
+    "copyrightSub": "Chat Smith منتج من Vulcan Labs.",
+    "socialAria": {
+      "facebook": "Chat Smith على Facebook",
+      "discord": "Chat Smith على Discord",
+      "youtube": "Chat Smith على YouTube",
+      "instagram": "Chat Smith على Instagram",
+      "tiktok": "Chat Smith على TikTok",
+      "x": "Chat Smith على X"
+    }
+  },
+  "ctaFooter": {
+    "title": {
+      "prefix": "ارتقِ بعملك،",
+      "highlight": "على بعد نقرة واحدة!",
+      "suffix": ""
+    },
+    "subtitle": "كل ما تحتاجه لدفع مشاريعك إلى الأمام بين يديك.",
+    "cta": {
+      "signUp": "سجّل الآن"
+    },
+    "aria": {
+      "section": "سجّل للارتقاء بعملك"
+    }
+  },
+  "faq": {
+    "sectionAria": "الأسئلة الشائعة",
+    "title": {
+      "prefix": "اسألنا",
+      "main": "أي شيء"
+    }
+  }
+}

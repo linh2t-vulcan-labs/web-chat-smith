@@ -2,27 +2,155 @@
   "name": "web-chat-smith",
   "version": "0.0.1",
   "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalogs": {
+      "framework": {
+        "react": "^19.2.8",
+        "react-dom": "^19.2.8",
+        "@types/react": "^19.2.17",
+        "@types/react-dom": "^19.2.3",
+        "next": "16.3.0-canary.95",
+        "@next/third-parties": "16.3.0-canary.95",
+        "next-intl": "^4.13.4",
+        "server-only": "^0.0.1",
+        "@swc/helpers": "^0.5.23"
+      },
+      "ui": {
+        "@base-ui/react": "^1.6.0",
+        "radix-ui": "^1.6.5",
+        "@radix-ui/react-radio-group": "^1.4.5",
+        "@radix-ui/react-select": "^2.3.5",
+        "@radix-ui/react-use-controllable-state": "^1.2.5",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "cmdk": "^1.1.1",
+        "lucide-react": "^1.26.0",
+        "tailwind-merge": "^3.6.0",
+        "tw-animate-css": "^1.4.0",
+        "tailwind-variants": "^3.2.2",
+        "tailwindcss": "^4.3.3",
+        "@tailwindcss/postcss": "^4.3.3",
+        "@tailwindcss/typography": "^0.5.20",
+        "tailwindcss-animate": "^1.0.7",
+        "shadcn": "^4.14.1",
+        "sonner": "^2.0.7",
+        "motion": "^12.42.2",
+        "lottie-react": "^2.4.1",
+        "konva": "^10.3.0",
+        "react-konva": "^19.2.5",
+        "swiper": "^14.0.6",
+        "qrcode.react": "^4.2.0",
+        "react-svg": "^17.2.4",
+        "@wrksz/themes": "^1.0.0"
+      },
+      "data": {
+        "@tanstack/react-query": "^5.101.4",
+        "@tanstack/react-query-devtools": "^5.101.4",
+        "@tanstack/react-table": "^8.21.3",
+        "zustand": "^5.0.14",
+        "nuqs": "^2.9.1",
+        "immer": "^11.1.15"
+      },
+      "validation": {
+        "zod": "^4.4.3",
+        "class-transformer": "^0.5.1",
+        "reflect-metadata": "^0.2.2"
+      },
+      "content": {
+        "@portabletext/react": "^7.0.1",
+        "@sanity/image-url": "^2.1.1",
+        "next-sanity": "^13.2.1",
+        "streamdown": "^2.5.0",
+        "@streamdown/cjk": "^1.0.3",
+        "@streamdown/code": "^1.1.1",
+        "@streamdown/math": "^1.0.2",
+        "@streamdown/mermaid": "^1.0.2",
+        "react-markdown": "^10.1.0",
+        "remark-gfm": "^4.0.1",
+        "marked": "^18.0.7",
+        "unist-util-visit": "^5.1.0",
+        "@types/unist": "^3.0.3",
+        "react-syntax-highlighter": "^16.1.1",
+        "@types/react-syntax-highlighter": "^15.5.13",
+        "html-to-docx": "^1.8.0",
+        "@types/html-to-docx": "^1.8.1",
+        "jszip": "^3.10.1",
+        "@types/jszip": "^3.4.1"
+      },
+      "integrations": {
+        "firebase": "^12.16.0",
+        "jose": "^6.2.4",
+        "jwt-decode": "^4.0.0",
+        "@paddle/paddle-js": "^1.6.4",
+        "@coralogix/browser": "^3.20.0",
+        "@marsidev/react-turnstile": "^1.5.3",
+        "ai": "^7.0.37"
+      },
+      "utils": {
+        "lodash-es": "^4.18.1",
+        "@types/lodash-es": "^4.17.12",
+        "dayjs": "^1.11.21",
+        "uuid": "^14.0.1",
+        "@types/uuid": "^11.0.0",
+        "axios": "^1.18.1",
+        "eventsource-parser": "^3.1.0",
+        "use-stick-to-bottom": "^1.1.6",
+        "react-infinite-scroll-hook": "^6.0.1",
+        "react-dropzone": "^19.1.1",
+        "react-joyride": "^3.2.0",
+        "@uidotdev/usehooks": "^2.4.1"
+      },
+      "tools": {
+        "typescript": "^7.0.2",
+        "@types/node": "^26.1.1",
+        "@types/bun": "^1.3.14",
+        "lefthook": "^2.1.10",
+        "oxfmt": "^0.60.0",
+        "oxlint": "^1.75.0",
+        "oxlint-plugin-react-doctor": "^0.9.1",
+        "turbo": "^2.10.6",
+        "ultracite": "7.9.4",
+        "vitest": "^4.1.10",
+        "tsdown": "^0.22.14",
+        "msw": "^2.15.0",
+        "webpack-bundle-analyzer": "^5.3.1",
+        "@svgr/webpack": "^8.1.0",
+        "postcss": "^8.5.22",
+        "sass": "^1.101.7"
+      }
+    }
+  },
+  "type": "module",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "turbo format",
-    "typecheck": "turbo typecheck"
+    "start": "turbo start",
+    "analyze": "turbo analyze",
+    "typecheck": "turbo typecheck",
+    "clean": "turbo clean && rm -rf node_modules bun.lock",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "prepare": "lefthook install"
   },
   "devDependencies": {
-    "@workspace/eslint-config": "workspace:*",
-    "@workspace/typescript-config": "workspace:*",
-    "prettier": "^3.8.3",
-    "prettier-plugin-tailwindcss": "^0.8.0",
-    "turbo": "^2.9.18",
-    "typescript": "^5"
+    "@cs/ts-config": "workspace:*",
+    "lefthook": "catalog:tools",
+    "oxfmt": "catalog:tools",
+    "oxlint": "catalog:tools",
+    "oxlint-plugin-react-doctor": "catalog:tools",
+    "turbo": "catalog:tools",
+    "typescript": "catalog:tools",
+    "ultracite": "catalog:tools"
   },
-  "packageManager": "bun@1.3.14",
+  "overrides": {
+    "@swc/helpers": "catalog:framework"
+  },
   "engines": {
-    "node": ">=20"
+    "bun": ">=1.3.14"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packageManager": "bun@1.3.14"
 }

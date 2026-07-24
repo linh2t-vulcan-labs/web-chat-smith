@@ -1,0 +1,373 @@
+/* AI tool landing — resource blog carousel. Desktop: 3 per page. Figma node 1:8326 */
+
+.section {
+  --rb-visible: 1.3;
+  --rb-gap: 12px;
+  background: rgba(247, 247, 247, 1);
+}
+
+.inner {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px var(--ai-content-padding-x);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  text-align: center;
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  max-width: 725px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+
+.title {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(28px, 5vw, 48px);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: #000000;
+}
+
+.titleHighlight {
+  color: #000000;
+}
+
+/* ── Carousel block ─────────────────────────────────────────── */
+
+.carouselBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+}
+
+.cardsViewport {
+  width: 100%;
+  container-type: inline-size;
+  container-name: rb-viewport;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.cardsViewport::-webkit-scrollbar {
+  display: none;
+}
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: var(--rb-gap);
+  width: max-content;
+  min-width: 100%;
+}
+
+.cardItem {
+  flex: 0 0
+    calc((100cqw - (var(--rb-visible) - 1) * var(--rb-gap)) / var(--rb-visible));
+  width: calc(
+    (100cqw - (var(--rb-visible) - 1) * var(--rb-gap)) / var(--rb-visible)
+  );
+  scroll-snap-align: start;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+}
+
+.cardLink:focus-visible {
+  outline: none;
+}
+
+/* ── Blog card ──────────────────────────────────────────────── */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-height: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cardLink:hover .card,
+.cardLink:focus-visible .card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.media {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  aspect-ratio: 388 / 206;
+  background: #ececec;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: contain;
+  object-position: center;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 8px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+.badge {
+  align-self: flex-start;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgba(0, 166, 129, 0.2);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  color: #1e1e1e;
+}
+
+.cardTitle {
+  margin: 0;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: #1e1e1e;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.metaRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.metaText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.authorName {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  color: #0a0a0a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.published {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  color: #818181;
+}
+
+/* ── Nav buttons ────────────────────────────────────────────── */
+
+.navRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.navBtn {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  margin: 0;
+  border: none;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.1);
+  color: #141414;
+  cursor: pointer;
+  line-height: 0;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.navBtn:focus-visible {
+  outline: 2px solid #0abf93;
+  outline-offset: 2px;
+}
+
+.navBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.navIcon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.navIconBack {
+  transform: rotate(180deg);
+}
+
+/* ── CTA ────────────────────────────────────────────────────── */
+
+.cta {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 0;
+  background: #00a681;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.cta:hover {
+  background: #009070;
+}
+
+.cta:focus-visible {
+  outline: 2px solid #141414;
+  outline-offset: 3px;
+}
+
+.ctaLabel {
+  display: inline;
+}
+
+.ctaIcon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* ── Tablet (≥768px): 2 per page ────────────────────────────── */
+
+@media (min-width: 768px) {
+  .section {
+    --rb-visible: 2;
+    --rb-gap: 20px;
+  }
+
+  .cardsViewport {
+    overflow: hidden;
+  }
+}
+
+/* ── Desktop (≥900px): wider padding ───────────────────────── */
+
+@media (min-width: 900px) {
+  .inner {
+    padding-left: var(--ai-content-padding-x-wide);
+    padding-right: var(--ai-content-padding-x-wide);
+  }
+
+  .cta {
+    gap: 8px;
+    padding: 16px 24px;
+    border-radius: 20px;
+  }
+}
+
+/* ── Desktop (≥1024px): 3 per page ─────────────────────────── */
+
+@media (min-width: 1024px) {
+  .section {
+    --rb-visible: 3;
+    --rb-gap: 32px;
+  }
+
+  .inner {
+    padding: 80px;
+    gap: 48px;
+  }
+
+  .carouselBlock {
+    gap: 48px;
+  }
+
+  .navRow {
+    gap: 16px;
+  }
+
+  .cardTitle {
+    font-size: 18px;
+  }
+}

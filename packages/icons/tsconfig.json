@@ -1,0 +1,11 @@
+{
+  "extends": "@cs/ts-config/react-library.json",
+  "compilerOptions": {
+    "incremental": true,
+    "noEmit": true,
+    "strictNullChecks": true,
+    "types": ["node", "bun"]
+  },
+  "include": ["src", "scripts"],
+  "exclude": ["node_modules", "dist"]
+}

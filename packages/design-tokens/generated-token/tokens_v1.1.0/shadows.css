@@ -1,0 +1,49 @@
+:root {
+  --cs-elevation-glass-1-common:
+    0px 2px 4px 0px rgba(21, 22, 27, 0.04),
+    0px 1px 3px 0px rgba(21, 22, 27, 0.03);
+  --cs-elevation-glass-2-navbar:
+    0px 4px 8px 0px rgba(21, 22, 27, 0.06),
+    0px 2px 4px 0px rgba(21, 22, 27, 0.04);
+  --cs-elevation-glass-3-dropdown:
+    0px 6px 12px 1px rgba(21, 22, 27, 0.08),
+    0px 4px 8px 0px rgba(21, 22, 27, 0.06),
+    0px 0px 3px 1px rgba(21, 22, 27, 0.02);
+  --cs-elevation-glass-4-modal:
+    0px 12px 24px 0px rgba(21, 22, 27, 0.12),
+    0px 6px 12px 0px rgba(21, 22, 27, 0.08),
+    0px 0px 3px 1px rgba(21, 22, 27, 0.04);
+  --cs-elevation-glass-5-subtle:
+    0px 2px 4px 0px rgba(21, 22, 27, 0.04),
+    0px 1px 3px 0px rgba(21, 22, 27, 0.03);
+  --cs-elevation-glass-6-very-subtle:
+    0px 2px 4px 0px rgba(21, 22, 27, 0.04),
+    0px 1px 3px 0px rgba(21, 22, 27, 0.03);
+  --cs-elevation-glass-7-prominent:
+    0px 2px 4px 0px rgba(21, 22, 27, 0.04),
+    0px 1px 3px 0px rgba(21, 22, 27, 0.03);
+  --cs-elevation-glass-8-subtle-sticky:
+    0px 4px 8px 0px rgba(21, 22, 27, 0.06),
+    0px 2px 4px 0px rgba(21, 22, 27, 0.04);
+  --cs-elevation-glass-9-prominent-glass-modal:
+    0px 12px 24px 0px rgba(21, 22, 27, 0.12),
+    0px 6px 12px 0px rgba(21, 22, 27, 0.08),
+    0px 0px 3px 1px rgba(21, 22, 27, 0.04);
+  --cs-elevation-solid-1-raised:
+    0px 1px 3px 0px rgba(21, 22, 27, 0.02),
+    0px 1px 3px 0px rgba(21, 22, 27, 0.03);
+  --cs-elevation-solid-2-lifted:
+    0px 2px 4px 0px rgba(21, 22, 27, 0.04),
+    0px 1px 3px 0px rgba(21, 22, 27, 0.03);
+  --cs-elevation-solid-3-floating:
+    0px 4px 8px 0px rgba(21, 22, 27, 0.06),
+    0px 2px 4px 0px rgba(21, 22, 27, 0.04);
+  --cs-elevation-solid-4-hovering:
+    0px 6px 12px 1px rgba(21, 22, 27, 0.08),
+    0px 4px 8px 0px rgba(21, 22, 27, 0.06),
+    0px 0px 3px 1px rgba(21, 22, 27, 0.02);
+  --cs-elevation-solid-5-overlay:
+    0px 12px 24px 0px rgba(21, 22, 27, 0.12),
+    0px 6px 12px 0px rgba(21, 22, 27, 0.08),
+    0px 0px 3px 1px rgba(21, 22, 27, 0.04);
+}

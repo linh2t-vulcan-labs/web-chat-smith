@@ -1,0 +1,128 @@
+{
+  "status": {
+    "active": "نشط",
+    "cancelled": "تم الإلغاء",
+    "expired": "منتهي الصلاحية"
+  },
+  "paymentTransactionStatus": {
+    "unspecified": "غير محدد",
+    "processing": "قيد المعالجة",
+    "succeeded": "تم بنجاح",
+    "failed": "فشل",
+    "cancelled": "تم الإلغاء",
+    "expired": "منتهي الصلاحية",
+    "refunded": "تم الاسترداد",
+    "partiallyRefunded": "استرداد جزئي",
+    "pending": "قيد الانتظار",
+    "disputed": "قيد النزاع",
+    "reversed": "تم العكس"
+  },
+  "actions": {
+    "cancelPlan": "إلغاء الخطة",
+    "dontCancelPlan": "لا تُلغِ الخطة",
+    "updatePlan": "تحديث الخطة",
+    "update": "تحديث",
+    "renew": "تجديد",
+    "manageSubscription": "إدارة الاشتراك",
+    "showLess": "عرض أقل",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "back": "رجوع",
+    "yesContinue": "نعم، متابعة",
+    "gotIt": "فهمت",
+    "continue": "متابعة",
+    "needHelp": "تحتاج مساعدة",
+    "getPro": "احصل على Pro",
+    "addPaymentMethod": "إضافة وسيلة دفع",
+    "viewInvoice": "عرض الفاتورة"
+  },
+  "billing": {
+    "paymentMethodTitle": "طريقة الدفع",
+    "billingHistoryTitle": "سجل الفوترة",
+    "invoicesCount": "{count, plural, one {# فاتورة} other {# فواتير}}",
+    "noInvoices": "لا توجد فواتير",
+    "period": "الفترة",
+    "type": "النوع"
+  },
+  "subscription": {
+    "currentPeriodLabel": "الفترة الحالية",
+    "nextBillingDateLabel": "تاريخ الفوترة التالي",
+    "expiredDateLabel": "تاريخ الانتهاء",
+    "scheduledToCancelOn": "من المقرر الإلغاء في {date}"
+  },
+  "accordion": {
+    "manageSubscription": "إدارة الاشتراك",
+    "showLess": "عرض أقل"
+  },
+  "cancel": {
+    "modalTitle": "إلغاء الخطة",
+    "reviewDescription": "يرجى مراجعة ما سيحدث عند إلغاء خطتك",
+    "loseAccessDescription": "ستفقد الوصول إلى أدوات Pro والميزات الحصرية، وسينتهي وصولك في <strong>{date}</strong>",
+    "limitedHistory": "سيتم تقييد محادثاتك وسجلك في Pro",
+    "noAiModels": "لن تتوفر نماذج الذكاء الاصطناعي والاستجابات الأسرع",
+    "removeCustomizations": "ستتم إزالة التخصيصات والسمات وأولوية الوصول",
+    "loseUpcomingFeatures": "ستفقد الوصول إلى الميزات المدفوعة القادمة",
+    "uncancelTitle": "لا تُلغِ الخطة",
+    "uncancelDescription": "سيؤدي هذا إلى إلغاء الإلغاء المجدول"
+  },
+  "successCancel": {
+    "title": "تم إلغاء اشتراكك بنجاح",
+    "description": "سينتهي وصولك إلى ميزات Pro في <strong>{date}</strong>.<break></break>إذا احتجت مساعدة، <contact>تواصل معنا</contact>"
+  },
+  "successUpdate": {
+    "title": "تم تحديث خطتك بنجاح",
+    "description": "أصبحت خطة {planDuration} الخاصة بك مفعّلة اعتبارًا من <strong>{activationDate}</strong>.<break></break>إذا كنت بحاجة إلى مساعدة في إدارة اشتراكاتك، فلا تتردد في <contact>تواصل معنا</contact>.",
+    "downgradeDesc": "ستنتقل إلى خطة {planDuration} بدءًا من <strong>{activationDate}</strong>.<break></break>إذا كنت بحاجة إلى مساعدة في إدارة اشتراكاتك، فلا تتردد في <contact>تواصل معنا</contact>."
+  },
+  "previewChange": {
+    "proratedCreditLabel": "رصيد نسبي من خطة {planDuration}",
+    "newPlanLabel": "خطة {planDuration}",
+    "amountDueTodayLabel": "المبلغ المستحق اليوم",
+    "nextBillingCycleLabel": "دورة الفوترة التالية ({date})",
+    "switchingPlanDescription": "أنت بصدد التبديل إلى خطة {planDuration}",
+    "additionalChargeNowDescription": "سيتم خصم مبلغ إضافي قدره {amount} اليوم ({date})، وتبدأ خطتك الجديدة فورًا",
+    "chargeNextCycleDescription": "سيتم تحصيل {amount} بدءًا من دورة الفوترة التالية في {date}",
+    "confirmYourUpdatesTitle": "تأكيد التحديثات",
+    "pickPlanDescription": "اختر إحدى خطط Chat Smith Pro التالية"
+  },
+  "notice": {
+    "headerTitle": "Chat Smith",
+    "badgeFree": "مجاني",
+    "badgePro": "Pro",
+    "featuresTitle": "الميزات المتضمنة:",
+    "limitedDailyAccess": "وصول يومي محدود إلى نماذج الذكاء الاصطناعي المتقدمة",
+    "basicWritingAssistant": "وصول أساسي إلى مساعد الكتابة",
+    "limitedFileUploads": "تحميل ملفات محدود",
+    "standardSecurityPrivacy": "أمان وخصوصية قياسية",
+    "mobileOnlyDescription": "لإدارة اشتراكك، يرجى استخدام تطبيق الجوال. نسخة الويب لا تدعم التغييرات حاليًا. يمكنك الاشتراك أو الإلغاء أو تعديل خطتك بسهولة عبر الجوال"
+  },
+  "paymentCard": {
+    "expiredDateLabel": "تاريخ الانتهاء: {date}",
+    "actions": {
+      "markAsDefault": "تعيين كافتراضي",
+      "edit": "تعديل",
+      "delete": "حذف"
+    }
+  },
+  "trial": {
+    "info": "هذا الاشتراك حاليًا في الفترة التجريبية. ستنتهي الفترة التجريبية في {endDate} وبعد ذلك سيتم تحصيل {amount}/{unit}."
+  },
+  "invoice": {
+    "title": "الفاتورة",
+    "newPurchase": "عملية شراء جديدة",
+    "billingDate": "تاريخ الفوترة",
+    "paymentMethod": "طريقة الدفع",
+    "product": "المنتج",
+    "qty": "الكمية",
+    "gst": "GST",
+    "amountExclTax": "المبلغ غير شامل الضريبة",
+    "subtotal": "المجموع الفرعي",
+    "total": "الإجمالي شامل الضريبة"
+  },
+  "historyStatus": {
+    "newPurchase": "عملية شراء جديدة",
+    "paymentMethodUpdate": "تحديث طريقة الدفع",
+    "recurringPayment": "دفع متكرر",
+    "subscriptionUpdate": "تحديث الاشتراك"
+  }
+}

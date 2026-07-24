@@ -1,0 +1,176 @@
+import path from "node:path";
+
+import { $ } from "bun";
+
+import {
+  flattenTokens,
+  generateDarkModeCss,
+  generateIndexCss,
+  generateManifest,
+  generateModeOverridesCss,
+  generateRecipeCss,
+  generateShadcnBridgeCss,
+  generateShadowsCss,
+  generateTokensCss,
+  generateTypographyCss,
+} from "../lib/generators";
+import {
+  normalizeBorders,
+  normalizeColors,
+  normalizeRadius,
+  normalizeShadows,
+  normalizeSpacing,
+  normalizeTypography,
+} from "../lib/normalizers";
+import { resolveTokens } from "../lib/resolver";
+import type { TokenMap } from "../lib/resolver";
+import { styleText } from "../lib/utils/console-colors";
+import {
+  validateContrast,
+  validateRefs,
+  validateSchema,
+  validateSSRSafety,
+} from "../lib/validators";
+import {
+  FIGMA_TOKENS_DIR,
+  listVersions,
+  readCurrentVersion,
+} from "../lib/version";
+
+const { resolve } = path;
+
+const OUTPUT_ROOT = resolve(import.meta.dir, "../../generated-token");
+
+const parseTokenFile = async (
+  version: string,
+  fileName: string
+): Promise<TokenMap | undefined> => {
+  const file = Bun.file(resolve(FIGMA_TOKENS_DIR, version, fileName));
+
+  if (!(await file.exists())) {
+    return undefined;
+  }
+
+  const parsed = JSON.parse(await file.text()) as unknown;
+  if (typeof parsed !== "object" || parsed === null) {
+    return undefined;
+  }
+
+  return parsed as TokenMap;
+};
+
+const normalizeAll = (tokens: TokenMap): TokenMap => {
+  const step1 = normalizeColors(tokens);
+  const step2 = normalizeSpacing(step1);
+  const step3 = normalizeRadius(step2);
+  const step4 = normalizeBorders(step3);
+  const step5 = normalizeShadows(step4);
+  return normalizeTypography(step5);
+};
+
+const buildVersion = async (version: string): Promise<void> => {
+  const outputDir = resolve(OUTPUT_ROOT, version);
+
+  console.log(styleText("cyan", `Building design tokens for ${version}...`));
+
+  const [resolved, resolvedDark] = await Promise.all([
+    resolveTokens(FIGMA_TOKENS_DIR, version, "light"),
+    resolveTokens(FIGMA_TOKENS_DIR, version, "dark"),
+  ]);
+  const normalized = normalizeAll(resolved.tokens);
+  const normalizedDark = normalizeAll(resolvedDark.tokens);
+
+  const schema = validateSchema(normalized);
+  const refs = validateRefs(normalized);
+  const contrast = validateContrast(normalized);
+  const ssrSafety = validateSSRSafety(normalized);
+  const darkSchema = validateSchema(normalizedDark);
+  const darkRefs = validateRefs(normalizedDark);
+  const darkContrast = validateContrast(normalizedDark);
+  const darkSsrSafety = validateSSRSafety(normalizedDark);
+
+  const errorCount =
+    resolved.errors.length +
+    resolvedDark.errors.length +
+    schema.errors.length +
+    refs.errors.length +
+    contrast.errors.length +
+    ssrSafety.errors.length +
+    darkSchema.errors.length +
+    darkRefs.errors.length +
+    darkContrast.errors.length +
+    darkSsrSafety.errors.length;
+
+  if (errorCount > 0) {
+    throw new Error(
+      `Build failed for ${version} with ${errorCount} validation errors.`
+    );
+  }
+
+  const flatTokens = flattenTokens(normalized);
+  const flatDarkTokens = flattenTokens(normalizedDark);
+  const darkModeCss = generateDarkModeCss(flatTokens, flatDarkTokens);
+  const modeOverrides = generateModeOverridesCss({
+    densityCompact: await parseTokenFile(
+      version,
+      "primitive_densitive_mode compact.json"
+    ),
+    densityDefault: await parseTokenFile(
+      version,
+      "primitive_densitive_mode default.json"
+    ),
+    densitySpacious: await parseTokenFile(
+      version,
+      "primitive_densitive_mode spacious.json"
+    ),
+    deviceDesktop: await parseTokenFile(
+      version,
+      "primitive_device_mode desktop.json"
+    ),
+    deviceMobile: await parseTokenFile(
+      version,
+      "primitive_device_mode mobile.json"
+    ),
+    deviceTablet: await parseTokenFile(
+      version,
+      "primitive_device_mode tablet.json"
+    ),
+  });
+
+  await $`rm -rf ${outputDir} && mkdir -p ${outputDir}`.quiet();
+
+  const tokensCss = `${generateTokensCss(flatTokens)}${modeOverrides}${darkModeCss}`;
+  await Promise.all([
+    Bun.write(resolve(outputDir, "tokens.css"), tokensCss),
+    Bun.write(
+      resolve(outputDir, "typography.css"),
+      generateTypographyCss(flatTokens)
+    ),
+    Bun.write(
+      resolve(outputDir, "shadows.css"),
+      generateShadowsCss(flatTokens)
+    ),
+    Bun.write(resolve(outputDir, "recipes.css"), generateRecipeCss()),
+    Bun.write(resolve(outputDir, "shadcn.css"), generateShadcnBridgeCss()),
+    Bun.write(resolve(outputDir, "index.css"), generateIndexCss()),
+  ]);
+
+  const manifest = generateManifest(version, flatTokens.length);
+  await Bun.write(
+    resolve(outputDir, "manifest.json"),
+    `${JSON.stringify(manifest, null, 2)}\n`
+  );
+
+  console.log(styleText("green", `Build succeeded: ${outputDir}`));
+};
+
+export const run = async (args: string[]): Promise<void> => {
+  if (args.includes("--all")) {
+    await Promise.all(listVersions().map((version) => buildVersion(version)));
+    return;
+  }
+
+  const explicitVersion = args.find((arg) => !arg.startsWith("--"));
+  const version = explicitVersion ?? (await readCurrentVersion());
+  await buildVersion(version);
+};

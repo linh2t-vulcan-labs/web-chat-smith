@@ -1,0 +1,38 @@
+{
+  "name": "@cs/flags",
+  "version": "0.0.1",
+  "private": true,
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./keys": "./src/keys.ts",
+    "./schema": "./src/schema.ts",
+    "./firebase": "./src/adapters/firebase/index.ts",
+    "./react": "./src/react/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist node_modules .turbo .cache"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/bun": "catalog:tools",
+    "@types/react": "catalog:framework",
+    "@types/react-dom": "catalog:framework",
+    "firebase": "catalog:integrations",
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework",
+    "vitest": "catalog:tools"
+  },
+  "peerDependencies": {
+    "firebase": "catalog:integrations",
+    "react": "catalog:framework"
+  }
+}

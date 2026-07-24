@@ -1,0 +1,228 @@
+{
+  "sidebar": {
+    "newChat": "नई चैट",
+    "assistantWriting": "असिस्टेंट राइटिंग",
+    "chatHistory": "चैट हिस्ट्री",
+    "others": "अन्य",
+    "pinned": "पिन किए गए",
+    "today": "आज",
+    "yesterday": "कल",
+    "lastWeek": "पिछले 7 दिन",
+    "twoWeeksAgo": "पिछले 15 दिन",
+    "getProButton": {
+      "upgrade": "Pro में अपग्रेड करें",
+      "title": "Chat Smith Pro लें",
+      "description": "अभी अपग्रेड करें"
+    },
+    "qr": {
+      "description": "Chat Smith App पाने के लिए नीचे QR कोड स्कैन करें<break></break>",
+      "openLink": "लिंक खोलें",
+      "copyLink": "लिंक कॉपी करें"
+    },
+    "emptyThread": {
+      "title": "अभी कोई बातचीत नहीं",
+      "description": "आपकी सेव्ड बातचीत यहाँ दिखेगी।"
+    }
+  },
+  "sidebarV2": {
+    "newChat": "चैट",
+    "home": "होम",
+    "writing": "राइटिंग",
+    "chatHistory": "हिस्ट्री",
+    "creativeSuite": "डिज़ाइन स्टूडियो"
+  },
+  "helpCenter": {
+    "title": "हेल्प सेंटर",
+    "faq": {
+      "title": "अक्सर पूछे जाने वाले सवाल",
+      "description": "आम सवालों के जल्दी जवाब पाएं।"
+    },
+    "community": {
+      "description": "कम्युनिटी से जुड़ें और अपना अनुभव शेयर करें।"
+    },
+    "contactSupport": {
+      "description": "हमारी सपोर्ट टीम से मदद लें।",
+      "title": "सपोर्ट से संपर्क करें"
+    },
+    "termsOfUse": {
+      "description": "Chat Smith के उपयोग की शर्तें पढ़ें।"
+    },
+    "privacyPolicy": {
+      "description": "जानें कि हम आपका डेटा कैसे सुरक्षित रखते और उपयोग करते हैं।"
+    },
+    "refundPolicy": {
+      "description": "रिफ़ंड और कैंसिलेशन की प्रक्रिया समझें।"
+    }
+  },
+  "helpButton": {
+    "featureRequests": "फ़ीचर रिक्वेस्ट",
+    "whatNews": "नया क्या है",
+    "aboutUs": "हमारे बारे में"
+  },
+  "header": {
+    "notification": {
+      "title": "नोटिफिकेशन ({count})",
+      "markAllAsRead": "सभी को पढ़ा हुआ मार्क करें",
+      "upToDate": "आप अप-टू-डेट हैं!"
+    },
+    "userInfo": {
+      "manageSubscription": "सब्सक्रिप्शन मैनेज करें",
+      "upgradeToPro": "Pro में अपग्रेड करें",
+      "upgradeToProV2": "PRO में अपग्रेड करें",
+      "manageAccount": "अकाउंट मैनेज करें"
+    }
+  },
+  "chatSuggestion": {
+    "title": "चैट सुझाव",
+    "description": "चैट के दौरान सुझाए गए सवाल दिखाएं"
+  },
+  "floatingUpgradeBanner": {
+    "content": "ऑल-इन-वन AI चैटबॉट का मज़ा लें"
+  },
+  "floatingUpgradeBlock": {
+    "title": "Chat Smith Pro के साथ और भी अनलॉक करें",
+    "upgradeNow": "अभी <span>अपग्रेड करें</span>",
+    "description": "ज़्यादा लिमिट, फ़ाइल अपलोड, रियलटाइम सर्च, डीप रिसर्च और आर्ट जनरेशन का मज़ा लें",
+    "hitDailyLimit": {
+      "title": "आपकी आज की लिमिट खत्म हो गई!",
+      "description": "आपके फ्री मैसेज 00:00 बजे रिफ्रेश होंगे — या अभी अपग्रेड करें और बिना रुके जारी रहें"
+    },
+    "hasRemainingMessages": {
+      "title": "आपके पास {usage} फ्री मैसेज बचे हैं।",
+      "description": "ज़्यादा लिमिट, फ़ाइल अपलोड, रियलटाइम सर्च, डीप रिसर्च और आर्ट जनरेशन का मज़ा लें"
+    },
+    "greatProgress": {
+      "title": "आपने शानदार प्रगति की है!",
+      "description": "सीखते, बनाते और चैट करते रहें बिना किसी लिमिट के — अभी अपग्रेड करें"
+    }
+  },
+  "featureRequest": {
+    "modal": {
+      "title": "फ़ीचर सुझाएं या वोट करें"
+    },
+    "field": {
+      "title": {
+        "label": "शीर्षक",
+        "placeholder": "छोटा और स्पष्ट विवरण"
+      },
+      "detail": {
+        "label": "विवरण जोड़ें और अपनी ज़रूरत बताएं",
+        "placeholder": "अपनी फ़ीचर रिक्वेस्ट के बारे में और जानकारी दें"
+      },
+      "search": {
+        "placeholder": "यहाँ सर्च करें"
+      }
+    },
+    "filter": {
+      "sortBy": {
+        "newest": "पहले नया",
+        "vote": "वोट काउंट"
+      }
+    },
+    "cta": {
+      "submit": "रिक्वेस्ट भेजें"
+    },
+    "result": {
+      "none": "हमें इसके लिए कोई आर्टिकल नहीं मिला: <strong>{searchInput}</strong>"
+    }
+  },
+  "webReminder": {
+    "modal": {
+      "subTitle": "अनुभव टिप्स",
+      "title": "डेस्कटॉप पर बेहतर",
+      "desc": "यह साइट डेस्कटॉप के लिए ऑप्टिमाइज़्ड है। बेहतर अनुभव के लिए वहाँ आज़माएं।"
+    }
+  },
+  "manageAccount": {
+    "account": {
+      "title": "अकाउंट",
+      "description": "अपनी पर्सनल जानकारी मैनेज करें"
+    },
+    "preference": {
+      "title": "प्राथमिकताएं",
+      "description": "अपना अनुभव और नोटिफिकेशन सेटिंग्स कस्टमाइज़ करें"
+    }
+  },
+  "system": {
+    "title": "सिस्टम",
+    "description": "अपनी लॉगिन और सिक्योरिटी सेटिंग्स मैनेज करें"
+  },
+  "logout": {
+    "title": "साइन आउट करें",
+    "description": "अपने अकाउंट से साइन आउट करें"
+  },
+  "deleteAccount": {
+    "title": "अकाउंट डिलीट करें",
+    "description": "अपना अकाउंट और सारा डेटा हमेशा के लिए डिलीट करें"
+  },
+  "generalTab": "सामान्य",
+  "myPlan": "मेरा प्लान",
+  "language": {
+    "title": "भाषाएं",
+    "description": "यूज़र इंटरफेस में इस्तेमाल की जाने वाली भाषा।"
+  },
+  "theme": {
+    "title": "थीम",
+    "description": "इंटरफ़ेस के लिए उपयोग की जाने वाली उपस्थिति चुनें",
+    "light": "लाइट",
+    "dark": "डार्क",
+    "system": "सिस्टम"
+  },
+  "confirmModal": {
+    "signout": {
+      "title": "साइन आउट",
+      "description": "क्या आप सच में साइन आउट करना चाहते हैं?",
+      "actionLabel": "साइन आउट"
+    },
+    "deleteAccountNoActiveSubscription": {
+      "title": "अकाउंट डिलीट करें",
+      "description": "क्या आप सच में अपना अकाउंट डिलीट करना चाहते हैं? <break></break><warning>यह क्रिया वापस नहीं की जा सकती और आपका सारा डेटा हमेशा के लिए हटा दिया जाएगा</warning>",
+      "confirmInstruction": "पुष्टि करने के लिए, नीचे \"{confirmText}\" टाइप करें।",
+      "confirmPlaceholder": "पुष्टि के लिए \"{confirmText}\" टाइप करें",
+      "actionLabel": "अकाउंट डिलीट करें",
+      "cancelText": "रद्द करें",
+      "confirmText": "Delete Account"
+    },
+    "deleteAccountWithActiveSubscriptionFromWeb": {
+      "title": "अकाउंट डिलीट करें",
+      "description": "क्या आप सच में अपना अकाउंट डिलीट करना चाहते हैं? <break></break><subscriptionInfo>आप अभी ऑटोमैटिक रिन्यूअल के साथ सब्सक्राइब्ड हैं। आपकी बिलिंग पेमेंट सिस्टम के ज़रिए जारी रहेगी और आप Chat Smith इस्तेमाल करते रह सकते हैं।</subscriptionInfo> <break></break><cancelPlanInstruction>किसी भी अनचाहे चार्ज से बचने के लिए, कृपया</cancelPlanInstruction> <cancelPlanLink>प्लान कैंसिल करें</cancelPlanLink> <beforeDeleting>अकाउंट डिलीट करने से पहले।</beforeDeleting>",
+      "actionLabel": "प्लान कैंसिल करें और अकाउंट डिलीट करें",
+      "cancelText": "रद्द करें",
+      "confirmText": "delete"
+    },
+    "deleteAccountWithActiveSubscriptionFromMobile": {
+      "title": "अकाउंट डिलीट करें",
+      "description": "<span>अपना अकाउंट डिलीट करने के लिए, पहले उस प्लेटफ़ॉर्म पर अपना सक्रिय सब्सक्रिप्शन कैंसिल करें जहाँ से आपने इसे खरीदा था।</span><break></break><afterCancellation>वहाँ सब्सक्रिप्शन कैंसिल होने के बाद, आप सुरक्षित रूप से अपना अकाउंट डिलीट कर सकते हैं</afterCancellation>",
+      "actionLabel": "समझ गया",
+      "cancelText": "मदद चाहिए"
+    }
+  },
+  "paymentUnavailableModal": {
+    "title": "सब्सक्रिप्शन मैनेजमेंट <break></break> अस्थायी रूप से अनुपलब्ध",
+    "description": "हम अभी अपना पेमेंट सिस्टम अपग्रेड कर रहे हैं। आपका <brand>Chat Smith Pro</brand> सब्सक्रिप्शन सक्रिय है और सभी प्रीमियम फ़ीचर्स सामान्य रूप से काम करते रहेंगे।<break></break>सब्सक्रिप्शन मैनेजमेंट जल्द ही फिर से उपलब्ध होगा।",
+    "privacy": "आपका सब्सक्रिप्शन और बिलिंग सुरक्षित है"
+  },
+  "onboardingPro": {
+    "step1": {
+      "title": "Pro में आपका स्वागत है",
+      "description": "आपने प्रीमियम एक्सेस अनलॉक कर लिया है — अब तेज़, अनलिमिटेड और स्मार्ट टूल्स का आनंद लें।"
+    },
+    "step2": {
+      "title": "अनलिमिटेड चैट",
+      "description": "GPT-5, Gemini 2.5 Pro और अन्य उन्नत मॉडलों के साथ बिना रुकावट चैट करें — बेहतर परिणाम और गहरी समझ के लिए।"
+    },
+    "step3": {
+      "title": "AI आर्ट और विज़न टूल्स",
+      "description": "अगली पीढ़ी के AI टूल्स के साथ इमेज बनाएं, एडिट करें और समझें। ट्रेंडिंग आर्ट स्टाइल्स एक्सप्लोर करें और अपने आइडियाज़ को सेकंडों में विज़ुअल में बदलें।"
+    },
+    "step4": {
+      "title": "काम और पढ़ाई के लिए और स्मार्ट",
+      "description": "अगली पीढ़ी के AI टूल्स के साथ इमेज बनाएं, एडिट करें और समझें। ट्रेंडिंग आर्ट स्टाइल्स एक्सप्लोर करें और अपने आइडियाज़ को सेकंडों में विज़ुअल में बदलें।"
+    }
+  },
+  "expiredPlan": {
+    "title": "आपका Pro प्लान समाप्त हो गया है",
+    "description": "हमें आपकी कमी महसूस हुई! अपने Pro फ़ायदों को न खोएँ — वापस आएँ और अपनी गति बनाए रखें।",
+    "cta": "फिर से Pro लें"
+  }
+}

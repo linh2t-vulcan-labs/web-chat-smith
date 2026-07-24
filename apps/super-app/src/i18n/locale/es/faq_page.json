@@ -1,0 +1,23 @@
+{
+  "header": {
+    "brandName": "Chat Smith",
+    "helpCenter": "Centro de ayuda",
+    "faqsMobile": "Preguntas frecuentes",
+    "backToHome": "Volver al inicio"
+  },
+  "search": {
+    "heroTitle": "¿Tienes preguntas? Encuentra respuestas aquí",
+    "inputPlaceholder": "Escribe para buscar",
+    "resultsFor": "Resultados de búsqueda para:",
+    "noResultsFor": "No encontramos artículos para:"
+  },
+  "accordion": {
+    "viewMore": "Ver más"
+  },
+  "metadata": {
+    "categoryTitlePrefix": "Preguntas frecuentes:"
+  },
+  "breadcrumb": {
+    "allFaqs": "Todas las preguntas frecuentes"
+  }
+}

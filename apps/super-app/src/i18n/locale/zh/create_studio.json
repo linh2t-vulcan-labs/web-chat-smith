@@ -1,0 +1,16 @@
+{
+  "seo": {
+    "base": {
+      "title": "AI 设计工作室 - Chat Smith",
+      "description": "使用 AI 设计工作室创建徽标、海报、社交媒体图片、演示文稿等内容。几秒钟即可生成、编辑并优化专业级设计。",
+      "ogImage": ""
+    },
+    "usecase": {
+      "logo": {
+        "title": "AI Logo 设计 - Chat Smith",
+        "description": "使用 AI Logo 设计为您的企业、品牌或初创公司创建独特的徽标。几秒钟即可生成、自定义并优化专业级 Logo。",
+        "ogImage": ""
+      }
+    }
+  }
+}

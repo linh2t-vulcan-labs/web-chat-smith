@@ -1,0 +1,497 @@
+:root {
+  --cs-display-lg-fontFamily: Inter;
+  --cs-display-lg-fontWeight: 600;
+  --cs-display-lg-lineHeight: 1;
+  --cs-display-md-fontFamily: Inter;
+  --cs-display-md-fontWeight: 500;
+  --cs-display-md-lineHeight: 1;
+  --cs-markdown-h1-fontFamily: Inter;
+  --cs-markdown-h1-fontWeight: 600;
+  --cs-markdown-h1-lineHeight: 1.33;
+  --cs-markdown-h2-fontFamily: Inter;
+  --cs-markdown-h2-fontWeight: 600;
+  --cs-markdown-h2-lineHeight: 1.4;
+  --cs-markdown-h3-fontFamily: Inter;
+  --cs-markdown-h3-fontWeight: 600;
+  --cs-markdown-h3-lineHeight: 1.11;
+  --cs-markdown-h4-fontFamily: Inter;
+  --cs-markdown-h4-fontWeight: 600;
+  --cs-markdown-h4-lineHeight: 1.25;
+  --cs-heading-h1-fontFamily: Inter;
+  --cs-heading-h1-fontWeight: 400;
+  --cs-heading-h1-lineHeight: 1.3;
+  --cs-heading-h2-fontFamily: Inter;
+  --cs-heading-h2-fontWeight: 500;
+  --cs-heading-h2-lineHeight: 1.38;
+  --cs-heading-h3-fontFamily: Inter;
+  --cs-heading-h3-fontWeight: 500;
+  --cs-heading-h3-lineHeight: 1.33;
+  --cs-heading-h4-fontFamily: Inter;
+  --cs-heading-h4-fontWeight: 500;
+  --cs-heading-h4-lineHeight: 1.4;
+  --cs-heading-h5-fontFamily: Inter;
+  --cs-heading-h5-fontWeight: 500;
+  --cs-heading-h5-lineHeight: 1.25;
+  --cs-heading-h6-fontFamily: Inter;
+  --cs-heading-h6-fontWeight: 500;
+  --cs-heading-h6-lineHeight: 1.43;
+  --cs-title-lg-fontFamily: Inter;
+  --cs-title-lg-fontWeight: 600;
+  --cs-title-lg-lineHeight: 1.25;
+  --cs-title-md_normal-fontFamily: Inter;
+  --cs-title-md_normal-fontWeight: 500;
+  --cs-title-md_normal-lineHeight: 1.43;
+  --cs-title-md_light-fontFamily: Inter;
+  --cs-title-md_light-fontWeight: 400;
+  --cs-title-md_light-lineHeight: 1.43;
+  --cs-title-sm-fontFamily: Inter;
+  --cs-title-sm-fontWeight: 500;
+  --cs-title-sm-lineHeight: 1.33;
+  --cs-body-leading-fontFamily: Inter;
+  --cs-body-leading-fontWeight: 400;
+  --cs-body-leading-lineHeight: 1.56;
+  --cs-body-default_strong-fontFamily: Inter;
+  --cs-body-default_strong-fontWeight: 600;
+  --cs-body-default_strong-lineHeight: 1.5;
+  --cs-body-default_normal-fontFamily: Inter;
+  --cs-body-default_normal-fontWeight: 400;
+  --cs-body-default_normal-lineHeight: 1.5;
+  --cs-body-secondary-fontFamily: Inter;
+  --cs-body-secondary-fontWeight: 400;
+  --cs-body-secondary-lineHeight: 1.43;
+  --cs-body-longform-fontFamily: Inter;
+  --cs-body-longform-fontWeight: 400;
+  --cs-body-longform-lineHeight: 1.5;
+  --cs-action-lg-fontFamily: Inter;
+  --cs-action-lg-fontWeight: 500;
+  --cs-action-lg-lineHeight: 1.33;
+  --cs-action-md_strong-fontFamily: Inter;
+  --cs-action-md_strong-fontWeight: 500;
+  --cs-action-md_strong-lineHeight: 1.25;
+  --cs-action-md_light-fontFamily: Inter;
+  --cs-action-md_light-fontWeight: 400;
+  --cs-action-md_light-lineHeight: 1.25;
+  --cs-action-sm_light-fontFamily: Inter;
+  --cs-action-sm_light-fontWeight: 400;
+  --cs-action-sm_light-lineHeight: 1.43;
+  --cs-action-xs_light-fontFamily: Inter;
+  --cs-action-xs_light-fontWeight: 400;
+  --cs-action-xs_light-lineHeight: 1.67;
+  --cs-action-inline_md-fontFamily: Inter;
+  --cs-action-inline_md-fontWeight: 500;
+  --cs-action-inline_md-lineHeight: 1.25;
+  --cs-action-inline_s-fontFamily: Inter;
+  --cs-action-inline_s-fontWeight: 500;
+  --cs-action-inline_s-lineHeight: 1.43;
+  --cs-action-inline_xs-fontFamily: Inter;
+  --cs-action-inline_xs-fontWeight: 500;
+  --cs-action-inline_xs-lineHeight: 1.33;
+  --cs-action-compact_md-fontFamily: Inter;
+  --cs-action-compact_md-fontWeight: 500;
+  --cs-action-compact_md-lineHeight: 1.5;
+  --cs-action-compact_sm_allcap-fontFamily: Inter;
+  --cs-action-compact_sm_allcap-fontWeight: 500;
+  --cs-action-compact_sm_allcap-lineHeight: 1.43;
+  --cs-action-compact_sm_light-fontFamily: Inter;
+  --cs-action-compact_sm_light-fontWeight: 400;
+  --cs-action-compact_sm_light-lineHeight: 1.43;
+  --cs-action-compact_sm_normal-fontFamily: Inter;
+  --cs-action-compact_sm_normal-fontWeight: 500;
+  --cs-action-compact_sm_normal-lineHeight: 1.43;
+  --cs-support-default-fontFamily: Inter;
+  --cs-support-default-fontWeight: 400;
+  --cs-support-default-lineHeight: 1.43;
+  --cs-support-secondary_normal-fontFamily: Inter;
+  --cs-support-secondary_normal-fontWeight: 400;
+  --cs-support-secondary_normal-lineHeight: 1.33;
+  --cs-support-secondary_strong-fontFamily: Inter;
+  --cs-support-secondary_strong-fontWeight: 600;
+  --cs-support-secondary_strong-lineHeight: 1.33;
+  --cs-support-micro-fontFamily: Inter;
+  --cs-support-micro-fontWeight: 400;
+  --cs-support-micro-lineHeight: 1.2;
+  --cs-label-default-fontFamily: Inter;
+  --cs-label-default-fontWeight: 500;
+  --cs-label-default-lineHeight: 1.43;
+  --cs-label-compact_allcap-fontFamily: Inter;
+  --cs-label-compact_allcap-fontWeight: 500;
+  --cs-label-compact_allcap-lineHeight: 1;
+  --cs-label-compact_default-fontFamily: Inter;
+  --cs-label-compact_default-fontWeight: 500;
+  --cs-label-compact_default-lineHeight: 1.33;
+  --cs-label-micro_allcap-fontFamily: Inter;
+  --cs-label-micro_allcap-fontWeight: 500;
+  --cs-label-micro_allcap-lineHeight: 1.2;
+  --cs-label-micro_default-fontFamily: Inter;
+  --cs-label-micro_default-fontWeight: 500;
+  --cs-label-micro_default-lineHeight: 1.2;
+  --cs-label-nano-fontFamily: Inter;
+  --cs-label-nano-fontWeight: 500;
+  --cs-label-nano-lineHeight: 1.5;
+  --cs-caption-md-Helper-Text-fontFamily: Inter;
+  --cs-caption-md-Helper-Text-fontWeight: 400;
+  --cs-caption-md-Helper-Text-lineHeight: 1.33;
+  --cs-caption-sm-Secondary-Helper-fontFamily: Inter;
+  --cs-caption-sm-Secondary-Helper-fontWeight: 400;
+  --cs-caption-sm-Secondary-Helper-lineHeight: 1.2;
+  --cs-caption-sm-strong-Secondary-Helper-fontFamily: Inter;
+  --cs-caption-sm-strong-Secondary-Helper-fontWeight: 500;
+  --cs-caption-sm-strong-Secondary-Helper-lineHeight: 1.2;
+  --cs-caption-meta-Timestamp-Status-fontFamily: Inter;
+  --cs-caption-meta-Timestamp-Status-fontWeight: 300;
+  --cs-caption-meta-Timestamp-Status-lineHeight: 1.33;
+  --cs-code-sm_inline-fontFamily: Menlo;
+  --cs-code-sm_inline-fontWeight: 400;
+  --cs-code-sm_inline-lineHeight: 1.67;
+  --cs-code-md_code_block-fontFamily: Menlo;
+  --cs-code-md_code_block-fontWeight: 400;
+  --cs-code-md_code_block-lineHeight: 1.43;
+  --cs-code-data_metrics_numbers-fontFamily: Inter;
+  --cs-code-data_metrics_numbers-fontWeight: 500;
+  --cs-code-data_metrics_numbers-lineHeight: 1.5;
+  --cs-overline-overline-fontFamily: Inter;
+  --cs-overline-overline-fontWeight: 500;
+  --cs-overline-overline-lineHeight: 1.2;
+  --cs-overline-tagline-fontFamily: Inter;
+  --cs-overline-tagline-fontWeight: 400;
+  --cs-overline-tagline-lineHeight: 1.33;
+  --cs-price-old-fontFamily: Inter;
+  --cs-price-old-fontWeight: 400;
+  --cs-price-old-lineHeight: 1.43;
+  --cs-price-new-fontFamily: Inter;
+  --cs-price-new-fontWeight: 500;
+  --cs-price-new-lineHeight: 1.33;
+  --cs-price-weekly-fontFamily: Inter;
+  --cs-price-weekly-fontWeight: 500;
+  --cs-price-weekly-lineHeight: 1.25;
+}
+
+@utility type-display-lg {
+  font-family: Inter;
+  font-weight: 600;
+  line-height: 1;
+}
+
+@utility type-display-md {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1;
+}
+
+@utility type-markdown-h1 {
+  font-family: Inter;
+  font-weight: 600;
+  line-height: 1.33;
+}
+
+@utility type-markdown-h2 {
+  font-family: Inter;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@utility type-markdown-h3 {
+  font-family: Inter;
+  font-weight: 600;
+  line-height: 1.11;
+}
+
+@utility type-markdown-h4 {
+  font-family: Inter;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+@utility type-heading-h1 {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+@utility type-heading-h2 {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.38;
+}
+
+@utility type-heading-h3 {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.33;
+}
+
+@utility type-heading-h4 {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+@utility type-heading-h5 {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+@utility type-heading-h6 {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.43;
+}
+
+@utility type-title-lg {
+  font-family: Inter;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+@utility type-title-md-normal {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.43;
+}
+
+@utility type-title-md-light {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+@utility type-title-sm {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.33;
+}
+
+@utility type-body-leading {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.56;
+}
+
+@utility type-body-default-strong {
+  font-family: Inter;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@utility type-body-default-normal {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@utility type-body-secondary {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+@utility type-body-longform {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@utility type-action-lg {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.33;
+}
+
+@utility type-action-md-strong {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+@utility type-action-md-light {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+@utility type-action-sm-light {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+@utility type-action-xs-light {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.67;
+}
+
+@utility type-action-inline-md {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+@utility type-action-inline-s {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.43;
+}
+
+@utility type-action-inline-xs {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.33;
+}
+
+@utility type-action-compact-md {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+@utility type-action-compact-sm-allcap {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.43;
+}
+
+@utility type-action-compact-sm-light {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+@utility type-action-compact-sm-normal {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.43;
+}
+
+@utility type-support-default {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+@utility type-support-secondary-normal {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.33;
+}
+
+@utility type-support-secondary-strong {
+  font-family: Inter;
+  font-weight: 600;
+  line-height: 1.33;
+}
+
+@utility type-support-micro {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+@utility type-label-default {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.43;
+}
+
+@utility type-label-compact-allcap {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1;
+}
+
+@utility type-label-compact-default {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.33;
+}
+
+@utility type-label-micro-allcap {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+@utility type-label-micro-default {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+@utility type-label-nano {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+@utility type-caption-md-helper-text {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.33;
+}
+
+@utility type-caption-sm-secondary-helper {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+@utility type-caption-sm-strong-secondary-helper {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+@utility type-caption-meta-timestamp-status {
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 1.33;
+}
+
+@utility type-code-sm-inline {
+  font-family: Menlo;
+  font-weight: 400;
+  line-height: 1.67;
+}
+
+@utility type-code-md-code-block {
+  font-family: Menlo;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+@utility type-code-data-metrics-numbers {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+@utility type-overline-overline {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+@utility type-overline-tagline {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.33;
+}
+
+@utility type-price-old {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+@utility type-price-new {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.33;
+}
+
+@utility type-price-weekly {
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 1.25;
+}

@@ -1,0 +1,40 @@
+{
+  "servers": {
+    "graphify": {
+      "command": "python3",
+      "args": ["-m", "graphify.serve", "graphify-out/graph.json"],
+      "env": {}
+    },
+    "ultracite": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://docs.ultracite.ai/mcp"]
+    },
+    "next-devtools": {
+      "command": "npx",
+      "args": ["-y", "next-devtools-mcp@latest"]
+    },
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    },
+    "figma": {
+      "url": "https://mcp.figma.com/mcp",
+      "type": "http"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {
+        "CONTEXT7_API_KEY": "${input:context7-api-key}"
+      }
+    }
+  },
+  "inputs": [
+    {
+      "id": "context7-api-key",
+      "type": "promptString",
+      "description": "Context7 API Key from https://upstash.com/docs/context7. Stored in VS Code secure credential store.",
+      "password": true
+    }
+  ]
+}

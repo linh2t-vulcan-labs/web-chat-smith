@@ -1,0 +1,214 @@
+/* Scoped tokens for pricing — mirrors `image/[slug]/styles.css` tokens used by
+   `HeaderWrapper` and `FooterWrapper` (AIToolCTAFooter, AIToolFooterProductNav, AIToolFooter).
+   Keep in sync when header/footer design tokens change. */
+
+.pricing-scope {
+  /* Text */
+  --ai-text-header: #0b0f1a;
+  --ai-text-body: #1f2a37;
+  --ai-text-muted: #6b7280;
+  --ai-text-nav: #818181;
+  --ai-text-link: #2563eb;
+  --ai-header-brand-text: #1e1e1e;
+
+  /* Surfaces */
+  --ai-surface-page: #ffffff;
+  --ai-surface-card: #fafafa;
+  --ai-border-default: #00000033;
+
+  /* Header bar */
+  --ai-header-bar-fill: #ffffff;
+  --ai-header-backdrop-blur: 32px;
+  --ai-header-bg: var(--ai-header-bar-fill);
+  --ai-shadow-popover: 0 20px 60px rgba(0, 0, 0, 0.15);
+
+  --ai-header-height: 64px;
+  --ai-header-height-desktop: 72px;
+  --ai-header-mega-panel-top-offset: 12px;
+  --ai-header-products-panel-left: 150px;
+  --ai-header-products-panel-max-height: 60dvh;
+
+  --ai-control-bg: rgba(0, 0, 0, 0.06);
+  --ai-control-bg-strong: #ededed;
+  --ai-control-hover: rgba(0, 0, 0, 0.06);
+
+  /* Language selector */
+  --ai-lang-trigger-bg: #ededed;
+  --ai-lang-trigger-bg-hover: #e4e4e4;
+  --ai-lang-trigger-border: rgba(0, 0, 0, 0.2);
+  --ai-lang-trigger-text: #0a0a0a;
+  --ai-lang-chevron: #818181;
+  --ai-lang-trigger-radius-mobile: 10px;
+  --ai-lang-trigger-radius-desktop: 16px;
+  --ai-lang-trigger-padding-mobile: 4px 8px;
+  --ai-lang-trigger-padding-desktop: 8px 16px;
+  --ai-lang-trigger-min-height-mobile: 32px;
+  --ai-lang-trigger-min-height-desktop: 40px;
+  --ai-lang-trigger-width-desktop: 151px;
+  --ai-lang-trigger-gap-inner-mobile: 12px;
+  --ai-lang-trigger-font-size-mobile: 12px;
+  --ai-lang-trigger-font-weight-mobile: 600;
+  --ai-lang-trigger-line-height-mobile: 16px;
+  --ai-lang-trigger-font-size-desktop: 16px;
+  --ai-lang-trigger-font-weight-desktop: 400;
+  --ai-lang-trigger-line-height-desktop: 24px;
+
+  /* Sign In / account */
+  --ai-sign-in-bg: #00a681;
+  --ai-sign-in-bg-hover: #00a682f9;
+  --ai-sign-in-border: var(--ai-lang-trigger-border);
+  --ai-sign-in-text: #ffffff;
+  --ai-sign-in-min-height-mobile: var(--ai-lang-trigger-min-height-mobile);
+  --ai-sign-in-padding-mobile: var(--ai-lang-trigger-padding-mobile);
+  --ai-sign-in-radius-mobile: var(--ai-lang-trigger-radius-mobile);
+  --ai-sign-in-font-size-mobile: var(--ai-lang-trigger-font-size-mobile);
+  --ai-sign-in-font-weight-mobile: var(--ai-lang-trigger-font-weight-mobile);
+  --ai-sign-in-line-height-mobile: var(--ai-lang-trigger-line-height-mobile);
+  --ai-sign-in-min-height-desktop: 40px;
+  --ai-sign-in-padding-desktop: 8px 20px;
+  --ai-sign-in-radius-desktop: 16px;
+  --ai-sign-in-font-size-desktop: 16px;
+  --ai-sign-in-font-weight-desktop: 600;
+  --ai-sign-in-line-height-desktop: 24px;
+  --ai-account-avatar-size-mobile: 32px;
+  --ai-account-avatar-size-desktop: 40px;
+  --ai-btn-bg: #00a681;
+  --ai-lang-item-selected-bg: transparent;
+  --ai-lang-item-hover-bg: #ededed;
+  --ai-lang-item-active-text: #00a681;
+
+  /* Header layout */
+  --ai-radius-sm: 10px;
+  --ai-radius-md: 12px;
+  --ai-radius-lg: 16px;
+  --ai-header-padding-x: 12px;
+  --ai-header-padding-y: 16px;
+  --ai-header-padding-x-desktop: 56px;
+  --ai-header-padding-y-desktop: 16px;
+  --ai-content-padding-x: var(--ai-header-padding-x);
+  --ai-content-padding-x-wide: var(--ai-header-padding-x-desktop);
+  --ai-header-left-gap-x: 20px;
+  --ai-header-left-gap-x-desktop: 48px;
+  --ai-header-right-gap-x: 16px;
+  --ai-header-right-gap-x-desktop: 16px;
+  --ai-header-nav-layout-safe-gap: 40px;
+  --ai-header-nav-gap-x-desktop: 0px;
+  --ai-header-nav-pill-padding-y: 8px;
+  --ai-header-nav-pill-padding-x: 24px;
+  --ai-header-nav-pill-radius: 20px;
+  --ai-header-icon-hit-mobile: 24px;
+  --ai-header-icon-hit-desktop: 40px;
+  --ai-header-brand-gap-mobile: 7px;
+  --ai-header-brand-gap-desktop: 8px;
+  --ai-header-brand-lead-gap: 12px;
+  --ai-header-primary-font-size-mobile: 14px;
+  --ai-header-primary-line-height-mobile: 21px;
+  --ai-header-primary-font-size-desktop: 16px;
+  --ai-header-primary-line-height-desktop: 24px;
+  --ai-header-primary-font-weight-brand: 700;
+  --ai-header-primary-font-weight-nav: 600;
+
+  /* Mobile drawer (HeaderWrapper sidebar) */
+  --ai-drawer-top-offset: var(--ai-header-height);
+  --ai-mobile-drawer-bg: #ffffff;
+  --ai-mobile-drawer-padding-x: 16px;
+  --ai-mobile-drawer-section-gap: 20px;
+  --ai-mobile-drawer-scroll-padding-bottom: 20px;
+  --ai-mobile-drawer-inline-max: 358px;
+  --ai-mobile-drawer-search-padding: 8px 12px;
+  --ai-mobile-drawer-search-radius: 8px;
+  --ai-mobile-drawer-search-gap: 8px;
+  --ai-mobile-drawer-search-placeholder: rgba(0, 0, 0, 0.5);
+  --ai-mobile-drawer-section-title-weight: 700;
+  --ai-mobile-drawer-section-title-size: 14px;
+  --ai-mobile-drawer-section-title-line: 1.4;
+  --ai-mobile-drawer-megamenu-padding-x: 16px;
+  --ai-mobile-drawer-megamenu-column-gap: 30px;
+  --ai-mobile-drawer-row-radius: 8px;
+  --ai-mobile-drawer-row-padding: 8px 6px 8px 12px;
+  --ai-mobile-drawer-row-gap: 12px;
+  --ai-mobile-drawer-link-font-size: 14px;
+  --ai-mobile-drawer-link-line-height: 20px;
+  --ai-mobile-drawer-backdrop: rgba(15, 23, 42, 0.35);
+
+  /* PricingContent */
+  --pricing-text-primary: #141414;
+  --pricing-text-muted: #818181;
+  --pricing-text-secondary: #404040;
+  --pricing-brand: #00a681;
+  --pricing-title-grad-from: #82f4b1;
+  --pricing-title-grad-to: #0abf93;
+
+  /* AIToolFAQs */
+  --faq-text: #141414;
+  --faq-muted: #3b3b3b;
+  --faq-border: rgba(20, 20, 20, 0.08);
+  --faq-surface: #ffffff;
+
+  /* AIToolCTAFooter (FooterWrapper) */
+  --cta-footer-text: #1e1e1e;
+  --cta-footer-accent-from: #82f4b1;
+  --cta-footer-accent-to: #0abf93;
+  --cta-footer-cta: #00a681;
+
+  color: var(--ai-text-body);
+  background: var(--ai-surface-page);
+  min-height: 100vh;
+}
+
+html.dark .pricing-scope {
+  --ai-text-header: #f3f4f6;
+  --ai-text-body: #e5e7eb;
+  --ai-text-muted: #9ca3af;
+  --ai-text-nav: #a1a1aa;
+  --ai-text-link: #60a5fa;
+  --ai-header-brand-text: #f3f4f6;
+
+  --ai-surface-page: #0b0f1a;
+  --ai-surface-card: #111827;
+  --ai-border-default: rgba(243, 244, 246, 0.14);
+
+  --ai-header-bar-fill: color-mix(
+    in oklab,
+    var(--ai-surface-page) 96%,
+    #ffffff 4%
+  );
+  --ai-header-backdrop-blur: 32px;
+  --ai-header-bg: var(--ai-header-bar-fill);
+  --ai-shadow-popover: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+  --ai-control-bg: rgba(255, 255, 255, 0.08);
+  --ai-control-bg-strong: rgba(255, 255, 255, 0.08);
+  --ai-control-hover: rgba(255, 255, 255, 0.08);
+
+  --ai-lang-trigger-bg: rgba(255, 255, 255, 0.1);
+  --ai-lang-trigger-bg-hover: rgba(255, 255, 255, 0.14);
+  --ai-lang-trigger-border: rgba(243, 244, 246, 0.2);
+  --ai-lang-trigger-text: #f3f4f6;
+  --ai-lang-chevron: var(--ai-text-nav);
+  --ai-lang-item-selected-bg: transparent;
+  --ai-lang-item-hover-bg: rgba(255, 255, 255, 0.1);
+  --ai-lang-item-active-text: #2dd4bf;
+
+  --ai-btn-bg: #00a681;
+
+  --ai-mobile-drawer-bg: #ffffff;
+  --ai-mobile-drawer-search-placeholder: rgba(255, 255, 255, 0.45);
+  --ai-mobile-drawer-backdrop: rgba(0, 0, 0, 0.45);
+
+  --pricing-text-primary: #f3f4f6;
+  --pricing-text-secondary: #9ca3af;
+  --pricing-brand: #00a681;
+  --pricing-title-grad-from: #82f4b1;
+  --pricing-title-grad-to: #2dd4bf;
+
+  --faq-text: #f3f4f6;
+  --faq-muted: #9ca3af;
+  --faq-border: rgba(243, 244, 246, 0.12);
+  --faq-surface: #111827;
+
+  --cta-footer-text: #f3f4f6;
+  --cta-footer-accent-from: #82f4b1;
+  --cta-footer-accent-to: #2dd4bf;
+  --cta-footer-cta: #00a681;
+}

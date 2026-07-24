@@ -1,0 +1,128 @@
+{
+  "status": {
+    "active": "Active",
+    "cancelled": "Cancelled",
+    "expired": "Expired"
+  },
+  "paymentTransactionStatus": {
+    "unspecified": "Unspecified",
+    "processing": "Processing",
+    "succeeded": "Succeeded",
+    "failed": "Failed",
+    "cancelled": "Cancelled",
+    "expired": "Expired",
+    "refunded": "Refunded",
+    "partiallyRefunded": "Partially Refunded",
+    "pending": "Pending",
+    "disputed": "Disputed",
+    "reversed": "Reversed"
+  },
+  "actions": {
+    "cancelPlan": "Cancel Plan",
+    "dontCancelPlan": "Don't Cancel Plan",
+    "updatePlan": "Update Plan",
+    "update": "Update",
+    "renew": "Renew",
+    "manageSubscription": "Manage Subscription",
+    "showLess": "Show less",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "yesContinue": "Yes, Continue",
+    "gotIt": "Got It",
+    "continue": "Continue Update Plan",
+    "needHelp": "Need Help",
+    "getPro": "Get Pro",
+    "addPaymentMethod": "Add payment method",
+    "viewInvoice": "View invoice"
+  },
+  "billing": {
+    "paymentMethodTitle": "Payment Method",
+    "billingHistoryTitle": "Billing History",
+    "invoicesCount": "{count, plural, one {# invoice} other {# invoices}}",
+    "noInvoices": "No invoices",
+    "period": "Period",
+    "type": "Type"
+  },
+  "subscription": {
+    "currentPeriodLabel": "Current Period",
+    "nextBillingDateLabel": "Next Billing Date",
+    "expiredDateLabel": "Expired Date",
+    "scheduledToCancelOn": "Scheduled to cancel on {date}"
+  },
+  "accordion": {
+    "manageSubscription": "Manage Subscription",
+    "showLess": "Show less"
+  },
+  "cancel": {
+    "modalTitle": "Cancel Plan",
+    "reviewDescription": "Please take a moment to review what will happen if you cancel your plan.",
+    "loseAccessDescription": "You’ll lose access to Pro-exclusive tools and insights that enhance your AI experience. Your access to all PRO features will end on <strong>{date}</strong>.",
+    "limitedHistory": "Your Pro conversations and history will be limited",
+    "noAiModels": "AI models and faster responses will no longer be available",
+    "removeCustomizations": "Custom styles, themes, and priority access will be removed",
+    "loseUpcomingFeatures": "You’ll lose access to upcoming premium features",
+    "uncancelTitle": "Don't Cancel Plan",
+    "uncancelDescription": "Doing this will remove the scheduled cancelation."
+  },
+  "successCancel": {
+    "title": "Successfully canceled your subscription",
+    "description": "Your access to all PRO features will end on <strong>{date}</strong>.<break></break>If you need help managing your subscriptions, feel free to <contact>Contact us</contact>!"
+  },
+  "successUpdate": {
+    "title": "Successfully update your plan",
+    "description": "Your {planDuration} plan is now active as of <strong>{activationDate}</strong>.<break></break>If you need help managing your subscriptions, feel free to <contact>contact us</contact>!",
+    "downgradeDesc": "You’ll move to the {planDuration} plan starting on <strong>{activationDate}</strong>.<break></break>If you need help managing your subscriptions, feel free to <contact>contact us</contact>!"
+  },
+  "previewChange": {
+    "proratedCreditLabel": "Prorated credit from {planDuration} plan",
+    "newPlanLabel": "{planDuration} plan",
+    "amountDueTodayLabel": "Amount due today",
+    "nextBillingCycleLabel": "Next billing cycle ({date})",
+    "switchingPlanDescription": "You’re switching to the {planDuration} plan.",
+    "additionalChargeNowDescription": "An additional {amount} will be charged today ({date}), and your new plan takes effect immediately.",
+    "chargeNextCycleDescription": "You will be charged {amount} starting from your next billing cycle on {date}.",
+    "confirmYourUpdatesTitle": "Confirm Your Updates",
+    "pickPlanDescription": "Pick one of the following Chat Smith Pro plans"
+  },
+  "notice": {
+    "headerTitle": "Chat Smith",
+    "badgeFree": "Free",
+    "badgePro": "Pro",
+    "featuresTitle": "Features included:",
+    "limitedDailyAccess": "Limited daily access to advanced AI models",
+    "basicWritingAssistant": "Basic access to writing assistant",
+    "limitedFileUploads": "Limited file uploads",
+    "standardSecurityPrivacy": "Standard security and privacy",
+    "mobileOnlyDescription": "To manage your subscription, please use the mobile app. The web version does not currently support subscription changes. In the mobile, you can easily subscribe, cancel, or modify your plan."
+  },
+  "paymentCard": {
+    "expiredDateLabel": "Expired date: {date}",
+    "actions": {
+      "markAsDefault": "Mark as Default",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "trial": {
+    "info": "This subscription is currently trialing. This trial will end on {endDate} after which you will be charged {amount}/{unit}."
+  },
+  "invoice": {
+    "title": "Invoice",
+    "newPurchase": "New purchase",
+    "billingDate": "Billing date on",
+    "paymentMethod": "Payment method",
+    "product": "Product",
+    "qty": "Qty",
+    "gst": "GST",
+    "amountExclTax": "Amount (Exc.tax)",
+    "subtotal": "Subtotal",
+    "total": "Total (Inx. tax)"
+  },
+  "historyStatus": {
+    "newPurchase": "New purchase",
+    "paymentMethodUpdate": "Payment method update",
+    "recurringPayment": "Recurring payment",
+    "subscriptionUpdate": "Subscription update"
+  }
+}

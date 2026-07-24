@@ -1,0 +1,92 @@
+{
+  "aria": {
+    "section": "الأسعار",
+    "breadcrumb": "مسار التنقل"
+  },
+  "breadcrumb": {
+    "home": "الرئيسية",
+    "current": "الأسعار"
+  },
+  "hero": {
+    "titleHighlight": "الأسعار",
+    "titleRest": " والخطط",
+    "subtitle": "اختر الخطة المناسبة لك"
+  },
+  "benefits": {
+    "sectionTitle": "مزاياك",
+    "free": "مجاني",
+    "pro": "PRO",
+    "limited": "محدود",
+    "rows": {
+      "everydayModels": {
+        "title": "GPT-5 Nano, Gemini 2.5 Flash Lite",
+        "description": "إجابات سريعة للأسئلة اليومية"
+      },
+      "proModels": {
+        "title": "GPT-5.2, Claude Sonnet 4.6, Gemini 3 Pro, Grok-4, DeepSeek",
+        "description": "أنجز المهام الأصعب بأفضل ذكاء اصطناعي في العالم"
+      },
+      "imageGen": {
+        "title": "Image Generation with ChatGPT Images 2.0 and Nano Banana Pro",
+        "description": "أنشئ صورًا مذهلة بالذكاء الاصطناعي من أي فكرة في ثوانٍ"
+      },
+      "sync": {
+        "title": "Sync Across Devices",
+        "description": "تابع المحادثة على أي جهاز — هاتف أو جهاز لوحي أو متصفح"
+      },
+      "research": {
+        "title": "Deep Research, Realtime Search",
+        "description": "احصل على إجابات أذكى ببيانات الويب المباشرة"
+      },
+      "uploads": {
+        "title": "File Uploads",
+        "description": "رفع الملفات (png وjpg وjpeg وpdf وغيرها)"
+      },
+      "grammar": {
+        "title": "Grammar & Writing",
+        "description": "حسّن القواعد وأعد الصياغة وأنشئ محتوى بنبرة وأسلوب قابلين للتخصيص"
+      },
+      "study": {
+        "title": "Study Assistant",
+        "description": "أنشئ ملاحظات وملخصات وإجابات واجبات في ثوانٍ"
+      },
+      "languages": {
+        "title": "Multi-language Support",
+        "description": "تحدث بالإنجليزية واليابانية والعربية والمزيد"
+      }
+    }
+  },
+  "plansHero": {
+    "prefix": "احصل على وصول كامل إلى",
+    "highlight": "Chat Smith PRO"
+  },
+  "plans": {
+    "free": "مجاني",
+    "pro": "Pro",
+    "currentPlan": "(خطتك الحالية)",
+    "features": "الميزات",
+    "monthly": "شهري",
+    "yearly": "سنوي",
+    "oneMonth": "شهر واحد",
+    "twelveMonths": "12 شهرًا",
+    "save": "وفّر 33%",
+    "save67": "وفّر 67%",
+    "save75": "وفّر 75%",
+    "perWeek": "في الأسبوع"
+  },
+  "cta": {
+    "guest": "متابعة",
+    "upgrade": "ترقية",
+    "viewMyPlan": "عرض خطتي"
+  },
+  "checkout": {
+    "aria": "ملخص الدفع",
+    "total": "المبلغ المستحق اليوم",
+    "billedMonthly": "فوترة شهرية. يمكنك الإلغاء في أي وقت.",
+    "continue": "متابعة",
+    "cancelAnytime": "إلغاء في أي وقت",
+    "paymentMethods": "طرق الدفع المتاحة",
+    "paySafe": "ادفع بأمان",
+    "policyNote": "بالمتابعة، فإنك توافق على شروط الاستخدام وسياسة الخصوصية"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "aria": {
+    "section": "मूल्य निर्धारण",
+    "breadcrumb": "ब्रेडक्रंब"
+  },
+  "breadcrumb": {
+    "home": "होम",
+    "current": "मूल्य निर्धारण"
+  },
+  "hero": {
+    "titleHighlight": "मूल्य",
+    "titleRest": " और प्लान",
+    "subtitle": "अपने लिए सही प्लान चुनें"
+  },
+  "title": {
+    "prefix": "",
+    "highlight": "Chat Smith PRO"
+  },
+  "benefits": {
+    "sectionTitle": "आपके लाभ",
+    "free": "मुफ़्त",
+    "pro": "PRO",
+    "limited": "सीमित",
+    "rows": {
+      "everydayModels": {
+        "title": "GPT-5 Nano, Gemini 2.5 Flash Lite",
+        "description": "रोज़मर्रा के सवालों के लिए तेज़ जवाब"
+      },
+      "proModels": {
+        "title": "GPT-5.2, Claude Sonnet 4.6, Gemini 3 Pro, Grok-4, DeepSeek",
+        "description": "दुनिया के सर्वश्रेष्ठ AI से कठिन कार्य पूरे करें"
+      },
+      "imageGen": {
+        "title": "Image Generation with ChatGPT Images 2.0 and Nano Banana Pro",
+        "description": "किसी भी आइडिया से सेकंडों में शानदार AI इमेज बनाएं"
+      },
+      "sync": {
+        "title": "Sync Across Devices",
+        "description": "फ़ोन, टैबलेट या ब्राउज़र पर कहीं भी चैट जारी रखें"
+      },
+      "research": {
+        "title": "Deep Research, Realtime Search",
+        "description": "लाइव वेब डेटा के साथ और स्मार्ट जवाब पाएं"
+      },
+      "uploads": {
+        "title": "File Uploads",
+        "description": "फ़ाइल अपलोड (png, jpg, jpeg, pdf आदि)"
+      },
+      "grammar": {
+        "title": "Grammar & Writing",
+        "description": "व्याकरण सुधारें, टेक्स्ट दोबारा लिखें और कस्टम टोन व स्टाइल में कंटेंट बनाएं"
+      },
+      "study": {
+        "title": "Study Assistant",
+        "description": "सेकंडों में नोट्स, सारांश और होमवर्क के जवाब बनाएं"
+      },
+      "languages": {
+        "title": "Multi-language Support",
+        "description": "अंग्रेज़ी, जापानी, अरबी और अन्य भाषाओं में चैट करें"
+      }
+    }
+  },
+  "plansHero": {
+    "prefix": "पूर्ण एक्सेस",
+    "highlight": "Chat Smith PRO"
+  },
+  "plans": {
+    "free": "मुफ़्त",
+    "pro": "Pro",
+    "currentPlan": "(आपका वर्तमान प्लान)",
+    "features": "फ़ीचर्स",
+    "monthly": "मासिक",
+    "yearly": "वार्षिक",
+    "oneMonth": "1 महीना",
+    "twelveMonths": "12 महीने",
+    "save": "33% बचत",
+    "save67": "67% बचत",
+    "save75": "75% बचत",
+    "perWeek": "प्रति सप्ताह"
+  },
+  "userState": {
+    "currentPlanTitle": "आपका प्लान",
+    "managePlan": "प्लान प्रबंधित करें"
+  },
+  "cta": {
+    "guest": "जारी रखें",
+    "upgrade": "अपग्रेड",
+    "viewMyPlan": "मेरा प्लान देखें"
+  },
+  "checkout": {
+    "aria": "चेकआउट सारांश",
+    "total": "आज देय कुल राशि",
+    "billedMonthly": "मासिक बिलिंग। कभी भी रद्द करें।",
+    "continue": "जारी रखें",
+    "cancelAnytime": "कभी भी रद्द करें",
+    "paymentMethods": "उपलब्ध भुगतान विधियाँ",
+    "paySafe": "सुरक्षित भुगतान",
+    "policyNote": "जारी रखकर आप हमारी उपयोग की शर्तों और गोपनीयता नीति से सहमत होते हैं।"
+  }
+}

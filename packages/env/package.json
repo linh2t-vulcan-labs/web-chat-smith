@@ -1,0 +1,35 @@
+{
+  "name": "@cs/env",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts",
+    "./server": "./src/server.ts",
+    "./client": "./src/client.ts",
+    "./universal": "./src/universal.ts",
+    "./bridge": "./src/bridge.tsx",
+    "./helpers": "./src/helpers.ts",
+    "./sanity": "./src/sanity.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules .turbo .cache"
+  },
+  "dependencies": {
+    "@cs/validation": "workspace:*"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/bun": "catalog:tools",
+    "@types/node": "catalog:tools",
+    "@types/react": "catalog:framework",
+    "react": "catalog:framework"
+  },
+  "peerDependencies": {
+    "react": "catalog:framework"
+  }
+}

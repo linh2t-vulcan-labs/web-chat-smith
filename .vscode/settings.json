@@ -1,0 +1,122 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "emmet.showExpandedAbbreviation": "never",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.experimental.useTsgo": true,
+  "[css]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[graphql]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[handlebars]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[vue-html]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit",
+    "source.fixAll.tailwindCSS": "never"
+  },
+  "json.schemaDownload.trustedDomains": {
+    "https://ui.shadcn.com": true,
+    "https://turbo.build": true,
+    "https://turborepo.dev": true
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.experimental.configFile": "apps/super-app/src/app/globals.css",
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "versionlens.npm.dependencyProperties": [
+    "version",
+    "packageManager",
+    "dependencies",
+    "devDependencies",
+    "peerDependencies",
+    "optionalDependencies",
+    "overrides",
+    "overrides.*",
+    "jspm.dependencies",
+    "jspm.devDependencies",
+    "jspm.peerDependencies",
+    "jspm.optionalDependencies",
+    "pnpm.overrides",
+    "pnpm.overrides.*",
+    "catalog",
+    "catalogs.*",
+    "workspaces.catalog",
+    "workspaces.catalogs.*"
+  ],
+  "chat.useAgentsMdFile": false,
+  "chat.useCustomizationsInParentRepositories": true,
+  "chat.includeApplyingInstructions": true,
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true,
+    ".claude/rules": true,
+    "~/.copilot/instructions": false,
+    "~/.claude/rules": false
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": false,
+    "**/.turbo": true,
+    "**/dist": false,
+    "**/.next": false,
+    "**/graphify-out": false
+  },
+  // "search.exclude": {
+  //   "**/node_modules": true,
+  //   "**/dist": true,
+  //   "**/.next": true,
+  //   "**/.turbo": true,
+  //   "**/graphify-out": true,
+  //   "**/bun.lock": true
+  // },
+  "extensions.ignoreRecommendations": false,
+  "tailwindCSS.validate": false
+}

@@ -1,0 +1,717 @@
+/* Tailwind v4 theme – migrated from tailwind.config.ts theme.extend */
+
+@theme {
+  /* Animation */
+  --animate-border: border 3s linear infinite;
+  @keyframes border {
+    to {
+      --border-angle: 1turn;
+    }
+  }
+
+  /* Border width (design tokens – use thickness-* utilities in utilities.css to apply) */
+  --border-width-none: 0px;
+  --border-width-thin: 1px;
+  --border-width-standard: 2px;
+  --border-width-medium: 4px;
+  --border-width-thick: 8px;
+
+  /* Border radius */
+  --radius-subtle: 0.25rem;
+  --radius-soft: 0.5rem;
+  --radius-rounded: 0.75rem;
+  --radius-pill-default: 0.875rem;
+  --radius-default: 1rem;
+  --radius-pill-soft: 1.25rem;
+  --radius-pill: 1.5rem;
+  --radius-half: 2rem;
+  --radius-full: 2rem;
+  --radius-circle: 62499.9375rem;
+  --radius-overlays-dropdown-border-radius: 0.75rem;
+  --radius-round: 6.25rem;
+
+  /* Background images */
+  --background-image-gradient-navigation-previous: linear-gradient(
+    -90deg,
+    rgba(10, 10, 10, 0) 0%,
+    rgba(10, 10, 10, 0.7) 110.96%
+  );
+  --background-image-gradient-navigation-next: linear-gradient(
+    90deg,
+    rgba(10, 10, 10, 0) 0%,
+    rgba(10, 10, 10, 0.7) 110.96%
+  );
+  --background-image-gradient-navigation-top: linear-gradient(
+    0deg,
+    rgba(10, 10, 10, 0) 0%,
+    rgba(10, 10, 10, 0.7) 110.96%
+  );
+  --background-image-gradient-navigation-bottom: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0) 0%,
+    rgba(10, 10, 10, 0.7) 110.96%
+  );
+  --background-image-gradient-banner-subscription: linear-gradient(
+    90deg,
+    rgba(5, 165, 152, 1) 0%,
+    rgba(12, 226, 174, 1) 25%,
+    rgba(223, 225, 177, 1) 50%,
+    rgba(247, 180, 191, 1) 75%,
+    rgba(196, 76, 232, 1) 100%
+  );
+  --background-image-gradient-yellow: linear-gradient(
+    90deg,
+    #ffffa4 0%,
+    #ffff5e 100%
+  );
+  --background-image-gradient-mint: linear-gradient(
+    90deg,
+    #00a77e80 39.12%,
+    #6bff707a 48%,
+    #77fffa64 50%
+  );
+  --background-image-gradient-green: linear-gradient(
+    90deg,
+    #82f4b1 0%,
+    #0abf93 39.46%
+  );
+  --background-image-gradient-upgrade-button: linear-gradient(
+    90deg,
+    rgba(255, 255, 164, 0.2) 0%,
+    rgba(255, 255, 94, 0.2) 100%
+  );
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+  --background-image-gradient-writing-banner: linear-gradient(
+    249deg,
+    #00c4da 2.71%,
+    #008d7f 59.98%
+  );
+  --background-image-gradient-writing-icon: linear-gradient(
+    225deg,
+    #ffae96 0%,
+    #08c1ab 100%
+  );
+  --background-image-gradient-grammar-icon: linear-gradient(
+    225deg,
+    #2dc43a 0%,
+    #9cb54a 100%
+  );
+  --background-image-gradient-writing-layer: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.6) 10.55%,
+    #000 100%
+  );
+  --background-image-gradient-heading: linear-gradient(
+    180deg,
+    #ffffea 0%,
+    #fefda8 100%
+  );
+  --background-image-gradient-title: linear-gradient(
+    180deg,
+    #ffffff 22.5%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  --background-image-gradient-blur-thread: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0),
+    rgba(10, 10, 10, 0.7),
+    rgba(10, 10, 10, 1)
+  );
+  --background-image-gradient-blur-card: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0) 0%,
+    rgba(10, 10, 10, 0.7) 55.48%,
+    #0a0a0a 110.96%
+  );
+  --background-image-gradient-feedback-card: radial-gradient(
+    412.31% 141.42% at 100% 100%,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(101, 217, 230, 0.15) 100%
+  );
+  --background-image-gradient-glassmorphism: linear-gradient(
+    101deg,
+    rgba(68, 68, 68, 0.5) 51.79%,
+    rgba(187, 187, 187, 0) 99.53%
+  );
+  --background-image-gradient-glassmorphism-light: linear-gradient(
+    101deg,
+    rgb(68 68 68 / 13%) 51.79%,
+    rgba(187, 187, 187, 0) 99.53%
+  );
+  --background-image-radial-toast-success: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(0, 237, 71, 0.13) 0%,
+    rgba(240, 66, 72, 0) 100%
+  );
+  --background-image-radial-toast-error: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(240, 66, 72, 0.13) 0%,
+    rgba(0, 237, 123, 0) 100%
+  );
+  --background-image-landing-page-starry: url("/images/landing-page/starry.png");
+  --background-image-notfound-page: url("/images/not-found-background.webp");
+  --background-image-notfound-mobile-page: url("/images/not-found-background-mobile.webp");
+  --background-image-error-starling: url("/images/error-background.webp");
+  --background-image-feature-card-1: url("/images/feature-1.jpg");
+  --background-image-feature-card-2: url("/images/feature-2.jpg");
+  --background-image-feature-card-3: url("/images/feature-3.jpg");
+  --background-image-feature-card-4: url("/images/feature-4.jpg");
+  --background-image-bg-login-form: url("/images/login/login-bg.jpg");
+  --background-image-bg-login-form-mobile: url("/images/login/login-bg-mobile.png");
+  --background-image-bg-login-card: url("/images/login/login-bg-v2.png");
+  --background-image-login-badge: url("/images/login/leaf.svg");
+  --background-image-feature-card-item: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  --background-image-get-pro-bg: url("/images/get-pro-background.png");
+  --background-image-get-pro-bg-v2: url("/images/get-pro-background-v2.png");
+  --background-image-get-pro-bg-mobile: url("/images/upgrade-pro-badge.png");
+  --background-image-gradiant-glassmorphism: var(
+    --theme-gradiant-glassmorphism
+  );
+  --background-image-gradiant-glassmorphism-light: var(
+    --theme-gradiant-glassmorphism-light
+  );
+
+  /* Font weight (numeric) for custom text sizes */
+  --font-weight-250: 250;
+  --font-weight-350: 350;
+
+  /* Spacing */
+  --spacing-small-0: 0;
+  --spacing-small-0\.25: 0.125rem;
+  --spacing-small-0\.5: 0.25rem;
+  --spacing-small-0\.75: 0.375rem;
+  --spacing-small-1: 0.5rem;
+  --spacing-medium-1\.25: 0.625rem;
+  --spacing-medium-1\.5: 0.75rem;
+  --spacing-medium-2: 1rem;
+  --spacing-medium-2\.5: 1.25rem;
+  --spacing-medium-3: 1.5rem;
+  --spacing-large-4: 2rem;
+  --spacing-large-5: 2.5rem;
+  --spacing-large-6: 3rem;
+  --spacing-large-8: 4rem;
+  --spacing-large-10: 5rem;
+}
+
+/* Colors: reference :root vars where defined there, else literal */
+@theme inline {
+  /* Black */
+  --color-black-50: var(--black-50);
+  --color-black-100: var(--black-100);
+  --color-black-200: var(--black-200);
+  --color-black-300: var(--black-300);
+  --color-black-400: var(--black-400);
+  --color-black-500: var(--black-500);
+  --color-black-600: var(--black-600);
+  --color-black-700: var(--black-700);
+  --color-black-800: var(--black-800);
+  --color-black-900: var(--black-900);
+  --color-black-950: var(--black-950);
+  --color-black-1000: var(--black-1000);
+
+  /* Neutral */
+  --color-neutral-0: var(--neutral-0);
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-150: var(--neutral-150);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-250: var(--neutral-250);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-350: var(--neutral-350);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-450: var(--neutral-450);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-850: var(--neutral-850);
+  --color-neutral-900: var(--neutral-900);
+  --color-neutral-950: var(--neutral-950);
+  --color-neutral-1000: var(--neutral-1000);
+
+  /* Vul */
+  --color-vul-primary: #0abf93;
+  --color-vul-secondary: #a3a3a3;
+  --color-vul-warning: #ffb800;
+  --color-vul-danger: #f83617;
+  --color-vul-green-100: #d0fbe9;
+  --color-vul-green-200: #a4f6d7;
+  --color-vul-green-300: #6aebc3;
+  --color-vul-green-400: #2fd8a9;
+  --color-vul-green-500: #0abf93;
+  --color-vul-green-600: #00a681;
+  --color-vul-green-700: #007c64;
+  --color-vul-green-800: #03624f;
+  --color-vul-green-900: #045043;
+  --color-vul-green-950: #012d27;
+  --color-vul-yellow-100: #fff9c5;
+  --color-vul-yellow-200: #fff485;
+  --color-vul-yellow-300: #ffe846;
+  --color-vul-yellow-350: #fde746;
+  --color-vul-yellow-400: #ffd81b;
+  --color-vul-yellow-450: #8c753a;
+  --color-vul-yellow-500: #ffb800;
+  --color-vul-yellow-600: #e28d00;
+  --color-vul-yellow-700: #bb6302;
+  --color-vul-yellow-800: #984c08;
+  --color-vul-yellow-900: #7c3f0b;
+  --color-vul-yellow-950: #482000;
+  --color-vul-red-100: #ffe2d5;
+  --color-vul-red-200: #fec0aa;
+  --color-vul-red-300: #fc9675;
+  --color-vul-red-400: #fa5733;
+  --color-vul-red-500: #f83617;
+  --color-vul-red-600: #e91d0d;
+  --color-vul-red-700: #c1110d;
+  --color-vul-red-800: #991316;
+  --color-vul-red-900: #7c1214;
+  --color-vul-red-950: #43070a;
+
+  /* Text */
+  --color-text-highlight: var(--theme-color-text-highlight);
+  --color-text-dandelion: var(--theme-color-text-dandelion);
+  --color-text-tomato-red: var(--theme-color-text-tomato-red);
+  --color-text-light-lavender: var(--theme-color-text-light-lavender);
+  --color-text-general-primary: var(--theme-color-text-general-primary);
+  --color-text-general-secondary: var(--theme-color-text-general-secondary);
+  --color-text-general-tertiary: var(--theme-color-text-general-tertiary);
+  --color-text-general-inverse: var(--theme-color-text-general-inverse);
+  --color-text-general-brand-identity: var(
+    --theme-color-text-general-brand-identity
+  );
+  --color-text-general-quaternary: var(--neutral-400);
+  --color-text-general-cta: var(--theme-color-text-general-cta);
+  --color-text-system-neutral: var(--theme-color-text-system-neutral);
+  --color-text-system-success: var(--theme-color-text-system-success);
+  --color-text-system-error: var(--theme-color-text-system-error);
+  --color-text-system-natural-red: var(--theme-color-text-system-natural-red);
+  --color-text-action-primary-default: var(
+    --theme-color-text-action-primary-default
+  );
+  --color-text-action-primary-disabled: var(
+    --theme-color-text-action-primary-disabled
+  );
+  --color-text-action-secondary-default: var(
+    --theme-color-text-action-secondary-default
+  );
+  --color-text-action-secondary-disabled: var(
+    --theme-color-text-action-secondary-disabled
+  );
+  --color-text-action-tertiary-default: var(
+    --theme-color-text-action-tertiary-default
+  );
+  --color-text-action-tertiary-disabled: var(
+    --theme-color-text-action-tertiary-disabled
+  );
+  --color-text-action-negative-default: var(
+    --theme-color-text-action-negative-default
+  );
+  --color-text-action-negative-disabled: var(
+    --theme-color-text-action-negative-disabled
+  );
+  --color-text-action-inverse-default: var(
+    --theme-color-text-action-inverse-default
+  );
+  --color-text-action-inverse-disabled: var(
+    --theme-color-text-action-inverse-disabled
+  );
+  --color-text-inputControl-neutral-default: var(
+    --theme-color-text-inputControl-neutral-default
+  );
+  --color-text-inputControl-inverse-default: var(
+    --theme-color-text-inputControl-inverse-default
+  );
+  --color-text-inputControl-highlight-default: var(
+    --theme-color-text-inputControl-highlight-default
+  );
+  --color-text-input-focus: var(--theme-color-text-input-focus);
+  --color-text-input-disabled: var(--theme-color-text-input-disabled);
+  --color-text-input-placeholder: var(--theme-color-text-input-placeholder);
+  --color-text-conversation-user-default: var(
+    --theme-color-text-conversation-user-default
+  );
+  --color-text-conversation-bot-default: var(
+    --theme-color-text-conversation-bot-default
+  );
+
+  /* Icon */
+  --color-icon-general-primary: var(--theme-color-icon-general-primary);
+  --color-icon-general-secondary: var(--theme-color-icon-general-secondary);
+  --color-icon-general-tertiary: var(--theme-color-icon-general-tertiary);
+  --color-icon-general-inverse: var(--theme-color-icon-general-inverse);
+  --color-icon-action-primary-default: var(
+    --theme-color-icon-action-primary-default
+  );
+  --color-icon-action-secondary-default: var(
+    --theme-color-icon-action-secondary-default
+  );
+  --color-icon-action-tertiary-default: var(
+    --theme-color-icon-action-tertiary-default
+  );
+  --color-icon-action-tertiary-disabled: var(
+    --theme-color-icon-action-tertiary-disabled
+  );
+
+  /* Surface */
+  --color-surface-general-primary: var(--theme-color-surface-general-primary);
+  --color-surface-general-secondary: var(
+    --theme-color-surface-general-secondary
+  );
+  --color-surface-general-tertiary: var(--theme-color-surface-general-tertiary);
+  --color-surface-general-highlight: var(
+    --theme-color-surface-general-highlight
+  );
+  --color-surface-general-highlight-light: var(
+    --theme-color-surface-general-highlight-light
+  );
+  --color-surface-general-highlight-lighten: var(
+    --theme-color-surface-general-highlight-lighten
+  );
+  --color-surface-general-modal1: var(--theme-color-surface-general-modal1);
+  --color-surface-general-modal2: var(--theme-color-surface-general-modal2);
+  --color-surface-general-dim: var(--theme-color-surface-general-dim);
+  --color-surface-general-bright-overlay: var(
+    --theme-color-surface-general-bright-overlay
+  );
+  --color-surface-general-shade-overlay: var(
+    --theme-color-surface-general-shade-overlay
+  );
+  --color-surface-general-shade-overlay2: var(
+    --theme-color-surface-general-shade-overlay2
+  );
+  --color-surface-general-new-secondary: var(
+    --theme-color-surface-general-new-secondary
+  );
+  --color-surface-general-new-tertiary: var(
+    --theme-color-surface-general-new-tertiary
+  );
+  --color-surface-general-glass: var(--theme-color-surface-general-glass);
+  --color-surface-general-soft: var(--theme-color-surface-general-soft);
+  --color-surface-theme-yellow: var(--theme-color-surface-theme-yellow);
+  --color-surface-theme-frog: var(--theme-color-surface-theme-frog);
+  --color-surface-system-neutral: var(--theme-color-surface-system-neutral);
+  --color-surface-system-success: var(--theme-color-surface-system-success);
+  --color-surface-system-error: var(--theme-color-surface-system-error);
+  --color-surface-action-primary-default: var(
+    --theme-color-surface-action-primary-default
+  );
+  --color-surface-action-primary-hover: var(
+    --theme-color-surface-action-primary-hover
+  );
+  --color-surface-action-primary-disabled: var(
+    --theme-color-surface-action-primary-disabled
+  );
+  --color-surface-action-secondary-default: var(
+    --theme-color-surface-action-secondary-default
+  );
+  --color-surface-action-secondary-hover: var(
+    --theme-color-surface-action-secondary-hover
+  );
+  --color-surface-action-secondary-disabled: var(
+    --theme-color-surface-action-secondary-disabled
+  );
+  --color-surface-action-default-default: var(
+    --theme-color-surface-action-default-default
+  );
+  --color-surface-action-default-hover: var(
+    --theme-color-surface-action-default-hover
+  );
+  --color-surface-action-default-disabled: var(
+    --theme-color-surface-action-default-disabled
+  );
+  --color-surface-action-neutral-default: var(
+    --theme-color-surface-action-neutral-default
+  );
+  --color-surface-action-neutral-hover: var(
+    --theme-color-surface-action-neutral-hover
+  );
+  --color-surface-action-neutral-disabled: var(
+    --theme-color-surface-action-neutral-disabled
+  );
+  --color-surface-action-negative-default: var(
+    --theme-color-surface-action-negative-default
+  );
+  --color-surface-action-negative-hover: var(
+    --theme-color-surface-action-negative-hover
+  );
+  --color-surface-action-negative-disabled: var(
+    --theme-color-surface-action-negative-disabled
+  );
+  --color-surface-action-inverse-default: var(
+    --theme-color-surface-action-inverse-default
+  );
+  --color-surface-action-inverse-hover: var(
+    --theme-color-surface-action-inverse-hover
+  );
+  --color-surface-action-inverse-disabled: var(
+    --theme-color-surface-action-inverse-disabled
+  );
+  --color-surface-inputControl-basic-default: var(
+    --theme-color-surface-inputControl-basic-default
+  );
+  --color-surface-inputControl-highlight-default: var(
+    --theme-color-surface-inputControl-highlight-default
+  );
+  --color-surface-inputControl-highlight-disabled: var(
+    --theme-color-surface-inputControl-highlight-disabled
+  );
+  --color-surface-inputControl-highlight-hover: var(
+    --theme-color-surface-inputControl-highlight-hover
+  );
+  --color-surface-inputControl-neutral-default: var(
+    --theme-color-surface-inputControl-neutral-default
+  );
+  --color-surface-inputControl-neutral-disabled: var(
+    --theme-color-surface-inputControl-neutral-disabled
+  );
+  --color-surface-inputControl-neutral-hover: var(
+    --theme-color-surface-inputControl-neutral-hover
+  );
+  --color-surface-input-default: var(--theme-color-surface-input-default);
+  --color-surface-input-hover: var(--theme-color-surface-input-hover);
+  --color-surface-conversation-user-default: var(
+    --theme-color-surface-conversation-user-default
+  );
+  --color-surface-conversation-bot-default: var(
+    --theme-color-surface-conversation-bot-default
+  );
+
+  /* Border */
+  --color-border-highlight: var(--theme-color-border-highlight);
+  --color-border-brand-identity: var(--theme-color-border-brand-identity);
+  --color-border-general-primary: var(--theme-color-border-general-primary);
+  --color-border-general-secondary: var(--theme-color-border-general-secondary);
+  --color-border-general-tertiary: var(--theme-color-border-general-tertiary);
+  --color-border-general-disabled: var(--theme-color-border-general-disabled);
+  --color-border-system-neutral: var(--theme-color-border-system-neutral);
+  --color-border-system-error: var(--theme-color-border-system-error);
+  --color-border-action-primary-default: var(
+    --theme-color-border-action-primary-default
+  );
+  --color-border-action-primary-hover: var(
+    --theme-color-border-action-primary-hover
+  );
+  --color-border-action-tertiary-default: var(
+    --theme-color-border-action-tertiary-default
+  );
+  --color-border-action-tertiary-hover: var(
+    --theme-color-border-action-tertiary-hover
+  );
+  --color-border-action-tertiary-disabled: var(
+    --theme-color-border-action-tertiary-disabled
+  );
+  --color-border-inputControls-neutral-default: var(
+    --theme-color-border-inputControls-neutral-default
+  );
+  --color-border-inputControls-neutral-hover: var(
+    --theme-color-border-inputControls-neutral-hover
+  );
+  --color-border-inputControls-highlight-default: var(
+    --theme-color-border-inputControls-highlight-default
+  );
+  --color-border-inputControls-highlight-hover: var(
+    --theme-color-border-inputControls-highlight-hover
+  );
+  --color-border-input-default: var(--theme-color-border-input-default);
+  --color-border-input-hover: var(--theme-color-border-input-hover);
+  --color-border-input-disabled: var(--theme-color-border-input-disabled);
+
+  /* Feature card */
+  --color-feature-card: var(--theme-color-feature-card);
+}
+
+/* Font sizes with line-height (aligned with tailwind.config.ts fontSize, pxToRem base 16) */
+@theme {
+  --text-footnoteS-neutral: 0.625rem;
+  --text-footnoteS-neutral--line-height: 1rem;
+  --text-footnoteS-neutral--font-weight: var(--font-weight-350);
+  --text-footnoteS-highlight: 0.625rem;
+  --text-footnoteS-highlight--line-height: 1rem;
+  --text-footnoteS-highlight--font-weight: 700;
+  --text-footnoteM-neutral: 0.75rem;
+  --text-footnoteM-neutral--line-height: 1rem;
+  --text-footnoteM-neutral--font-weight: var(--font-weight-250);
+  --text-footnoteM-highlight: 0.75rem;
+  --text-footnoteM-highlight--line-height: 1rem;
+  --text-footnoteM-highlight--font-weight: 500;
+  --text-footnoteM-bold: 0.75rem;
+  --text-footnoteM-bold--line-height: 1rem;
+  --text-footnoteM-bold--font-weight: 600;
+  --text-footnoteM-link: 0.75rem;
+  --text-footnoteM-link--line-height: 1rem;
+  --text-footnoteM-link--font-weight: 700;
+  --text-bodyS-neutral: 0.875rem;
+  --text-bodyS-neutral--line-height: 1.25rem;
+  --text-bodyS-neutral--font-weight: var(--font-weight-250);
+  --text-bodyS-link: 0.875rem;
+  --text-bodyS-link--line-height: 1.25rem;
+  --text-bodyS-link--font-weight: var(--font-weight-350);
+  --text-bodyS-highlight: 0.875rem;
+  --text-bodyS-highlight--line-height: 1.25rem;
+  --text-bodyS-highlight--font-weight: 400;
+  --text-bodyM-neutral: 1rem;
+  --text-bodyM-neutral--line-height: 1.5rem;
+  --text-bodyM-neutral--font-weight: var(--font-weight-250);
+  --text-bodyM-medium: 1rem;
+  --text-bodyM-medium--line-height: 1.5rem;
+  --text-bodyM-medium--font-weight: var(--font-weight-350);
+  --text-bodyM-highlight: 1rem;
+  --text-bodyM-highlight--line-height: 1.5rem;
+  --text-bodyM-highlight--font-weight: 600;
+  --text-bodyM-Link: 1rem;
+  --text-bodyM-Link--line-height: 1.5rem;
+  --text-bodyM-Link--font-weight: var(--font-weight-350);
+  --text-bodyL-neutral: 1.125rem;
+  --text-bodyL-neutral--line-height: 1.75rem;
+  --text-bodyL-neutral--font-weight: 400;
+  --text-bodyL-highlight: 1.125rem;
+  --text-bodyL-highlight--line-height: 1.75rem;
+  --text-bodyL-highlight--font-weight: 600;
+  --text-bodyXL-Neutral: 1.5rem;
+  --text-bodyXL-Neutral--line-height: 2rem;
+  --text-bodyXL-Neutral--font-weight: 500;
+  --text-bodyXL-Highlight: 1.25rem;
+  --text-bodyXL-Highlight--line-height: 1.75rem;
+  --text-bodyXL-Highlight--font-weight: 700;
+  --text-headingS-Highlight: 0.75rem;
+  --text-headingS-Highlight--line-height: 1rem;
+  --text-headingS-Highlight--font-weight: 600;
+  --text-headingS-Bold: 0.75rem;
+  --text-headingS-Bold--line-height: 1rem;
+  --text-headingS-Bold--font-weight: 700;
+  --text-heading-neutral: 1rem;
+  --text-heading-neutral--line-height: 1.5rem;
+  --text-heading-neutral--font-weight: 400;
+  --text-heading-highlight: 1rem;
+  --text-heading-highlight--line-height: 1.5rem;
+  --text-heading-highlight--font-weight: 700;
+  --text-memoji: 1.25rem;
+  --text-memoji--line-height: 1.75rem;
+  --text-memoji--font-weight: 600;
+  --text-title1: 1.5rem;
+  --text-title1--line-height: 2rem;
+  --text-title1--font-weight: 500;
+  --text-app-title-0-light: 2rem;
+  --text-app-title-0-light--line-height: 2.5rem;
+  --text-app-title-0-light--font-weight: 200;
+  --text-app-display-medium: 2.25rem;
+  --text-app-display-medium--line-height: 3rem;
+  --text-app-display-medium--font-weight: 500;
+  --text-app-title-0: 2rem;
+  --text-app-title-0--line-height: 2.5rem;
+  --text-app-title-0--font-weight: 500;
+  --text-app-Title1: 1.5rem;
+  --text-app-Title1--line-height: 1.75rem;
+  --text-app-Title1--font-weight: 400;
+  --text-app-Title2: 1.25rem;
+  --text-app-Title2--line-height: 1.75rem;
+  --text-app-Title2--font-weight: 500;
+  --text-app-Title3: 1rem;
+  --text-app-Title3--line-height: 1.5rem;
+  --text-app-Title3--font-weight: 700;
+  --text-app-Title1-Light: 1.5rem;
+  --text-app-Title1-Light--line-height: 2rem;
+  --text-app-Title1-Light--font-weight: 200;
+  --text-title2: 1.25rem;
+  --text-title2--line-height: 1.75rem;
+  --text-title2--font-weight: 700;
+  --text-title3: 1rem;
+  --text-title3--line-height: 1.5rem;
+  --text-title3--font-weight: 700;
+  --text-display-medium: 2.25rem;
+  --text-display-medium--line-height: 3rem;
+  --text-display-medium--font-weight: 500;
+  --text-display-neutral: 2.5rem;
+  --text-display-neutral--line-height: 3.25rem;
+  --text-display-neutral--font-weight: 700;
+  --text-display-highlight: 3.75rem;
+  --text-display-highlight--line-height: 4.5rem;
+  --text-display-highlight--font-weight: 700;
+  --text-mobile-bodyXL-Neutral: 1.25rem;
+  --text-mobile-bodyXL-Neutral--line-height: 1.75rem;
+  --text-mobile-bodyXL-Neutral--font-weight: 500;
+  --text-mobile-h1: 3rem;
+  --text-mobile-h1--line-height: 3.75rem;
+  --text-mobile-h1--font-weight: 700;
+  --text-mobile-h2: 2.5rem;
+  --text-mobile-h2--line-height: 3.25rem;
+  --text-mobile-h2--font-weight: 700;
+  --text-mobile-h3: 2rem;
+  --text-mobile-h3--line-height: 2.5rem;
+  --text-mobile-h3--font-weight: 400;
+  --text-mobile-h4: 1.75rem;
+  --text-mobile-h4--line-height: 2.25rem;
+  --text-mobile-h4--font-weight: 700;
+  --text-mobile-h5: 1.5rem;
+  --text-mobile-h5--line-height: 2rem;
+  --text-mobile-h5--font-weight: 700;
+  --text-mobile-gap-h5-h6: 1.375rem;
+  --text-mobile-gap-h5-h6--line-height: 1.875rem;
+  --text-mobile-gap-h5-h6--font-weight: 700;
+  --text-mobile-h6: 1rem;
+  --text-mobile-h6--line-height: 1.5rem;
+  --text-mobile-h6--font-weight: 700;
+  --text-web-h1: 4rem;
+  --text-web-h1--line-height: 5rem;
+  --text-web-h1--font-weight: 700;
+  --text-web-h2: 3rem;
+  --text-web-h2--line-height: 3.5rem;
+  --text-web-h2--font-weight: 700;
+  --text-web-h4: 2rem;
+  --text-web-h4--line-height: 2.5rem;
+  --text-web-h4--font-weight: 700;
+  --text-web-h5: 1.5rem;
+  --text-web-h5--line-height: 2rem;
+  --text-web-h5--font-weight: 700;
+  --text-Heading-07: 0.875rem;
+  --text-Heading-07--line-height: 1.5rem;
+  --text-Heading-07--font-weight: 500;
+  --text-Heading-h6: 1rem;
+  --text-Heading-h6--line-height: 1.5rem;
+  --text-Heading-h6--font-weight: 400;
+  --text-Heading-h1: 3.5rem;
+  --text-Heading-h1--line-height: 4rem;
+  --text-Heading-h1--font-weight: 400;
+  --text-Heading-h2: 3rem;
+  --text-Heading-h2--line-height: 3.5rem;
+  --text-Heading-h2--font-weight: 400;
+  --text-Heading-h3: 2.25rem;
+  --text-Heading-h3--line-height: 2.75rem;
+  --text-Heading-h3--font-weight: 400;
+  --text-Heading-h4: 1.5rem;
+  --text-Heading-h4--line-height: 2rem;
+  --text-Heading-h4--font-weight: 500;
+  --text-Heading-h5: 1.125rem;
+  --text-Heading-h5--line-height: 1.5rem;
+  --text-Heading-h5--font-weight: 500;
+  --text-Body-l: 1.25rem;
+  --text-Body-l--line-height: 1.75rem;
+  --text-Body-l--font-weight: 300;
+  --text-Body-s: 0.875rem;
+  --text-Body-s--line-height: 1.25rem;
+  --text-Body-s--font-weight: 300;
+  --text-bodyXS: 0.75rem;
+  --text-bodyXS--line-height: 1.25rem;
+  --text-bodyXS--font-weight: 300;
+  --text-bodyM: 1rem;
+  --text-bodyM--line-height: 1.5rem;
+  --text-bodyM--font-weight: 300;
+  --text-display-m: 2rem;
+  --text-display-m--line-height: 2.5rem;
+  --text-display-m--font-weight: 700;
+}
+
+@layer base {
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+}

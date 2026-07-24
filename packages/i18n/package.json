@@ -1,0 +1,29 @@
+{
+  "name": "@cs/i18n",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./routing": "./src/routing.ts",
+    "./config": "./src/config.ts",
+    "./request": "./src/request.ts",
+    "./constants": "./src/constants.ts",
+    "./navigation": "./src/navigation.ts",
+    "./utils": "./src/utils.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "next": "catalog:framework",
+    "next-intl": "catalog:framework",
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:framework",
+    "@types/react-dom": "catalog:framework",
+    "typescript": "catalog:tools"
+  }
+}

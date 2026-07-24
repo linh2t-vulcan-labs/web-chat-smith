@@ -1,0 +1,39 @@
+{
+  "name": "@cs/notifications",
+  "version": "0.0.1",
+  "private": true,
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/messaging/index.ts",
+    "./integrations/api-client": "./src/integrations/api-client.ts",
+    "./permission": "./src/permission/index.ts",
+    "./react": "./src/react/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules .turbo .cache"
+  },
+  "dependencies": {
+    "@cs/api-client": "workspace:*",
+    "@cs/firebase": "workspace:*"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/bun": "catalog:tools",
+    "@types/react": "catalog:framework",
+    "@types/react-dom": "catalog:framework",
+    "firebase": "catalog:integrations",
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework"
+  },
+  "peerDependencies": {
+    "firebase": "catalog:integrations",
+    "react": "catalog:framework"
+  }
+}

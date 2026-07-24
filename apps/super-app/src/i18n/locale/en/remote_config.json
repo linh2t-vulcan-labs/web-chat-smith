@@ -1,0 +1,544 @@
+{
+  "chatSuggestion": {
+    "imageToImage": {
+      "sereneSnowPortrait": "Create a portrait of my serene pose in the snow",
+      "joyfulSnowToss": "Transform my image into a joyful girl tossing snow",
+      "cozyCampfireGuitar": "Transform my image into a cozy campfire and guitar night scene",
+      "walkingInSnow": "Create an portrait of me walking in snow",
+      "festiveLollipopPortrait": "Transform my photo into a sweet festive lollipop portrait",
+      "peacefulChristmasPorch": "Use my uploaded photo to create a peaceful Christmas on the porch vibe",
+      "playingWithReindeer": "Create an image of me playing with reindeer",
+      "goSkiing": "Create a portrait of me go skiing",
+      "northernLights": "Create a portrait of me watching magical northern lights",
+      "canadianFrozenRiver": "Create an image of me check in a majestic Canadian frozen river",
+      "portraitOfMeReadingByAFireplace": "Create a portrait of me reading by a fireplace",
+      "enjoyingCoffeeInAScenicCafe": "Transform my image into a scene of enjoying coffee in a scenic cafe",
+      "wrappedInABlanketOnABalcony": "Create an image of me wrapped in a blanket on a balcony",
+      "stargazingScene": "Transform my picture into a stargazing scene",
+      "peacefulMorningWalk": "Create a portrait of me on a peaceful morning walk",
+      "relaxingInAHammock": "Transform my image into a scene of relaxing in a hammock",
+      "writingInAJournal": "Create an image of me writing in a journal",
+      "sunsetViewingScene": "Transform my picture into a sunset viewing scene",
+      "picnicInAGarden": "Create a portrait of me having a picnic in a garden",
+      "meditatingByALake": "Transform my image into a meditating scene by a lake",
+      "highFashionPortrait": "Turn my photo into a high-fashion magazine portrait",
+      "warmStreetArt": "Restyle my image as a warm street art photo",
+      "dreamyFloralGaze": "Give my portrait a dreamy, floral gaze look",
+      "windKissedPortrait": "Turn my photo into a wind-kissed outdoor portrait",
+      "goldenHourCloseup": "Restyle my image as a golden hour close-up",
+      "lightShadowComposition": "Give my portrait a light and shadow composition",
+      "vintageNightTone": "Turn my photo into a vintage night tone",
+      "aquariumFilmPortrait": "Restyle my image as an aquarium film portrait",
+      "candidSunset": "Give my portrait a candid sunset aesthetic",
+      "chicElevatorEditorial": "Turn my photo into a chic elevator editorial shot"
+    },
+    "textToImage": {
+      "christmasFireplace": "Design Christmas fireplace with crackling fire",
+      "giftWrappingPostcard": "Create gift wrapping postcard",
+      "thanksgivingStorybook": "Draw storybook Thanksgiving dinner",
+      "christmasLivingRoom": "Design Christmas cozy living room",
+      "cozyCatWindow": "Cozy cat by window",
+      "catsGiftExchange": "Cats exchanging gifts postcard",
+      "winterVillageWatercolor": "Watercolor winter village",
+      "minimalWarmWorkspace": "Design minimal workspace with warm tones",
+      "watercolorImagination": "Design watercolor imagination burst",
+      "dreamscapeBedroom": "Create dreamscape bedroom art",
+      "newYearVisionBoard": "Design New Year vision board",
+      "newYearFireworksPoster": "New Year fireworks poster",
+      "futuristicNewYearCafe": "Futuristic New Year Cafe",
+      "morningZenGarden": "Morning Zen Garden",
+      "goalSettingJournalCover": "Goal-setting journal cover",
+      "newYearNightCityscape": "New Year night cityscape",
+      "yearOfTheHorseArt": "Year of the Horse Art (2026)",
+      "cyberpunkNewYearParty": "Cyberpunk NYE Party",
+      "newYearCountdownIllustration": "New Year countdown illustration",
+      "dreamLifeTheme": "Dream life in 2026",
+      "snowyMountainLandscape": "Draw a snowy mountain landscape",
+      "cuteCartoonGirl": "Create a cute cartoon girl character",
+      "fantasyCastleDragon": "Paint a fantasy castle and dragon scene",
+      "galaxySpaceArt": "Illustrate a colorful galaxy space art",
+      "retroNeonPoster": "Design a retro 1980s neon poster",
+      "futuristicCity": "Create a futuristic city skyline",
+      "minimalLeafLogo": "Design a minimal leaf logo design",
+      "indieAlbumCover": "Make a dark indie album cover",
+      "aiMeme": "Design AI-generated meme",
+      "futuristicSneaker": "Make futuristic sneaker concept"
+    },
+    "infoQuery": {
+      "holidayTravelPlanning": "Prepare for holiday travel stress-free",
+      "wealthPlan5Years": "Plan to grow my wealth in 5 years",
+      "easterBrunchIdeas": "Easter brunch ideas for family",
+      "movieNightMoods": "Movies for laughs, tears or chills",
+      "weekendStaycation": "Weekend staycation at home",
+      "christmasDinnerMenu": "Christmas dinner menu",
+      "quickHomeWorkout": "Quick 30-minute home workout",
+      "holidayTraditions": "Make meaningful holiday traditions",
+      "brainstormNewYearResolutions": "Help me brainstorm ideas for my 2026 resolutions",
+      "buildNewYearRoutine": "Build a New Year routine",
+      "topTravelTrends": "Top travel trends for 2026",
+      "stayConsistent": "How to stay consistent",
+      "declutterHomeAndMind": "Declutter my home & mind",
+      "techAndCareerOutlook": "2026 Tech & Career outlook",
+      "personalYearTheme": "Personal theme for 2026",
+      "planNewYearsParty": "Plan a New Year’s party",
+      "balanceWorkAndLife": "Balance work and life",
+      "morningMeditationGuide": "Morning meditation guide",
+      "explainAI": "Explain AI simply",
+      "apollo11Summary": "Summarize Apollo 11 mission",
+      "dailyWalkingBenefits": "Provide benefits of daily walking",
+      "blockchainSimple": "Explain blockchain in simple words",
+      "greenhouseEffect": "Explain greenhouse effect",
+      "improveFocus": "How to focus better",
+      "manageStress": "Tips to manage stress",
+      "morningRoutine": "Build a morning routine",
+      "sleepQuality": "Ways to improve sleep quality",
+      "stayMotivated": "How to stay motivated?"
+    },
+    "funSocial": {
+      "casualHangoutInvite": "Casual hangout invite text",
+      "personalityQuiz": "Fun personality quiz question",
+      "christmasPlaylist": "Christmas cozy playlist",
+      "easterGiftsKids": "Easter gifts ideas for kids",
+      "christmasGiftsFamily": "Christmas gifts for my family",
+      "sweetGiftNote": "Write a sweet note for a gift",
+      "secretSantaFunny": "Funny Secret Santa message",
+      "goodMorningText": "Suggest cute good morning text",
+      "meetingExcuse": "Funny excuse to skip a meeting",
+      "singleWittyReply": "Witty reply to “Why are you single?”",
+      "newYearGreetingText": "New Year greeting text",
+      "energyQuiz": "2026 Energy Quiz",
+      "funnyResolutionExcuses": "Funny resolution excuses",
+      "funnyNewYearResolution": "Funny 2026 resolution",
+      "visionWordGame": "Vision word game",
+      "motivationMessage": "Motivation message",
+      "predictYearFortune": "Predict my 2026 fortune",
+      "workFriendlyNewYearWish": "Work-friendly New Year wish",
+      "bucketListChallenge": "2026 Bucket List Challenge",
+      "randomActsOfKindness": "Random Acts of Kindness",
+      "riddle": "Ask me a riddle",
+      "joke": "Tell me a joke",
+      "catCaption": "Suggest photo caption for a cat",
+      "coffeePoem": "Make a coffee poem",
+      "pickupLine": "Give pickup line",
+      "hangoutInvite": "Ask to hang out",
+      "quizQuestion": "Ask quiz question",
+      "inspiringQuote": "Share an inspiring quote",
+      "animalFact": "Tell me a surprising animal fact",
+      "wordChainGame": "Start a word chain game"
+    },
+    "deepResearch": {
+      "remoteWorkImpact": "Research remote work impact",
+      "coffeeIndustry": "Analyze the global coffee industry",
+      "kpopInfluence": "Research K-pop's global influence",
+      "educationModels": "Compare Finland and US education models",
+      "habitFormation": "Study how habits form and change",
+      "renewableEnergy": "Analyze renewable energy adoption trends",
+      "socialMediaTeens": "Research social media effects on teens",
+      "startupFailures": "Find key reasons startups fail",
+      "mindfulnessWork": "Research mindfulness at workplaces",
+      "spaceExploration": "Summarize milestones in space exploration"
+    }
+  },
+  "imageCreation": {
+    "gemini-3-pro-image-preview": {
+      "none": {
+        "title": "None",
+        "description": ""
+      },
+      "zootopia": {
+        "title": "Wildtopia",
+        "description": "Create a fun cinema photo where real people pose with an animated fox and rabbit, blending photoreal humans with stylized characters in one seamless scene."
+      },
+      "gashapon_capsule": {
+        "title": "Gashapon Capsule",
+        "description": "A full-body miniature of the person displayed inside a clear gashapon capsule, keeping their identity true while completing the full outfit. A fun, collectible-style portrait with a clean, polished look."
+      },
+      "anatomical_infographic": {
+        "title": "Anatomical Infographic",
+        "description": "A symmetrical cutaway illustration of your subject with labeled anatomy and concise info, styled like an encyclopedia page on parchment."
+      },
+      "product_technical_view": {
+        "title": "Product Technical View",
+        "description": "An ultra-detailed exploded-view image of your product, showing every internal component floating in precise alignment over a soft gray studio background."
+      },
+      "poster_creation": {
+        "title": "Poster Creation",
+        "description": "A polished advertising poster featuring your product in realistic detail, enhanced with a matching slogan and clean, professional layout."
+      },
+      "ingredients": {
+        "title": "Ingredients",
+        "description": "A clean wooden-background layout showing your dish fully deconstructed into labeled, realistic ingredients with clear names and quantities."
+      },
+      "studio_style_photo": {
+        "title": "Photo Coloring",
+        "description": "Stylized concept art."
+      },
+      "object_infrastructure": {
+        "title": "Object Infrastructure",
+        "description": "Creates a precise architectural floor plan or blueprint by analyzing the building’s exterior and inferring its interior layout using real-world architectural logic."
+      },
+      "outfit_swap": {
+        "title": "Outfit Swap",
+        "description": "Replaces the outfit with clothing from the other images while keeping their pose, identity, and the original background."
+      },
+      "me_with_my_pet_pro": {
+        "title": "Me With My Pet",
+        "description": "Merge the person and pet from the uploaded images into one natural scene, keeping true identity, lighting, and perspective so they look photographed together."
+      },
+      "combination_photo": {
+        "title": "Combination Photo",
+        "description": "Combines all uploaded elements into one natural, cohesive scene with unified lighting, scale, and color. Produces a seamless, photorealistic composite."
+      },
+      "line_art": {
+        "title": "Line Art",
+        "description": "A 3×3 grid of studio portraits showing the same person in nine varied poses with consistent outfit, identity, and clean studio lighting."
+      },
+      "nine_half_length_portraits": {
+        "title": "Nine Portraits",
+        "description": "A 3×3 grid of half-length portraits captured in diverse natural outdoor settings. Identity remains consistent while outfits adjust to match each scene and season."
+      },
+      "clothing_extraction": {
+        "title": "Clothing Extraction",
+        "description": "A realistic fashion collage that removes the model and displays each outfit piece separately with true colors, textures, and 3D fabric shape on a corkboard background."
+      },
+      "knitted_wool_food": {
+        "title": "Knitted Wool Food",
+        "description": "Turns the dish into a hyper-realistic knitted wool version while preserving its composition and colors. A detailed yarn sculpture photographed like real food."
+      },
+      "pet_surrounding": {
+        "title": "Pet Surrounding",
+        "description": "Combine the person with multiple copies of the same pet species in one cohesive outdoor scene, keeping identity and realism intact. photorealistic detail."
+      },
+      "drawing_assistant": {
+        "title": "Drawing Assistant",
+        "description": "Complete the unfinished sketch in the same art style with clean, professional linework and proper details."
+      },
+      "storyboard_extend_border_line": {
+        "title": "Storyboard",
+        "description": "Creates a 6-frame cinematic storyboard expanding the scene, keeping characters and art style consistent."
+      }
+    },
+    "gemini-2": {
+      "5-flash-image": {
+        "none": {
+          "title": "None",
+          "description": ""
+        },
+        "esports_poster": {
+          "title": "Esports Poster",
+          "description": "A dynamic esports poster showing you in a confident pro-gamer pose beside your game hero, with neon tournament effects and your glowing gamer name below."
+        },
+        "me_with_my_favorite_boss": {
+          "title": "Me With My Favorite Boss",
+          "description": "A top-down elevator shot placing you beside your favorite game hero, with clear “Player” and “Hero” labels — realistic, cinematic, and true to each character’s appearance."
+        },
+        "winter_reverie": {
+          "title": "Winter Reverie",
+          "description": "A cinematic sequence of three snowy frames — a lone figure under an umbrella, surrounded by quiet snowfall and soft winter light."
+        },
+        "winter_veil": {
+          "title": "Winter Veil",
+          "description": "A serene winter portrait beneath a transparent umbrella, where soft snowflakes fall around a calm, introspective figure."
+        },
+        "pokemon": {
+          "title": "Pokémon",
+          "description": "A realistic trainer-style shot of you sitting in streetwear beside a lifelike Pokémon, set in a fantasy world matching its element."
+        },
+        "realistic_figurine": {
+          "title": "Realistic Figurine",
+          "description": "Transform yourself into a lifelike collectible figure with detailed realism."
+        },
+        "snowflake": {
+          "title": "Snowflake",
+          "description": "A gentle two-frame winter collage capturing quiet emotion and falling snow, blending softness with serene beauty."
+        },
+        "studio_portrait": {
+          "title": "Studio Portrait",
+          "description": "Dramatic spotlight portraits with cinematic mood and soft shadows."
+        },
+        "me_with_my_pet": {
+          "title": "Me With My Pet",
+          "description": "A simple polaroid-style shot that captures you posing naturally with your pet in a clean, minimal setup."
+        },
+        "future_family": {
+          "title": "Future Family",
+          "description": "A tropical vacation photo showing you and your future family enjoying the beach together."
+        },
+        "old_couple": {
+          "title": "Old Couple",
+          "description": "A photorealistic future-age portrait showing you in old age, standing outdoors with a natural, gentle expression and a calm sense of companionship."
+        },
+        "glowing_winter": {
+          "title": "Glowing Winter",
+          "description": "Soft winter portrait with golden light glowing through falling snow, blending warmth and serenity in a frozen landscape."
+        },
+        "professional_portrait": {
+          "title": "Professional Portrait",
+          "description": "Studio portrait with a red backdrop, clean lighting, and a confident, professional look."
+        },
+        "poster_design": {
+          "title": "Poster Design",
+          "description": "Bold fashion-poster look with a graphic circle backdrop."
+        },
+        "winter": {
+          "title": "Winter",
+          "description": "Snowy wonderland with aurora skies and icy landscapes."
+        },
+        "art_gallery": {
+          "title": "Art Gallery",
+          "description": "Place your portrait inside a modern gallery setting, like an art exhibition."
+        },
+        "birthday_girl": {
+          "title": "Birthday",
+          "description": "Celebrate with a festive birthday scene featuring cake, candles, and joy."
+        },
+        "spotify": {
+          "title": "Music",
+          "description": "Immersive music vibe, placing you inside a digital playlist scene."
+        },
+        "ocean": {
+          "title": "Ocean",
+          "description": "Sitting calmly above endless blue waters, surrounded by the vast open sea."
+        },
+        "polaroid": {
+          "title": "Polaroid",
+          "description": "Candid portrait with an even white photo border, resembling modern instant prints."
+        },
+        "meowchic": {
+          "title": "Meowchic",
+          "description": "Relax in a cozy, stylish scene surrounded by adorable cats."
+        },
+        "festival": {
+          "title": "Festival",
+          "description": "Lively night festival scene with string lights, drinks, and carefree smiles under the open sky."
+        },
+        "surreal_metamorphosis": {
+          "title": "Surreal Metamorphosis",
+          "description": "Ethereal transformation scene with glowing butterflies swirling around, symbolizing rebirth and dreamlike change."
+        },
+        "taylor_swift_1989": {
+          "title": "1989",
+          "description": "Bright coastal scene with soft sunlight, carefree energy, and cinematic seaside vibes."
+        },
+        "blue_solace": {
+          "title": "Blue Solace",
+          "description": "A serene winter collage of three moments, blending solitude, reflection, and gentle calm in soft blue tones."
+        },
+        "taylor_swift_reputation": {
+          "title": "Reputation",
+          "description": "Bold monochrome aesthetic with high contrast and fierce, empowered attitude inspired by the Reputation era."
+        },
+        "the_life_of_a_showgirl": {
+          "title": "The Life of a Showgirl",
+          "description": "Glamorous stage scene with sparkling sequins, feathers, and spotlight drama."
+        },
+        "taylor_swift_evermore": {
+          "title": "Evermore",
+          "description": "Soft autumn field with muted tones and quiet introspection, capturing the warmth and melancholy of late fall."
+        },
+        "speak_now": {
+          "title": "Speak Now",
+          "description": "Dreamy lavender field at sunset with soft, romantic tones inspired by the Speak Now era."
+        },
+        "folklore": {
+          "title": "Folklore",
+          "description": "Moody forest scene with mist and solitude, evoking quiet reflection and poetic nostalgia."
+        }
+      }
+    },
+    "gpt-image-1": {
+      "none": {
+        "title": "None",
+        "description": ""
+      },
+      "ghibli": {
+        "title": "Dreamy Studio",
+        "description": "Niche appeal, more art-house than mainstream in the U.S"
+      },
+      "the_simpson": {
+        "title": "Yellow Toon Family",
+        "description": "A cultural juggernaut with unmatched mainstream appeal and longevity"
+      },
+      "south_park": {
+        "title": "Bold Satire Toon",
+        "description": "Strong, consistent fanbase with significant cultural relevance"
+      },
+      "dragon_ball": {
+        "title": "Super Saiyan",
+        "description": "The most iconic anime in the U.S., with deep cultural penetration"
+      },
+      "naruto": {
+        "title": "Ninja Legend",
+        "description": "Massive search popularity and viewership, slightly behind Dragon Ball"
+      },
+      "rick_and_morty": {
+        "title": "Mad Sci-Fi",
+        "description": "Modern appeal and strong fanbase among younger adults"
+      },
+      "one_piece": {
+        "title": "Pirate Voyage",
+        "description": "Popular but lags behind Naruto and Dragon Ball due to accessibility issues"
+      },
+      "sailor_moon": {
+        "title": "Magic Moon Heroines",
+        "description": "Nostalgic appeal and niche fanbase, strong in specific regions"
+      },
+      "attack_on_titan": {
+        "title": "Gritty Titan",
+        "description": "Critically acclaimed with a dedicated fanbase, but smaller than the Big Three"
+      },
+      "demon_slayer": {
+        "title": "Demon Hunter Saga",
+        "description": "Rising star, popular among younger fans, but less established in the U.S"
+      },
+      "bleach": {
+        "title": "Soul Hunter",
+        "description": "Revived interest with recent arcs, but lower overall impact in the U.S"
+      },
+      "doraemon": {
+        "title": "Futuristic Retro Kid",
+        "description": "Limited U.S. popularity, mostly niche or nostalgic"
+      },
+      "anime": {
+        "description": "Vivid colors, dynamic characters, emotional expressions"
+      },
+      "manga": {
+        "description": "Bold line art, high contrast shading"
+      },
+      "genshin_impact": {
+        "description": "Elegant fantasy characters, detailed cinematic worlds"
+      },
+      "disney": {
+        "description": "Soft colors, magical, expressive fairytale style"
+      }
+    },
+    "chatsmith": {
+      "none": {
+        "title": "None",
+        "description": ""
+      },
+      "painting": {
+        "title": "Painting",
+        "description": "Hand-painted images with textured brush strokes"
+      },
+      "3d": {
+        "title": "3D",
+        "description": "3D images with depth and perspective"
+      },
+      "realistic": {
+        "title": "Realistic",
+        "description": "Lifelike images that look like real photos"
+      },
+      "cartoon": {
+        "title": "Cartoon",
+        "description": "Fun, simplified images with bold outlines"
+      },
+      "cyberpunk": {
+        "title": "Cyberpunk",
+        "description": "Futuristic images with neon lights and dark tech"
+      },
+      "digital_art": {
+        "title": "Digital Art",
+        "description": "Modern emulates the look, feel of traditional paintings"
+      },
+      "fantasy": {
+        "title": "Fantasy",
+        "description": "Magical images of mythical enchanted worlds"
+      },
+      "anime": {
+        "title": "Anime",
+        "description": "Colorful images like Japanese cartoons"
+      },
+      "chibi": {
+        "title": "Chibi",
+        "description": "Cute, miniature characters with oversized heads"
+      },
+      "watercolor": {
+        "title": "Watercolor",
+        "description": "Soft images like watercolor paintings"
+      },
+      "pop_art": {
+        "title": "Pop Art",
+        "description": "Bold, vibrant retro comic book images"
+      },
+      "sketch": {
+        "title": "Sketch",
+        "description": "Rough images like hand-drawn sketches"
+      },
+      "noir": {
+        "title": "Noir",
+        "description": "Dramatic black-and-white images with shadows"
+      },
+      "abstract": {
+        "title": "Abstract",
+        "description": "Shapes and colors, not realistic images"
+      },
+      "low_poly": {
+        "title": "Low Poly",
+        "description": "Images made of simple geometric shapes"
+      }
+    }
+  },
+  "featureSurveyRequest": {
+    "feedbackOptions": {
+      "research": "Too shallow, Untrusted sources, Outdated info, Hard to understand",
+      "image_creation": "Wrong style, Bad composition, Wrong subject, Looks broken",
+      "normal": "Off-topic, Incorrect facts, Hard to understand, Biased",
+      "common": "Didn’t match what I asked for, Not useful, Lacking detail, Poor quality"
+    }
+  },
+  "whatsNewFeatures": {
+    "textToImage": {
+      "title": "Turn your words into images",
+      "description": "Text-to-image is now available for GPT-Image-2 & Banana models"
+    },
+    "uploadMultiple": {
+      "title": "Create Image now supports multiple uploads",
+      "description": "Upload up to 4 images to create one unique result, explore a wide range of styles and discover new possibilities."
+    },
+    "chatSync": {
+      "title": "Meet Chat Sync",
+      "description": "Your chat history is now synced. Continue your conversation on any device, any time"
+    },
+    "gptImage": {
+      "title": "😆 Caricature Is Here!",
+      "description": "Turn your photo to a fun, exaggerated twist with our latest styles update"
+    },
+    "claude": {
+      "title": "Meet Claude: The Master of Nuance",
+      "description": "Experience a more natural, human-like AI. Claude is your most sophisticated collaborator for your essay or coding projects"
+    },
+    "gemini": {
+      "title": "New models are available",
+      "description": "Fast answers or deep thinking. New models are ready for you in Chat Smith"
+    },
+    "designLogo": {
+      "title": "Create polished logos in minutes",
+      "description": "Generate professional logo concepts, customize every detail and refine your design in one place"
+    }
+  },
+  "whatsNewOptions": {
+    "joinNow": "Join Now",
+    "empty": "You're all caught up, nice!",
+    "whatNew1": {
+      "title": "Join the ChatSmith Community on Discord",
+      "description": "Connect with others, get support, share ideas, and be part of something exciting. Discover everything happening in the ChatSmith server!"
+    },
+    "whatNew2": {
+      "title": "🔍 Web Search Is Here",
+      "description": "Get the latest updates and insights pulled live from the web. Tap to see what's new!"
+    },
+    "whatNew3": {
+      "title": "📄 Chat with PDFs Now Supported",
+      "description": "Upload any PDF and ask questions like you're chatting with a person. Tap to explore the latest update!"
+    },
+    "whatNew4": {
+      "title": "🎨 Create Stunning Images with AI",
+      "description": "Turn your ideas into beautiful visuals in seconds. Tap to explore the new AI Art feature!"
+    },
+    "whatNew5": {
+      "title": "📚 Deep Research, Done Instantly",
+      "description": "Generate detailed, cited reports on any topic in minutes. Tap to discover now"
+    }
+  }
+}

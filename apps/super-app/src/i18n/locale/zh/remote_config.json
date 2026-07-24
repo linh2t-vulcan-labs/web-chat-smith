@@ -1,0 +1,545 @@
+{
+  "chatSuggestion": {
+    "imageToImage": {
+      "sereneSnowPortrait": "请为我创作一幅在雪地中宁静姿态的肖像画",
+      "joyfulSnowToss": "请将我的形象变成一个快乐的女孩在抛洒雪花",
+      "cozyCampfireGuitar": "将我的图片转换成温馨的篝火和吉他之夜场景。",
+      "walkingInSnow": "请画一幅我行走在雪地里的肖像",
+      "festiveLollipopPortrait": "请将我的照片转换成一张甜美喜庆的棒棒糖肖像。",
+      "peacefulChristmasPorch": "使用我上传的照片，营造一种宁静祥和的圣诞节门廊氛围。",
+      "playingWithReindeer": "创作一幅我与驯鹿玩耍的图片",
+      "goSkiing": "画一幅我去滑雪的肖像。",
+      "northernLights": "请为我创作一幅观看神奇北极光的肖像画",
+      "canadianFrozenRiver": "创作一幅我站在壮丽的加拿大冰封河流中的画面",
+      "portraitOfMeReadingByAFireplace": "请画一幅我坐在壁炉旁读书的肖像。",
+      "enjoyingCoffeeInAScenicCafe": "将我的照片转换成在风景优美的咖啡馆享用咖啡的场景。",
+      "wrappedInABlanketOnABalcony": "创作一张我裹着毯子躺在阳台上的照片。",
+      "stargazingScene": "将我的照片转换成星空景象",
+      "peacefulMorningWalk": "请为我创作一幅在宁静的清晨漫步中的肖像画。",
+      "relaxingInAHammock": "将我的照片转换成在吊床上放松的场景",
+      "writingInAJournal": "创作一张我写日记的图片",
+      "sunsetViewingScene": "将我的照片转换成日落景色",
+      "picnicInAGarden": "请创作一幅我在花园里野餐的肖像画。",
+      "meditatingByALake": "将我的图片转换成湖边冥想的场景",
+      "highFashionPortrait": "把我的照片变成一张高级时尚杂志的肖像照",
+      "warmStreetArt": "将我的图片重新设计成一张温暖的街头艺术照片",
+      "dreamyFloralGaze": "让我的肖像呈现出梦幻、花卉氛围的眼神效果",
+      "windKissedPortrait": "将我的照片转换成一张被风吹拂的户外肖像。",
+      "goldenHourCloseup": "将我的照片重新设计成黄金时刻的近景特写",
+      "lightShadowComposition": "请为我的肖像画创作一个光影构图。",
+      "vintageNightTone": "将我的照片转换成复古夜色调",
+      "aquariumFilmPortrait": "将我的照片重新设计成水下水族电影风格的肖像",
+      "candidSunset": "赋予我的肖像一种随性、日落氛围的美感",
+      "chicElevatorEditorial": "将我的照片变成一张电梯场景的时尚编辑大片"
+    },
+    "textToImage": {
+      "christmasFireplace": "设计带有噼啪作响火焰的圣诞壁炉",
+      "giftWrappingPostcard": "制作礼品包装明信片",
+      "thanksgivingStorybook": "画一幅故事书般的感恩节晚餐",
+      "christmasLivingRoom": "设计温馨的圣诞客厅",
+      "cozyCatWindow": "窗边一只舒适的猫咪",
+      "catsGiftExchange": "猫咪交换礼物明信片",
+      "winterVillageWatercolor": "水彩画般的冬日村庄",
+      "minimalWarmWorkspace": "以暖色调打造简约工作空间",
+      "watercolorImagination": "设计水彩想象力迸发",
+      "dreamscapeBedroom": "打造梦幻般的卧室艺术",
+      "newYearVisionBoard": "设计新年愿景板",
+      "newYearFireworksPoster": "新年烟花海报",
+      "futuristicNewYearCafe": "未来主义新年咖啡馆",
+      "morningZenGarden": "晨曦禅园",
+      "goalSettingJournalCover": "目标设定日志封面",
+      "newYearNightCityscape": "新年夜的城市景观",
+      "yearOfTheHorseArt": "马年艺术（2026）",
+      "cyberpunkNewYearParty": "赛博朋克新年派对",
+      "newYearCountdownIllustration": "新年倒计时插图",
+      "dreamLifeTheme": "2026年的理想生活",
+      "snowyMountainLandscape": "画一幅雪山景色",
+      "cuteCartoonGirl": "创作一个可爱的卡通女孩角色",
+      "fantasyCastleDragon": "绘制一个奇幻城堡和龙的场景",
+      "galaxySpaceArt": "绘制一幅色彩斑斓的星系太空艺术图",
+      "retroNeonPoster": "设计一张 1980 年代复古霓虹灯海报",
+      "futuristicCity": "创建一幅未来城市天际线",
+      "minimalLeafLogo": "设计一个极简风格的叶子标志",
+      "indieAlbumCover": "制作一张暗黑系独立专辑封面",
+      "aiMeme": "设计由 AI 生成的网络梗图",
+      "futuristicSneaker": "打造未来主义运动鞋概念"
+    },
+    "infoQuery": {
+      "holidayTravelPlanning": "轻松准备假期旅行",
+      "wealthPlan5Years": "五年内实现财富增长计划",
+      "easterBrunchIdeas": "适合家庭的复活节早午餐创意",
+      "movieNightMoods": "让你开怀大笑、潸然泪下或毛骨悚然的电影",
+      "weekendStaycation": "周末宅家度假",
+      "christmasDinnerMenu": "圣诞晚餐菜单",
+      "quickHomeWorkout": "30分钟快速居家锻炼",
+      "holidayTraditions": "创造有意义的节日传统",
+      "brainstormNewYearResolutions": "帮我为 2026 年头脑风暴一些想法",
+      "buildNewYearRoutine": "建立新年的日常作息",
+      "topTravelTrends": "2026 年顶级旅游趋势",
+      "stayConsistent": "如何保持一致性",
+      "declutterHomeAndMind": "整理我的家和思绪",
+      "techAndCareerOutlook": "2026年科技与职业展望",
+      "personalYearTheme": "2026年个人主题",
+      "planNewYearsParty": "策划一场新年派对",
+      "balanceWorkAndLife": "平衡工作与生活",
+      "morningMeditationGuide": "晨间冥想指南",
+      "explainAI": "用简单方式解释人工智能",
+      "apollo11Summary": "简述阿波罗11号任务",
+      "dailyWalkingBenefits": "说明每日步行的好处",
+      "blockchainSimple": "用简单的话解释区块链",
+      "greenhouseEffect": "解释温室效应",
+      "improveFocus": "如何更好地集中注意力",
+      "manageStress": "缓解压力的技巧",
+      "morningRoutine": "养成晨间习惯",
+      "sleepQuality": "改善睡眠质量的方法",
+      "stayMotivated": "如何保持动力？"
+    },
+    "funSocial": {
+      "casualHangoutInvite": "休闲聚会邀请短信",
+      "personalityQuiz": "有趣的性格测试题",
+      "christmasPlaylist": "圣诞温馨歌单",
+      "easterGiftsKids": "复活节儿童礼物创意",
+      "christmasGiftsFamily": "给家人的圣诞礼物",
+      "sweetGiftNote": "为礼物写一张温馨的便条",
+      "secretSantaFunny": "有趣的秘密圣诞老人留言",
+      "goodMorningText": "建议发送可爱的早安短信",
+      "meetingExcuse": "逃避会议的搞笑借口",
+      "singleWittyReply": "对“你为什么单身？”这个问题的机智回答",
+      "newYearGreetingText": "新年祝福语",
+      "energyQuiz": "2026年个人能量测验",
+      "funnyResolutionExcuses": "搞笑的决议借口",
+      "funnyNewYearResolution": "2026 年的搞笑新年计划",
+      "visionWordGame": "愿景词语游戏",
+      "motivationMessage": "激励信息",
+      "predictYearFortune": "预测我在 2026 年的整体运势",
+      "workFriendlyNewYearWish": "适合工作的新年祝福",
+      "bucketListChallenge": "2026 年人生清单挑战",
+      "randomActsOfKindness": "随机的善举",
+      "riddle": "问我一个谜语",
+      "joke": "给我讲个笑话",
+      "catCaption": "为一张猫的照片建议标题",
+      "coffeePoem": "写一首咖啡诗",
+      "pickupLine": "给一句搭讪语",
+      "hangoutInvite": "邀请一起出去玩",
+      "quizQuestion": "提出测验问题",
+      "inspiringQuote": "分享一句鼓舞人心的名言",
+      "animalFact": "告诉我一个令人惊讶的动物趣闻",
+      "wordChainGame": "开始一个接龙游戏"
+    },
+    "deepResearch": {
+      "remoteWorkImpact": "研究远程工作的影响",
+      "coffeeIndustry": "分析全球咖啡产业",
+      "kpopInfluence": "研究韩国流行音乐的全球影响力",
+      "educationModels": "比较芬兰和美国的教育模式",
+      "habitFormation": "研究习惯是如何形成和改变的",
+      "renewableEnergy": "分析可再生能源采用趋势",
+      "socialMediaTeens": "研究社交媒体对青少年的影响",
+      "startupFailures": "找出创业公司失败的关键原因",
+      "mindfulnessWork": "研究工作场所中的正念",
+      "spaceExploration": "概述太空探索的里程碑事件"
+    }
+  },
+  "imageCreation": {
+    "gemini-3-pro-image-preview": {
+      "none": {
+        "title": "没有任何",
+        "description": ""
+      },
+      "zootopia": {
+        "title": "狂野托邦",
+        "description": "创建一张有趣的电影院照片，真实的人与动画狐狸和兔子摆姿势，完美融合真实人类与风格化角色，形成无缝场景。"
+      },
+      "gashapon_capsule": {
+        "title": "扭蛋胶囊",
+        "description": "透明扭蛋壳内展示的人物全身微缩模型，完美还原人物形象，并还原了人物全套服装。趣味十足的收藏级肖像，画面干净利落。"
+      },
+      "anatomical_infographic": {
+        "title": "解剖信息图",
+        "description": "一幅对称的剖面图，描绘了你的主题，并标注了解剖结构和简明信息，风格类似于羊皮纸上的百科全书页面。"
+      },
+      "product_technical_view": {
+        "title": "产品技术视图",
+        "description": "一张超详细的产品爆炸图，展示了产品的每个内部组件如何精确对齐地悬浮在柔和的灰色摄影棚背景上。"
+      },
+      "poster_creation": {
+        "title": "海报创作",
+        "description": "一张精美的广告海报，以逼真的细节展示您的产品，并配以相得益彰的标语和简洁专业的版式。"
+      },
+      "ingredients": {
+        "title": "原料",
+        "description": "简洁的木质背景布局，将您的菜肴完全分解成贴有标签的逼真食材，并清晰地标明名称和数量。"
+      },
+      "studio_style_photo": {
+        "title": "照片着色",
+        "description": "风格化的概念艺术图。"
+      },
+      "object_infrastructure": {
+        "title": "对象基础架构",
+        "description": "通过分析建筑物的外观，并运用现实世界的建筑逻辑推断其内部布局，从而创建精确的建筑平面图或蓝图。"
+      },
+      "outfit_swap": {
+        "title": "换装",
+        "description": "将当前服装替换为其他图片中的服装，同时保留人物的姿势、身份和原始背景。"
+      },
+      "me_with_my_pet_pro": {
+        "title": "我和我的宠物",
+        "description": "将上传图片中的人和宠物合并到一个自然的场景中，保持他们的真实身份、光线和视角，使他们看起来像是一起拍摄的。"
+      },
+      "combination_photo": {
+        "title": "合成照片",
+        "description": "将所有上传的元素融合到一个自然、和谐的场景中，并统一光照、比例和色彩。生成无缝、逼真的合成图像。"
+      },
+      "line_art": {
+        "title": "线稿",
+        "description": "一组 3×3 的摄影棚肖像，展示了同一个人在九种不同姿势下的合影，服装、身份和摄影棚灯光保持一致。"
+      },
+      "nine_half_length_portraits": {
+        "title": "九幅肖像",
+        "description": "一组3×3的半身肖像，拍摄于各种不同的户外自然环境中。人物身份保持一致，服装则根据场景和季节进行调整。"
+      },
+      "clothing_extraction": {
+        "title": "衣物提取",
+        "description": "一幅逼真的时尚拼贴画，去掉了模特，在软木板背景上分别展示了每件服装单品的真实色彩、纹理和 3D 面料形状。"
+      },
+      "knitted_wool_food": {
+        "title": "针织羊毛食品",
+        "description": "将菜肴转化为超逼真的针织羊毛版本，同时保留其成分和颜色。一件精细的毛线雕塑作品，以如同真实食物般的视角进行拍摄。"
+      },
+      "pet_surrounding": {
+        "title": "宠物周边环境",
+        "description": "将人物与同一种宠物的多只个体融合在一个和谐的户外场景中，保持人物的个性和真实感。照片级写实细节。"
+      },
+      "drawing_assistant": {
+        "title": "绘图助手",
+        "description": "用同样的艺术风格，以干净、专业的线条和恰当的细节完成未完成的草图。"
+      },
+      "storyboard_extend_border_line": {
+        "title": "故事板",
+        "description": "创建 6 帧电影故事板，扩展场景，保持角色和艺术风格的一致性。"
+      }
+    },
+    "gemini-2": {
+      "5-flash-image": {
+        "none": {
+          "title": "没有任何",
+          "description": ""
+        },
+        "esports_poster": {
+          "title": "电子竞技海报",
+          "description": "一张动感十足的电子竞技海报，海报中你以自信的职业玩家姿势站在你的游戏英雄旁边，配以霓虹灯锦标赛特效，下方是你闪亮的玩家名字。"
+        },
+        "me_with_my_favorite_boss": {
+          "title": "我和我最喜欢的老板",
+          "description": "俯视电梯镜头，将你置于你最喜欢的游戏英雄旁边，清晰地显示“玩家”和“英雄”标签——逼真、电影化，并且忠实于每个角色的外观。"
+        },
+        "winter_reverie": {
+          "title": "冬日遐想",
+          "description": "一段由三个雪景画面组成的电影式序列——一个孤独的身影撑着伞，周围是静谧的雪花和柔和的冬日阳光。"
+        },
+        "winter_veil": {
+          "title": "冬日面纱",
+          "description": "一张宁静的冬日肖像，在透明的雨伞下，柔软的雪花飘落在平静、沉思的身影周围。"
+        },
+        "pokemon": {
+          "title": "宝可梦",
+          "description": "一张写实的训练家风格照片，你身穿街头服饰，坐在栩栩如生的宝可梦旁边，背景设定在一个与宝可梦元素相符的奇幻世界中。"
+        },
+        "realistic_figurine": {
+          "title": "逼真人偶",
+          "description": "将自己变成栩栩如生、细节逼真的收藏级人偶。"
+        },
+        "snowflake": {
+          "title": "雪花",
+          "description": "一幅柔和的双画面冬季拼贴画，捕捉了宁静的情感和飘落的雪花，将柔和与宁静之美融合在一起。"
+        },
+        "studio_portrait": {
+          "title": "摄影棚肖像照",
+          "description": "戏剧性的聚光灯人像，营造出电影般的氛围和柔和的光影。"
+        },
+        "me_with_my_pet": {
+          "title": "我和我的宠物",
+          "description": "一张简单的宝丽来风格照片，捕捉你和你的宠物在干净、简约的布景中自然摆出的姿势。"
+        },
+        "future_family": {
+          "title": "未来家庭",
+          "description": "一张热带度假照片，照片中你和未来的家人一起享受海滩的快乐时光。"
+        },
+        "old_couple": {
+          "title": "老夫妇",
+          "description": "一张逼真的未来时代肖像，展现了年老的你站在户外，表情自然温和，给人一种平静的陪伴感。"
+        },
+        "glowing_winter": {
+          "title": "闪耀的冬天",
+          "description": "柔和的冬日人像，金色的阳光透过飘落的雪花，在冰封的景色中交织出温暖与宁静。"
+        },
+        "professional_portrait": {
+          "title": "专业肖像",
+          "description": "影棚肖像照，红色背景，干净的灯光，展现出自信专业的形象。"
+        },
+        "poster_design": {
+          "title": "海报设计",
+          "description": "大胆的时尚海报风格，搭配圆形图案背景。"
+        },
+        "winter": {
+          "title": "冬天",
+          "description": "冰雪覆盖的仙境，极光闪耀，冰雪覆盖大地。"
+        },
+        "art_gallery": {
+          "title": "美术馆",
+          "description": "将您的肖像画放置在现代画廊环境中，就像艺术展览一样。"
+        },
+        "birthday_girl": {
+          "title": "生日",
+          "description": "用充满蛋糕、蜡烛和欢乐的喜庆生日场景来庆祝吧。"
+        },
+        "spotify": {
+          "title": "音乐",
+          "description": "沉浸式音乐氛围，将你带入数字播放列表场景。"
+        },
+        "ocean": {
+          "title": "海洋",
+          "description": "静静地坐落在无垠的蓝色海面上，四周环绕着浩瀚的大海。"
+        },
+        "polaroid": {
+          "title": "宝丽来",
+          "description": "一张自然抓拍的肖像照，四周环绕着均匀的白色照片边框，类似于现代即时打印照片。"
+        },
+        "meowchic": {
+          "title": "喵时尚",
+          "description": "在舒适时尚的环境中放松身心，周围环绕着可爱的猫咪。"
+        },
+        "festival": {
+          "title": "节日",
+          "description": "夜晚的节日气氛十分热闹，串灯闪烁，人们畅饮美酒，在星空下尽情享受无忧无虑的笑容。"
+        },
+        "surreal_metamorphosis": {
+          "title": "超现实变形",
+          "description": "梦幻般的蜕变场景，闪闪发光的蝴蝶环绕飞舞，象征着重生和梦幻般的变化。"
+        },
+        "taylor_swift_1989": {
+          "title": "1989",
+          "description": "明媚的海岸景色，柔和的阳光，轻松自在的氛围，以及电影般的海滨风情。"
+        },
+        "blue_solace": {
+          "title": "蓝色慰藉",
+          "description": "一幅宁静的冬日拼贴画，由三个瞬间组成，融合了孤独、沉思和柔和的平静，以柔和的蓝色调为主。"
+        },
+        "taylor_swift_reputation": {
+          "title": "名声",
+          "description": "大胆的单色美学，高对比度，以及受 Reputation 时代启发而来的强势、自信的态度。"
+        },
+        "the_life_of_a_showgirl": {
+          "title": "舞女的生活",
+          "description": "华丽的舞台布景，闪亮的亮片、羽毛和聚光灯营造出戏剧性的效果。"
+        },
+        "taylor_swift_evermore": {
+          "title": "永恒",
+          "description": "柔和的秋日田野，色调柔和，宁静内省，捕捉到了深秋的温暖与忧郁。"
+        },
+        "speak_now": {
+          "title": "现在讲",
+          "description": "夕阳西下，梦幻般的薰衣草田，柔和浪漫的色调，灵感源自《Speak Now》时期。"
+        },
+        "folklore": {
+          "title": "民俗学",
+          "description": "雾气弥漫、寂静幽深的森林景色，令人不禁陷入沉思和诗意的怀旧之中。"
+        }
+      }
+    },
+    "gpt-image-1": {
+      "none": {
+        "title": "没有任何",
+        "description": ""
+      },
+      "ghibli": {
+        "title": "梦幻工作室",
+        "description": "小众，在美国更偏向艺术电影而非主流电影。"
+      },
+      "the_simpson": {
+        "title": "黄色卡通家族",
+        "description": "一部具有无与伦比的主流吸引力和持久生命力的文化巨作"
+      },
+      "south_park": {
+        "title": "大胆讽刺卡通",
+        "description": "拥有强大且稳定的粉丝群体，并具有重要的文化影响力"
+      },
+      "dragon_ball": {
+        "title": "超级赛亚人",
+        "description": "这部动画是美国最具代表性的作品，拥有深厚的文化影响力。"
+      },
+      "naruto": {
+        "title": "忍者传奇",
+        "description": "搜索热度和观看量都非常高，略逊于《龙珠》。"
+      },
+      "rick_and_morty": {
+        "title": "疯狂科幻",
+        "description": "现代吸引力和在年轻成年人中的强大粉丝群"
+      },
+      "one_piece": {
+        "title": "海盗之旅",
+        "description": "虽然很受欢迎，但由于无障碍访问问题，其受欢迎程度仍落后于《火影忍者》和《龙珠》。"
+      },
+      "sailor_moon": {
+        "title": "魔法月亮女英雄",
+        "description": "怀旧情怀和特定地区小众粉丝群体强大"
+      },
+      "attack_on_titan": {
+        "title": "坚韧的泰坦",
+        "description": "广受好评，拥有一批忠实粉丝，但规模小于三大巨头。"
+      },
+      "demon_slayer": {
+        "title": "恶魔猎人传奇",
+        "description": "冉冉升起的新星，深受年轻粉丝喜爱，但在美国知名度不高。"
+      },
+      "bleach": {
+        "title": "灵魂猎手",
+        "description": "近期剧情发展重新唤起了人们的兴趣，但在美国的整体影响力有所下降。"
+      },
+      "doraemon": {
+        "title": "未来复古小子",
+        "description": "在美国受欢迎程度有限，主要面向小众群体或怀旧群体。"
+      },
+      "anime": {
+        "description": "鲜艳的色彩、生动的人物、丰富的情感表达"
+      },
+      "manga": {
+        "description": "粗线条艺术，高对比度阴影"
+      },
+      "genshin_impact": {
+        "description": "优雅的奇幻角色，精细的电影化世界"
+      },
+      "disney": {
+        "description": "柔和的色彩，梦幻般的、富有表现力的童话风格"
+      }
+    },
+    "chatsmith": {
+      "none": {
+        "title": "没有任何",
+        "description": ""
+      },
+      "painting": {
+        "title": "绘画",
+        "description": "手绘图像，带有纹理笔触"
+      },
+      "3d": {
+        "title": "3D",
+        "description": "具有深度和透视效果的3D图像"
+      },
+      "realistic": {
+        "title": "实际的",
+        "description": "栩栩如生的图像，看起来像真实照片"
+      },
+      "cartoon": {
+        "title": "卡通片",
+        "description": "有趣、简洁的图像，轮廓粗犷"
+      },
+      "cyberpunk": {
+        "title": "赛博朋克",
+        "description": "充满霓虹灯和黑暗科技的未来主义图像"
+      },
+      "digital_art": {
+        "title": "数字艺术",
+        "description": "现代艺术模仿传统绘画的外观和感觉。"
+      },
+      "fantasy": {
+        "title": "幻想",
+        "description": "充满神话色彩的奇幻世界景象"
+      },
+      "anime": {
+        "title": "日本动画片",
+        "description": "色彩鲜艳的图片，类似日本卡通"
+      },
+      "chibi": {
+        "title": "奇比",
+        "description": "可爱的小人物，却有着大大的脑袋。"
+      },
+      "watercolor": {
+        "title": "水彩",
+        "description": "柔和的图像，如同水彩画一般"
+      },
+      "pop_art": {
+        "title": "波普艺术",
+        "description": "大胆、充满活力的复古漫画图像"
+      },
+      "sketch": {
+        "title": "草图",
+        "description": "类似手绘草图的粗略图像"
+      },
+      "noir": {
+        "title": "黑色电影",
+        "description": "具有阴影效果的引人注目的黑白照片"
+      },
+      "abstract": {
+        "title": "抽象的",
+        "description": "形状和颜色，而非逼真的图像"
+      },
+      "low_poly": {
+        "title": "低多边形",
+        "description": "由简单几何图形组成的图像"
+      }
+    }
+  },
+  "featureSurveyRequest": {
+    "feedbackOptions": {
+      "research": "内容过于浅薄、信息来源不可信、信息过时、难以理解",
+      "image_creation": "风格错误，构图糟糕，主题错误，看起来像坏了一样。",
+      "normal": "离题、事实错误、难以理解、带有偏见",
+      "common": "与我的要求不符，没用，缺乏细节，质量差。"
+    }
+  },
+  "whatsNewFeatures": {
+    "textToImage": {
+      "title": "用文字，生成你的图像",
+      "description": "GPT-Image-2 与 Banana 模型现已支持文字生成图像"
+    },
+    "uploadMultiple": {
+      "title": "创建图像现已支持多图上传",
+      "description": "最多可上传 4 张图片来生成一个独特的结果，并探索多种风格与新的可能性。c"
+    },
+    "chatSync": {
+      "title": "认识 Chat Sync",
+      "description": "你的聊天记录已同步。你可以随时在任何设备上继续对话。"
+    },
+    "gptImage": {
+      "title": "😆 漫画滤镜上线",
+      "description": "用我们最新的风格，让你的照片瞬间变得搞怪有趣！"
+    },
+    "claude": {
+      "title": "认识 Claude：洞察细微差别的大师",
+      "description": "体验更自然、更具人类风格的 AI。无论是写作还是编程，Claude 都是值得信赖的助手."
+    },
+    "gemini": {
+      "title": "新模型已上线",
+      "description": "即时回答或深度思考，全新模型已在 Chat Smith 等你"
+    },
+    "designLogo": {
+      "title": "几分钟即可创建精美 Logo",
+      "description": "生成专业 Logo 设计方案，自定义每一处细节，并在一个地方完善您的设计。"
+    }
+  },
+
+  "whatsNewOptions": {
+    "joinNow": "立即加入",
+    "empty": "你已经看完全部内容了，太棒了！",
+    "whatNew1": {
+      "title": "加入 ChatSmith 的 Discord 社区",
+      "description": "与他人交流、获得支持、分享想法，成为精彩社区的一部分。探索 ChatSmith 服务器中的所有精彩内容！"
+    },
+    "whatNew2": {
+      "title": "🔍 网页搜索已上线",
+      "description": "实时获取来自网络的最新资讯与洞察。点击查看新内容！"
+    },
+    "whatNew3": {
+      "title": "📄 现已支持与 PDF 对话",
+      "description": "上传任意 PDF，像聊天一样提问。点击了解最新更新！"
+    },
+    "whatNew4": {
+      "title": "🎨 用 AI 创作惊艳图像",
+      "description": "几秒内将创意变成精美视觉效果。点击体验全新 AI 艺术功能！"
+    },
+    "whatNew5": {
+      "title": "📚 深度研究，即刻完成",
+      "description": "几分钟内生成包含引用的深度报告。点击立即探索"
+    }
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "errorPage": {
+    "title": "Error",
+    "code": "50x",
+    "subTitle": "Este es un problema temporal.",
+    "description": "Este es un problema temporal. Inténtalo de nuevo en unos minutos. Si el error persiste, contáctanos a través de <link>{url}</link>."
+  },
+  "contactUs": "Contáctanos",
+  "notFound": {
+    "title": "Error",
+    "code": "404",
+    "description": "¡Ups! No pudimos encontrar la página que estás buscando. Por favor verifica e inténtalo de nuevo.",
+    "cta": "Ir a la página de inicio"
+  },
+  "metadata": {
+    "title": "Chat Smith: Chat de IA Todo en Uno para Trabajo y Estudio",
+    "description": "Chatea con GPT, Gemini y Claude en un solo lugar. Escribe, investiga y genera imágenes con un chat de IA diseñado para la productividad y la creatividad. Empieza hoy mismo.",
+    "keywords": "chat smith, chat de IA, chatbot de IA, chat de IA en línea, chat AI online, chatear con IA, aplicación de chat de IA"
+  },
+  "cta": {
+    "edit": "Editar",
+    "submit": "Enviar",
+    "copy": "Copiar",
+    "rename": "Rebautizar",
+    "delete": "Borrar",
+    "new": "Nuevo",
+    "expand": "Expandir",
+    "yes": "Sí",
+    "no": "No",
+    "stay": "Quédate aquí",
+    "removeSwitch": "Eliminar y cambiar",
+    "gotIt": "Entendido",
+    "skip": "Omitir",
+    "next": "Siguiente",
+    "cancel": "Cancelar",
+    "uploadPhoto": "Subir foto",
+    "regenerate": "Regenerar",
+    "accept": "Aceptar",
+    "apply": "Aplicar",
+    "beta": "Beta",
+    "back": "Volver",
+    "tryAgain": "Intentar de nuevo",
+    "tryNow": "Probar ahora",
+    "exploreNow": "Explorar ahora",
+    "letGo": "Vamos",
+    "more": "Más",
+    "failLoadResult": "Error al cargar los resultados",
+    "failLoadMoreResult": "No se pudieron cargar más resultados",
+    "failLoadMoreHistory": "No se pudo cargar más historial de chat"
+  },
+  "toast": {
+    "error": {
+      "somethingWentWrong": "Algo salió mal, por favor inténtalo de nuevo",
+      "unableFindConversation": "No se pudo encontrar la conversación",
+      "unexpectedError": "Se produjo un error inesperado. Por favor, inténtalo de nuevo más tarde",
+      "tooManyImages": "Puedes cargar hasta {maxImage} imágenes por mensaje",
+      "tooManyFiles": "Solo puedes cargar {maxFiles} archivos a la vez.",
+      "fileInvalidType": "El archivo está dañado o no se puede procesar. Verifique el archivo e intente nuevamente.",
+      "fileTooLarge": "El tamaño del archivo excede el límite de {maxSizeInMB}MB. Por favor, suba un archivo más pequeño.",
+      "fileNotSupport": "Esta función no admite carga de archivos.",
+      "singleImage": "Este estilo solo permite hasta {maxImage} imágenes.",
+      "reachMaxImages": "Por favor, seleccione {maxImage} imágenes o menos. Este estilo solo permite hasta {maxImage} imágenes.",
+      "modelNotAllowImages": "Este modelo no permite agregar imágenes"
+    },
+    "copy": {
+      "successfully": "Copiado correctamente"
+    }
+  },
+  "downloadApp": "Descargar aplicación",
+  "termsOfUse": "Términos de uso",
+  "privacyPolicy": "Política de privacidad",
+  "refundPolicy": "Política de reembolso",
+  "community": "Comunidad",
+  "signOut": "Cerrar sesión",
+  "getPro": "Obtener Pro",
+  "getProV2": "Obtener PRO",
+  "unlockAllFeature": "Desbloquea todas las funciones ahora",
+  "expire": "Expirado",
+  "pro": "Pro",
+  "free": "Gratis",
+  "upgrade": "Mejorar ",
+  "upgradeNow": "Mejorar ahora ",
+  "createImage": "Crear imagen",
+  "imageCreation": "Creación de imágenes",
+  "deepResearch": "Investigación profunda",
+  "webSearch": "Búsqueda web",
+  "limited": "Limitado",
+  "perDuration": "por {duration}",
+  "savePercentage": "ahorra {percent}%",
+  "mostFlexible": "el más flexible",
+  "pricePerDuration": "{price}/{duration}",
+  "duration": {
+    "day": "día",
+    "week": "semana",
+    "month": "mes",
+    "year": "año"
+  },
+  "imageCreationDescription": "Crea imágenes a partir de tus palabras o fotos",
+  "deepResearchDescription": "Búsqueda y razonamiento avanzados",
+  "webSearchDescription": "Busca en la web para obtener la información más reciente",
+  "uploadNeedSignIn": "Inicia sesión para adjuntar archivos",
+  "loading": "Cargando",
+  "loadingVerifyCaptcha": "Verificando que eres humano…",
+  "signIn": "Iniciar sesión",
+  "inProgress": "En progreso",
+  "planning": "En planificación",
+  "released": "Lanzado",
+  "viewMore": "Ver más",
+  "none": "Ninguno",
+  "frequency": {
+    "daily": "diario",
+    "monthly": "mensual",
+    "quarterly": "trimestral",
+    "yearly": "anual"
+  },
+  "amountPerDuration": "{amount, plural, one {# mes} other {# meses}}",
+  "unknownUser": "Usuario desconocido",
+  "freeTrial": "Prueba gratuita",
+  "currentPlan": "Plan actual",
+  "only": "Solo",
+  "newFeature": "Nueva función",
+  "viewDetail": "Ver detalles",
+  "whatsNew": "Novedades",
+  "availableNow": "Disponible ahora",
+  "sessionEnd": "La sesión finalizó o se modificó desde otra ventana.",
+  "close": "Cerrar",
+  "noNotificationsYet": "Aún no hay notificaciones",
+  "couldntLoadNotifications": "No se pudieron cargar las notificaciones",
+  "errorLoadingNotifications": "Ocurrió un error al cargar tus notificaciones",
+  "weWillNotifyWhenNew": "Te avisaremos cuando haya novedades",
+  "reload": "Recargar",
+  "timeAgo": {
+    "justNow": "ahora mismo",
+    "secondsAgo": "hace {count} segundos",
+    "minutesAgo": "hace {count} minutos",
+    "hoursAgo": "hace {count} horas",
+    "daysAgo": "hace {count} días",
+    "monthsAgo": "hace {count} meses",
+    "yearsAgo": "hace {count} años"
+  },
+  "notification": {
+    "stayUpdate": "Activa las notificaciones para mantenerte al día",
+    "enableNow": "Activar ahora",
+    "skip": "Omitir",
+    "later": "Más tarde",
+    "alert": {
+      "title": "No te pierdas ninguna actualización",
+      "description": "Activa las notificaciones para recibir actualizaciones, noticias y ofertas!"
+    },
+    "popup": {
+      "title": "Mantente actualizado al instante",
+      "description": "Activa las notificaciones ahora para recibir actualizaciones en tiempo real, nuevas funciones y ofertas exclusivas para ti",
+      "enable": "Activar notificaciones"
+    },
+    "task": {
+      "title": "Notificar al finalizar",
+      "description": "Estamos procesando tu tarea en segundo plano — ¿quieres recibir una alerta cuando el resultado esté listo?"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@cs/icons",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.tsx"
+  },
+  "scripts": {
+    "generate": "bun run scripts/generate-icons.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/bun": "catalog:tools",
+    "@types/node": "catalog:tools",
+    "@types/react": "catalog:framework",
+    "@types/react-dom": "catalog:framework",
+    "typescript": "catalog:tools"
+  },
+  "peerDependencies": {
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework"
+  }
+}

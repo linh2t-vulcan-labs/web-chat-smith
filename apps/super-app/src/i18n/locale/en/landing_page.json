@@ -1,0 +1,161 @@
+{
+  "CTA": "Chat now",
+  "header": {
+    "features": "Features",
+    "useCases": "Use Cases",
+    "plan": "Plan",
+    "blog": "Blog"
+  },
+  "hero": {
+    "title": "Chat Smith: AI Pro <breakMobile></breakMobile> Assistant<break></break>with All-in-one AI<breakMobile></breakMobile>Top models",
+    "subtitle": "Your all-in-one AI chat solution that combines leading <break></break>AI Top models (<highlight>GPT-5, Grok</highlight>, and <highlight>Gemini</highlight>)",
+    "CTA": "Try for free"
+  },
+  "stats": {
+    "users": "users",
+    "aiChat": "AI Chat",
+    "countries": "Countries Using",
+    "usersValue": "{value}M"
+  },
+  "search": "Search",
+  "feature": {
+    "title": "One Platform. Endless Possibilities",
+    "subtitle": "Chat, create, analyze—experience the <breakMobile></breakMobile> full power of AI in Chat Smith",
+    "CTA": "Try now",
+    "discoverCTA": "Discover more",
+    "imageCreation": {
+      "title": "Image Creation",
+      "description": "Let Chat Smith paint your ideas with creativity, precision, and style"
+    },
+    "deepResearch": {
+      "title": "Deep Research",
+      "description": "Get fast, trusted insights with GPT-4o & GPT-5—search, filter, and summarize anytime, anywhere"
+    },
+    "writing": {
+      "title": "Write Better, Faster",
+      "description": "Academic, business, marketing, or personal—Assistant Writing adapts instantly"
+    },
+    "research": {
+      "title": "Ask, Search, Discover",
+      "description": "From breaking news to niche facts, find what you need without the clutter"
+    },
+    "document": {
+      "title": "Master Documents",
+      "description": "Work smarter with large files—summarize, translate, and perfect them all in one seamless workspace"
+    },
+    "discover": {
+      "title": "See What's Possible",
+      "description": "Discover smart ways people use Chat Smith every day"
+    }
+  },
+  "useCase": {
+    "title": "Made for Everyone",
+    "contentCreator": {
+      "title": "Content Creator",
+      "description": "Create <b>viral content</b> in seconds with <b>GPT-4o</b> and <b>GPT-5</b>. From catchy Instagram captions to engaging Facebook posts or binge-worthy video scripts, <b>AI transforms ideas into share-ready hits</b> that grab attention instantly"
+    },
+    "analyst": {
+      "title": "Analytics",
+      "description": "Analyze smarter with GPT-4o and GPT-5. Detect <b>hidden patterns</b>, uncover profitable trends, and <b>deliver actionable insights for reports </b> — helping you make data-backed <b>decisions with speed and confidence</b>"
+    },
+    "researcher": {
+      "title": "Researcher",
+      "description": "Go from <b>complex question to clear answer</b> in seconds using GPT-4o and GPT-5. Search, filter, and summarize information from trusted sources for <b>academic papers</b>, industry reports, or <b>breakthrough research</b>"
+    },
+    "student": {
+      "title": "Student",
+      "description": "Level up your learning with GPT-4o and GPT-5. Summarize textbooks, create <b>exam-ready notes</b>, or polish essays—saving hours while improving <b>accuracy, clarity</b>, and your <b>academic profile</b> online"
+    },
+    "marketing": {
+      "title": "Marketing",
+      "description": "Show your <b>unique voice</b> with GPT-4o and GPT-5. Whether witty, bold, or inspiring, AI helps craft authentic stories, <b>signature quotes</b>, and updates that strengthen your <b>personal brand</b> on LinkedIn, Facebook, Instagram and other platforms"
+    },
+    "personality": {
+      "title": "Personality",
+      "description": "Show your unique voice with GPT-4o and GPT-5. Whether witty, bold, or inspiring, AI helps craft authentic stories, <b>signature quotes</b>, and updates that strengthen your <b>personal brand</b> on LinkedIn and other platforms"
+    }
+  },
+  "plan": {
+    "title": "Discover the Full Power <breakMobile></breakMobile> of Chat Smith",
+    "sectionTitle": "Your Benefit",
+    "CTA": "Discover now",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "limited": "Limited",
+    "basicModels": {
+      "title": "GPT-4o mini, Gemini 1.5 Flash",
+      "description": "Access to AI Chat messages"
+    },
+    "advancedModels": {
+      "title": "GPT-5, Gemini 2.5 Pro, Grok-4, DeepSeek",
+      "description": "Access to other advanced AI Models"
+    },
+    "fileUploads": {
+      "title": "File Uploads",
+      "description": "Access to File Uploads (png, jpg, jpeg, pdf, etc)"
+    },
+    "realtimeSearch": {
+      "title": "Realtime Search",
+      "description": "Get up-to-date AI answers with real-time web information"
+    },
+    "deepResearch": {
+      "title": "Deep Research",
+      "description": "Tackle your complex research tasks"
+    },
+    "artGeneration": {
+      "title": "Art Generation",
+      "description": "A new way to turn your imagination into reality"
+    }
+  },
+  "feedback": {
+    "title": "Big Numbers. Bigger Impact.",
+    "subtitle": "A global impact measured in millions, <breakMobile></breakMobile>trusted by users worldwide.",
+    "user": {
+      "content1": "The AI Image Generator show <b>strong ability</b> to tweak <b>styles and colors</b> made it feel like I had <b>a professional designer</b> at my fingertips.",
+      "content2": "Chat Smith Image Generation help me <b>save hours of design work</b> and delivers stunning designs every time!",
+      "content3": "I love how the real-time search pulls in <b>live updates for current events</b>. It’s like having <b>a research assistant</b> who never sleeps!",
+      "content4": "The <b>grammar enhancement</b> feature is top-notch! It helps to correct error and suggested <b>stylistic improvements</b> for my professional writing",
+      "content5": "Easily to <b> stream workflow</b> with <b>PDFs</b> and <b>embedded links</b> interaction. Quick <b>extract key insights</b> from reports without wasting hours reading through.",
+      "content6": "Just drop a link, and it <b>extracts the key information</b>, highlights important data, and even <b>provides a concise summary</b>. A <b>must-have tool</b> for anyone who deals with large volumes of information!"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "A global impact measured in millions, <breakMobile></breakMobile> trusted by users worldwide."
+  },
+  "community": {
+    "title": "Community",
+    "subtitle": "A global impact measured in millions, <breakMobile></breakMobile> trusted by users worldwide.",
+    "CTA": "Join Our Global Community"
+  },
+  "faq": {
+    "title": "FAQs",
+    "question1": "What is Chat Smith",
+    "answer1": "Chat Smith is an AI assistant that helps you research, write, analyze, and automate tasks through natural, conversational prompts",
+    "question2": "What can I do with Chat Smith?",
+    "answer2": "- Draft, edit, and translate text and emails\n- Summarize articles, PDFs, and meetings\n- Brainstorm ideas and create outlines or presentations\n- Answer questions and find sources\n- Write, review, and debug code\n- Analyze data or spreadsheets and create charts\n- Create templates and automate repetitive workflow",
+    "question3": "Where can I access Chat Smith?",
+    "answer3": "- On the web (any browser)\n- Mobile apps (iOS and Android)\n- Optional browser extension for quick use while you browse",
+    "question4": "Who is Chat Smith designed for?",
+    "answer4": "- Students, freelancers, and creators\n- Professionals in marketing, sales, operations, customer support, and engineering\n- Teams that want faster research, content creation, and documentation",
+    "question5": "What AI models power Chat Smith?",
+    "answer5": "Chat Smith uses a mix of state-of-the-art large language models chosen for quality, speed, and cost, including top commercial models (e.g., GPT‑4‑class and Claude‑class models) and strong open‑source models (e.g., Llama/Mistral families). Models are routed automatically per task and are updated over time. Your content isn't used to train base models unless you opt in."
+  },
+  "footer": {
+    "title": "Level Up Your Work, <breakMobile></breakMobile> One Click Away!",
+    "subtitle": "Everything you need to push projects forward is right at your fingertips.",
+    "CTA": "Unlock AI Power",
+    "about": {
+      "title": "About Us",
+      "description": "Chat Smith is built to help users unlock their potential — by reducing friction in their thinking, accelerating their tasks, and enhancing their creativity"
+    },
+    "follow": {
+      "title": "Follow us"
+    },
+    "copyright": "© Copyright {year} Chat Smith Pte, Ltd. All rights reserved <break></break>\nChat Smith is operated by Chat Smith Pte, Ltd."
+  },
+  "aiAir": "AI Air",
+  "aiAnalytic": "AI Analytics",
+  "seeMore": "See More",
+  "seeMoreLink": "See more blog posts"
+}

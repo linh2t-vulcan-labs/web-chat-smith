@@ -1,0 +1,321 @@
+{
+  "brand": {
+    "name": "Chat Smith"
+  },
+  "languages": {
+    "en": "अंग्रेज़ी (US)",
+    "zh": "चीनी (简体)",
+    "th": "थाई (ไทย)",
+    "ar": "अरबी (العربية)",
+    "es": "स्पेनिश (Español)",
+    "ko": "कोरियाई (한국어)",
+    "ja": "जापानी (日本語)",
+    "hi": "हिंदी"
+  },
+  "header": {
+    "nav": {
+      "home": "होम",
+      "products": "सुविधाएँ",
+      "blog": "ब्लॉग",
+      "pricing": "मूल्य"
+    },
+    "sections": {
+      "features": "फ़ीचर्स",
+      "useCases": "उपयोग के तरीके"
+    },
+    "search": {
+      "placeholder": "श्रेणियाँ खोजें",
+      "noResults": "कोई श्रेणी आपकी खोज से मेल नहीं खाती।",
+      "ariaLabel": "नाम से श्रेणियाँ फ़िल्टर करें"
+    },
+    "auth": {
+      "signIn": "साइन इन"
+    },
+    "fallback": {
+      "untitled": "बिना शीर्षक"
+    },
+    "aria": {
+      "toggleMenu": "मेनू टॉगल करें",
+      "navigationDrawer": "साइट मेनू",
+      "closeMenu": "मेनू बंद करें",
+      "toggleTheme": "थीम बदलें",
+      "language": "भाषा",
+      "account": "खाता"
+    }
+  },
+  "banner": {
+    "title": {
+      "muted": "AI",
+      "image": "इमेज",
+      "generator": "जेनरेटर"
+    },
+    "subtitle": "सबसे शक्तिशाली AI इमेज जेनरेशन टूल आज़माएं। प्रोफेशनल कॉन्सेप्ट से क्रिएटिव आर्ट तक, Chat Smith सेकंडों में कर देता है।",
+    "promptPlaceholder": "अंतरिक्ष में तैरती भविष्य की लाइब्रेरी, सिनेमैटिक लाइटिंग, ...",
+    "promptPlaceholderTranslate": "निम्नलिखित पाठ का पेशेवर व्यावसायिक स्वर में चीनी में अनुवाद करें",
+    "promptPlaceholderQa": "अपना प्रश्न टाइप करें, छवि या PDF खींचकर अपलोड करें, या Ctrl+V से पेस्ट करें",
+    "promptPlaceholderQaSimple": "अपना प्रश्न टाइप करें...",
+    "modelLabel": "GPT-5 Nano",
+    "tryTheseOptional": "इन्हें आज़माएँ (वैकल्पिक)",
+    "tryThese": {
+      "label": "इन्हें आज़माएँ",
+      "optional": "(वैकल्पिक)"
+    },
+    "cta": {
+      "generate": "जेनरेट करें",
+      "translate": "अनुवाद करें",
+      "getAnswer": "उत्तर पाएँ"
+    },
+    "uploadFile": {
+      "title": "फ़ाइलें अपलोड करें",
+      "instructionPrefix": "ड्रैग और ड्रॉप करें या ",
+      "chooseFiles": "फ़ाइलें चुनें",
+      "instructionSuffix": " अपलोड करने के लिए",
+      "supportedTypes": "समर्थित फ़ाइल प्रकार: pdf, png, jpg, jpeg. अधिकतम फ़ाइल आकार: 20MB.",
+      "aria": {
+        "chooseFiles": "अपलोड करने के लिए फ़ाइलें चुनें"
+      }
+    },
+    "qaCards": {
+      "selectedAttachments": "चयनित अटैचमेंट",
+      "removeAttachment": "{name} हटाएँ"
+    },
+    "loading": {
+      "artStyles": "आर्ट स्टाइल लोड हो रही हैं",
+      "savingDraft": "आपका ड्राफ़्ट सेव हो रहा है…"
+    },
+    "breadcrumb": {
+      "home": "होम",
+      "current": "AI इमेज जेनरेटर"
+    },
+    "referenceStyle": {
+      "label": "संदर्भ शैली",
+      "optional": "(वैकल्पिक)"
+    },
+    "aria": {
+      "section": "AI इमेज जेनरेटर",
+      "breadcrumb": "ब्रेडक्रंब",
+      "referenceImages": "संदर्भ इमेज",
+      "removeReference": "संदर्भ हटाएं",
+      "addReference": "डिवाइस से संदर्भ इमेज जोड़ें",
+      "generate": "जेनरेट करें"
+    }
+  },
+  "groupPage": {
+    "aria": {
+      "tools": "इस समूह में AI टूल"
+    },
+    "groups": {
+      "image": "छवि",
+      "text": "टेक्स्ट",
+      "study": "अध्ययन",
+      "model": "मॉडल",
+      "code": "कोड",
+      "doc": "दस्तावेज़"
+    }
+  },
+  "metrics": {
+    "title": {
+      "prefix": "पहले से",
+      "highlight": "5 करोड़",
+      "suffix": " से अधिक खुश AI Chat प्रशंसकों में शामिल हों"
+    },
+    "fallback": [
+      {
+        "value": "+43M",
+        "text": "सक्रिय उपयोगकर्ता"
+      },
+      {
+        "value": "#1",
+        "text": "AI चैट"
+      },
+      {
+        "value": "236",
+        "text": "उपयोग करने वाले देश"
+      }
+    ],
+    "aria": {
+      "section": "उपलब्धियाँ",
+      "list": "मेट्रिक्स"
+    }
+  },
+  "hero": {
+    "title": {
+      "prefix": "अल्टीमेट",
+      "highlight": "AI मॉडल",
+      "suffix": ""
+    },
+    "subtitle": "सबसे शक्तिशाली AI इमेज जेनरेशन टूल आज़माएं। प्रोफेशनल कॉन्सेप्ट से क्रिएटिव आर्ट तक, Chat Smith सेकंडों में कर देता है।",
+    "fallbackItems": [
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      },
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      },
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      }
+    ],
+    "cta": {
+      "generate": "अभी जेनरेट करें",
+      "tryNow": "अभी आजमाएं"
+    },
+    "aria": {
+      "section": "AI मॉडल",
+      "list": "AI मॉडल सूची"
+    }
+  },
+  "steps": {
+    "title": {
+      "prefix": "AI इमेज जेनरेटर से",
+      "highlight": "तस्वीर बनाने का तरीका",
+      "suffix": ""
+    },
+    "subtitle": "सबसे शक्तिशाली AI इमेज जेनरेशन टूल आज़माएं। प्रोफेशनल कॉन्सेप्ट से क्रिएटिव आर्ट तक, Chat Smith सेकंडों में कर देता है।",
+    "fallbackItems": [
+      {
+        "title": "चरण 1",
+        "description": "DALL-E, Gemini और कस्टम Stable Diffusion मॉडल के बीच स्विच करके अपनी ज़रूरी स्टाइल पाएं।"
+      },
+      {
+        "title": "चरण 2",
+        "description": "DALL-E, Gemini और कस्टम Stable Diffusion मॉडल के बीच स्विच करके अपनी ज़रूरी स्टाइल पाएं।"
+      },
+      {
+        "title": "चरण 3",
+        "description": "DALL-E, Gemini और कस्टम Stable Diffusion मॉडल के बीच स्विच करके अपनी ज़रूरी स्टाइल पाएं।"
+      }
+    ],
+    "cta": {
+      "generate": "अभी जेनरेट करें",
+      "generateShort": "जेनरेट"
+    },
+    "aria": {
+      "section": "कैसे काम करता है",
+      "list": "चरण"
+    }
+  },
+  "feature": {
+    "title": {
+      "prefix": "असीमित रचनात्मकता।",
+      "highlight": "आसान बना।",
+      "suffix": ""
+    },
+    "subtitle": "शौकीनों से ब्रांड डिज़ाइनरों तक — सभी के लिए प्रोफेशनल टूल।",
+    "fallbackItems": [
+      {
+        "title": "मल्टी-मॉडल फ्यूज़न",
+        "description": "मॉडल बदलकर अपनी पसंद का लुक और मूड पाएं।"
+      },
+      {
+        "title": "तेज़, उच्च गुणवत्ता आउटपुट",
+        "description": "सेकंडों में तेज़ परिणाम — शेयर या इटरेट के लिए तैयार।"
+      },
+      {
+        "title": "क्रिएटर्स के लिए बनाया गया",
+        "description": "त्वरित आइडिया से पॉलिश्ड विज़ुअल तक — सरल नियंत्रण, शक्तिशाली परिणाम।"
+      }
+    ],
+    "aria": {
+      "section": "मुख्य लाभ",
+      "list": "लाभ सूची"
+    }
+  },
+  "horizontalCards": {
+    "title": {
+      "prefix": "आइडिया से इमेज,",
+      "highlight": "एक स्क्रॉल में।",
+      "suffix": ""
+    },
+    "subtitle": "वास्तविक-स्टाइल उदाहरण स्वाइप करें — हर कार्ड में प्रीव्यू और संक्षिप्त विवरण।",
+    "defaults": {
+      "main": "AI के साथ असीमित संभावनाओं को अनलॉक करें",
+      "subtitle": "लगातार अपडेट होने वाले AI टूल्स को अनलॉक करें और स्मार्ट राइटिंग, क्रिएटिविटी, विचार-मंथन से लेकर ऑफिस के कामों तक, अपनी वर्क-एफिशिएंसी को नेक्स्ट लेवल पर ले जाएं।"
+    },
+    "imageFallbackAlt": "उदाहरण प्रीव्यू",
+    "fallbackItems": [
+      {
+        "title": "प्रोडक्ट शॉट",
+        "description": "लिस्टिंग, विज्ञापन और सोशल पोस्ट के लिए साफ़ लाइटिंग और तेज़ डिटेल।"
+      },
+      {
+        "title": "कॉन्सेप्ट आर्ट",
+        "description": "मूड तेज़ी से एक्सप्लोर करें — फाइनल रेंडर से पहले कंपोज़िशन इटरेट करें।"
+      },
+      {
+        "title": "सोशल क्रिएटिव",
+        "description": "फ़ीड के लिए बोल्ड विज़ुअल — कॉपी स्पेस और ब्रांड रंग ध्यान में रखें।"
+      }
+    ],
+    "aria": {
+      "section": "उदाहरण गैलरी",
+      "list": "क्षैतिज कार्ड",
+      "previous": "पिछले कार्ड",
+      "next": "अगले कार्ड"
+    }
+  },
+  "resourceBlog": {
+    "title": {
+      "prefix": "और ",
+      "highlight": "संसाधन",
+      "suffix": ""
+    },
+    "seeMore": "और देखें",
+    "fallbackCategory": "ब्लॉग",
+    "fallbackAuthor": "Chat Smith",
+    "aria": {
+      "section": "ब्लॉग से और संसाधन",
+      "blogList": "नवीनतम ब्लॉग पोस्ट",
+      "seeMoreLink": "और ब्लॉग पोस्ट देखें"
+    }
+  },
+  "footer": {
+    "aria": {
+      "section": "साइट फ़ुटर"
+    },
+    "legalNavAria": "कानूनी नीतियाँ",
+    "featureColumnTitle": "फ़ीचर्स",
+    "productNavAria": "उत्पाद लिंक",
+    "logoAlt": "Chat Smith",
+    "brandName": "Chat Smith",
+    "aboutTitle": "हमारे बारे में",
+    "aboutDescription": "Chat Smith उपयोगकर्ताओं की क्षमता को अनलॉक करने के लिए बनाया गया है — सोच में रुकावट कम करके, कार्य तेज़ करके और रचनात्मकता बढ़ाकर।",
+    "followTitle": "फ़ॉलो करें",
+    "emailPlaceholder": "अपना ईमेल दर्ज करें",
+    "subscribeCta": "सब्सक्राइब",
+    "copyright": "© {year} Vulcan Labs. सर्वाधिकार सुरक्षित",
+    "copyrightSub": "Chat Smith, Vulcan Labs का उत्पाद है।",
+    "socialAria": {
+      "facebook": "Facebook पर Chat Smith",
+      "discord": "Discord पर Chat Smith",
+      "youtube": "YouTube पर Chat Smith",
+      "instagram": "Instagram पर Chat Smith",
+      "tiktok": "TikTok पर Chat Smith",
+      "x": "X पर Chat Smith"
+    }
+  },
+  "ctaFooter": {
+    "title": {
+      "prefix": "अपना काम लेवल अप करें,",
+      "highlight": "एक क्लिक दूर!",
+      "suffix": ""
+    },
+    "subtitle": "प्रोजेक्ट आगे बढ़ाने के लिए जो कुछ चाहिए, वह आपकी उंगलियों पर है।",
+    "cta": {
+      "signUp": "अभी साइन अप करें"
+    },
+    "aria": {
+      "section": "साइन अप करके काम लेवल अप करें"
+    }
+  },
+  "faq": {
+    "sectionAria": "अक्सर पूछे जाने वाले प्रश्न",
+    "title": {
+      "prefix": "हमसे",
+      "main": "कुछ भी पूछें"
+    }
+  }
+}

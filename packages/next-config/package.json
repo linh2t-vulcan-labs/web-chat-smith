@@ -1,0 +1,28 @@
+{
+  "name": "@cs/next-config",
+  "version": "0.0.1",
+  "private": true,
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "clean": "rm -rf dist node_modules .turbo .cache",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/bun": "catalog:tools",
+    "@types/node": "catalog:tools",
+    "next": "catalog:framework"
+  },
+  "peerDependencies": {
+    "next": "catalog:framework"
+  }
+}

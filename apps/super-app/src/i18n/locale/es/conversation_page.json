@@ -1,0 +1,359 @@
+{
+  "messageAnswersSkipped": "Respuestas omitidas",
+  "others": "Otros",
+  "home": {
+    "introQuestion": "¿Por dónde deberíamos empezar?",
+    "welcomeQuestion": "¿Cómo puedo ayudarte hoy?"
+  },
+  "input": {
+    "placeholder": {
+      "normalChat": "Hablar con Chat Smith",
+      "imageToImage": {
+        "banana": "Agrega hasta {maxImages} imágenes y describe tus ideas",
+        "normal": "Añade una imagen y describe tus ideas.",
+        "allowText2Image": "Describe o sube fotos para crear"
+      },
+      "textToImage": "Describe tu imagen",
+      "search": "Escribe tu búsqueda",
+      "feedback": "Agradecemos sus comentarios. Comparta cualquier comentario o sugerencia que tenga para ayudarnos a mejorar."
+    }
+  },
+  "suggestion": {
+    "enableChatSuggestion": "Habilita las sugerencias de chat en la configuración de tu perfil para mantenerlas",
+    "keepSuggestion": "¿Quieres seguir viendo las sugerencias de chat?"
+  },
+  "normalChat": {
+    "error": {
+      "title": "Chat Smith no pudo responder a tu último mensaje.",
+      "desc": "Inténtalo de nuevo más tarde o vuelve a cargar la página"
+    }
+  },
+  "createImage": {
+    "chooseStyle": "Elija estilo <span>(opcional)</span>",
+    "style": "estilo",
+    "optional": "Opcional",
+    "loading": {
+      "title": "Creando imagen...",
+      "desc": "Las grandes ideas se generan en un instante. Tu imagen estará lista en breve."
+    },
+    "free": {
+      "title": "¡Tu increíble arte está a solo un paso!",
+      "desc": "Imagina el arte que has creado con esta función. ¡Actualiza a premium para descubrirlo!"
+    },
+    "error": {
+      "title": "Aviso de uso de imágenes"
+    },
+    "reachLimit": {
+      "title": "Límite alcanzado",
+      "desc": "El límite se restablece después de 3 horas"
+    },
+    "reachLimitStyle": {
+      "title": "Límite de imagen alcanzado",
+      "desc": "Este estilo solo permite <span> {maxImage} imagen. Elimina los extras </span> para mejores resultados"
+    },
+    "singleImage": {
+      "desc": "GPT Image solo acepta <span>una sola foto</span>"
+    }
+  },
+  "deepResearch": {
+    "loading": {
+      "desc": "Muchos usuarios están usando Deep Research en este momento.\nEl resultado puede tardar entre 2 y 5 minutos. Espere..."
+    },
+    "thinking": "Pensando",
+    "researching": "Investigando",
+    "exploring": "Explorando",
+    "consolidatingResult": "Consolidando resultados",
+    "done": "Hecho",
+    "sources": "Fuentes",
+    "source": "{count, plural, one {# fuente} other {# fuentes}}",
+    "free": {
+      "title": "¡Actualiza a premium para descubrirlo!",
+      "desc": "Solo un paso para completar tu investigación."
+    },
+    "reachLimit": {
+      "title": "Límite alcanzado",
+      "desc": "El límite se restablece a las {resetTime}"
+    }
+  },
+  "webSearch": {
+    "sources": "Fuentes",
+    "loading": {
+      "title": "Busque en la web para obtener la información más reciente..."
+    },
+    "free": {
+      "title": "Función premium",
+      "desc": "Actualice para desbloquear el acceso a la última fuente de datos"
+    },
+    "reachLimit": {
+      "title": "Has alcanzado el límite de uso avanzado.",
+      "desc": "Límite alcanzado. El límite se restablece después de 3 horas."
+    }
+  },
+  "actions": {
+    "free": "Actualice ahora por solo {price} /semana"
+  },
+  "modal": {
+    "chooseStyle": {
+      "title": "Elija estilo"
+    },
+    "uploadNotSupport": {
+      "title": "Carga de imágenes no soportada",
+      "desc": "Este modelo no permite agregar fotos",
+      "descWithAction": "Este modelo no permite añadir imágenes. Al seleccionar <span>“Eliminar y cambiar”</span>, se eliminarán tus imágenes y se cambiará al modelo seleccionado",
+      "proceedText": "Quitar y cambiar"
+    },
+    "attachFiles": {
+      "title": "Subir archivos",
+      "instruction": "{isDesktop, select, true {Arrastra y suelta o <span>elige archivos</span> para subir} other {<span>Elegir archivos</span> para subir}}",
+      "dragdrop": "Arrastre y suelte imágenes para cargar",
+      "desc": "Máximo de {maxfiles} archivos por conversación. Tamaño máximo: {maxSizeInMB} MB por archivo. Formato: {listAcceptFiles}",
+      "artDesc": "Puedes subir {maxfiles} imágenes para este estilo. Tamaño máximo: {maxSizeInMB} MB por archivo. Formato: {listAcceptFiles}",
+      "recentFiles": "Archivos recientes"
+    },
+    "feedback": {
+      "title": "Comentario",
+      "desc": "¿Cómo se puede mejorar la respuesta? <span>(opcional)</span>",
+      "options": {
+        "tooShallow": "Demasiado superficial",
+        "untrustedSources": "Fuentes poco confiables",
+        "outdatedInfo": "Información desactualizada",
+        "hardToUnderstand": "Difícil de entender",
+        "wrongStyle": "Estilo incorrecto",
+        "badComposition": "Mala composición",
+        "wrongSubject": "Tema incorrecto",
+        "looksBroken": "Se ve defectuoso",
+        "offTopic": "Fuera de tema",
+        "incorrectFacts": "Datos incorrectos",
+        "biased": "Sesgado",
+        "didntMatchAsked": "No coincide con lo que pedí",
+        "notUseful": "No es útil",
+        "lackingDetail": "Falta de detalle",
+        "poorQuality": "Mala calidad"
+      }
+    },
+    "imageRequired": {
+      "title": "Imagen requerida",
+      "desc": "Sube una foto para generar resultados."
+    },
+    "deleteConversation": {
+      "title": "¿Borrar el chat?",
+      "desc": "¿Estás seguro de que deseas eliminar este chat?"
+    },
+    "termsConsent": {
+      "title": "Acuerdo de carga de medios",
+      "description1": "La persona en el contenido multimedia tiene 18 años o más",
+      "description2": "Tengo el consentimiento de todas las personas identificables en el contenido",
+      "description3": "El contenido no incluye material ilegal, violento ni explícito",
+      "acceptText": "He leído y acepto los términos de carga de medios."
+    }
+  },
+  "tooltip": {
+    "modelNotSupport": "El modelo no admite la carga de archivos",
+    "usecase": "El caso de uso no admite la carga de archivos",
+    "limit": "Nos encantaría ayudarte a resolver tu solicitud. Pásate a Pro y obtén acceso ilimitado ahora.",
+    "attachFiles": "Adjuntar archivos",
+    "createImage": "Crea imágenes a partir de tus palabras o fotos.",
+    "deepResearch": "Búsqueda avanzada y razonamiento",
+    "webSearch": "Busque en la web para obtener la información más reciente",
+    "copy": "Copiar",
+    "regenerate": "Regenerar",
+    "like": "Me gusta",
+    "dislike": "No me gusta",
+    "export": "Exportar como DOCX"
+  },
+  "toast": {
+    "error": {
+      "somethingWentWrong": "¡Algo salió mal!",
+      "failDeleteConversation": "No se pudo eliminar el chat. Inténtalo de nuevo",
+      "failHistory": "No se pudo cargar el historial",
+      "failConversation": "No se pudo cargar la conversación",
+      "failResult": "No se pudieron cargar los resultados",
+      "tryAgain": "Por favor, inténtelo de nuevo.",
+      "tryAgainLater": "Por favor, inténtelo de nuevo más tarde",
+      "notExistConversation": "Este chat no existe.",
+      "system": "Tenemos un error del sistema con esta configuración. Inténtalo de nuevo más tarde.",
+      "modelUnAvailable": "Tu modelo anterior no está disponible temporalmente. Se cambió a {model}.",
+      "modelExpired": "Tu suscripción ha expirado. Se cambió al modelo predeterminado.",
+      "conversationUpdated": "Conversación actualizada — respuesta en curso"
+    },
+    "sync": {
+      "title": "La conversación se ha sincronizado",
+      "desc": "Inicie sesión en cualquier dispositivo para continuar con las conversaciones sincronizadas"
+    },
+    "resetUsage": {
+      "title": "Tus mensajes gratuitos se han renovado",
+      "desc": "¡Vuelve y pregunta lo que quieras!",
+      "title24h": "Tienes nuevos mensajes gratuitos esperándote",
+      "desc24h": "Empieza tu día con mensajes gratuitos",
+      "title48h": "¿Necesitas ideas nuevas o un poco de ayuda?",
+      "desc48h": "Chat Smith está aquí para ayudarte"
+    }
+  },
+  "guideTour": {
+    "model": {
+      "title": "Generación de siguiente nivel",
+      "desc": "Produce imágenes realistas de paisajes, plantas, personas y animales."
+    },
+    "attachFiles": {
+      "title": "Empieza con tus fotos",
+      "desc": "¡Adjunta una imagen y cuéntanos qué quieres crear!"
+    },
+    "others": {
+      "of": "/"
+    }
+  },
+  "newModel": {
+    "title": "Conoce el nuevo Gemini 3 Flash, respuestas rápidas y baja latencia",
+    "desc": "Optimizado para velocidad y eficiencia. Ideal para tareas rápidas, chats y flujos de trabajo en tiempo real."
+  },
+  "bananaPro": {
+    "title": "Banana Pro"
+  },
+  "imageToImage": {
+    "desc": "Sube una imagen 🖼️ → Le daré un nuevo estilo"
+  },
+  "nanoBanana": {
+    "title": "Nano Banana"
+  },
+  "gptImage": {
+    "title": "Imagen GPT"
+  },
+  "gptImage1_5": {
+    "title": "GPT Image 1.5"
+  },
+  "gptImage2": {
+    "title": "GPT Image 2"
+  },
+  "textToImage": {
+    "title": "ChatSmith Texto a imagen",
+    "desc": "Palabras en ✍️ → La imagen sale 🖼️. No se requiere foto."
+  },
+  "gpt-4o-mini": {
+    "desc": "Ideal para tareas rápidas y precisas."
+  },
+  "gpt-5": {
+    "2": {
+      "desc": "Específico para trabajos de conocimiento profesional"
+    },
+    "desc": "Excelente modelo para tareas complejas"
+  },
+  "gpt-5-mini": {
+    "desc": "Razonador eficiente para diversas tareas"
+  },
+  "o3-mini": {
+    "desc": "Experto en codificación y matemáticas"
+  },
+  "gpt-4": {
+    "1-mini": {
+      "desc": "Modelo rápido para tareas enfocadas"
+    }
+  },
+  "o3": {
+    "desc": "El modelo de razonamiento más poderoso"
+  },
+  "o4-mini": {
+    "desc": "Razonador eficiente para codificar elementos visuales"
+  },
+  "gpt-4o": {
+    "desc": "Modelo rápido, inteligente y flexible"
+  },
+  "gemini-3-flash-preview": {
+    "desc": "Modelo de velocidad con súper búsqueda y puesta a tierra"
+  },
+  "gemini-3-pro-preview": {
+    "desc": "Sobresaliente en codificación y razonamiento complejo."
+  },
+  "gemini-3": {
+    "1-flash-lite": {
+      "desc": "Modelo rápido para tareas simples"
+    },
+    "5-flash": {
+      "desc": "Modelo inteligente de alto rendimiento"
+    }
+  },
+  "gemini-2": {
+    "5-flash": {
+      "desc": "Lo mejor para un rendimiento rápido en tareas diarias"
+    },
+    "5-flash-lite": {
+      "desc": "Reasoner impulsando con alta velocidad"
+    },
+    "5-pro": {
+      "desc": "Sobresalir en la resolución de problemas multimodales"
+    }
+  },
+  "gemini-1": {
+    "5-flash": {
+      "desc": ""
+    },
+    "5-pro": {
+      "desc": ""
+    }
+  },
+  "grok-4-fast": {
+    "desc": "Inferencia en contextos largos"
+  },
+  "grok-4": {
+    "desc": "\"Modelo avanzado para razonamiento complejo\""
+  },
+  "grok-2": {
+    "desc": "Soluciones innovadoras en dominios complejos"
+  },
+  "deepseek-chat": {
+    "desc": "Inferencia en contextos largos"
+  },
+  "deepseek-reasoner": {
+    "desc": "Investigación y operaciones intensivas en datos"
+  },
+  "claude-haiku-4-5": {
+    "desc": "El modelo más rápido con inteligencia casi de vanguardia"
+  },
+  "claude-sonnet-4-6": {
+    "desc": "El modelo más inteligente para agentes complejos y programación"
+  },
+  "gpt-5-nano": {
+    "desc": "Modelo rápido para tareas diarias"
+  },
+  "customResponse": {
+    "title": "Respuesta",
+    "preview": "Vista previa:",
+    "cynic": {
+      "title": "Cínico",
+      "description": "Sarcástico, crítico con humor.",
+      "preview": "Brillante y cálido. Gran clima para cuestionar todas tus decisiones de vida... pero afuera."
+    },
+    "nerd": {
+      "title": "Nerd",
+      "description": "Explorador y entusiasta",
+      "preview": "28°C con baja humedad: condiciones ideales para la dopamina y la vitamina D. ¡Ve a absorber un poco!"
+    },
+    "concise": {
+      "title": "Conciso",
+      "description": "Directo y eficiente",
+      "preview": "28°C, cielo despejado."
+    },
+    "listener": {
+      "title": "Oyente",
+      "description": "Apoyo, suave y empático",
+      "preview": "Hoy está brillante y tranquilo. Espero que también te sientas un poco más ligero por dentro."
+    },
+    "formal": {
+      "title": "Formal",
+      "description": "Profesional, educado y estructurado.",
+      "preview": "Actualmente 28°C, cielo despejado con viento ligero. Un día favorable para actividades al aire libre."
+    },
+    "default": {
+      "title": "Por defecto",
+      "description": "Alegre y adaptable",
+      "preview": "Está soleado y 28°C: un día perfecto para salir un poco."
+    }
+  },
+  "chatSync": {
+    "title": "Sincronización de chat",
+    "synced": "<span>Sincronizado</span>: disponible en todos los dispositivos",
+    "notSync": "<span>No sincronizado</span>: visible solo en este dispositivo",
+    "processing": "<span>Procesando</span>: preparándose en este dispositivo",
+    "syncFailed": "<span>Error en el procesamiento</span>: no pudimos preparar esta conversación",
+    "descV2": "Algunas conversaciones se sincronizan entre dispositivos. Los chats más antiguos permanecen en el dispositivo original."
+  }
+}

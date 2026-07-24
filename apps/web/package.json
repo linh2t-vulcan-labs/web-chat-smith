@@ -1,32 +1,49 @@
 {
   "name": "web",
   "version": "0.0.1",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "format": "prettier --write \"**/*.{ts,tsx}\"",
-    "typecheck": "tsc --noEmit"
+    "dev": "bun -bun next dev",
+    "build": "bun -bun next build",
+    "prestart": "cp -r .next/static .next/standalone/apps/web/.next/",
+    "start": "bun run .next/standalone/apps/web/server.js",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .next node_modules",
+    "analyze": "next experimental-analyze"
   },
   "dependencies": {
-    "@workspace/ui": "workspace:*",
-    "lucide-react": "^1.25.0",
-    "next": "16.2.6",
-    "next-themes": "^0.4.6",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "@cs/api-client": "workspace:*",
+    "@cs/core": "workspace:*",
+    "@cs/env": "workspace:*",
+    "@cs/firebase": "workspace:*",
+    "@cs/flags": "workspace:*",
+    "@cs/i18n": "workspace:*",
+    "@cs/next-config": "workspace:*",
+    "@cs/notifications": "workspace:*",
+    "@cs/security": "workspace:*",
+    "@cs/themes": "workspace:*",
+    "@cs/ui": "workspace:*",
+    "@tanstack/react-query": "catalog:data",
+    "firebase": "catalog:integrations",
+    "next": "catalog:framework",
+    "next-intl": "catalog:framework",
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@workspace/eslint-config": "workspace:^",
-    "@workspace/typescript-config": "workspace:*",
-    "eslint": "^9",
-    "typescript": "^5"
-  }
+    "@cs/ts-config": "workspace:*",
+    "@tailwindcss/postcss": "catalog:ui",
+    "@types/bun": "catalog:tools",
+    "@types/node": "catalog:tools",
+    "@types/react": "catalog:framework",
+    "@types/react-dom": "catalog:framework",
+    "typescript": "catalog:tools"
+  },
+  "browserslist": [
+    "last 2 chrome versions",
+    "last 2 firefox versions",
+    "last 2 safari versions",
+    "last 2 edge versions"
+  ]
 }

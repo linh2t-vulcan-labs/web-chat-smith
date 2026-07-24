@@ -1,0 +1,160 @@
+{
+  "errorPage": {
+    "title": "خطأ",
+    "code": "50x",
+    "subTitle": "هذه مشكلة مؤقتة",
+    "description": "هذه مشكلة مؤقتة. يُرجى المحاولة مرة أخرى خلال بضع دقائق. إذا استمرت المشكلة، يُرجى التواصل معنا عبر <link>{url}</link>."
+  },
+  "contactUs": "اتصل بنا",
+  "notFound": {
+    "title": "خطأ",
+    "code": "404",
+    "description": "عذرًا! لم نتمكن من العثور على الصفحة التي تبحث عنها. يُرجى التحقق مرة أخرى والمحاولة مجددًا.",
+    "cta": "اذهب إلى الصفحة الرئيسية"
+  },
+  "metadata": {
+    "title": "Chat Smith: دردشة ذكاء اصطناعي شاملة للعمل والدراسة",
+    "description": "تحدث مع GPT وGemini وClaude في مكان واحد. اكتب وابحث وأنشئ الصور باستخدام دردشة ذكاء اصطناعي مصممة للإنتاجية والإبداع. ابدأ الآن.",
+    "keywords": "شات سميث, دردشة ذكاء اصطناعي, روبوت دردشة ذكاء اصطناعي, دردشة ذكاء اصطناعي عبر الإنترنت, دردشة AI عبر الإنترنت, التحدث مع الذكاء الاصطناعي, تطبيق دردشة ذكاء اصطناعي"
+  },
+  "cta": {
+    "edit": "تعديل",
+    "submit": "إرسال",
+    "copy": "نسخ",
+    "rename": "إعادة تسمية",
+    "delete": "حذف",
+    "new": "جديد",
+    "expand": "توسيع",
+    "yes": "نعم",
+    "no": "لا",
+    "stay": "ابق هنا",
+    "removeSwitch": "إزالة وتبديل",
+    "gotIt": "فهمت",
+    "skip": "تخطي",
+    "next": "التالي",
+    "cancel": "إلغاء",
+    "uploadPhoto": "تحميل الصورة",
+    "regenerate": "إعادة التوليد",
+    "accept": "قبول",
+    "apply": "تطبيق",
+    "beta": "Beta",
+    "back": "رجوع",
+    "tryAgain": "حاول ثانية",
+    "tryNow": "جرّب الآن",
+    "exploreNow": "استكشف الآن",
+    "letGo": "لنبدأ",
+    "more": "المزيد",
+    "failLoadResult": "فشل في تحميل النتائج",
+    "failLoadMoreResult": "فشل في تحميل المزيد من النتائج",
+    "failLoadMoreHistory": "فشل في تحميل المزيد من سجل الدردشة"
+  },
+  "toast": {
+    "error": {
+      "somethingWentWrong": "حدث خطأ ما، يرجى المحاولة مرة أخرى",
+      "unableFindConversation": "تعذر العثور على المحادثة",
+      "unexpectedError": "واجهنا خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا",
+      "tooManyImages": "يمكنك تحميل ما يصل إلى {maxImage} صور لكل رسالة",
+      "tooManyFiles": "يمكنك تحميل {maxFiles} ملفات فقط في كل مرة",
+      "fileInvalidType": "الملف تالف أو لا يمكن معالجته. يرجى التحقق من الملف والمحاولة مرة أخرى.",
+      "fileTooLarge": "حجم الملف يتجاوز الحد الأقصى {maxSizeInMB}MB. يرجى تحميل ملف أصغر.",
+      "fileNotSupport": "هذه الميزة لا تدعم تحميل الملفات",
+      "singleImage": "هذا النمط يسمح بتحميل {maxImage} صورة فقط",
+      "reachMaxImages": "يرجى اختيار {maxImage} صور أو أقل. هذا النمط يسمح بتحميل {maxImage} صور فقط",
+      "modelNotAllowImages": "هذا النموذج لا يسمح بإضافة الصور"
+    },
+    "copy": {
+      "successfully": "تم النسخ بنجاح"
+    }
+  },
+  "downloadApp": "تنزيل التطبيق",
+  "termsOfUse": "شروط الاستخدام",
+  "privacyPolicy": "سياسة الخصوصية",
+  "refundPolicy": "سياسة الاسترداد",
+  "community": "المجتمع",
+  "signOut": "تسجيل الخروج",
+  "getPro": "احصل على Pro",
+  "getProV2": "احصل على PRO",
+  "unlockAllFeature": "افتح جميع الميزات الآن",
+  "expire": "منتهي",
+  "pro": "برو",
+  "free": "مجاني",
+  "upgrade": "ترقية",
+  "upgradeNow": "قم بالترقية الآن",
+  "createImage": "إنشاء صورة",
+  "imageCreation": "إنشاء الصور",
+  "deepResearch": "البحث المتعمق",
+  "webSearch": "بحث الويب",
+  "limited": "محدود",
+  "perDuration": "في {duration}",
+  "savePercentage": "وفر {percent}%",
+  "mostFlexible": "الأكثر مرونة",
+  "pricePerDuration": "{price}/{duration}",
+  "duration": {
+    "day": "يوم",
+    "week": "أسبوع",
+    "month": "شهر",
+    "year": "سنة"
+  },
+  "imageCreationDescription": "أنشئ صورًا من كلماتك أو صورتك",
+  "deepResearchDescription": "بحث واستدلال متقدم",
+  "webSearchDescription": "ابحث في الويب للحصول على أحدث المعلومات",
+  "uploadNeedSignIn": "يرجى تسجيل الدخول لإرفاق الملفات",
+  "loading": "جارٍ التحميل",
+  "loadingVerifyCaptcha": "جارٍ التحقق من أنك إنسان…",
+  "signIn": "تسجيل الدخول",
+  "inProgress": "قيد التنفيذ",
+  "planning": "قيد التخطيط",
+  "released": "تم الإصدار",
+  "viewMore": "عرض المزيد",
+  "none": "لا شيء",
+  "frequency": {
+    "daily": "يومي",
+    "monthly": "شهري",
+    "quarterly": "ربع سنوي",
+    "yearly": "سنوي"
+  },
+  "amountPerDuration": "{amount, plural, one {# شهر} other {# أشهر}}",
+  "unknownUser": "مستخدم غير معروف",
+  "freeTrial": "تجربة مجانية",
+  "currentPlan": "الخطة الحالية",
+  "only": "فقط",
+  "newFeature": "ميزة جديدة",
+  "viewDetail": "عرض التفاصيل",
+  "whatsNew": "ما الجديد",
+  "availableNow": "متاح الآن",
+  "sessionEnd": "انتهت الجلسة أو تم تغييرها من نافذة أخرى.",
+  "close": "إغلاق",
+  "noNotificationsYet": "لا توجد إشعارات بعد",
+  "couldntLoadNotifications": "تعذر تحميل الإشعارات",
+  "errorLoadingNotifications": "حدث خطأ أثناء تحميل الإشعارات",
+  "weWillNotifyWhenNew": "سنخبرك عندما يكون هناك شيء جديد",
+  "reload": "إعادة التحميل",
+  "timeAgo": {
+    "justNow": "الآن",
+    "secondsAgo": "منذ {count} ثانية",
+    "minutesAgo": "منذ {count} دقيقة",
+    "hoursAgo": "منذ {count} ساعة",
+    "daysAgo": "منذ {count} يوم",
+    "monthsAgo": "منذ {count} شهر",
+    "yearsAgo": "منذ {count} سنة"
+  },
+  "notification": {
+    "stayUpdate": "فعّل الإشعارات للبقاء على اطلاع الآن",
+    "enableNow": "فعّل الآن",
+    "skip": "تخطي",
+    "later": "لاحقًا",
+    "alert": {
+      "title": "لا تفوّت أي تحديث",
+      "description": "فعّل الإشعارات لتلقي التحديثات والأخبار والعروض!"
+    },
+    "popup": {
+      "title": "ابقَ على اطلاع فوري",
+      "description": "فعّل الإشعارات الآن لمتابعة التقدم لحظيًا والميزات الجديدة والعروض الحصرية لك",
+      "enable": "تفعيل الإشعارات"
+    },
+    "task": {
+      "title": "إشعار عند الاكتمال",
+      "description": "تتم معالجة مهمتك في الخلفية — هل ترغب في إشعار سريع عند جاهزية النتيجة؟"
+    }
+  }
+}

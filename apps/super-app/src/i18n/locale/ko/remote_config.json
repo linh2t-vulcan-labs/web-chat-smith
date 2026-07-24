@@ -1,0 +1,544 @@
+{
+  "chatSuggestion": {
+    "imageToImage": {
+      "sereneSnowPortrait": "눈 속에서 평온한 포즈의 초상화를 만들어 주세요",
+      "joyfulSnowToss": "제 이미지를 눈을 던지며 즐거워하는 소녀로 변환해 주세요",
+      "cozyCampfireGuitar": "제 이미지를 아늑한 캠프파이어와 기타 야경으로 변환해 주세요",
+      "walkingInSnow": "눈 속을 걷는 제 초상화를 만들어 주세요",
+      "festiveLollipopPortrait": "제 사진을 달콤한 축제 분위기의 롤리팝 초상화로 변환해 주세요",
+      "peacefulChristmasPorch": "업로드한 사진으로 평화로운 크리스마스 베란다 분위기를 연출해 주세요",
+      "playingWithReindeer": "순록과 놀고 있는 제 이미지를 만들어 주세요",
+      "goSkiing": "스키를 타는 제 초상화를 만들어 주세요",
+      "northernLights": "신비로운 오로라를 감상하는 제 초상화를 만들어 주세요",
+      "canadianFrozenRiver": "웅장한 캐나다 빙하 강을 배경으로 한 제 이미지를 만들어 주세요",
+      "portraitOfMeReadingByAFireplace": "벽난로 옆에서 책 읽는 제 초상화를 만들어 주세요",
+      "enjoyingCoffeeInAScenicCafe": "제 이미지를 아름다운 카페에서 커피를 즐기는 장면으로 변환해 주세요",
+      "wrappedInABlanketOnABalcony": "발코니에서 담요에 싸인 제 이미지를 만들어 주세요",
+      "stargazingScene": "제 사진을 별 보기 장면으로 변환해 주세요",
+      "peacefulMorningWalk": "평화로운 아침 산책 중인 제 초상화를 만들어 주세요",
+      "relaxingInAHammock": "제 이미지를 해먹에서 쉬는 장면으로 변환해 주세요",
+      "writingInAJournal": "일기를 쓰는 제 이미지를 만들어 주세요",
+      "sunsetViewingScene": "제 사진을 일몰 감상 장면으로 변환해 주세요",
+      "picnicInAGarden": "정원에서 피크닉을 즐기는 제 초상화를 만들어 주세요",
+      "meditatingByALake": "제 이미지를 호숫가에서 명상하는 장면으로 변환해 주세요",
+      "highFashionPortrait": "제 사진을 하이패션 매거진 초상화로 변환해 주세요",
+      "warmStreetArt": "제 이미지를 따뜻한 스트리트 아트 사진으로 재스타일링해 주세요",
+      "dreamyFloralGaze": "제 초상화에 몽환적인 꽃 시선 느낌을 주세요",
+      "windKissedPortrait": "제 사진을 바람이 스치는 야외 초상화로 변환해 주세요",
+      "goldenHourCloseup": "제 이미지를 황금 시간대 클로즈업으로 재스타일링해 주세요",
+      "lightShadowComposition": "제 초상화에 빛과 그림자 구성을 주세요",
+      "vintageNightTone": "제 사진을 빈티지 야경 톤으로 변환해 주세요",
+      "aquariumFilmPortrait": "제 이미지를 수족관 필름 초상화로 재스타일링해 주세요",
+      "candidSunset": "제 초상화에 자연스러운 일몰 미학을 주세요",
+      "chicElevatorEditorial": "제 사진을 시크한 엘리베이터 에디토리얼 샷으로 변환해 주세요"
+    },
+    "textToImage": {
+      "christmasFireplace": "장작 타는 크리스마스 벽난로 디자인을 만들어 주세요",
+      "giftWrappingPostcard": "선물 포장 엽서를 만들어 주세요",
+      "thanksgivingStorybook": "동화 속 추수감사절 저녁 식사를 그려 주세요",
+      "christmasLivingRoom": "아늑한 크리스마스 거실을 디자인해 주세요",
+      "cozyCatWindow": "창가의 아늑한 고양이",
+      "catsGiftExchange": "선물을 교환하는 고양이 엽서",
+      "winterVillageWatercolor": "수채화 겨울 마을",
+      "minimalWarmWorkspace": "따뜻한 톤의 미니멀 작업 공간을 디자인해 주세요",
+      "watercolorImagination": "수채화 상상력 폭발 디자인을 만들어 주세요",
+      "dreamscapeBedroom": "몽환적인 침실 아트를 만들어 주세요",
+      "newYearVisionBoard": "새해 비전 보드를 디자인해 주세요",
+      "newYearFireworksPoster": "새해 불꽃놀이 포스터",
+      "futuristicNewYearCafe": "미래적인 새해 카페",
+      "morningZenGarden": "아침 선 정원",
+      "goalSettingJournalCover": "목표 설정 일기 표지",
+      "newYearNightCityscape": "새해 야경 도시 풍경",
+      "yearOfTheHorseArt": "말띠의 해 아트 (2026)",
+      "cyberpunkNewYearParty": "사이버펑크 새해 파티",
+      "newYearCountdownIllustration": "새해 카운트다운 일러스트레이션",
+      "dreamLifeTheme": "2026년 꿈의 삶",
+      "snowyMountainLandscape": "눈 덮인 산 풍경을 그려 주세요",
+      "cuteCartoonGirl": "귀여운 만화 소녀 캐릭터를 만들어 주세요",
+      "fantasyCastleDragon": "판타지 성과 드래곤 장면을 그려 주세요",
+      "galaxySpaceArt": "다채로운 은하 우주 아트를 일러스트해 주세요",
+      "retroNeonPoster": "1980년대 레트로 네온 포스터를 디자인해 주세요",
+      "futuristicCity": "미래적인 도시 스카이라인을 만들어 주세요",
+      "minimalLeafLogo": "미니멀한 잎사귀 로고 디자인을 해주세요",
+      "indieAlbumCover": "다크 인디 앨범 커버를 만들어 주세요",
+      "aiMeme": "AI로 생성된 밈을 디자인해 주세요",
+      "futuristicSneaker": "미래적인 스니커즈 컨셉을 만들어 주세요"
+    },
+    "infoQuery": {
+      "holidayTravelPlanning": "스트레스 없이 휴일 여행을 준비하세요",
+      "morningRoutine": "아침 루틴 만들기",
+      "wealthPlan5Years": "5년 내 자산을 키우는 계획을 세워 주세요",
+      "stayMotivated": "동기를 유지하는 방법",
+      "easterBrunchIdeas": "가족을 위한 부활절 브런치 아이디어",
+      "movieNightMoods": "웃음, 눈물, 소름을 위한 영화 추천",
+      "weekendStaycation": "집에서 즐기는 주말 스테이케이션",
+      "christmasDinnerMenu": "크리스마스 저녁 식사 메뉴",
+      "quickHomeWorkout": "30분 홈 트레이닝",
+      "holidayTraditions": "의미 있는 명절 전통 만들기",
+      "brainstormNewYearResolutions": "2026년 새해 목표 아이디어를 브레인스토밍하도록 도와주세요",
+      "buildNewYearRoutine": "새해 루틴 만들기",
+      "topTravelTrends": "2026년 최고의 여행 트렌드",
+      "stayConsistent": "꾸준함을 유지하는 방법",
+      "declutterHomeAndMind": "집과 마음 정리하기",
+      "techAndCareerOutlook": "2026년 기술 및 커리어 전망",
+      "personalYearTheme": "2026년을 위한 개인 테마",
+      "planNewYearsParty": "새해 파티 계획하기",
+      "balanceWorkAndLife": "일과 삶의 균형",
+      "morningMeditationGuide": "아침 명상 가이드",
+      "explainAI": "AI를 간단하게 설명해 주세요",
+      "apollo11Summary": "아폴로 11호 임무 요약",
+      "dailyWalkingBenefits": "매일 걷기의 이점 알려주세요",
+      "blockchainSimple": "블록체인을 쉽게 설명해 주세요",
+      "greenhouseEffect": "온실 효과 설명",
+      "improveFocus": "집중력을 높이는 방법",
+      "manageStress": "스트레스 관리 팁",
+      "sleepQuality": "수면의 질을 높이는 방법"
+    },
+    "funSocial": {
+      "casualHangoutInvite": "편안한 만남 초대 문자",
+      "personalityQuiz": "재미있는 성격 퀴즈 질문",
+      "christmasPlaylist": "아늑한 크리스마스 플레이리스트",
+      "easterGiftsKids": "아이들을 위한 부활절 선물 아이디어",
+      "christmasGiftsFamily": "가족을 위한 크리스마스 선물",
+      "sweetGiftNote": "선물에 달콤한 메모 써 주세요",
+      "secretSantaFunny": "재미있는 시크릿 산타 메시지",
+      "goodMorningText": "귀여운 굿모닝 문자 제안",
+      "meetingExcuse": "회의 빠질 재미있는 핑계",
+      "singleWittyReply": "\"왜 싱글이에요?\"에 대한 재치 있는 답변",
+      "newYearGreetingText": "새해 인사 문자",
+      "energyQuiz": "2026년 에너지 퀴즈",
+      "funnyResolutionExcuses": "재미있는 새해 목표 핑계",
+      "funnyNewYearResolution": "재미있는 2026년 새해 목표",
+      "visionWordGame": "비전 단어 게임",
+      "motivationMessage": "동기 부여 메시지",
+      "predictYearFortune": "2026년 운세 예측",
+      "workFriendlyNewYearWish": "업무 친화적인 새해 소망",
+      "bucketListChallenge": "2026년 버킷리스트 챌린지",
+      "randomActsOfKindness": "랜덤 친절 행동",
+      "riddle": "수수께끼를 내 주세요",
+      "joke": "농담 해주세요",
+      "catCaption": "고양이 사진 캡션 제안",
+      "coffeePoem": "커피 시를 써 주세요",
+      "pickupLine": "픽업 라인 알려주세요",
+      "hangoutInvite": "같이 놀자고 말하는 방법",
+      "quizQuestion": "퀴즈 질문 내 주세요",
+      "inspiringQuote": "영감을 주는 명언 공유",
+      "animalFact": "놀라운 동물 사실 알려주세요",
+      "wordChainGame": "끝말잇기 게임 시작"
+    },
+    "deepResearch": {
+      "remoteWorkImpact": "원격 근무 영향 조사",
+      "coffeeIndustry": "글로벌 커피 산업 분석",
+      "kpopInfluence": "K-팝의 글로벌 영향력 조사",
+      "educationModels": "핀란드와 미국 교육 모델 비교",
+      "habitFormation": "습관이 형성되고 변화하는 방법 연구",
+      "renewableEnergy": "재생 가능 에너지 도입 추세 분석",
+      "socialMediaTeens": "청소년에 대한 소셜 미디어 영향 조사",
+      "startupFailures": "스타트업 실패의 주요 원인 찾기",
+      "mindfulnessWork": "직장 내 마음챙김 연구",
+      "spaceExploration": "우주 탐사 주요 이정표 요약"
+    }
+  },
+  "imageCreation": {
+    "gemini-3-pro-image-preview": {
+      "none": {
+        "title": "없음",
+        "description": "\"\""
+      },
+      "zootopia": {
+        "title": "Wildtopia",
+        "description": "실제 사람들이 애니메이션 여우와 토끼와 함께 포즈를 취하는 재미있는 시네마 사진을 만들어 주세요. 실제처럼 보이는 사람과 스타일화된 캐릭터를 하나의 매끄러운 장면에 혼합합니다."
+      },
+      "gashapon_capsule": {
+        "title": "가샤폰 캡슐",
+        "description": "투명한 가샤폰 캡슐 안에 전신 미니어처 인물이 담겨 있으며, 신원을 유지하면서 완전한 의상을 착용합니다. 깔끔하고 세련된 느낌의 재미있는 컬렉터블 스타일 초상화입니다."
+      },
+      "anatomical_infographic": {
+        "title": "해부학적 인포그래픽",
+        "description": "양피지 위의 백과사전 페이지처럼 스타일링된, 레이블이 붙은 해부도와 간결한 정보가 담긴 대칭적인 단면도입니다."
+      },
+      "product_technical_view": {
+        "title": "제품 기술 뷰",
+        "description": "부드러운 회색 스튜디오 배경 위에 모든 내부 부품이 정밀하게 정렬되어 떠 있는 초고해상도 분해도 이미지입니다."
+      },
+      "poster_creation": {
+        "title": "포스터 제작",
+        "description": "사실적인 디테일로 제품을 담은 세련된 광고 포스터로, 어울리는 슬로건과 깔끔하고 전문적인 레이아웃이 적용되어 있습니다."
+      },
+      "ingredients": {
+        "title": "재료",
+        "description": "깔끔한 나무 배경 위에 요리를 레이블이 붙은 사실적인 재료로 완전히 분해하여 이름과 수량을 명확하게 표시한 레이아웃입니다."
+      },
+      "studio_style_photo": {
+        "title": "사진 채색",
+        "description": "스타일화된 컨셉 아트."
+      },
+      "object_infrastructure": {
+        "title": "오브젝트 인프라",
+        "description": "건물 외관을 분석하고 실제 건축 논리를 사용하여 내부 레이아웃을 추론하여 정밀한 건축 평면도 또는 청사진을 만듭니다."
+      },
+      "outfit_swap": {
+        "title": "의상 교체",
+        "description": "포즈, 신원, 원래 배경을 유지하면서 다른 이미지의 옷으로 의상을 교체합니다."
+      },
+      "me_with_my_pet_pro": {
+        "title": "나와 내 반려동물",
+        "description": "업로드된 이미지에서 사람과 반려동물을 자연스러운 하나의 장면으로 합성합니다. 실제 신원, 조명, 원근감을 유지하여 함께 촬영된 것처럼 보이게 합니다."
+      },
+      "combination_photo": {
+        "title": "합성 사진",
+        "description": "업로드된 모든 요소를 통일된 조명, 비율, 색상으로 하나의 자연스럽고 일관된 장면으로 합성합니다. 매끄러운 실사 합성 이미지를 생성합니다."
+      },
+      "line_art": {
+        "title": "라인 아트",
+        "description": "동일한 의상, 신원, 깔끔한 스튜디오 조명으로 9가지 다양한 포즈를 담은 3×3 그리드의 스튜디오 초상화입니다."
+      },
+      "nine_half_length_portraits": {
+        "title": "나인 포트레이트",
+        "description": "다양한 자연 야외 배경에서 촬영한 3×3 그리드의 반신 초상화입니다. 신원은 일관되게 유지되며 의상은 각 장면과 계절에 맞게 조정됩니다."
+      },
+      "clothing_extraction": {
+        "title": "의류 추출",
+        "description": "모델을 제거하고 코르크보드 배경에 실제 색상, 질감, 3D 원단 형태로 각 의상 아이템을 따로 표시하는 사실적인 패션 콜라주입니다."
+      },
+      "knitted_wool_food": {
+        "title": "뜨개질 울 음식",
+        "description": "요리의 구성과 색상을 유지하면서 초고해상도 뜨개질 울 버전으로 변환합니다. 실제 음식처럼 촬영된 세밀한 실 조각품입니다."
+      },
+      "pet_surrounding": {
+        "title": "반려동물 둘러싸기",
+        "description": "하나의 일관된 야외 장면에 사람과 같은 종의 반려동물 여러 마리를 합성합니다. 신원과 사실감을 유지합니다. 실사 디테일."
+      },
+      "drawing_assistant": {
+        "title": "그리기 도우미",
+        "description": "동일한 아트 스타일로 깔끔하고 전문적인 선화와 적절한 디테일로 미완성 스케치를 완성합니다."
+      },
+      "storyboard_extend_border_line": {
+        "title": "스토리보드",
+        "description": "장면을 확장하는 6프레임 시네마틱 스토리보드를 만들며, 캐릭터와 아트 스타일의 일관성을 유지합니다."
+      }
+    },
+    "gemini-2": {
+      "5-flash-image": {
+        "none": {
+          "title": "없음",
+          "description": "\"\""
+        },
+        "esports_poster": {
+          "title": "e스포츠 포스터",
+          "description": "게임 영웅 옆에서 자신감 넘치는 프로게이머 포즈를 취한 역동적인 e스포츠 포스터로, 네온 토너먼트 효과와 빛나는 게이머 이름이 아래에 표시됩니다."
+        },
+        "me_with_my_favorite_boss": {
+          "title": "나와 내가 좋아하는 보스",
+          "description": "좋아하는 게임 영웅 옆에 배치된 탑뷰 엘리베이터 샷으로, \"플레이어\"와 \"영웅\" 레이블이 명확하게 표시됩니다 — 사실적이고 시네마틱하며 각 캐릭터의 외모에 충실합니다."
+        },
+        "winter_reverie": {
+          "title": "겨울 몽상",
+          "description": "우산을 든 고독한 인물이 조용한 눈과 부드러운 겨울 빛에 둘러싸인 세 프레임의 시네마틱 시퀀스입니다."
+        },
+        "winter_veil": {
+          "title": "겨울 베일",
+          "description": "투명한 우산 아래 조용하고 내성적인 인물 주위로 부드러운 눈송이가 내리는 평온한 겨울 초상화입니다."
+        },
+        "pokemon": {
+          "title": "Pokémon",
+          "description": "그 원소에 맞는 판타지 세계를 배경으로 스트리트웨어를 입고 실제 같은 포켓몬 옆에 앉아 있는 사실적인 트레이너 스타일 샷입니다."
+        },
+        "realistic_figurine": {
+          "title": "리얼리스틱 피규어",
+          "description": "세밀한 사실감으로 자신을 실제 같은 컬렉터블 피규어로 변신시키세요."
+        },
+        "snowflake": {
+          "title": "눈송이",
+          "description": "조용한 감정과 내리는 눈을 담은 부드러운 두 프레임의 겨울 콜라주로, 부드러움과 고요한 아름다움을 혼합합니다."
+        },
+        "studio_portrait": {
+          "title": "스튜디오 초상화",
+          "description": "시네마틱한 분위기와 부드러운 그림자가 있는 드라마틱한 스포트라이트 초상화입니다."
+        },
+        "me_with_my_pet": {
+          "title": "나와 내 반려동물",
+          "description": "깔끔하고 미니멀한 환경에서 반려동물과 자연스럽게 포즈를 취하는 심플한 폴라로이드 스타일 샷입니다."
+        },
+        "future_family": {
+          "title": "미래 가족",
+          "description": "해변을 함께 즐기는 당신과 미래 가족의 열대 휴가 사진입니다."
+        },
+        "old_couple": {
+          "title": "노부부",
+          "description": "자연스럽고 온화한 표정으로 야외에 서 있는 노년의 당신을 담은 실사 미래 나이 초상화로, 잔잔한 동반자적 감성을 담고 있습니다."
+        },
+        "glowing_winter": {
+          "title": "빛나는 겨울",
+          "description": "내리는 눈을 통해 황금빛이 빛나는 부드러운 겨울 초상화로, 얼어붙은 풍경 속에서 따뜻함과 평온함을 혼합합니다."
+        },
+        "professional_portrait": {
+          "title": "전문적인 초상화",
+          "description": "빨간 배경, 깔끔한 조명, 자신감 있고 전문적인 느낌의 스튜디오 초상화입니다."
+        },
+        "poster_design": {
+          "title": "포스터 디자인",
+          "description": "그래픽 원형 배경이 있는 대담한 패션 포스터 느낌입니다."
+        },
+        "winter": {
+          "title": "겨울",
+          "description": "오로라 하늘과 얼음 풍경이 있는 눈 덮인 원더랜드입니다."
+        },
+        "art_gallery": {
+          "title": "아트 갤러리",
+          "description": "아트 전시회처럼 현대적인 갤러리 환경 안에 초상화를 배치하세요."
+        },
+        "birthday_girl": {
+          "title": "생일",
+          "description": "케이크, 초, 기쁨이 가득한 축제 생일 장면으로 축하하세요."
+        },
+        "spotify": {
+          "title": "음악",
+          "description": "디지털 플레이리스트 장면 안에 배치된 몰입형 음악 분위기입니다."
+        },
+        "ocean": {
+          "title": "바다",
+          "description": "광활한 바다에 둘러싸여 끝없는 파란 물 위에 고요히 앉아 있습니다."
+        },
+        "polaroid": {
+          "title": "폴라로이드",
+          "description": "현대 즉석 인화물을 연상시키는 균일한 흰색 테두리의 자연스러운 초상화입니다."
+        },
+        "meowchic": {
+          "title": "Meowchic",
+          "description": "귀여운 고양이들에 둘러싸인 아늑하고 스타일리시한 장면에서 편안하게 쉬세요."
+        },
+        "festival": {
+          "title": "축제",
+          "description": "야외 하늘 아래 줄 전구, 음료, 행복한 미소가 가득한 활기찬 야간 축제 장면입니다."
+        },
+        "surreal_metamorphosis": {
+          "title": "초현실적 변신",
+          "description": "빛나는 나비들이 소용돌이치는 신비로운 변신 장면으로, 재탄생과 꿈 같은 변화를 상징합니다."
+        },
+        "taylor_swift_1989": {
+          "title": "1989",
+          "description": "부드러운 햇빛, 자유로운 에너지, 시네마틱한 해변 분위기의 밝은 해안 장면입니다."
+        },
+        "blue_solace": {
+          "title": "블루 솔라스",
+          "description": "고독, 성찰, 부드러운 평온함이 담긴 세 순간의 평온한 겨울 콜라주로, 부드러운 파란색 톤으로 혼합되어 있습니다."
+        },
+        "taylor_swift_reputation": {
+          "title": "레퓨테이션",
+          "description": "레퓨테이션 시대에서 영감을 받은 강렬하고 힘 있는 태도와 높은 대비의 대담한 모노크롬 미학입니다."
+        },
+        "the_life_of_a_showgirl": {
+          "title": "쇼걸의 삶",
+          "description": "반짝이는 스팽글, 깃털, 스포트라이트 드라마가 있는 화려한 무대 장면입니다."
+        },
+        "taylor_swift_evermore": {
+          "title": "에버모어",
+          "description": "늦가을의 따뜻함과 우수를 담은 차분한 톤과 조용한 성찰의 부드러운 가을 들판입니다."
+        },
+        "speak_now": {
+          "title": "스피크 나우",
+          "description": "스피크 나우 시대에서 영감을 받은 부드럽고 로맨틱한 톤의 일몰 시 몽환적인 라벤더 들판입니다."
+        },
+        "folklore": {
+          "title": "포크로어",
+          "description": "안개와 고독이 있는 분위기 있는 숲 장면으로, 조용한 성찰과 시적인 향수를 자아냅니다."
+        }
+      }
+    },
+    "gpt-image-1": {
+      "none": {
+        "title": "없음",
+        "description": ""
+      },
+      "ghibli": {
+        "title": "드리미 스튜디오",
+        "description": "틈새 매력, 미국에서 주류보다 더 아트하우스적"
+      },
+      "the_simpsons": {
+        "title": "옐로우 툰 패밀리",
+        "description": "비교할 수 없는 주류 매력과 장수를 자랑하는 문화적 거물"
+      },
+      "south_park": {
+        "title": "볼드 사타이어 툰",
+        "description": "강력하고 일관된 팬층과 중요한 문화적 관련성"
+      },
+      "dragon_ball": {
+        "title": "슈퍼 사이어인",
+        "description": "깊은 문화적 침투력을 가진 미국에서 가장 상징적인 애니메이션"
+      },
+      "naruto": {
+        "title": "닌자 레전드",
+        "description": "엄청난 검색 인기와 시청률, Dragon Ball보다 약간 뒤처짐"
+      },
+      "rick_and_morty": {
+        "title": "매드 사이파이",
+        "description": "젊은 성인들 사이에서 현대적 매력과 강력한 팬층"
+      },
+      "one_piece": {
+        "title": "파이럿 보이지",
+        "description": "인기 있지만 접근성 문제로 나루토와 드래곤볼에 뒤처짐"
+      },
+      "sailor_moon": {
+        "title": "매직 문 히로인즈",
+        "description": "향수적 매력과 틈새 팬층, 특정 지역에서 강세"
+      },
+      "attack_on_titan": {
+        "title": "그리티 타이탄",
+        "description": "헌신적인 팬층을 가진 비평가들의 극찬을 받았지만 빅 3보다 규모가 작음"
+      },
+      "demon_slayer": {
+        "title": "데몬 헌터 사가",
+        "description": "신흥 스타, 어린 팬들 사이에서 인기 있지만 미국에서 덜 확립됨"
+      },
+      "bleach": {
+        "title": "소울 헌터",
+        "description": "최근 아크로 부활한 관심, 그러나 미국에서 전반적인 영향력이 낮음"
+      },
+      "doraemon": {
+        "title": "퓨처리스틱 레트로 키드",
+        "description": "제한적인 미국 인기, 주로 틈새 또는 향수 기반"
+      },
+      "anime": {
+        "description": "생동감 있는 색상, 역동적인 캐릭터, 감정적인 표현"
+      },
+      "manga": {
+        "description": "대담한 선 아트, 높은 대비 음영"
+      },
+      "genshin_impact": {
+        "description": "우아한 판타지 캐릭터, 세밀한 시네마틱 세계"
+      },
+      "disney": {
+        "description": "부드러운 색상, 마법 같은, 표현력 있는 동화 스타일"
+      }
+    },
+    "chatsmith": {
+      "none": {
+        "title": "없음",
+        "description": "\"\""
+      },
+      "painting": {
+        "title": "그림",
+        "description": "질감 있는 붓 터치의 손으로 그린 이미지"
+      },
+      "3d": {
+        "title": "3D",
+        "description": "깊이와 원근감이 있는 3D 이미지"
+      },
+      "realistic": {
+        "title": "실사풍",
+        "description": "실제 사진처럼 보이는 생생한 이미지"
+      },
+      "cartoon": {
+        "title": "만화",
+        "description": "굵은 윤곽선의 재미있고 단순화된 이미지"
+      },
+      "cyberpunk": {
+        "title": "사이버펑크",
+        "description": "네온 조명과 어두운 기술의 미래적 이미지"
+      },
+      "digital_art": {
+        "title": "디지털 아트",
+        "description": "전통 회화의 느낌을 현대적으로 재현한 이미지"
+      },
+      "fantasy": {
+        "title": "판타지",
+        "description": "신화 속 마법 세계의 환상적인 이미지"
+      },
+      "anime": {
+        "title": "애니메이션",
+        "description": "일본 만화 같은 다채로운 이미지"
+      },
+      "chibi": {
+        "title": "치비",
+        "description": "큰 머리의 귀엽고 미니어처 캐릭터"
+      },
+      "watercolor": {
+        "title": "수채화",
+        "description": "수채화 그림 같은 부드러운 이미지"
+      },
+      "pop_art": {
+        "title": "팝 아트",
+        "description": "대담하고 생동감 있는 레트로 만화책 이미지"
+      },
+      "sketch": {
+        "title": "스케치",
+        "description": "손으로 그린 스케치 같은 거친 이미지"
+      },
+      "noir": {
+        "title": "느와르",
+        "description": "그림자가 있는 드라마틱한 흑백 이미지"
+      },
+      "abstract": {
+        "title": "추상",
+        "description": "사실적이지 않은 형태와 색상의 이미지"
+      },
+      "low_poly": {
+        "title": "로우 폴리",
+        "description": "단순한 기하학적 도형으로 만든 이미지"
+      }
+    }
+  },
+  "featureSurveyRequest": {
+    "feedbackOptions": {
+      "research": "너무 얕음, 신뢰할 수 없는 출처, 오래된 정보, 이해하기 어려움",
+      "image_creation": "잘못된 스타일, 나쁜 구성, 잘못된 주제, 깨진 것처럼 보임",
+      "normal": "주제와 무관, 잘못된 사실, 이해하기 어려움, 편향됨",
+      "common": "요청과 일치하지 않음, 유용하지 않음, 디테일 부족, 낮은 품질"
+    }
+  },
+  "whatsNewFeatures": {
+    "textToImage": {
+      "title": "텍스트로 이미지를 만들어보세요",
+      "description": "GPT-Image-2와 Banana 모델에서 텍스트-이미지 생성이 가능합니다"
+    },
+    "uploadMultiple": {
+      "title": "이미지 생성이 이제 여러 업로드를 지원합니다",
+      "description": "최대 4개의 이미지를 업로드하여 고유한 결과를 만들고, 다양한 스타일을 탐색하며 새로운 가능성을 발견하세요."
+    },
+    "chatSync": {
+      "title": "Chat Sync 만나보기",
+      "description": "채팅 기록이 이제 동기화되었습니다. 언제 어디서나 어떤 기기에서도 대화를 계속하세요"
+    },
+    "gptImage": {
+      "title": "😆 캐리커처가 출시되었습니다!",
+      "description": "최신 스타일 업데이트로 사진을 재미있고 과장된 느낌으로 변환해 보세요"
+    },
+    "claude": {
+      "title": "Claude를 만나보세요: 섬세한 표현의 대가",
+      "description": "더 자연스럽고 사람 같은 AI를 경험해 보세요. Claude는 에세이 작성이나 코딩 프로젝트를 위한 가장 정교한 협업 파트너입니다."
+    },
+    "gemini": {
+      "title": "새로운 모델이 출시되었습니다",
+      "description": "빠른 답변부터 깊은 사고까지. Chat Smith에서 새 모델을 만나보세요"
+    },
+    "designLogo": {
+      "title": "몇 분 만에 완성도 높은 로고를 만들어 보세요",
+      "description": "전문적인 로고 시안을 생성하고, 모든 세부 사항을 맞춤 설정하며, 한곳에서 디자인을 완성해 보세요."
+    }
+  },
+  "whatsNewOptions": {
+    "joinNow": "지금 참여",
+    "empty": "모든 내용을 확인했습니다, 잘 하셨어요!",
+    "whatNew1": {
+      "title": "Discord의 ChatSmith 커뮤니티에 참여하세요",
+      "description": "다른 사람들과 연결하고, 지원을 받고, 아이디어를 공유하며, 흥미로운 일의 일부가 되어보세요. ChatSmith 서버에서 일어나는 모든 것을 발견하세요!"
+    },
+    "whatNew2": {
+      "title": "🔍 웹 검색이 도착했습니다",
+      "description": "웹에서 실시간으로 최신 업데이트와 인사이트를 받아보세요. 탭하여 새로운 것을 확인하세요!"
+    },
+    "whatNew3": {
+      "title": "📄 PDF와 채팅이 이제 지원됩니다",
+      "description": "PDF를 업로드하고 사람과 대화하듯 질문해 보세요. 탭하여 최신 업데이트를 탐색하세요!"
+    },
+    "whatNew4": {
+      "title": "🎨 AI로 멋진 이미지를 만드세요",
+      "description": "아이디어를 순식간에 아름다운 비주얼로 변환하세요. 탭하여 새로운 AI 아트 기능을 탐색하세요!"
+    },
+    "whatNew5": {
+      "title": "📚 딥 리서치, 즉시 완료",
+      "description": "몇 분 내에 어떤 주제에 대해서도 상세하고 출처가 있는 보고서를 생성하세요. 탭하여 지금 발견하세요"
+    }
+  }
+}

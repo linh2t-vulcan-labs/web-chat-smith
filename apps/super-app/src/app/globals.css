@@ -1,0 +1,295 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
+
+@import "../styles/colors/light.css";
+@import "../styles/colors/dark.css";
+@import "../styles/theme.css";
+@import "../styles/utilities.css";
+@import "../styles/components.css";
+
+@import "../styles/css/index.css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-family-v1-family-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+  Paddle iframes — pointer-events fix (GU-1398)
+
+  Root cause:
+  Radix UI Dialog (modal mode) passes disableOutsidePointerEvents: true to its
+  internal DismissableLayer, which sets document.body.style.pointerEvents = "none".
+  Since pointer-events is INHERITED, every Paddle iframe injected into <body>
+  inherits "none" and becomes unclickable — even though they sit at the maximum
+  z-index. z-index is not the problem; the inherited pointer-events is.
+
+  Paddle doesn't document its injected iframe markup, so we match the identifiers
+  it actually emits, favouring stable attributes over the variable class suffix
+  (e.g. "paddle-frame paddle-frame-overlay" vs "...-inline"):
+    - name="paddle_frame"     overlay + inline checkout
+    - .paddle-frame           stable base class shared by both checkout modes
+    - src*="paddle.com"        any Paddle checkout iframe
+    - [id^="__pw"]             Retain frames, incl. #__pw_frame recovery notification
+                              (srcless iframe, so matched by id rather than src)
+*/
+iframe[name="paddle_frame"],
+iframe.paddle-frame,
+iframe[src*="paddle.com"],
+iframe[id^="__pw"],
+#__pw_frame {
+  pointer-events: auto !important;
+}
+
+/* Sonnet: Remove sonner svg icon default behavior */
+/* The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+[data-sonner-toast] {
+  --toast-svg-margin-start: 0px;
+  --toast-svg-margin-end: 0px;
+  --lift: 0.3;
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@layer utilities {
+  :root {
+    /* Neutral */
+    --neutral-0: #ffffff;
+    --neutral-50: #fafafa;
+    --neutral-100: #f7f7f7;
+    --neutral-150: #f4f4f4;
+    --neutral-200: #d9d9d9;
+    --neutral-250: #cbcbcb;
+    --neutral-300: #bcbcbc;
+    --neutral-350: #9e9e9e;
+    --neutral-400: #818181;
+    --neutral-450: #636363;
+    --neutral-500: #4f4f4f;
+    --neutral-600: #3b3b3b;
+    --neutral-700: #282828;
+    --neutral-700A: rgba(40, 40, 40, 0.7);
+    --neutral-800: #1e1e1e;
+    --neutral-850: #1a1a1a;
+    --neutral-900: #141414;
+    --neutral-950: #0a0a0a;
+    --neutral-1000: #000000;
+
+    /* Black */
+    --black-50: rgba(0, 0, 0, 5%);
+    --black-100: rgba(0, 0, 0, 10%);
+    --black-200: rgba(0, 0, 0, 20%);
+    --black-300: rgba(59, 59, 59, 0.3);
+    --black-400: rgba(10, 10, 10, 0.4);
+    --black-500: rgba(59, 59, 59, 0.5);
+    --black-600: rgba(30, 30, 30, 0.6);
+    --black-700: rgba(40, 40, 40, 0.7);
+    --black-800: rgba(30, 30, 30, 0.8);
+    --black-900: rgba(0, 0, 0, 90%);
+    --black-950: rgba(0, 0, 0, 95%);
+
+    /* Green */
+    --green-700: rgba(0, 124, 100, 1);
+    --green-800: rgba(3, 98, 79, 1);
+
+    /* Animation */
+    --fade-in-duration: 1s;
+  }
+
+  /* Sonnet: Remove sonner svg icon default behavior */
+  [data-sonner-toast] {
+    --toast-svg-margin-start: 0px;
+    --toast-svg-margin-end: 0px;
+    --lift: 0.3;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-surface-inputControl-neutral-default)
+      rgb(0, 0, 0, 0);
+    scroll-behavior: smooth;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-surface-inputControl-neutral-default);
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  html {
+    max-height: 100vh;
+    height: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  body {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --foreground-rgb: 255, 255, 255;
+      --background-start-rgb: 0, 0, 0;
+      --background-end-rgb: 0, 0, 0;
+    }
+  }
+}
+
+[contenteditable]:empty::before {
+  content: attr(data-placeholder);
+  color: var(--color-text-input-placeholder);
+  font-weight: 300;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 24px;
+  pointer-events: none;
+  display: block;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgb(106 235 195 / var(--tw-bg-opacity, 1));
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.animate-marquee-slow {
+  animation: marquee 10s linear infinite;
+}
+
+.animate-marquee {
+  animation: marquee 5s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes fadeInBottomToTop {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee-x {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(var(--shift, -50%));
+  }
+}
+
+.animate-marquee-x {
+  animation: marquee-x var(--duration, 3s) linear infinite alternate;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in-effect {
+  animation: fadeIn var(--fade-in-duration) ease-in-out forwards;
+}
+
+.fade-in-delayed {
+  opacity: 0;
+  animation: fadeIn 0.1s ease-in-out forwards;
+  animation-delay: var(--fade-in-duration);
+}
+
+@keyframes bump {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  20% {
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  40% {
+    transform: scale(1.05);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+  60% {
+    transform: scale(1.02);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  80% {
+    transform: scale(1.01);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.animate-bump {
+  animation: bump 0.8s ease-out;
+}

@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "title": "登录 | Chat Smith",
+    "description": "登录您的 Chat Smith 帐户，继续与您的 AI 助手聊天。立即注册以管理您的对话并体验高级功能。",
+    "keywords": "chat smith 登录, chat smith 登录帐户, chat smith 注册"
+  },
+  "hero": {
+    "writeBetter": "写得更好、更快",
+    "askSearch": "提问、搜索、发现",
+    "masterDocument": "文档大师"
+  },
+  "trustedByHighlight": "<brand>深受</brand> <highlight>{count}<break></break>全球用户信赖</highlight>",
+  "feedback": {
+    "1": "AI 图像生成器让人感觉像拥有一位随时可用的设计师，可调整风格和颜色",
+    "2": "Chat Smith 图像生成帮我节省数小时设计工作，每次都能提供惊艳设计！",
+    "3": "实时搜索提供最新动态，就像拥有专职研究助理！"
+  },
+  "aiChatPlatform": "AI 聊天<break></break>平台",
+  "loginForm": {
+    "page": {
+      "welcome": "立即加入 <break></break> <emphasize>解锁 AI 的力量</emphasize>",
+      "description": "<highlight>使用您喜欢的账户</highlight>以享受 Pro 功能和已保存历史记录",
+      "agreement": "继续即表示您同意 <break></break> 我们的 <terms>使用条款</terms>、<privacy>隐私政策</privacy> 和 <refund>退款政策</refund>"
+    },
+    "cta": "使用 {platform} 继续",
+    "guestPanel": {
+      "guest": "访客",
+      "title": "登录并创建账户",
+      "description": "解锁所有功能和历史记录",
+      "descV2": "登录以获取更多功能",
+      "agreement": "继续即表示您同意 <break></break> 我们的 <terms>使用条款</terms>、<privacy>隐私政策</privacy> 和 <refund>退款政策</refund>"
+    },
+    "guestBanner": {
+      "title": "登录以保存您的聊天记录",
+      "description": "历史记录、同步、无限聊天"
+    },
+    "guestModal": {
+      "title": "欢迎使用 Chat Smith",
+      "description": "登录或注册以继续",
+      "agreement": "继续即表示您同意 <break></break> 我们的 <terms>使用条款</terms>、<privacy>隐私政策</privacy> 和 <refund>退款政策</refund>"
+    },
+    "floatingLogin": {
+      "title": "继续使用 Chat Smith",
+      "description": "你已达到免费消息上限。登录即可再获得 10 条免费消息。"
+    },
+    "guestConfirmModal": {
+      "title": "访客聊天不会被保存",
+      "description": "登录以保存聊天记录"
+    }
+  }
+}

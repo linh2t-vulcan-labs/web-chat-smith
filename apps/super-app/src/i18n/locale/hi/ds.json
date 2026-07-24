@@ -1,0 +1,128 @@
+{
+  "yourBenefits": "आपके फ़ायदे",
+  "features": "फ़ीचर्स",
+  "upcomingFeatures": "आने वाले फ़ीचर्स",
+  "humanizeText": "टेक्स्ट को इंसानी बनाएं",
+  "AIAgents": "AI एजेंट्स",
+  "videoGeneration": "वीडियो जनरेशन",
+  "aiCompanion": "AI कंपेनियन",
+  "desktop": {
+    "features": {
+      "1": {
+        "title": "GPT-5 nano, Gemini 2.5 Flash Lite, Claude Haiku 4.5",
+        "description": "AI चैट मैसेज तक पहुँच"
+      },
+      "2": {
+        "title": "GPT-5.2, Gemini 3 Pro, Claude Sonnet 4.6",
+        "description": "अन्य एडवांस्ड AI मॉडल्स तक पहुँच"
+      },
+      "3": {
+        "title": "डीप रिसर्च, रियलटाइम सर्च",
+        "description": "जटिल रिसर्च टास्क आसानी से पूरे करें"
+      },
+      "4": {
+        "title": "वेब-मोबाइल सिंक",
+        "description": "एक सब्सक्रिप्शन में सभी डिवाइस पर निर्बाध चैट हिस्ट्री सिंक"
+      },
+      "5": {
+        "title": "फ़ाइल अपलोड",
+        "description": "फ़ाइल अपलोड तक पहुँच (png, jpg, jpeg, pdf, आदि)"
+      },
+      "6": {
+        "title": "आर्ट जनरेशन",
+        "description": "अपनी कल्पना को हकीकत में बदलने का नया तरीका"
+      }
+    },
+    "featureV2": {
+      "1": {
+        "title": "लेटेस्ट मॉडल्स",
+        "description": "GPT-5.2, Gemini 3 Pro, Claude Sonnet 4.6"
+      },
+      "2": {
+        "title": "जटिल टास्क",
+        "description": "डीप रिसर्च और रियलटाइम सर्च के साथ"
+      },
+      "3": {
+        "title": "क्रॉस प्लेटफ़ॉर्म",
+        "description": "वेब, iOS और Android के लिए एक सब्सक्रिप्शन"
+      },
+      "4": {
+        "title": "फ़ाइलें अपलोड",
+        "description": "फ़ाइल अपलोड तक पहुँच (png, jpg, jpeg, pdf, आदि)"
+      },
+      "5": {
+        "title": "आर्ट जनरेशन",
+        "description": "अपनी कल्पना को हकीकत में बदलने का नया तरीका"
+      }
+    }
+  },
+  "builtOn": "पर निर्मित",
+  "getFullAccess": "<brand>Chat Smith PRO</brand> का पूरा एक्सेस पाएं<break></break>",
+  "proBenefits": "<brand>Chat Smith Pro</brand> के फ़ायदे",
+  "proFeatures": "<brand>Pro</brand> फ़ीचर",
+  "brandProFeatures": "<brand>Chat Smith Pro</brand> फ़ीचर्स",
+  "getPro": "<brand>Chat Smith PRO</brand> लें",
+  "moreFeature": "और भी नए फ़ीचर्स आने वाले हैं — हर सीज़न अपडेट",
+  "safeAndSecure": "सुरक्षित पेमेंट करें",
+  "cancelAnytime": "कभी भी कैंसिल करें",
+  "policy": "जारी रखने पर, आप हमारे <breakMobile></breakMobile><terms>उपयोग की शर्तों</terms>, <privacy>गोपनीयता नीति</privacy> और <refund>रिफंड नीति</refund> से सहमत होते हैं",
+  "submit": "जारी रखें",
+  "threeDayTrial": "3-दिन का ट्रायल",
+  "trialSubmit": "3 दिन मुफ़्त आज़माएं",
+  "backToPlans": "प्लान्स पर वापस जाएं",
+  "badge": {
+    "save": "बचाएं <desktop>{percent}%</desktop><mobile>-{percent}%</mobile>",
+    "saveText": "बचाएं"
+  },
+  "manageSubscription": {
+    "title": "अपना सब्सक्रिप्शन मैनेज करें",
+    "description": "अपना सब्सक्रिप्शन मैनेज करने के लिए, कृपया मोबाइल ऐप इस्तेमाल करें। <strong>वेब वर्शन अभी सब्सक्रिप्शन बदलने की सुविधा नहीं देता।</strong> मोबाइल ऐप पर आप आसानी से सब्सक्राइब, कैंसिल या प्लान बदल सकते हैं।",
+    "helpBtn": "मदद चाहिए",
+    "textBtn": "समझ गया"
+  },
+  "pricing": {
+    "freeTrial": "फ्री ट्रायल",
+    "startForFree": "मुफ़्त में शुरू करें",
+    "dayFree": "3 दिन मुफ़्त",
+    "due": "देय",
+    "dayTrial": "3 दिन का फ्री ट्रायल",
+    "thenMonthly": "फिर {price}/माह",
+    "thenWeekly": "फिर {price}/सप्ताह"
+  },
+  "chooseYourPlan": "अपना प्लान चुनें",
+  "chooseOtherPlan": "दूसरा प्लान चुनें",
+  "yourCurrentPlan": "आपका मौजूदा प्लान",
+  "onlyPerWeek": "केवल <strong>{price}</strong> प्रति सप्ताह",
+  "info": {
+    "billingDetails": "बिलिंग डिटेल्स",
+    "plan": "प्लान",
+    "untilYouCancel": "कैंसिल करने तक",
+    "upgradeDate": "अपग्रेड तारीख",
+    "validUtil": "तक वैध",
+    "nextPayment": "अगला पेमेंट",
+    "totalPayment": "कुल पेमेंट",
+    "due": "देय",
+    "dueToday": "आज देय"
+  },
+  "paywall": {
+    "title": "मोबाइल ऐप पर <highlight>PRO एक्सेस</highlight><break></break> अनलॉक करें",
+    "subTitle": "PRO फ़ीचर्स जारी रखने के लिए, कृपया हमारे मोबाइल ऐप पर सब्सक्रिप्शन खरीदें",
+    "purchasing": "खरीदने के बाद, PRO फ़ायदे तुरंत सिंक करने के लिए <highlight>उसी अकाउंट से वेब पर लॉगिन करें</highlight>"
+  },
+  "purchase": {
+    "success": "सदस्यता सफलतापूर्वक खरीदी गई"
+  },
+  "unlimitedChat": "अनलिमिटेड चैट",
+  "topTierModels": "टॉप मॉडल",
+  "imageGeneration": "इमेज जनरेशन",
+  "deepResearch": "डीप रिसर्च",
+  "voiceInteraction": "वॉइस इंटरैक्शन",
+  "syncAcrossDevices": "डिवाइस सिंक",
+  "limited": "सीमित",
+  "userJoinDescription": "इस महीने 10 लाख+ जुड़े",
+  "bestOffer": "बेस्ट ऑफर",
+  "expressDescription": "अनलिमिटेड चैट, कई AI मॉडल, इमेज जनरेशन, वेब/मोबाइल सिंक और भी बहुत कुछ।",
+  "benefits": "फ़ायदे",
+  "allInOneAI": "ऑल-इन-वन",
+  "andMore": "और भी..."
+}

@@ -1,0 +1,363 @@
+{
+  "messageAnswersSkipped": "回答をスキップしました",
+  "others": "その他",
+  "home": {
+    "introQuestion": "どこから始めましょうか？",
+    "welcomeQuestion": "今日はどうお手伝いしましょうか？"
+  },
+  "input": {
+    "placeholder": {
+      "normalChat": "Chat Smithと話す",
+      "imageToImage": {
+        "banana": "最大{maxImages}枚の画像を追加してアイデアを説明してください。",
+        "normal": "画像を追加してアイデアを説明してください。",
+        "allowText2Image": "説明を入力または写真をアップロードして作成"
+      },
+      "textToImage": "画像を説明してください",
+      "search": "検索キーワードを入力してください",
+      "feedback": "フィードバックをいただきありがとうございます。改善にお役立てするため、コメントやご提案をお聞かせください。"
+    }
+  },
+  "suggestion": {
+    "enableChatSuggestion": "チャットの提案を維持するにはプロフィール設定で有効にしてください。",
+    "keepSuggestion": "チャットの提案の確認を続けますか？"
+  },
+  "normalChat": {
+    "error": {
+      "title": "Chat Smithは最後のメッセージに返信できませんでした。",
+      "desc": "後でもう一度試すか、ページをリロードしてください"
+    }
+  },
+  "createImage": {
+    "chooseStyle": "スタイルを選択<span>（オプション）</span>",
+    "style": "スタイル",
+    "optional": "オプション",
+    "loading": {
+      "title": "画像を作成しています...",
+      "desc": "素晴らしいアイデアを生成しています。画像はまもなく完成します"
+    },
+    "free": {
+      "title": "素晴らしいアートはもうすぐです！",
+      "desc": "この機能で作成できるアートを想像してみてください。プレミアムにアップグレードして確認しましょう"
+    },
+    "error": {
+      "title": "画像利用に関するご注意"
+    },
+    "reachLimit": {
+      "title": "上限に達しました",
+      "desc": "3時間後に上限がリセットされます"
+    },
+    "reachLimitStyle": {
+      "title": "画像の上限に達しました",
+      "desc": "このスタイルは<span>画像{maxImage}枚のみ</span>許可されています。不要な画像を削除するとより良い結果が得られます。"
+    },
+    "singleImage": {
+      "desc": "GPT Imageは<span>写真1枚</span>のみ受け付けます"
+    }
+  },
+  "deepResearch": {
+    "loading": {
+      "desc": "現在多くのユーザーがディープリサーチを利用中です。結果の生成に2〜5分かかる場合があります。しばらくお待ちください..."
+    },
+    "thinking": "考え中",
+    "researching": "調査中",
+    "exploring": "探索中",
+    "consolidatingResult": "結果をまとめています",
+    "done": "完了",
+    "sources": "ソース",
+    "source": "ソース",
+    "free": {
+      "title": "プレミアムにアップグレードして確認しましょう",
+      "desc": "リサーチを完了するまであと一歩です。"
+    },
+    "reachLimit": {
+      "title": "上限に達しました",
+      "desc": "{resetTime}に上限がリセットされます"
+    }
+  },
+  "webSearch": {
+    "sources": "ソース",
+    "loading": {
+      "title": "最新情報のためにウェブ検索中..."
+    },
+    "free": {
+      "title": "プレミアム機能",
+      "desc": "アップグレードして最新のデータソースへのアクセスを解放しましょう"
+    },
+    "reachLimit": {
+      "title": "高度な利用上限に達しました。",
+      "desc": "上限に達しました。3時間後に上限がリセットされます"
+    },
+    "reachLimitStyle": {
+      "title": "画像の上限に達しました",
+      "desc": "このスタイルは<span>画像{maxImage}枚のみ</span>許可されています。不要な画像を削除するとより良い結果が得られます。"
+    }
+  },
+  "actions": {
+    "free": "週${price}で今すぐアップグレードしましょう"
+  },
+  "modal": {
+    "chooseStyle": {
+      "title": "スタイルを選択"
+    },
+    "uploadNotSupport": {
+      "title": "画像アップロード非対応",
+      "desc": "このモデルは写真の追加を許可していません",
+      "descWithAction": "このモデルは画像の追加を許可していません。<span>「削除して切り替え」</span>を選ぶと、画像が削除され、選択したモデルに切り替わります。",
+      "proceedText": "削除して切り替え"
+    },
+    "attachFiles": {
+      "title": "ファイルをアップロード",
+      "instruction": "{isDesktop, select, true {ドラッグ＆ドロップまたは<span>ファイルを選択</span>してアップロード} other {<span>ファイルを選択</span>してアップロード}}",
+      "dragdrop": "画像をドラッグ＆ドロップしてアップロード",
+      "desc": "会話ごとに最大{maxfiles}個のファイル。ファイルごとの最大サイズ：{maxSizeInMB} MB。形式：{listAcceptFiles}",
+      "artDesc": "このスタイルに最大{maxfiles}枚の画像をアップロードできます。ファイルごとの最大サイズ：{maxSizeInMB} MB。形式：{listAcceptFiles}",
+      "recentFiles": "最近のファイル"
+    },
+    "feedback": {
+      "title": "フィードバック",
+      "desc": "返答をどのように改善できますか？<span>（オプション）</span>",
+      "options": {
+        "tooShallow": "内容が浅い",
+        "untrustedSources": "信頼できない情報源",
+        "outdatedInfo": "古い情報",
+        "hardToUnderstand": "理解しにくい",
+        "wrongStyle": "スタイルが間違い",
+        "badComposition": "構図が悪い",
+        "wrongSubject": "主題が間違い",
+        "looksBroken": "壊れているように見える",
+        "offTopic": "主題と無関係",
+        "incorrectFacts": "事実が間違い",
+        "biased": "偏っている",
+        "didntMatchAsked": "リクエストと一致しない",
+        "notUseful": "役に立たない",
+        "lackingDetail": "ディテールが不足",
+        "poorQuality": "品質が低い"
+      }
+    },
+    "imageRequired": {
+      "title": "画像が必要です",
+      "desc": "結果を生成するには写真をアップロードしてください"
+    },
+    "deleteConversation": {
+      "title": "チャットを削除しますか？",
+      "desc": "このチャットを削除してもよろしいですか？"
+    },
+    "termsConsent": {
+      "title": "メディアアップロードの同意",
+      "description1": "メディア内の人物は18歳以上です。",
+      "description2": "メディア内の識別可能な個人の同意を得ています。",
+      "description3": "メディアには違法、暴力的、または露骨なコンテンツは含まれていません。",
+      "acceptText": "メディアアップロード規約を読み、同意します"
+    }
+  },
+  "tooltip": {
+    "modelNotSupport": "このモデルはファイルのアップロードに対応していません",
+    "usecase": "この機能はファイルのアップロードに対応していません",
+    "limit": "リクエストを解決するお手伝いをしたいと思います。今すぐProにアップグレードして、無制限のアクセスを解放しましょう",
+    "attachFiles": "ファイルを添付",
+    "createImage": "テキストや写真から画像を作成しましょう",
+    "deepResearch": "高度な検索と推論",
+    "webSearch": "最新情報のためにウェブ検索",
+    "copy": "コピー",
+    "regenerate": "再生成",
+    "like": "いいね",
+    "dislike": "ひどいね",
+    "export": "DOCXとしてエクスポート"
+  },
+  "toast": {
+    "error": {
+      "somethingWentWrong": "問題が発生しました！",
+      "failDeleteConversation": "チャットの削除に失敗しました",
+      "failHistory": "履歴の読み込みに失敗しました",
+      "failConversation": "会話の読み込みに失敗しました",
+      "failResult": "結果の読み込みに失敗しました",
+      "tryAgain": "もう一度試してください。",
+      "tryAgainLater": "後でもう一度試してください",
+      "notExistConversation": "このチャットは存在しません。",
+      "system": "この設定でシステムエラーが発生しました。後でもう一度試してください",
+      "modelUnAvailable": "以前のモデルは一時的に利用できません。GPT-4o miniに切り替えました。",
+      "modelExpired": "サブスクリプションが期限切れです。デフォルトモデルに切り替えました。",
+      "conversationUpdated": "会話が更新されました — 返答はまだ進行中です"
+    },
+    "sync": {
+      "title": "会話が同期されました",
+      "desc": "同期された会話を続けるには、任意のデバイスでログインしてください"
+    },
+    "resetUsage": {
+      "title": "無料メッセージがリセットされました",
+      "desc": "いつでも戻ってきて何でも聞いてください！",
+      "title24h": "新しい無料メッセージが待っています",
+      "desc24h": "無料メッセージで一日を始めましょう",
+      "title48h": "新しいアイデアや少しのサポートが必要ですか？",
+      "desc48h": "Chat Smithがお手伝いします"
+    }
+  },
+  "guideTour": {
+    "model": {
+      "title": "次世代の生成",
+      "desc": "風景、植物、人物、動物のリアルな画像を生成しましょう"
+    },
+    "attachFiles": {
+      "title": "自分の写真から始めましょう",
+      "desc": "画像を添付して作りたいものを教えてください！"
+    },
+    "others": {
+      "of": "/"
+    }
+  },
+  "newModel": {
+    "title": "新しいGemini 3 Flashをご紹介します — 高速レスポンス、低レイテンシー",
+    "desc": "速度と効率性のために最適化されています。クイックタスク、チャット、リアルタイムワークフローに最適です。"
+  },
+  "bananaPro": {
+    "title": "Banana Pro"
+  },
+  "imageToImage": {
+    "desc": "画像をアップロードしてください 🖼️ → 新しいスタイルに変換します"
+  },
+  "nanoBanana": {
+    "title": "Nano Banana"
+  },
+  "gptImage": {
+    "title": "GPT Image"
+  },
+  "gptImage1_5": {
+    "title": "GPT Image 1.5"
+  },
+  "gptImage2": {
+    "title": "GPT Image 2"
+  },
+  "textToImage": {
+    "title": "ChatSmith テキストから画像生成",
+    "desc": "テキスト入力 ✍️ → 画像出力 🖼️。写真不要。"
+  },
+  "gpt-4o-mini": {
+    "desc": "迅速かつ正確なタスクに最適"
+  },
+  "gpt-5": {
+    "2": {
+      "desc": "専門的な知識業務に特化"
+    },
+    "desc": "複雑な作業に優れたモデル"
+  },
+  "gpt-5-mini": {
+    "desc": "多様なタスクに効率的に推論するモデル"
+  },
+  "o3-mini": {
+    "desc": "コーディングと数学の専門モデル"
+  },
+  "gpt-4": {
+    "1-mini": {
+      "desc": "集中的なタスクのための高速モデル"
+    }
+  },
+  "o3": {
+    "desc": "最も強力な推論モデル"
+  },
+  "o4-mini": {
+    "desc": "コーディングビジュアルのための効率的な推論モデル"
+  },
+  "gpt-4o": {
+    "desc": "高速でインテリジェント、かつ柔軟なモデル"
+  },
+  "gemini-3-flash-preview": {
+    "desc": "スーパー検索とグラウンディングを備えた高速モデル"
+  },
+  "gemini-3-pro-preview": {
+    "desc": "コーディングと複雑な推論に卓越"
+  },
+  "gemini-3": {
+    "1-flash-lite": {
+      "desc": "高性能インテリジェントモデル"
+    },
+    "5-flash": {
+      "desc": "軽タスク向け高速モデル"
+    }
+  },
+  "gemini-2": {
+    "5-flash": {
+      "desc": "日常タスクで高速パフォーマンスを発揮"
+    },
+    "5-flash-lite": {
+      "desc": "高速推論ブースティング"
+    },
+    "5-pro": {
+      "desc": "卓越したマルチモーダル問題解決能力"
+    }
+  },
+  "gemini-1": {
+    "5-flash": {
+      "desc": ""
+    },
+    "5-pro": {
+      "desc": ""
+    }
+  },
+  "grok-4-fast": {
+    "desc": "より小型で高速な推論モデル"
+  },
+  "grok-4": {
+    "desc": "\"複雑な推論のための高度なモデル\""
+  },
+  "grok-2": {
+    "desc": "複雑なドメインにわたる革新的なソリューション"
+  },
+  "deepseek-chat": {
+    "desc": "長いコンテキストの推論"
+  },
+  "deepseek-reasoner": {
+    "desc": "研究およびデータ集約型のオペレーション"
+  },
+  "claude-haiku-4-5": {
+    "desc": "最先端に近い知能を備えた、最速モデル"
+  },
+  "claude-sonnet-4-6": {
+    "desc": "複雑なエージェントやコーディングに最適な、最もスマートなモデル"
+  },
+  "gpt-5-nano": {
+    "desc": "日常タスクに最適な高速モデル"
+  },
+  "customResponse": {
+    "title": "反応",
+    "preview": "プレビュー：",
+    "cynic": {
+      "title": "皮肉屋",
+      "description": "皮肉的でユーモアのある批評",
+      "preview": "明るく温かいです。人生の選択を問い直すのに最適な天気です…でも外で。"
+    },
+    "nerd": {
+      "title": "オタク",
+      "description": "探究的で熱狂的",
+      "preview": "湿度が低い28°C。ドーパミンとビタミンDを補充する最適な条件です。外に出てみましょう！"
+    },
+    "concise": {
+      "title": "簡潔",
+      "description": "直接的で効率的",
+      "preview": "28°C、晴れた空。"
+    },
+    "listener": {
+      "title": "聞き上手",
+      "description": "支援的で、優しく、共感的",
+      "preview": "今日は明るく穏やかです。心も少し軽くなれることを願っています。"
+    },
+    "formal": {
+      "title": "フォーマル",
+      "description": "プロフェッショナルで丁寧、かつ体系的",
+      "preview": "現在28°C、微風の晴れた空。屋外活動に適した日です。"
+    },
+    "default": {
+      "title": "デフォルト",
+      "description": "明るく適応力がある",
+      "preview": "晴れて28°Cです。少し外に出るのに最適な日ですね。"
+    }
+  },
+  "chatSync": {
+    "title": "Chat Sync",
+    "synced": "<span>同期済み</span>：すべてのデバイスで利用可能",
+    "notSync": "<span>未同期</span>：このデバイスのみに表示",
+    "processing": "<span>処理中</span>：このデバイスで準備中",
+    "syncFailed": "<span>処理失敗</span>：この会話を準備できませんでした",
+    "descV2": "一部の会話はデバイス間で同期されます。過去のチャットは元のデバイスに保存されます"
+  }
+}

@@ -1,0 +1,544 @@
+{
+  "chatSuggestion": {
+    "imageToImage": {
+      "sereneSnowPortrait": "Crea un retrato de mi pose serena en la nieve.",
+      "joyfulSnowToss": "Transforma mi imagen en una chica alegre lanzando nieve.",
+      "cozyCampfireGuitar": "Transforma mi imagen en una acogedora escena nocturna de fogata y guitarra.",
+      "walkingInSnow": "Crea un retrato de mí caminando en la nieve.",
+      "festiveLollipopPortrait": "Transforma mi foto en un dulce retrato festivo de piruleta.",
+      "peacefulChristmasPorch": "Utilice mi foto subida para crear un ambiente navideño tranquilo en el porche.",
+      "playingWithReindeer": "Crea una imagen de mí jugando con renos.",
+      "goSkiing": "Crea un retrato de mí yendo a esquiar.",
+      "northernLights": "Crea un retrato mío observando la mágica aurora boreal.",
+      "canadianFrozenRiver": "Crea una imagen de mí registrándome en un majestuoso río congelado canadiense",
+      "portraitOfMeReadingByAFireplace": "Crea un retrato de mí leyendo junto a una chimenea.",
+      "enjoyingCoffeeInAScenicCafe": "Transforma mi imagen en una escena disfrutando de un café en una cafetería pintoresca.",
+      "wrappedInABlanketOnABalcony": "Crea una imagen de mí envuelta en una manta en un balcón.",
+      "stargazingScene": "Transforma mi imagen en una escena de observación de estrellas.",
+      "peacefulMorningWalk": "Crea un retrato de mí en un tranquilo paseo matutino.",
+      "relaxingInAHammock": "Transforma mi imagen en una escena de relax en una hamaca.",
+      "writingInAJournal": "Crea una imagen de mí escribiendo en un diario.",
+      "sunsetViewingScene": "Transforma mi imagen en una escena de observación del atardecer.",
+      "picnicInAGarden": "Crea un retrato mío haciendo un picnic en un jardín.",
+      "meditatingByALake": "Transforma mi imagen en una escena de meditación junto a un lago.",
+      "highFashionPortrait": "Convierte mi foto en un retrato de revista de alta moda.",
+      "warmStreetArt": "Remodela mi imagen como una cálida fotografía de arte callejero",
+      "dreamyFloralGaze": "Dale a mi retrato un aire floral y de ensueño.",
+      "windKissedPortrait": "Convierte mi foto en un retrato al aire libre bañado por el viento.",
+      "goldenHourCloseup": "Remodela mi imagen como un primer plano de la hora dorada",
+      "lightShadowComposition": "Dale a mi retrato una composición de luz y sombra.",
+      "vintageNightTone": "Convierte mi foto en un tono nocturno vintage",
+      "aquariumFilmPortrait": "Remodelar mi imagen como un retrato cinematográfico de acuario",
+      "candidSunset": "Dale a mi retrato una estética de atardecer espontáneo.",
+      "chicElevatorEditorial": "Convierte mi foto en una elegante foto editorial de ascensor."
+    },
+    "textToImage": {
+      "christmasFireplace": "Diseño de chimenea navideña con fuego crepitante.",
+      "giftWrappingPostcard": "Crear postal para envolver regalos",
+      "thanksgivingStorybook": "Dibujar un cuento de hadas para la cena de Acción de Gracias",
+      "christmasLivingRoom": "Diseño de sala de estar acogedora navideña",
+      "cozyCatWindow": "Gato acogedor junto a la ventana",
+      "catsGiftExchange": "Postal de gatos intercambiando regalos",
+      "winterVillageWatercolor": "Pueblo invernal en acuarela",
+      "minimalWarmWorkspace": "Diseña un espacio de trabajo minimalista con tonos cálidos.",
+      "watercolorImagination": "Diseño acuarela imaginación explosión",
+      "dreamscapeBedroom": "Crea arte de ensueño para el dormitorio",
+      "newYearVisionBoard": "Diseña un tablero de visión para Año Nuevo",
+      "newYearFireworksPoster": "Cartel de fuegos artificiales de Año Nuevo",
+      "futuristicNewYearCafe": "Café futurista de Año Nuevo",
+      "morningZenGarden": "Jardín zen matutino",
+      "goalSettingJournalCover": "Portada del diario de establecimiento de metas",
+      "newYearNightCityscape": "Paisaje urbano nocturno de Año Nuevo",
+      "yearOfTheHorseArt": "Año del Arte del Caballo (2026)",
+      "cyberpunkNewYearParty": "Fiesta de Nochevieja ciberpunk",
+      "newYearCountdownIllustration": "Ilustración de cuenta regresiva de Año Nuevo",
+      "dreamLifeTheme": "La vida de ensueño en 2026",
+      "snowyMountainLandscape": "Dibuja un paisaje de montaña nevado",
+      "cuteCartoonGirl": "Crea un lindo personaje de niña de dibujos animados",
+      "fantasyCastleDragon": "Pinta una escena de castillo y dragón de fantasía.",
+      "galaxySpaceArt": "Ilustra un arte espacial galáctico colorido",
+      "retroNeonPoster": "Diseña un póster de neón retro de los años 80",
+      "futuristicCity": "Crea un horizonte urbano futurista",
+      "minimalLeafLogo": "Diseña un logotipo de hoja minimalista.",
+      "indieAlbumCover": "Crea una portada de álbum indie oscura",
+      "aiMeme": "Diseña un meme generado por IA",
+      "futuristicSneaker": "Crea un concepto de zapatilla futurista"
+    },
+    "infoQuery": {
+      "holidayTravelPlanning": "Prepárese para un viaje de vacaciones sin estrés",
+      "wealthPlan5Years": "Plan para hacer crecer mi patrimonio en 5 años",
+      "easterBrunchIdeas": "Ideas de brunch de Pascua para la familia",
+      "movieNightMoods": "Películas para reír, llorar o escalofríos",
+      "weekendStaycation": "Fin de semana de vacaciones en casa",
+      "christmasDinnerMenu": "Menú de la cena de Navidad",
+      "quickHomeWorkout": "Entrenamiento rápido en casa de 30 minutos",
+      "holidayTraditions": "Crea tradiciones festivas significativas",
+      "brainstormNewYearResolutions": "Ayúdame a generar ideas para mis propósitos de 2026.",
+      "buildNewYearRoutine": "Crea una rutina de Año Nuevo",
+      "topTravelTrends": "Principales tendencias de viajes para 2026",
+      "stayConsistent": "Cómo mantener la constancia",
+      "declutterHomeAndMind": "Despeja mi casa y mi mente",
+      "techAndCareerOutlook": "Perspectivas tecnológicas y de carrera para 2026",
+      "personalYearTheme": "Tema personal para 2026",
+      "planNewYearsParty": "Planifica una fiesta de Año Nuevo",
+      "balanceWorkAndLife": "Equilibrar el trabajo y la vida",
+      "morningMeditationGuide": "Guía de meditación matutina",
+      "explainAI": "Explicar la IA de forma sencilla",
+      "apollo11Summary": "Resumir la misión Apolo 11",
+      "dailyWalkingBenefits": "Explica los beneficios de caminar diariamente",
+      "blockchainSimple": "Explicar blockchain en palabras sencillas",
+      "greenhouseEffect": "Explicar el efecto invernadero",
+      "improveFocus": "Cómo concentrarse mejor",
+      "manageStress": "Consejos para manejar el estrés",
+      "morningRoutine": "Crea una rutina matutina",
+      "sleepQuality": "Formas de mejorar la calidad del sueño",
+      "stayMotivated": "¿Cómo mantenerse motivado?"
+    },
+    "funSocial": {
+      "casualHangoutInvite": "Texto de invitación para una reunión informal",
+      "personalityQuiz": "Pregunta divertida de test de personalidad",
+      "christmasPlaylist": "Lista de reproducción acogedora navideña",
+      "easterGiftsKids": "Ideas de regalos de Pascua para niños",
+      "christmasGiftsFamily": "Regalos de Navidad para mi familia",
+      "sweetGiftNote": "Escribe una nota dulce para un regalo.",
+      "secretSantaFunny": "Mensaje divertido de amigo secreto",
+      "goodMorningText": "Sugerir un lindo texto de buenos días",
+      "meetingExcuse": "Una excusa divertida para faltar a una reunión",
+      "singleWittyReply": "Respuesta ingeniosa a \"¿Por qué estás soltero?\"",
+      "newYearGreetingText": "Texto de saludo de Año Nuevo",
+      "energyQuiz": "Cuestionario de energía 2026",
+      "funnyResolutionExcuses": "Excusas divertidas para las resoluciones",
+      "funnyNewYearResolution": "Resolución divertida para 2026",
+      "visionWordGame": "Juego de palabras de visión de vida",
+      "motivationMessage": "Mensaje de motivación",
+      "predictYearFortune": "Predecir mi fortuna para 2026",
+      "workFriendlyNewYearWish": "Deseos de Año Nuevo favorables para el trabajo",
+      "bucketListChallenge": "Desafío de la lista de deseos de 2026",
+      "randomActsOfKindness": "Actos de bondad al azar",
+      "riddle": "Hazme un acertijo",
+      "joke": "Cuéntame un chiste",
+      "catCaption": "Sugerir título de foto para un gato",
+      "coffeePoem": "Haz un poema de café",
+      "pickupLine": "Dar una frase para ligar",
+      "hangoutInvite": "Solicita pasar el rato",
+      "quizQuestion": "Haz una pregunta de cuestionario",
+      "inspiringQuote": "Comparte una cita inspiradora",
+      "animalFact": "Cuéntame un dato sorprendente sobre los animales.",
+      "wordChainGame": "Iniciar un juego de cadenas de palabras"
+    },
+    "deepResearch": {
+      "remoteWorkImpact": "Investigar el impacto del trabajo remoto",
+      "coffeeIndustry": "Analizar la industria mundial del café",
+      "kpopInfluence": "Investiga la influencia global del K-pop",
+      "educationModels": "Comparar los modelos educativos de Finlandia y Estados Unidos",
+      "habitFormation": "Estudia cómo se forman y cambian los hábitos.",
+      "renewableEnergy": "Analizar las tendencias de adopción de energías renovables",
+      "socialMediaTeens": "Investiga los efectos de las redes sociales en los adolescentes",
+      "startupFailures": "Encuentre las razones clave por las que las empresas emergentes fracasan",
+      "mindfulnessWork": "Investiga la atención plena en los lugares de trabajo",
+      "spaceExploration": "Resume los hitos en la exploración espacial"
+    }
+  },
+  "imageCreation": {
+    "gemini-3-pro-image-preview": {
+      "none": {
+        "title": "Ninguno",
+        "description": ""
+      },
+      "zootopia": {
+        "title": "Wildtopia",
+        "description": "Crea una divertida fotografía de cine en la que personas reales posan con un zorro y un conejo animados, combinando humanos fotorrealistas con personajes estilizados en una escena perfecta."
+      },
+      "gashapon_capsule": {
+        "title": "Cápsula de Gashapon",
+        "description": "Una miniatura de cuerpo entero de la persona, exhibida dentro de una cápsula de gashapon transparente, conserva su identidad y complementa el atuendo. Un retrato divertido y coleccionable con un aspecto limpio y refinado."
+      },
+      "anatomical_infographic": {
+        "title": "Infografía anatómica",
+        "description": "Una ilustración simétrica y recortada del sujeto, con anatomía etiquetada e información concisa, diseñada como una página de enciclopedia en pergamino."
+      },
+      "product_technical_view": {
+        "title": "Vista técnica del producto",
+        "description": "Una imagen ampliada y ultra detallada de su producto, que muestra cada componente interno flotando en una alineación precisa sobre un fondo de estudio gris suave."
+      },
+      "poster_creation": {
+        "title": "Creación de carteles",
+        "description": "Un cartel publicitario pulido que presenta su producto con detalles realistas, mejorado con un eslogan a juego y un diseño limpio y profesional."
+      },
+      "ingredients": {
+        "title": "Ingredientes",
+        "description": "Un diseño limpio con fondo de madera que muestra su plato completamente deconstruido en ingredientes etiquetados y realistas con nombres y cantidades claros."
+      },
+      "studio_style_photo": {
+        "title": "Coloración de fotos",
+        "description": "Arte conceptual estilizado."
+      },
+      "object_infrastructure": {
+        "title": "Infraestructura de objetos",
+        "description": "Crea un plano o esquema arquitectónico preciso analizando el exterior del edificio e infiriendo su distribución interior utilizando la lógica arquitectónica del mundo real."
+      },
+      "outfit_swap": {
+        "title": "Intercambio de atuendos",
+        "description": "Reemplaza el atuendo con ropa de las otras imágenes manteniendo su pose, identidad y fondo original."
+      },
+      "me_with_my_pet_pro": {
+        "title": "Yo con mi mascota",
+        "description": "Fusiona a la persona y a la mascota de las imágenes cargadas en una escena natural, conservando la verdadera identidad, la iluminación y la perspectiva para que parezcan fotografiadas juntas."
+      },
+      "combination_photo": {
+        "title": "Foto combinada",
+        "description": "Combina todos los elementos subidos en una escena natural y cohesiva con iluminación, escala y color unificados. Produce una composición fotorrealista impecable."
+      },
+      "line_art": {
+        "title": "Arte lineal",
+        "description": "Una cuadrícula de 3×3 de retratos de estudio que muestran a la misma persona en nueve poses variadas con un atuendo y una identidad consistentes y una iluminación de estudio limpia."
+      },
+      "nine_half_length_portraits": {
+        "title": "Nueve retratos",
+        "description": "Una cuadrícula de 3x3 con retratos de medio cuerpo capturados en diversos entornos naturales al aire libre. La identidad se mantiene constante mientras los atuendos se adaptan a cada escena y estación."
+      },
+      "clothing_extraction": {
+        "title": "Extracción de ropa",
+        "description": "Un collage de moda realista que elimina el modelo y muestra cada prenda por separado con colores reales, texturas y forma de tela en 3D sobre un fondo de corcho."
+      },
+      "knitted_wool_food": {
+        "title": "Comida de lana tejida",
+        "description": "Convierte el plato en una versión hiperrealista de lana tejida, conservando su composición y colores. Una escultura de hilo detallada, fotografiada como si fuera comida real."
+      },
+      "pet_surrounding": {
+        "title": "Alrededores de mascotas",
+        "description": "Combine a la persona con múltiples copias de la misma especie de mascota en una escena exterior cohesiva, manteniendo intactos la identidad y el realismo. Detalle fotorrealista."
+      },
+      "drawing_assistant": {
+        "title": "Asistente de dibujo",
+        "description": "Complete el boceto inacabado con el mismo estilo artístico, con líneas limpias y profesionales y detalles adecuados."
+      },
+      "storyboard_extend_border_line": {
+        "title": "Guión gráfico",
+        "description": "Crea un guión gráfico cinematográfico de 6 cuadros que amplía la escena, manteniendo la coherencia de los personajes y el estilo artístico."
+      }
+    },
+    "gemini-2": {
+      "5-flash-image": {
+        "none": {
+          "title": "Ninguno",
+          "description": "\"\""
+        },
+        "esports_poster": {
+          "title": "Póster de deportes electrónicos",
+          "description": "Un póster dinámico de deportes electrónicos que te muestra en una pose de jugador profesional confiado junto a tu héroe del juego, con efectos de torneo de neón y tu nombre de jugador brillante debajo."
+        },
+        "me_with_my_favorite_boss": {
+          "title": "Yo con mi jefe favorito",
+          "description": "Una toma de ascensor de arriba hacia abajo que te coloca junto a tu héroe de juego favorito, con etiquetas claras de \"Jugador\" y \"Héroe\": realista, cinematográfica y fiel a la apariencia de cada personaje."
+        },
+        "winter_reverie": {
+          "title": "Ensoñación invernal",
+          "description": "Una secuencia cinematográfica de tres fotogramas nevados: una figura solitaria bajo un paraguas, rodeada de una nevada silenciosa y una suave luz invernal."
+        },
+        "winter_veil": {
+          "title": "Velo de invierno",
+          "description": "Un retrato invernal sereno bajo un paraguas transparente, donde suaves copos de nieve caen alrededor de una figura tranquila e introspectiva."
+        },
+        "pokemon": {
+          "title": "Pokémon",
+          "description": "Una fotografía realista al estilo de un entrenador, en la que apareces sentado con ropa de calle junto a un Pokémon realista, ambientado en un mundo de fantasía que combina con su elemento."
+        },
+        "realistic_figurine": {
+          "title": "Figura realista",
+          "description": "Transfórmate en una figura coleccionable realista con un realismo detallado."
+        },
+        "snowflake": {
+          "title": "Copo de nieve",
+          "description": "Un suave collage invernal de dos cuadros que captura la emoción tranquila y la nieve que cae, combinando suavidad con belleza serena."
+        },
+        "studio_portrait": {
+          "title": "Retrato de estudio",
+          "description": "Retratos dramáticos con focos, ambiente cinematográfico y sombras suaves."
+        },
+        "me_with_my_pet": {
+          "title": "Yo con mi mascota",
+          "description": "Una sencilla fotografía estilo Polaroid que te captura posando de forma natural con tu mascota en una configuración limpia y minimalista."
+        },
+        "future_family": {
+          "title": "Familia futura",
+          "description": "Una foto de vacaciones tropicales que muestra a usted y a su futura familia disfrutando juntos de la playa."
+        },
+        "old_couple": {
+          "title": "Pareja de ancianos",
+          "description": "Un retrato fotorrealista de una era futura que lo muestra a usted en la vejez, de pie al aire libre con una expresión natural y gentil y una tranquila sensación de compañerismo."
+        },
+        "glowing_winter": {
+          "title": "Invierno resplandeciente",
+          "description": "Suave retrato invernal con luz dorada brillando a través de la nieve que cae, combinando calidez y serenidad en un paisaje helado."
+        },
+        "professional_portrait": {
+          "title": "Retrato profesional",
+          "description": "Retrato de estudio con fondo rojo, iluminación limpia y aspecto seguro y profesional."
+        },
+        "poster_design": {
+          "title": "Diseño de carteles",
+          "description": "Aspecto atrevido de un póster de moda con un fondo circular gráfico."
+        },
+        "winter": {
+          "title": "Invierno",
+          "description": "Maravillas nevadas con cielos de aurora y paisajes helados."
+        },
+        "art_gallery": {
+          "title": "Galería de arte",
+          "description": "Coloca tu retrato dentro de un entorno de galería moderno, como una exposición de arte."
+        },
+        "birthday_girl": {
+          "title": "Cumpleaños",
+          "description": "Celebre su cumpleaños con una escena festiva con pastel, velas y alegría."
+        },
+        "spotify": {
+          "title": "Música",
+          "description": "Ambiente musical envolvente que te coloca dentro de una escena de lista de reproducción digital."
+        },
+        "ocean": {
+          "title": "Océano",
+          "description": "Sentado tranquilamente sobre infinitas aguas azules, rodeado por el vasto mar abierto."
+        },
+        "polaroid": {
+          "title": "polaroid",
+          "description": "Retrato espontáneo con un borde de fotografía blanco uniforme, similar a las impresiones instantáneas modernas."
+        },
+        "meowchic": {
+          "title": "Miau chic",
+          "description": "Relájese en un ambiente acogedor y elegante rodeado de adorables gatos."
+        },
+        "festival": {
+          "title": "Festival",
+          "description": "Animado festival nocturno con luces de cadena, bebidas y sonrisas despreocupadas bajo el cielo abierto."
+        },
+        "surreal_metamorphosis": {
+          "title": "Metamorfosis surrealista",
+          "description": "Escena de transformación etérea con mariposas brillantes girando alrededor, simbolizando el renacimiento y el cambio onírico."
+        },
+        "taylor_swift_1989": {
+          "title": "1989",
+          "description": "Escena costera brillante con luz solar suave, energía despreocupada y vibraciones cinematográficas del mar."
+        },
+        "blue_solace": {
+          "title": "Consuelo azul",
+          "description": "Un collage invernal sereno de tres momentos que combina soledad, reflexión y suave calma en suaves tonos azules."
+        },
+        "taylor_swift_reputation": {
+          "title": "Reputación",
+          "description": "Estética monocromática audaz con alto contraste y actitud feroz y empoderada inspirada en la era Reputation."
+        },
+        "the_life_of_a_showgirl": {
+          "title": "La vida de una corista",
+          "description": "Escenario glamoroso con lentejuelas brillantes, plumas y dramatismo."
+        },
+        "taylor_swift_evermore": {
+          "title": "Eternamente",
+          "description": "Campo otoñal suave con tonos apagados e introspección tranquila, que captura la calidez y la melancolía del final del otoño."
+        },
+        "speak_now": {
+          "title": "Habla ahora",
+          "description": "Campo de lavanda de ensueño al atardecer con tonos suaves y románticos inspirados en la era Speak Now."
+        },
+        "folklore": {
+          "title": "Folklore",
+          "description": "Escena de bosque melancólico con niebla y soledad, que evoca una reflexión tranquila y una nostalgia poética."
+        }
+      }
+    },
+    "gpt-image-1": {
+      "none": {
+        "title": "Ninguno"
+      },
+      "ghibli": {
+        "title": "Estudio de ensueño",
+        "description": "Atractivo de nicho, más cine de autor que de corriente principal en Estados Unidos."
+      },
+      "the_simpson": {
+        "title": "Familia de dibujos animados amarillos",
+        "description": "Un gigante cultural con un atractivo general y una longevidad inigualables"
+      },
+      "south_park": {
+        "title": "Dibujo animado satírico audaz",
+        "description": "Base de fans fuerte y consistente con una relevancia cultural significativa"
+      },
+      "dragon_ball": {
+        "title": "Súper Saiyajin",
+        "description": "El anime más icónico de Estados Unidos, con una profunda penetración cultural."
+      },
+      "naruto": {
+        "title": "Leyenda Ninja",
+        "description": "Masiva popularidad de búsqueda y audiencia, ligeramente por detrás de Dragon Ball"
+      },
+      "rick_and_morty": {
+        "title": "Ciencia ficción loca",
+        "description": "Atractivo moderno y una fuerte base de seguidores entre los adultos más jóvenes."
+      },
+      "one_piece": {
+        "title": "Viaje pirata",
+        "description": "Popular pero se queda atrás de Naruto y Dragon Ball debido a problemas de accesibilidad."
+      },
+      "sailor_moon": {
+        "title": "Heroínas de la Luna Mágica",
+        "description": "Atractivo nostálgico y base de fans de nicho, fuerte en regiones específicas"
+      },
+      "attack_on_titan": {
+        "title": "Titán valiente",
+        "description": "Aclamado por la crítica y con una base de fans dedicada, pero más pequeño que los tres grandes."
+      },
+      "demon_slayer": {
+        "title": "Saga del cazador de demonios",
+        "description": "Estrella en ascenso, popular entre los fans más jóvenes, pero menos establecida en los EE. UU."
+      },
+      "bleach": {
+        "title": "Cazador de almas",
+        "description": "Interés renovado con arcos recientes, pero menor impacto general en EE. UU."
+      },
+      "doraemon": {
+        "title": "Niño retro futurista",
+        "description": "Popularidad limitada en EE. UU., mayormente de nicho o nostálgico."
+      },
+      "anime": {
+        "description": "Colores vivos, personajes dinámicos, expresiones emocionales."
+      },
+      "manga": {
+        "description": "Arte lineal en negrita, sombreado de alto contraste"
+      },
+      "genshin_impact": {
+        "description": "Personajes de fantasía elegantes, mundos cinematográficos detallados."
+      },
+      "disney": {
+        "description": "Colores suaves, estilo de cuento de hadas mágico y expresivo."
+      }
+    },
+    "chatsmith": {
+      "none": {
+        "title": "Ninguno",
+        "description": ""
+      },
+      "painting": {
+        "title": "Cuadro",
+        "description": "Imágenes pintadas a mano con pinceladas texturizadas."
+      },
+      "3d": {
+        "title": "3D",
+        "description": "Imágenes 3D con profundidad y perspectiva"
+      },
+      "realistic": {
+        "title": "Realista",
+        "description": "Imágenes realistas que parecen fotografías reales."
+      },
+      "cartoon": {
+        "title": "Dibujos animados",
+        "description": "Imágenes divertidas y simplificadas con contornos llamativos."
+      },
+      "cyberpunk": {
+        "title": "Ciberpunk",
+        "description": "Imágenes futuristas con luces de neón y tecnología oscura."
+      },
+      "digital_art": {
+        "title": "Arte digital",
+        "description": "Lo moderno emula la apariencia y la sensación de las pinturas tradicionales."
+      },
+      "fantasy": {
+        "title": "Fantasía",
+        "description": "Imágenes mágicas de mundos míticos encantados."
+      },
+      "anime": {
+        "title": "Anime",
+        "description": "Imágenes coloridas como dibujos animados japoneses."
+      },
+      "chibi": {
+        "title": "Chibi",
+        "description": "Lindos personajes en miniatura con cabezas de gran tamaño."
+      },
+      "watercolor": {
+        "title": "Acuarela",
+        "description": "Imágenes suaves como pinturas de acuarela."
+      },
+      "pop_art": {
+        "title": "Arte pop",
+        "description": "Imágenes de cómics retro vibrantes y atrevidas"
+      },
+      "sketch": {
+        "title": "Bosquejo",
+        "description": "Imágenes toscas como bocetos dibujados a mano"
+      },
+      "noir": {
+        "title": "Negro",
+        "description": "Imágenes dramáticas en blanco y negro con sombras."
+      },
+      "abstract": {
+        "title": "Abstracto",
+        "description": "Formas y colores, no imágenes realistas."
+      },
+      "low_poly": {
+        "title": "Bajo poli",
+        "description": "Imágenes hechas de formas geométricas simples"
+      }
+    }
+  },
+  "featureSurveyRequest": {
+    "feedbackOptions": {
+      "research": "Demasiado superficial, fuentes no confiables, información obsoleta, difícil de entender",
+      "image_creation": "Estilo incorrecto, mala composición, tema incorrecto, se ve roto",
+      "normal": "Fuera de tema, Datos incorrectos, Difícil de entender, Sesgado",
+      "common": "No coincidió con lo que pedí, No útil, Falta detalle, Mala calidad"
+    }
+  },
+  "whatsNewFeatures": {
+    "textToImage": {
+      "title": "Convierte tus palabras en una imagen",
+      "description": "Text-to-image ya está disponible para los modelos GPT-Image-2 y Banana"
+    },
+    "uploadMultiple": {
+      "title": "La creación de imágenes ahora admite múltiples cargas",
+      "description": "Sube hasta 4 imágenes para crear un resultado único, explora una amplia variedad de estilos y descubre nuevas posibilidades."
+    },
+    "chatSync": {
+      "title": "Conoce Chat Sync",
+      "description": "Tu historial de chat ya está sincronizado. Continúa la conversación en cualquier dispositivo, en cualquier momento."
+    },
+    "gptImage": {
+      "title": "😆 ¡Llegaron las Caricaturas!",
+      "description": "Dale a tu foto un toque divertido y exagerado con nuestros últimos estilos."
+    },
+    "claude": {
+      "title": "Conoce a Claude: el maestro de los matices",
+      "description": "Experimenta una IA más natural y humana. Ideal para escribir y programar."
+    },
+    "gemini": {
+      "title": "Nuevos modelos disponibles",
+      "description": "Respuestas rápidas o análisis profundo. Los nuevos modelos te esperan en Chat Smith"
+    },
+    "designLogo": {
+      "title": "Cree logotipos profesionales en minutos",
+      "description": "Genere conceptos de logotipos profesionales, personalice cada detalle y perfeccione su diseño en un solo lugar."
+    }
+  },
+
+  "whatsNewOptions": {
+    "joinNow": "Únete ahora",
+    "empty": "¡Ya estás al día, genial!",
+    "whatNew1": {
+      "title": "Únete a la comunidad de ChatSmith en Discord",
+      "description": "Conéctate con otros, recibe apoyo, comparte ideas y forma parte de algo emocionante. ¡Descubre todo lo que sucede en el servidor de ChatSmith!"
+    },
+    "whatNew2": {
+      "title": "🔍 La búsqueda web ya está disponible",
+      "description": "Obtén las últimas novedades y perspectivas en tiempo real desde la web. ¡Toca para descubrirlas!"
+    },
+    "whatNew3": {
+      "title": "📄 Ahora puedes chatear con PDFs",
+      "description": "Sube cualquier PDF y haz preguntas como si estuvieras conversando. ¡Toca para ver la novedad!"
+    },
+    "whatNew4": {
+      "title": "🎨 Crea imágenes increíbles con IA",
+      "description": "Convierte tus ideas en visuales impactantes en segundos. ¡Toca para explorar la nueva función de Arte con IA!"
+    },
+    "whatNew5": {
+      "title": "📚 Investigación profunda al instante",
+      "description": "Genera informes detallados con fuentes en minutos. ¡Toca para descubrirlo ahora!"
+    }
+  }
+}

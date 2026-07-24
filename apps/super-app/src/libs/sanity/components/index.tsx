@@ -1,0 +1,1 @@
+export { GroupedPortableText } from "./content";

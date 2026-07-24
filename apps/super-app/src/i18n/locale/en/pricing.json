@@ -1,0 +1,100 @@
+{
+  "aria": {
+    "section": "Pricing",
+    "breadcrumb": "Breadcrumb"
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "current": "Pricing"
+  },
+  "hero": {
+    "titleHighlight": "Pricing",
+    "titleRest": " & Plans",
+    "subtitle": "Pick a plan that works for you"
+  },
+  "title": {
+    "prefix": "Get",
+    "highlight": "Chat Smith PRO"
+  },
+  "benefits": {
+    "sectionTitle": "YOUR BENEFITS",
+    "free": "FREE",
+    "pro": "PRO",
+    "limited": "Limited",
+    "rows": {
+      "everydayModels": {
+        "title": "GPT-5 Nano, Gemini 2.5 Flash Lite",
+        "description": "Quick answers for everyday questions"
+      },
+      "proModels": {
+        "title": "GPT-5.2, Claude Sonnet 4.6, Gemini 3 Pro, Grok-4, DeepSeek",
+        "description": "Tackle harder tasks with the world's best AI"
+      },
+      "imageGen": {
+        "title": "Image Generation with ChatGPT Images 2.0 and Nano Banana Pro",
+        "description": "Create stunning AI images from any idea in seconds"
+      },
+      "sync": {
+        "title": "Sync Across Devices",
+        "description": "Continue chatting on any device — phone, tablet, or browser"
+      },
+      "research": {
+        "title": "Deep Research, Realtime Search",
+        "description": "Get smarter answers with live web data"
+      },
+      "uploads": {
+        "title": "File Uploads",
+        "description": "Access to File Uploads (png, jpg, jpeg, pdf, etc)"
+      },
+      "grammar": {
+        "title": "Grammar & Writing",
+        "description": "Improve grammar, rewrite text, and generate content with customizable tone and style."
+      },
+      "study": {
+        "title": "Study Assistant",
+        "description": "Create notes, summaries and homework answers in seconds."
+      },
+      "languages": {
+        "title": "Multi-language Support",
+        "description": "Chat in English, Japanese, Arabic & more"
+      }
+    }
+  },
+  "plansHero": {
+    "prefix": "Get Full Access To",
+    "highlight": "Chat Smith PRO"
+  },
+  "plans": {
+    "free": "Free",
+    "pro": "Pro",
+    "currentPlan": "(Your Current plan)",
+    "features": "Features",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "oneMonth": "1 Month",
+    "twelveMonths": "12 Months",
+    "save": "Save 33%",
+    "save67": "Save 67%",
+    "save75": "Save 75%",
+    "perWeek": "per week"
+  },
+  "userState": {
+    "currentPlanTitle": "Your plan",
+    "managePlan": "Manage plan"
+  },
+  "cta": {
+    "guest": "CONTINUE",
+    "upgrade": "UPGRADE",
+    "viewMyPlan": "View My Plan"
+  },
+  "checkout": {
+    "aria": "Checkout summary",
+    "total": "Total due today",
+    "billedMonthly": "Billed monthly. Cancel anytime.",
+    "continue": "CONTINUE",
+    "cancelAnytime": "CANCEL ANYTIME",
+    "paymentMethods": "Payment Method Available",
+    "paySafe": "Pay safe & secure",
+    "policyNote": "By continuing you agree to our Terms of Use and Privacy Policy."
+  }
+}

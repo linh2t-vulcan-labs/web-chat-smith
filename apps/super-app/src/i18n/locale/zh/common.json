@@ -1,0 +1,160 @@
+{
+  "errorPage": {
+    "title": "错误",
+    "code": "50x",
+    "subTitle": "这是一个暂时性的问题。",
+    "description": "这是一个暂时性的问题。请稍后再试。如果问题仍然存在，请通过 <link>{url}</link> 联系我们。"
+  },
+  "contactUs": "联系我们",
+  "notFound": {
+    "title": "错误",
+    "code": "404",
+    "description": "哎呀！我们找不到您要访问的页面。请检查后再试一次。",
+    "cta": "返回主页"
+  },
+  "metadata": {
+    "title": "Chat Smith：工作与学习的一体化 AI 聊天",
+    "description": "在一个平台上使用 GPT、Gemini 和 Claude。借助专为生产力和创造力打造的 AI 聊天，轻松完成写作、研究和图像生成。立即开始体验。",
+    "keywords": "Chat Smith, AI聊天, AI聊天机器人, 在线AI聊天, AI在线聊天, 与AI聊天, AI聊天应用"
+  },
+  "cta": {
+    "edit": "编辑",
+    "submit": "提交",
+    "copy": "复制",
+    "rename": "重命名",
+    "delete": "删除",
+    "new": "新建",
+    "expand": "展开",
+    "yes": "是的",
+    "no": "不是",
+    "stay": "留在这里",
+    "removeSwitch": "移除并切换",
+    "gotIt": "明白了",
+    "skip": "跳过",
+    "next": "下一步",
+    "cancel": "取消",
+    "uploadPhoto": "上传照片",
+    "regenerate": "重新生成",
+    "accept": "接受",
+    "apply": "应用",
+    "beta": "Beta",
+    "back": "返回",
+    "tryAgain": "重试",
+    "tryNow": "立即试用",
+    "exploreNow": "立即探索",
+    "letGo": "开始吧",
+    "more": "更多",
+    "failLoadResult": "加载结果失败",
+    "failLoadMoreResult": "无法加载更多结果",
+    "failLoadMoreHistory": "无法加载更多聊天记录"
+  },
+  "toast": {
+    "error": {
+      "somethingWentWrong": "出了点问题，请重试。",
+      "unableFindConversation": "无法找到对话",
+      "unexpectedError": "遇到意外错误，请稍后再试。",
+      "tooManyImages": "每条消息最多上传 {maxImage} 张图片",
+      "tooManyFiles": "每次只能上传 {maxFiles} 个文件",
+      "fileInvalidType": "文件已损坏或无法处理。请检查文件并重试。",
+      "fileTooLarge": "文件大小超过 {maxSizeInMB}MB 限制。请上传较小的文件。",
+      "fileNotSupport": "此功能不支持文件上传",
+      "singleImage": "此样式仅允许上传最多 {maxImage} 张图片",
+      "reachMaxImages": "请最多选择 {maxImage} 张图片。此样式仅允许最多 {maxImage} 张图片。",
+      "modelNotAllowImages": "此模型不允许添加图片"
+    },
+    "copy": {
+      "successfully": "复制成功"
+    }
+  },
+  "downloadApp": "下载应用",
+  "termsOfUse": "使用条款",
+  "privacyPolicy": "隐私政策",
+  "refundPolicy": "退款政策",
+  "community": "社区",
+  "signOut": "登出",
+  "getPro": "获取 Pro",
+  "getProV2": "获取 PRO",
+  "unlockAllFeature": "立即解锁所有功能",
+  "expire": "已过期",
+  "pro": "专业版",
+  "free": "免费",
+  "upgrade": "升级",
+  "upgradeNow": "立即升级",
+  "createImage": "创建图像",
+  "imageCreation": "图像生成",
+  "deepResearch": "深度研究",
+  "webSearch": "网页搜索",
+  "limited": "限制",
+  "perDuration": "每 {duration}",
+  "savePercentage": "节省 {percent}%",
+  "mostFlexible": "最灵活",
+  "pricePerDuration": "{price}/{duration}",
+  "duration": {
+    "day": "天",
+    "week": "周",
+    "month": "月",
+    "year": "年"
+  },
+  "imageCreationDescription": "根据你的文字或照片创建图像",
+  "deepResearchDescription": "高级搜索和推理",
+  "webSearchDescription": "搜索网页以获取最新信息",
+  "uploadNeedSignIn": "请登录以附加文件",
+  "loading": "加载中",
+  "loadingVerifyCaptcha": "正在验证您是否为真人…",
+  "signIn": "登录",
+  "inProgress": "正在进行中",
+  "planning": "规划中",
+  "released": "已发布",
+  "viewMore": "查看更多",
+  "none": "无",
+  "frequency": {
+    "daily": "每日",
+    "monthly": "每月",
+    "quarterly": "每季度",
+    "yearly": "每年"
+  },
+  "amountPerDuration": "{amount} {duration}",
+  "unknownUser": "未知用户",
+  "freeTrial": "免费试用",
+  "currentPlan": "当前计划",
+  "only": "仅",
+  "newFeature": "新功能",
+  "viewDetail": "查看详情",
+  "whatsNew": "最新更新",
+  "availableNow": "现已推出",
+  "sessionEnd": "会话已结束，或已在其他窗口中更改。",
+  "close": "关闭",
+  "noNotificationsYet": "暂无通知",
+  "couldntLoadNotifications": "无法加载通知",
+  "errorLoadingNotifications": "加载通知时发生错误",
+  "weWillNotifyWhenNew": "有新内容时会通知您",
+  "reload": "重新加载",
+  "timeAgo": {
+    "justNow": "刚刚",
+    "secondsAgo": "{count} 秒前",
+    "minutesAgo": "{count} 分钟前",
+    "hoursAgo": "{count} 小时前",
+    "daysAgo": "{count} 天前",
+    "monthsAgo": "{count} 个月前",
+    "yearsAgo": "{count} 年前"
+  },
+  "notification": {
+    "stayUpdate": "立即开启通知，随时获取最新动态",
+    "enableNow": "立即开启",
+    "skip": "跳过",
+    "later": "稍后",
+    "alert": {
+      "title": "不要错过任何更新",
+      "description": "开启通知，接收最新动态、新闻和专属优惠！"
+    },
+    "popup": {
+      "title": "即时获取最新动态",
+      "description": "立即开启通知，实时获取进度更新、新功能和专属优惠",
+      "enable": "开启通知"
+    },
+    "task": {
+      "title": "完成时通知",
+      "description": "正在后台处理您的任务 — 结果准备好时是否通知您？"
+    }
+  }
+}

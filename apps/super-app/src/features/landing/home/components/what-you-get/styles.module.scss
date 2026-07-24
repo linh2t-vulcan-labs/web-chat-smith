@@ -1,0 +1,40 @@
+.task-card:hover {
+  backdrop-filter: blur(16px);
+  background-position: center center;
+}
+.task-card-without-block:hover {
+  background: radial-gradient(
+    circle,
+    rgba(144, 255, 228, 0.12) 0%,
+    rgba(255, 255, 255, 0.08) 20%,
+    rgba(144, 255, 228, 0.2) 40%,
+    rgba(255, 255, 255, 0.08) 60%,
+    rgba(144, 255, 228, 0.2) 80%,
+    rgba(253, 255, 255, 0.08) 100%
+  );
+}
+
+.task-card-block:hover {
+  background: radial-gradient(
+    circle,
+    rgba(144, 255, 228, 0.12) 0%,
+    rgba(255, 255, 255, 0.08) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(144, 255, 228, 0.2) 75%,
+    rgba(253, 255, 255, 0.08) 100%
+  );
+}
+
+.background-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 194, 178, 0.48) 0%,
+    rgba(0, 194, 178, 0.48) 100%
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeIn 0.45s ease-in-out forwards;
+}

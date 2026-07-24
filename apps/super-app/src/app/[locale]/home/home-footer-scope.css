@@ -1,0 +1,38 @@
+/* Product links — subtle frosted layer, blends into footer body below. */
+.home-footer-scope {
+  position: relative;
+  width: 100%;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background-color: rgba(30, 30, 30, 0.12);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0) 0%,
+    rgba(10, 10, 10, 0.18) 1.5rem,
+    rgba(30, 30, 30, 0.12) 100%
+  );
+
+  --ai-text-header: #f3f4f6;
+  --ai-content-padding-x: 16px;
+  --ai-content-padding-x-wide: 56px;
+
+  --ai-footer-product-nav-bg: transparent;
+  --ai-footer-product-nav-border-top: none;
+  --ai-footer-product-nav-backdrop: none;
+  --ai-footer-product-nav-title: #f3f4f6;
+  --ai-footer-product-nav-link: rgba(255, 255, 255, 0.8);
+  --ai-footer-product-nav-link-hover: #ffffff;
+  --ai-footer-product-nav-link-focus: rgba(255, 255, 255, 0.45);
+}
+
+@media (min-width: 1024px) {
+  .home-footer-scope {
+    --ai-content-padding-x-wide: 56px;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(10, 10, 10, 0) 0%,
+      rgba(10, 10, 10, 0.18) 2rem,
+      rgba(30, 30, 30, 0.12) 100%
+    );
+  }
+}

@@ -1,0 +1,467 @@
+/* Semantic classes + scoped tokens for AI Tool (Image Generator).
+   Light tokens live on .ai-tool-scope; dark overrides under html.dark .ai-tool-scope.
+   Section tokens (banner, CTA footer, FAQs, steps, metrics) are defined here and consumed by CSS modules. */
+
+.ai-tool-scope {
+  /* Text */
+  --ai-text-header: #0b0f1a;
+  --ai-text-body: #1f2a37;
+  --ai-text-muted: #6b7280;
+  --ai-text-nav: #818181;
+  --ai-text-link: #2563eb;
+  /* Figma header logo title (desktop App/Title3, mobile style_VMN2UV) — node 1:8334 / 12:9495 */
+  --ai-header-brand-text: #1e1e1e;
+
+  /* Surfaces */
+  --ai-surface-page: #ffffff;
+  --ai-surface-card: #fafafa;
+  --ai-border-default: #00000033;
+
+  /* Header bar: Figma `header` fill #FFFFFF + backdrop blur 32px (1:8334); mobile same fill (12:9495) */
+  --ai-header-bar-fill: #ffffff;
+  --ai-header-backdrop-blur: 32px;
+  --ai-header-bg: var(--ai-header-bar-fill);
+  --ai-shadow-popover: 0 20px 60px rgba(0, 0, 0, 0.15);
+
+  /* Scrollbars (scoped): thinner + lighter across AI-tool pages */
+  --ai-scrollbar-thumb: rgba(129, 129, 129, 0.28);
+  --ai-scrollbar-track: transparent;
+
+  /* Mobile: vertical rhythm from 16px padding + 32px row (12:9495); desktop fixed 72px (1:8334) */
+  --ai-header-height: 64px;
+  --ai-header-height-desktop: 72px;
+  --ai-header-mega-panel-top-offset: 12px;
+  --ai-header-products-panel-left: 150px;
+  --ai-header-products-panel-max-height: 60dvh;
+
+  --ai-control-bg: rgba(0, 0, 0, 0.06);
+  --ai-control-bg-strong: #ededed;
+  --ai-control-hover: rgba(0, 0, 0, 0.06);
+
+  /* Language selector trigger + panel selected row (Figma category/website + list states) */
+  --ai-lang-trigger-bg: #ededed;
+  --ai-lang-trigger-bg-hover: #e4e4e4;
+  --ai-lang-trigger-border: rgba(0, 0, 0, 0.2);
+  --ai-lang-trigger-text: #0a0a0a;
+  /* Figma category/website chevron uses muted gray (12:9495 arrow fill #818181) */
+  --ai-lang-chevron: #818181;
+  /* Figma `category/website`: mobile 10px / 4×8 / 32 height / 12 gap; desktop 16px / 8×16 / 151 width (1:8349, 12:9503) */
+  --ai-lang-trigger-radius-mobile: 10px;
+  --ai-lang-trigger-radius-desktop: 16px;
+  --ai-lang-trigger-padding-mobile: 4px 8px;
+  --ai-lang-trigger-padding-desktop: 8px 16px;
+  --ai-lang-trigger-min-height-mobile: 32px;
+  --ai-lang-trigger-min-height-desktop: 40px;
+  --ai-lang-trigger-width-desktop: 151px;
+  --ai-lang-trigger-gap-inner-mobile: 12px;
+  --ai-lang-trigger-font-size-mobile: 12px;
+  --ai-lang-trigger-font-weight-mobile: 600;
+  --ai-lang-trigger-line-height-mobile: 16px;
+  --ai-lang-trigger-font-size-desktop: 16px;
+  --ai-lang-trigger-font-weight-desktop: 400;
+  --ai-lang-trigger-line-height-desktop: 24px;
+  /* Header Sign In (Figma 1:8351 desktop); mobile matches language trigger height / type scale */
+  --ai-sign-in-bg: #00a681;
+  --ai-sign-in-bg-hover: #00a682f9;
+  --ai-sign-in-border: var(--ai-lang-trigger-border);
+  --ai-sign-in-text: #ffffff;
+  --ai-sign-in-min-height-mobile: var(--ai-lang-trigger-min-height-mobile);
+  --ai-sign-in-padding-mobile: var(--ai-lang-trigger-padding-mobile);
+  --ai-sign-in-radius-mobile: var(--ai-lang-trigger-radius-mobile);
+  --ai-sign-in-font-size-mobile: var(--ai-lang-trigger-font-size-mobile);
+  --ai-sign-in-font-weight-mobile: var(--ai-lang-trigger-font-weight-mobile);
+  --ai-sign-in-line-height-mobile: var(--ai-lang-trigger-line-height-mobile);
+  --ai-sign-in-min-height-desktop: 40px;
+  --ai-sign-in-padding-desktop: 8px 20px;
+  --ai-sign-in-radius-desktop: 16px;
+  --ai-sign-in-font-size-desktop: 16px;
+  --ai-sign-in-font-weight-desktop: 600;
+  --ai-sign-in-line-height-desktop: 24px;
+  --ai-account-avatar-size-mobile: 32px;
+  --ai-account-avatar-size-desktop: 40px;
+  /* Primary button / header account avatar (brand green) */
+  --ai-btn-bg: #00a681;
+  --ai-lang-item-selected-bg: transparent;
+  --ai-lang-item-hover-bg: #ededed;
+  --ai-lang-item-active-text: #00a681;
+
+  /* Radii */
+  --ai-radius-sm: 10px;
+  --ai-radius-md: 12px;
+  --ai-radius-lg: 16px;
+
+  /* Spacing */
+  --ai-header-padding-x: 12px;
+  --ai-header-padding-y: 16px;
+  --ai-header-padding-x-desktop: 56px;
+  --ai-header-padding-y-desktop: 16px;
+  /* Page sections: same compact/wide breakpoint as header (900px) */
+  --ai-content-padding-x: var(--ai-header-padding-x);
+  --ai-content-padding-x-wide: var(--ai-header-padding-x-desktop);
+
+  --ai-header-left-gap-x: 20px;
+  --ai-header-left-gap-x-desktop: 48px;
+  --ai-header-right-gap-x: 16px;
+  --ai-header-right-gap-x-desktop: 16px;
+  /* Min space between header left (brand + nav) and right (lang + account) before compact layout */
+  --ai-header-nav-layout-safe-gap: 40px;
+  /* Figma `pages`: row with no gap; each pill is self-padded (1:8339 layout_NZOAEW). */
+  --ai-header-nav-gap-x-desktop: 0px;
+  /* Figma nav pills (1:8340 …): radius 20, horizontal 24, type 16/24 semibold. Vertical padding on the atom is 16px in file; with header fixed 72px and container py 16, inner row is 40px — use 8px vertical so pills align with the 32px logo row. */
+  --ai-header-nav-pill-padding-y: 8px;
+  --ai-header-nav-pill-padding-x: 24px;
+  --ai-header-nav-pill-radius: 20px;
+  /* Hit targets for icon buttons: theme 40×40 desktop (1:8348), 24×24 mobile (12:9502) */
+  --ai-header-icon-hit-mobile: 24px;
+  --ai-header-icon-hit-desktop: 40px;
+  /* Figma logo row: gap 7px mobile (12:9495 layout_TAJ8SS), 8px desktop (1:8336 layout_QAIYIC) */
+  --ai-header-brand-gap-mobile: 7px;
+  --ai-header-brand-gap-desktop: 8px;
+  --ai-header-brand-lead-gap: 12px;
+  /* Brand + primary nav pills (Chat Smith, Home, Products, Pricing) — 14/21 mobile, 16/24 from 900px */
+  --ai-header-primary-font-size-mobile: 14px;
+  --ai-header-primary-line-height-mobile: 21px;
+  --ai-header-primary-font-size-desktop: 16px;
+  --ai-header-primary-line-height-desktop: 24px;
+  --ai-header-primary-font-weight-brand: 700;
+  --ai-header-primary-font-weight-nav: 600;
+
+  /* Mobile sidebar / drawer — Figma `sidebar` 34:10894 (5gC1w9caiBlpmV5h5GVcq0) */
+  --ai-drawer-top-offset: var(--ai-header-height);
+  --ai-mobile-drawer-bg: #ffffff;
+  --ai-mobile-drawer-padding-x: 16px;
+  --ai-mobile-drawer-section-gap: 20px;
+  --ai-mobile-drawer-scroll-padding-bottom: 20px;
+  --ai-mobile-drawer-inline-max: 358px;
+  --ai-mobile-drawer-search-padding: 8px 12px;
+  --ai-mobile-drawer-search-radius: 8px;
+  --ai-mobile-drawer-search-gap: 8px;
+  --ai-mobile-drawer-search-placeholder: rgba(0, 0, 0, 0.5);
+  --ai-mobile-drawer-section-title-weight: 700;
+  --ai-mobile-drawer-section-title-size: 14px;
+  --ai-mobile-drawer-section-title-line: 1.4;
+  --ai-mobile-drawer-megamenu-padding-x: 16px;
+  --ai-mobile-drawer-megamenu-column-gap: 30px;
+  --ai-mobile-drawer-row-radius: 8px;
+  --ai-mobile-drawer-row-padding: 8px 6px 8px 12px;
+  --ai-mobile-drawer-row-gap: 12px;
+  --ai-mobile-drawer-link-font-size: 14px;
+  --ai-mobile-drawer-link-line-height: 20px;
+  --ai-mobile-drawer-backdrop: rgba(15, 23, 42, 0.35);
+
+  /* AIToolBanner */
+  --ai-banner-page-bg: #fafafa;
+  --ai-banner-text-primary: #141414;
+  --ai-banner-text-secondary: #404040;
+  --ai-banner-text-muted: #818181;
+  --ai-banner-brand: #00a681;
+  --ai-banner-title-grad-from: #82f4b1;
+  --ai-banner-title-grad-to: #0abf93;
+  --ai-banner-card-bg: rgba(255, 255, 255, 0.8);
+  --ai-banner-card-blur: 80px;
+  --ai-banner-border: rgba(0, 0, 0, 0.2);
+  --ai-banner-tag-bg: rgba(0, 0, 0, 0.05);
+  --ai-banner-radius-md: 16px;
+  --ai-banner-radius-sm: 12px;
+  --ai-banner-translate-card-bg: #ffffff;
+  --ai-banner-translate-card-radius: 24px;
+  --ai-banner-translate-card-padding: 20px;
+  --ai-banner-translate-card-width: 902px;
+  --ai-banner-translate-card-gap: 16px;
+  --ai-banner-translate-panel-bg: #fafafa;
+  --ai-banner-translate-input-border: rgba(0, 166, 129, 0.4);
+  --ai-banner-translate-output-bg: #fafafa;
+  --ai-banner-translate-output-border: rgba(0, 0, 0, 0.1);
+  --ai-banner-translate-panel-height: 360px;
+  --ai-banner-translate-panel-width: 415px;
+  --ai-banner-translate-panels-gap: 4px;
+  --ai-banner-translate-chip-bg: #fafafa;
+  --ai-banner-translate-chip-active-border: #00a681;
+  --ai-banner-translate-placeholder-color: #868686;
+  --ai-banner-translate-char-count-color: #bcbcbc;
+  --ai-banner-translate-swap-color: #9e9e9e;
+  --ai-banner-upload-file-border: rgba(0, 0, 0, 0.2);
+  --ai-banner-upload-file-bg: #ffffff;
+
+  /* AIToolCTAFooter */
+  --cta-footer-text: #1e1e1e;
+  --cta-footer-accent-from: #82f4b1;
+  --cta-footer-accent-to: #0abf93;
+  --cta-footer-cta: #00a681;
+
+  /* AIToolFAQs */
+  --faq-text: #141414;
+  --faq-muted: #3b3b3b;
+  --faq-border: rgba(20, 20, 20, 0.08);
+  --faq-surface: #ffffff;
+
+  /* AIToolStepSection */
+  --steps-text: #1e1e1e;
+  --steps-accent-from: #82f4b1;
+  --steps-accent-to: #0abf93;
+  --steps-cta: #00a681;
+
+  /* AIToolMetricSection */
+  --metric-border: #82f4b1;
+  --metric-text: #3b3b3b;
+  --metric-card: #3b3b3b;
+  --metric-white: #ffffff;
+  --metric-accent-from: #82f4b1;
+  --metric-accent-to: #0abf93;
+  --metric-section-chatsmith-fill: rgba(0, 166, 130, 0.05);
+  --metric-section-chatsmith-w: 160px;
+  --metric-card-chatsmith-fill: rgba(255, 255, 255, 0.2);
+  --metric-card-chatsmith-w: 100px;
+
+  color: var(--ai-text-body);
+  min-height: 100vh;
+}
+
+/* Scrollbar styling (Firefox) */
+.ai-tool-scope * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ai-scrollbar-thumb) var(--ai-scrollbar-track);
+}
+
+/* Scrollbar styling (WebKit: Chrome/Safari/Edge) */
+.ai-tool-scope *::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.ai-tool-scope *::-webkit-scrollbar-thumb {
+  background: var(--ai-scrollbar-thumb);
+  border-radius: 999px;
+}
+.ai-tool-scope *::-webkit-scrollbar-track {
+  background: var(--ai-scrollbar-track);
+}
+
+/**
+ * Portaled "Choose style" modal (AIToolArtStyleDrawer) — Figma file `5gC1w9caiBlpmV5h5GVcq0`, node `1:14291`
+ * https://www.figma.com/design/5gC1w9caiBlpmV5h5GVcq0/Landing-Page--Trang-V%C5%A9-?node-id=1-14291
+ * `display: contents` keeps layout on <body>; tokens still inherit into the modal subtree.
+ */
+.ai-tool-style-modal-root {
+  display: contents;
+
+  --ai-style-modal-overlay: rgba(15, 23, 42, 0.4);
+  --ai-style-modal-panel-bg: #ffffff;
+  --ai-style-modal-panel-color: #1f2a37;
+  --ai-style-modal-panel-radius: 24px;
+  --ai-style-modal-panel-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  --ai-style-modal-panel-border: #00000033;
+  --ai-style-modal-panel-max-width: min(800px, calc(100vw - 32px));
+  --ai-style-modal-panel-min-height: min(70vh, 720px);
+  --ai-style-modal-panel-max-height: calc(100vh - 80px);
+
+  --ai-style-modal-header-padding: 20px 24px 12px;
+  --ai-style-modal-title-font-size: 24px;
+  --ai-style-modal-title-line-height: 1.25;
+  --ai-style-modal-title-font-weight: 700;
+  --ai-style-modal-title-letter-spacing: -0.02em;
+  --ai-style-modal-title-color: #0b0f1a;
+
+  --ai-style-modal-close-size: 40px;
+  --ai-style-modal-close-radius: 12px;
+  --ai-style-modal-close-border: rgba(0, 0, 0, 0.2);
+  --ai-style-modal-close-bg: #ededed;
+  --ai-style-modal-close-bg-hover: #e4e4e4;
+  --ai-style-modal-close-color: #0a0a0a;
+
+  --ai-style-modal-search-wrap-padding: 0 24px 16px;
+  --ai-style-modal-search-height: 40px;
+  --ai-style-modal-search-radius: 8px;
+  --ai-style-modal-search-padding: 8px 12px;
+  --ai-style-modal-search-border: rgba(0, 0, 0, 0.2);
+  --ai-style-modal-search-bg: #fafafa;
+  --ai-style-modal-search-color: #0a0a0a;
+  --ai-style-modal-search-placeholder: rgba(0, 0, 0, 0.5);
+  --ai-style-modal-search-focus-border: rgba(0, 166, 129, 0.55);
+  --ai-style-modal-search-focus-bg: #ffffff;
+
+  --ai-style-modal-grid-padding: 8px 24px 24px;
+  --ai-style-modal-grid-gap: 12px;
+  --ai-style-modal-empty-color: #6b7280;
+
+  --ai-style-modal-card-padding: 6px;
+  --ai-style-modal-card-radius: 16px;
+  --ai-style-modal-card-border-hover: #00a681;
+  --ai-style-modal-card-border-selected: #00a681;
+  --ai-style-modal-preview-min-height: 200px;
+  --ai-style-modal-preview-bg: #fafafa;
+  --ai-style-modal-preview-border: rgba(0, 0, 0, 0.08);
+
+  --ai-style-modal-meta-bg: rgba(255, 255, 255, 0.96);
+  --ai-style-modal-meta-border-top: rgba(0, 0, 0, 0.08);
+  --ai-style-modal-title-sm-size: 14px;
+  --ai-style-modal-title-sm-line-height: 1.3;
+  --ai-style-modal-desc-size: 12px;
+  --ai-style-modal-desc-line-height: 1.35;
+  --ai-style-modal-desc-color: #6b7280;
+
+  --ai-style-modal-selected-badge-bg: #00a681;
+  --ai-style-modal-selected-badge-color: #ffffff;
+  --ai-style-modal-icon-muted: #9ca3af;
+}
+
+html.dark .ai-tool-style-modal-root {
+  --ai-style-modal-overlay: rgba(0, 0, 0, 0.55);
+  --ai-style-modal-panel-bg: #1a2332;
+  --ai-style-modal-panel-color: #e5e7eb;
+  --ai-style-modal-panel-border: rgba(243, 244, 246, 0.12);
+  --ai-style-modal-panel-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+
+  --ai-style-modal-title-color: #f3f4f6;
+
+  --ai-style-modal-close-border: rgba(243, 244, 246, 0.16);
+  --ai-style-modal-close-bg: rgba(255, 255, 255, 0.08);
+  --ai-style-modal-close-bg-hover: rgba(255, 255, 255, 0.12);
+  --ai-style-modal-close-color: #f3f4f6;
+
+  --ai-style-modal-search-border: rgba(243, 244, 246, 0.14);
+  --ai-style-modal-search-bg: rgba(255, 255, 255, 0.06);
+  --ai-style-modal-search-color: #f3f4f6;
+  --ai-style-modal-search-placeholder: rgba(255, 255, 255, 0.45);
+  --ai-style-modal-search-focus-border: rgba(45, 212, 191, 0.55);
+  --ai-style-modal-search-focus-bg: rgba(255, 255, 255, 0.08);
+
+  --ai-style-modal-empty-color: #9ca3af;
+
+  --ai-style-modal-preview-bg: rgba(255, 255, 255, 0.06);
+  --ai-style-modal-preview-border: rgba(243, 244, 246, 0.1);
+
+  --ai-style-modal-meta-bg: rgba(26, 35, 50, 0.92);
+  --ai-style-modal-meta-border-top: rgba(243, 244, 246, 0.1);
+  --ai-style-modal-desc-color: #9ca3af;
+
+  --ai-style-modal-selected-badge-bg: #00a681;
+  --ai-style-modal-icon-muted: #9ca3af;
+}
+
+html.dark .ai-tool-scope {
+  /* Text */
+  --ai-text-header: #f3f4f6;
+  --ai-text-body: #e5e7eb;
+  --ai-text-muted: #9ca3af;
+  --ai-text-nav: #a1a1aa;
+  --ai-text-link: #60a5fa;
+  --ai-header-brand-text: #f3f4f6;
+
+  /* Surfaces */
+  --ai-surface-page: #0b0f1a;
+  --ai-surface-card: #111827;
+  --ai-border-default: rgba(243, 244, 246, 0.14);
+
+  /* Header bar (dark: match page tone + same blur treatment) */
+  --ai-header-bar-fill: color-mix(
+    in oklab,
+    var(--ai-surface-page) 96%,
+    #ffffff 4%
+  );
+  --ai-header-backdrop-blur: 32px;
+  --ai-header-bg: var(--ai-header-bar-fill);
+  --ai-shadow-popover: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+  --ai-scrollbar-thumb: rgba(255, 255, 255, 0.22);
+  --ai-scrollbar-track: transparent;
+
+  --ai-control-bg: rgba(255, 255, 255, 0.08);
+  --ai-control-bg-strong: rgba(255, 255, 255, 0.08);
+  --ai-control-hover: rgba(255, 255, 255, 0.08);
+
+  --ai-lang-trigger-bg: rgba(255, 255, 255, 0.1);
+  --ai-lang-trigger-bg-hover: rgba(255, 255, 255, 0.14);
+  --ai-lang-trigger-border: rgba(243, 244, 246, 0.2);
+  --ai-lang-trigger-text: #f3f4f6;
+  --ai-lang-chevron: var(--ai-text-nav);
+  --ai-lang-item-selected-bg: transparent;
+  --ai-lang-item-hover-bg: rgba(255, 255, 255, 0.1);
+  --ai-lang-item-active-text: #2dd4bf;
+
+  --ai-btn-bg: #00a681;
+
+  --ai-mobile-drawer-bg: #ffffff;
+  --ai-mobile-drawer-search-placeholder: rgba(255, 255, 255, 0.45);
+  --ai-mobile-drawer-backdrop: rgba(0, 0, 0, 0.45);
+
+  /* AIToolBanner (dark) */
+  --ai-banner-page-bg: #0b0f1a;
+  --ai-banner-text-primary: #f3f4f6;
+  --ai-banner-text-secondary: #d1d5db;
+  --ai-banner-text-muted: #9ca3af;
+  --ai-banner-brand: #00a681;
+  --ai-banner-title-grad-from: #82f4b1;
+  --ai-banner-title-grad-to: #2dd4bf;
+  --ai-banner-card-bg: rgba(17, 24, 39, 0.72);
+  --ai-banner-border: rgba(243, 244, 246, 0.16);
+  --ai-banner-tag-bg: rgba(255, 255, 255, 0.08);
+  --ai-banner-translate-card-bg: rgba(17, 24, 39, 0.92);
+  --ai-banner-translate-panel-bg: rgba(255, 255, 255, 0.06);
+  --ai-banner-translate-input-border: rgba(0, 166, 129, 0.35);
+  --ai-banner-translate-output-bg: rgba(255, 255, 255, 0.04);
+  --ai-banner-translate-output-border: rgba(255, 255, 255, 0.12);
+  --ai-banner-translate-chip-bg: rgba(255, 255, 255, 0.08);
+  --ai-banner-translate-chip-active-border: #00a681;
+  --ai-banner-translate-placeholder-color: #9ca3af;
+  --ai-banner-translate-char-count-color: #6b7280;
+  --ai-banner-translate-swap-color: #9ca3af;
+  --ai-banner-upload-file-border: rgba(255, 255, 255, 0.2);
+  --ai-banner-upload-file-bg: rgba(255, 255, 255, 0.04);
+
+  /* AIToolCTAFooter (dark) */
+  --cta-footer-text: #f3f4f6;
+  --cta-footer-accent-from: #82f4b1;
+  --cta-footer-accent-to: #2dd4bf;
+  --cta-footer-cta: #00a681;
+
+  /* AIToolFAQs (dark) */
+  --faq-text: #f3f4f6;
+  --faq-muted: #9ca3af;
+  --faq-border: rgba(243, 244, 246, 0.12);
+  --faq-surface: #111827;
+
+  /* AIToolStepSection (dark) */
+  --steps-text: #f3f4f6;
+  --steps-accent-from: #82f4b1;
+  --steps-accent-to: #2dd4bf;
+  --steps-cta: #00a681;
+
+  /* AIToolMetricSection (dark) */
+  --metric-border: #82f4b1;
+  --metric-text: #e5e7eb;
+  --metric-card: #111827;
+  --metric-white: #ffffff;
+  --metric-accent-from: #82f4b1;
+  --metric-accent-to: #2dd4bf;
+  --metric-section-chatsmith-fill: rgba(45, 212, 191, 0.1);
+  --metric-card-chatsmith-fill: rgba(255, 255, 255, 0.12);
+}
+
+.text-header {
+  color: var(--ai-text-header);
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-body {
+  color: var(--ai-text-body);
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.text-muted {
+  color: var(--ai-text-muted);
+}
+
+.text-link {
+  color: var(--ai-text-link);
+}
+
+.surface-card {
+  background: var(--ai-surface-card);
+  border: 1px solid var(--ai-border-default);
+  border-radius: 16px;
+}

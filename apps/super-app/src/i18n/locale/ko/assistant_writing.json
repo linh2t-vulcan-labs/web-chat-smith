@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "AI 챗봇: 학술 글쓰기"
+  },
+  "settings": {
+    "title": "설정",
+    "resetCta": "초기화",
+    "submitCta": "제출",
+    "length": {
+      "title": "길이",
+      "short": "짧게",
+      "medium": "중간",
+      "long": "길게"
+    },
+    "tone": {
+      "title": "말투",
+      "friendly": "친근",
+      "formal": "격식",
+      "informal": "비격식",
+      "optimistic": "낙관적",
+      "worried": "걱정됨",
+      "curious": "궁금함",
+      "assertive": "단호",
+      "encouraging": "격려함",
+      "surprised": "놀람",
+      "cooperative": "협조적"
+    },
+    "technique": {
+      "title": "기법 사용",
+      "none": "없음",
+      "framework": "5가지 기본 반론 프레임워크",
+      "aida": "AIDA 카피라이팅",
+      "pas": "PAS 카피라이팅",
+      "webinar": "Russell Brunson의 완벽한 웨비나 공식",
+      "pastor": "PASTOR 프레임워크"
+    },
+    "feedback": {
+      "label": "귀하의 피드백 <span>(선택 사항)</span>",
+      "placeholder": "피드백을 입력해 주세요..."
+    }
+  },
+  "cta": {
+    "stop": "생성 중지",
+    "regenerate": "다시 생성"
+  },
+  "result": {
+    "placeholder": "어떤 주제에 대해 쓰고 싶으신가요?",
+    "loading": "생성 중",
+    "suggestion": {
+      "title": "관심 있으실 만한 내용입니다"
+    }
+  },
+  "toast": {
+    "error": {
+      "reachedLimit": "고급 사용 한도에 도달했습니다. 업그레이드하여 가장 빠르고 고급화된 기능을 계속 이용하세요"
+    }
+  },
+  "promoteSignIn": "남은 무료 메시지를 이용하려면 로그인하세요",
+  "usage": {
+    "remaining": "무료 메시지 {count, plural, one {#개} other {#개}} 남았습니다.",
+    "getPremium": "Premium 이용하기"
+  },
+  "title": "학술 글쓰기"
+}

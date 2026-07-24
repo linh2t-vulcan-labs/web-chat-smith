@@ -1,7 +1,22 @@
-import type { NextConfig } from "next"
+import { createNextIntlConfig } from "@cs/i18n/config";
+import { createNextConfig } from "@cs/next-config";
+import createNextIntlPlugin from "next-intl/plugin";
 
-const nextConfig: NextConfig = {
-  transpilePackages: ["@workspace/ui"],
-}
+const withNextIntl = createNextIntlPlugin(
+  createNextIntlConfig({
+    messagesPath: "./messages",
+    requestConfig: "./i18n/request.ts",
+    srcPath: ["./app", "./components", "../../packages/ui/src"],
+  })
+);
 
-export default nextConfig
+export default withNextIntl(
+  createNextConfig({
+    cacheComponents: true,
+    partialPrefetching: true,
+    publicRuntimeConfig: {
+      isProd: process.env.NODE_ENV === "production",
+      webUrl: "http://localhost:3000",
+    },
+  })
+);

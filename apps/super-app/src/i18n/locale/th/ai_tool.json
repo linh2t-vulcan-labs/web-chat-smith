@@ -1,0 +1,321 @@
+{
+  "brand": {
+    "name": "Chat Smith"
+  },
+  "languages": {
+    "en": "อังกฤษ (US)",
+    "zh": "จีน (简体)",
+    "th": "ไทย",
+    "ar": "อาหรับ (العربية)",
+    "es": "สเปน (Español)",
+    "ko": "เกาหลี (한국어)",
+    "ja": "ญี่ปุ่น (日本語)",
+    "hi": "ฮินดี (हिंदी)"
+  },
+  "header": {
+    "nav": {
+      "home": "หน้าแรก",
+      "products": "ฟีเจอร์",
+      "blog": "บล็อก",
+      "pricing": "ราคา"
+    },
+    "sections": {
+      "features": "ฟีเจอร์",
+      "useCases": "กรณีการใช้งาน"
+    },
+    "search": {
+      "placeholder": "ค้นหาหมวดหมู่",
+      "noResults": "ไม่พบหมวดหมู่ที่ตรงกับการค้นหา",
+      "ariaLabel": "กรองหมวดหมู่ตามชื่อ"
+    },
+    "auth": {
+      "signIn": "เข้าสู่ระบบ"
+    },
+    "fallback": {
+      "untitled": "ไม่มีชื่อ"
+    },
+    "aria": {
+      "toggleMenu": "สลับเมนู",
+      "navigationDrawer": "เมนูเว็บไซต์",
+      "closeMenu": "ปิดเมนู",
+      "toggleTheme": "สลับธีม",
+      "language": "ภาษา",
+      "account": "บัญชี"
+    }
+  },
+  "banner": {
+    "title": {
+      "muted": "AI",
+      "image": "สร้างภาพ",
+      "generator": "อัตโนมัติ"
+    },
+    "subtitle": "สัมผัสเครื่องมือสร้างภาพ AI ที่ทรงพลังที่สุด ตั้งแต่งานคอนเซปต์มืออาชีพไปจนถึงงานศิลปะสร้างสรรค์ Chat Smith ทำได้ทั้งหมดในไม่กี่วินาที",
+    "promptPlaceholder": "ห้องสมุดล้ำยุคที่ลอยอยู่ในอวกาศ แสงแบบภาพยนตร์ ...",
+    "promptPlaceholderTranslate": "แปลข้อความต่อไปนี้เป็นโทนธุรกิจมืออาชีพเป็นภาษาจีน",
+    "promptPlaceholderQa": "พิมพ์คำถาม ลากและอัปโหลดรูปภาพหรือ PDF หรือวางด้วย Ctrl+V",
+    "promptPlaceholderQaSimple": "พิมพ์คำถามของคุณ...",
+    "modelLabel": "GPT-5 Nano",
+    "tryTheseOptional": "ลองใช้ (ไม่บังคับ)",
+    "tryThese": {
+      "label": "ลองใช้",
+      "optional": "(ไม่บังคับ)"
+    },
+    "cta": {
+      "generate": "สร้าง",
+      "translate": "แปล",
+      "getAnswer": "รับคำตอบ"
+    },
+    "uploadFile": {
+      "title": "อัปโหลดไฟล์",
+      "instructionPrefix": "ลากและวางหรือ",
+      "chooseFiles": "เลือกไฟล์",
+      "instructionSuffix": "เพื่ออัปโหลด",
+      "supportedTypes": "ประเภทไฟล์ที่รองรับ: pdf, png, jpg, jpeg ขนาดไฟล์สูงสุด: 20MB",
+      "aria": {
+        "chooseFiles": "เลือกไฟล์เพื่ออัปโหลด"
+      }
+    },
+    "qaCards": {
+      "selectedAttachments": "ไฟล์แนบที่เลือก",
+      "removeAttachment": "ลบ {name}"
+    },
+    "loading": {
+      "artStyles": "กำลังโหลดสไตล์ศิลปะ",
+      "savingDraft": "กำลังบันทึกแบบร่าง…"
+    },
+    "breadcrumb": {
+      "home": "หน้าแรก",
+      "current": "AI Image Generator"
+    },
+    "referenceStyle": {
+      "label": "สไตล์อ้างอิง",
+      "optional": "(ไม่บังคับ)"
+    },
+    "aria": {
+      "section": "AI Image Generator",
+      "breadcrumb": "เส้นทางนำทาง",
+      "referenceImages": "ภาพอ้างอิง",
+      "removeReference": "ลบภาพอ้างอิง",
+      "addReference": "เพิ่มภาพอ้างอิงจากอุปกรณ์ของคุณ",
+      "generate": "สร้าง"
+    }
+  },
+  "groupPage": {
+    "aria": {
+      "tools": "เครื่องมือ AI ในกลุ่มนี้"
+    },
+    "groups": {
+      "image": "รูปภาพ",
+      "text": "ข้อความ",
+      "study": "การเรียนรู้",
+      "model": "โมเดล",
+      "code": "โค้ด",
+      "doc": "เอกสาร"
+    }
+  },
+  "metrics": {
+    "title": {
+      "prefix": "ร่วมกับมากกว่า",
+      "highlight": "50 ล้าน",
+      "suffix": "แฟนพันธุ์แท้ AI Chat"
+    },
+    "fallback": [
+      {
+        "value": "+43M",
+        "text": "ผู้ใช้งาน"
+      },
+      {
+        "value": "#1",
+        "text": "AI Chat"
+      },
+      {
+        "value": "236",
+        "text": "ประเทศที่ใช้งาน"
+      }
+    ],
+    "aria": {
+      "section": "ความสำเร็จ",
+      "list": "ตัวชี้วัด"
+    }
+  },
+  "hero": {
+    "title": {
+      "prefix": "สุดยอด",
+      "highlight": "โมเดล AI",
+      "suffix": ""
+    },
+    "subtitle": "สัมผัสเครื่องมือสร้างภาพ AI ที่ทรงพลังที่สุด ตั้งแต่งานคอนเซปต์มืออาชีพไปจนถึงงานศิลปะสร้างสรรค์ Chat Smith ทำได้ทั้งหมดในไม่กี่วินาที",
+    "fallbackItems": [
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      },
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      },
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      }
+    ],
+    "cta": {
+      "generate": "สร้างเลย",
+      "tryNow": "ลองเลย"
+    },
+    "aria": {
+      "section": "โมเดล AI",
+      "list": "รายการโมเดล AI"
+    }
+  },
+  "steps": {
+    "title": {
+      "prefix": "This is how to create picture using",
+      "highlight": "AI Imagine Generator?",
+      "suffix": ""
+    },
+    "subtitle": "Experience the most powerful AI image generation tool. From professional concepts, to creative art, Chat Smith does it all in seconds.",
+    "fallbackItems": [
+      {
+        "title": "Step 1",
+        "description": "Switch between DALL-E, Gemini, and custom Stable Diffusion models to get the exact style you need."
+      },
+      {
+        "title": "Step 2",
+        "description": "Switch between DALL-E, Gemini, and custom Stable Diffusion models to get the exact style you need."
+      },
+      {
+        "title": "Step 3",
+        "description": "Switch between DALL-E, Gemini, and custom Stable Diffusion models to get the exact style you need."
+      }
+    ],
+    "cta": {
+      "generate": "สร้างเลย",
+      "generateShort": "สร้าง"
+    },
+    "aria": {
+      "section": "How it works",
+      "list": "Steps"
+    }
+  },
+  "feature": {
+    "title": {
+      "prefix": "Unlimited Creativity.",
+      "highlight": "Simplified.",
+      "suffix": ""
+    },
+    "subtitle": "Professional tool designed for everyone, from hobbyists to brand designers.",
+    "fallbackItems": [
+      {
+        "title": "Multi-model Fusion",
+        "description": "Switch between models to get the exact look and mood you want."
+      },
+      {
+        "title": "Fast, High-quality Outputs",
+        "description": "Generate sharp results in seconds, ready to share or iterate."
+      },
+      {
+        "title": "Designed for Creators",
+        "description": "From quick ideas to polished visuals—simple controls, powerful results."
+      }
+    ],
+    "aria": {
+      "section": "Key benefits",
+      "list": "Benefits list"
+    }
+  },
+  "horizontalCards": {
+    "title": {
+      "prefix": "Ideas to images,",
+      "highlight": "in one scroll.",
+      "suffix": ""
+    },
+    "subtitle": "Swipe through real-style examples—each card pairs a preview with a short explanation.",
+    "defaults": {
+      "main": "เปิดรับทุกความเป็นไปได้ด้วย AI",
+      "subtitle": "ปลดล็อกคลังเครื่องมือ AI ที่อัปเดตอย่างต่อเนื่อง ครอบคลุมทั้งการเขียนอัจฉริยะ การสร้างสรรค์แรงบันดาลใจ การระดมสมอง และการทำงานอย่างชาญฉลาด เพื่อยกระดับประสิทธิภาพของคุณอย่างเต็มที่"
+    },
+    "imageFallbackAlt": "Example preview",
+    "fallbackItems": [
+      {
+        "title": "Product shots",
+        "description": "Clean lighting and crisp detail for listings, ads, and social posts."
+      },
+      {
+        "title": "Concept art",
+        "description": "Explore moods fast—iterate compositions before you commit to a final render."
+      },
+      {
+        "title": "Social creatives",
+        "description": "Bold visuals sized for feeds—keep copy space and brand color in mind."
+      }
+    ],
+    "aria": {
+      "section": "Example gallery",
+      "list": "Horizontal cards",
+      "previous": "Previous cards",
+      "next": "Next cards"
+    }
+  },
+  "resourceBlog": {
+    "title": {
+      "prefix": "แหล่ง ",
+      "highlight": "ข้อมูลเพิ่มเติม",
+      "suffix": ""
+    },
+    "seeMore": "ดูเพิ่มเติม",
+    "fallbackCategory": "บล็อก",
+    "fallbackAuthor": "Chat Smith",
+    "aria": {
+      "section": "แหล่งข้อมูลเพิ่มเติมจากบล็อก",
+      "blogList": "โพสต์บล็อกล่าสุด",
+      "seeMoreLink": "ดูโพสต์บล็อกเพิ่มเติม"
+    }
+  },
+  "footer": {
+    "aria": {
+      "section": "ส่วนท้ายเว็บไซต์"
+    },
+    "legalNavAria": "นโยบายทางกฎหมาย",
+    "featureColumnTitle": "คุณสมบัติ",
+    "productNavAria": "ลิงก์ผลิตภัณฑ์",
+    "logoAlt": "Chat Smith",
+    "brandName": "Chat Smith",
+    "aboutTitle": "เกี่ยวกับเรา",
+    "aboutDescription": "Chat Smith ถูกสร้างขึ้นเพื่อช่วยให้ผู้ใช้ปลดล็อกศักยภาพ — โดยลดแรงเสียดทานในการคิด เร่งงานให้เสร็จเร็วขึ้น และเสริมความคิดสร้างสรรค์",
+    "followTitle": "ติดตามเรา",
+    "emailPlaceholder": "กรอกอีเมลของคุณ",
+    "subscribeCta": "สมัครรับข้อมูล",
+    "copyright": "© ลิขสิทธิ์ {year} Vulcan Labs สงวนลิขสิทธิ์",
+    "copyrightSub": "Chat Smith เป็นผลิตภัณฑ์ของ Vulcan Labs",
+    "socialAria": {
+      "facebook": "Chat Smith บน Facebook",
+      "discord": "Chat Smith บน Discord",
+      "youtube": "Chat Smith บน YouTube",
+      "instagram": "Chat Smith บน Instagram",
+      "tiktok": "Chat Smith บน TikTok",
+      "x": "Chat Smith บน X"
+    }
+  },
+  "ctaFooter": {
+    "title": {
+      "prefix": "ยกระดับงานของคุณ",
+      "highlight": "แค่คลิกเดียว!",
+      "suffix": ""
+    },
+    "subtitle": "ทุกอย่างที่คุณต้องการเพื่อขับเคลื่อนโปรเจกต์อยู่แค่ปลายนิ้ว",
+    "cta": {
+      "signUp": "สมัครสมาชิกเลย"
+    },
+    "aria": {
+      "section": "สมัครสมาชิกเพื่อยกระดับงานของคุณ"
+    }
+  },
+  "faq": {
+    "sectionAria": "คำถามที่พบบ่อย",
+    "title": {
+      "prefix": "ถามเรา",
+      "main": "อะไรก็ได้"
+    }
+  }
+}

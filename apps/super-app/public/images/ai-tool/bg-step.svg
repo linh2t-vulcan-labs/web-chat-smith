@@ -1,0 +1,20 @@
+<svg width="770" height="1400" viewBox="0 0 770 1400" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.5" filter="url(#filter0_f_2019_3788)">
+<path d="M-221.63 732.029C-232.302 656.624 -337.214 605.228 -315.647 532.188C-265.719 363.095 79.6359 445.317 153.486 605.386C197.92 701.698 220.524 766.373 167.824 858.43C116.407 948.245 76.4966 980.857 -17.8428 1023.31C-52.1433 1038.75 -115.044 1054.33 -157.062 1037.81C-204.984 1018.97 -223.719 978.146 -228.345 926.833C-233.108 874.007 -208.384 825.612 -221.63 732.029Z" fill="#019B64" fill-opacity="0.2"/>
+</g>
+<g opacity="0.5" filter="url(#filter1_f_2019_3788)">
+<ellipse cx="180.955" cy="583.892" rx="248.227" ry="213.055" transform="rotate(138.762 180.955 583.892)" fill="#00FFE0" fill-opacity="0.8"/>
+</g>
+<defs>
+<filter id="filter0_f_2019_3788" x="-673.449" y="83.844" width="1226.69" height="1315.93" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="177.445" result="effect1_foregroundBlur_2019_3788"/>
+</filter>
+<filter id="filter1_f_2019_3788" x="-407.543" y="0" width="1177" height="1167.78" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="177.445" result="effect1_foregroundBlur_2019_3788"/>
+</filter>
+</defs>
+</svg>

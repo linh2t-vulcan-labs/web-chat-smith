@@ -1,0 +1,9 @@
+{
+  "extends": "@cs/ts-config/base.json",
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "types": ["bun"]
+  },
+  "include": ["scripts/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

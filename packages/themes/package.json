@@ -1,0 +1,28 @@
+{
+  "name": "@cs/themes",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "@cs/icons": "workspace:*",
+    "@cs/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/node": "catalog:tools",
+    "@types/react": "catalog:framework",
+    "@types/react-dom": "catalog:framework",
+    "typescript": "catalog:tools"
+  },
+  "peerDependencies": {
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework"
+  }
+}

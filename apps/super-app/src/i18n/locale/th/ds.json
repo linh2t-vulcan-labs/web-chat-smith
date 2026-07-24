@@ -1,0 +1,128 @@
+{
+  "yourBenefits": "ประโยชน์ของคุณ",
+  "features": "ฟีเจอร์",
+  "upcomingFeatures": "คุณสมบัติที่จะมาถึง",
+  "humanizeText": "ทำให้ข้อความมีความเป็นมนุษย์",
+  "AIAgents": "เอเจนต์ AI",
+  "videoGeneration": "การสร้างวิดีโอ",
+  "aiCompanion": "เพื่อนร่วมงาน AI",
+  "desktop": {
+    "features": {
+      "1": {
+        "title": "GPT-5 nano, Gemini 2.5 Flash Lite, Claude Haiku 4.5",
+        "description": "เข้าถึงข้อความ AI Chat"
+      },
+      "2": {
+        "title": "GPT-5.2, Gemini 3 Pro, Claude Sonnet 4.6",
+        "description": "เข้าถึง AI Models ขั้นสูงอื่น ๆ"
+      },
+      "3": {
+        "title": "การวิจัยเชิงลึก, การค้นหาแบบเรียลไทม์",
+        "description": "จัดการกับงานวิจัยที่ซับซ้อนของคุณ"
+      },
+      "4": {
+        "title": "การซิงค์เว็บ-มือถือ",
+        "description": "สมัครสมาชิกเดียว ซิงค์ประวัติการแชทได้ทุกอุปกรณ์อย่างราบรื่น"
+      },
+      "5": {
+        "title": "อัปโหลดไฟล์",
+        "description": "เข้าถึงการอัปโหลดไฟล์ (png, jpg, jpeg, pdf ฯลฯ)"
+      },
+      "6": {
+        "title": "การสร้างงานศิลป์",
+        "description": "วิธีใหม่ในการเปลี่ยนจินตนาการของคุณให้เป็นจริง"
+      }
+    },
+    "featureV2": {
+      "1": {
+        "title": "โมเดลล่าสุด",
+        "description": "GPT-5.2, Gemini 3 Pro, Claude Sonnet 4.6"
+      },
+      "2": {
+        "title": "งานที่ซับซ้อน",
+        "description": "พร้อมการวิจัยเชิงลึกและการค้นหาแบบเรียลไทม์"
+      },
+      "3": {
+        "title": "ใช้งานข้ามแพลตฟอร์ม",
+        "description": "สมัครครั้งเดียว ใช้ได้บน Web, iOS และ Android"
+      },
+      "4": {
+        "title": "อัปโหลดไฟล์",
+        "description": "เข้าถึงการอัปโหลดไฟล์ (png, jpg, jpeg, pdf ฯลฯ)"
+      },
+      "5": {
+        "title": "การสร้างงานศิลป์",
+        "description": "วิธีใหม่ในการเปลี่ยนจินตนาการของคุณให้เป็นจริง"
+      }
+    }
+  },
+  "builtOn": "AI ครบจบในที่เดียว",
+  "getFullAccess": "รับสิทธิ์การใช้งานเต็มรูปแบบของ <break></break><brand>Chat Smith PRO</brand>",
+  "proBenefits": "สิทธิประโยชน์ของ <brand>Chat Smith Pro</brand>",
+  "proFeatures": "ฟีเจอร์ <brand>Pro</brand>",
+  "brandProFeatures": "ฟีเจอร์ของ <brand>Chat Smith Pro</brand>",
+  "getPro": "รับ <brand>Chat Smith PRO</brand>",
+  "moreFeature": "และคุณสมบัติใหม่ ๆ ที่จะมาถึง อัปเดตทุกฤดูกาล",
+  "safeAndSecure": "ชำระเงินอย่างปลอดภัยและมั่นคง",
+  "cancelAnytime": "ยกเลิกได้ทุกเมื่อ",
+  "policy": "โดยการดำเนินการต่อ คุณตกลงกับ <breakMobile></breakMobile><terms>ข้อกำหนดการใช้งาน</terms>、<privacy>นโยบายความเป็นส่วนตัว</privacy> และ <refund>นโยบายการคืนเงิน</refund> ของเรา",
+  "submit": "ต่อไป",
+  "threeDayTrial": "ทดลองใช้ 3 วัน",
+  "trialSubmit": "ลองใช้ฟรี 3 วัน",
+  "backToPlans": "กลับไปยังแผน",
+  "badge": {
+    "save": "ประหยัด  <desktop>{percent}%</desktop><mobile>-{percent}%</mobile>",
+    "saveText": "ประหยัด"
+  },
+  "manageSubscription": {
+    "title": "จัดการการสมัครสมาชิก",
+    "description": "หากต้องการจัดการการสมัครสมาชิก โปรดใช้แอปบนมือถือ <strong>เวอร์ชันเว็บยังไม่รองรับการเปลี่ยนแปลงการสมัครสมาชิกในขณะนี้</strong> คุณสามารถสมัคร ยกเลิก หรือเปลี่ยนแพ็กเกจได้อย่างง่ายดายในแอปมือถือ",
+    "helpBtn": "รับความช่วยเหลือ",
+    "textBtn": "เข้าใจแล้ว"
+  },
+  "pricing": {
+    "freeTrial": "ทดลองใช้ฟรี",
+    "startForFree": "เริ่มต้นฟรี",
+    "dayFree": "ฟรี 3 วัน",
+    "due": "ครบกำหนด",
+    "dayTrial": "ทดลองใช้ฟรี 3 วัน",
+    "thenMonthly": "จากนั้น {price}/เดือน",
+    "thenWeekly": "จากนั้น {price}/สัปดาห์"
+  },
+  "chooseYourPlan": "เลือกแพ็กเกจของคุณ",
+  "chooseOtherPlan": "เลือกแพ็กเกจอื่น",
+  "yourCurrentPlan": "แพ็กเกจปัจจุบันของคุณ",
+  "onlyPerWeek": "เพียง <strong>{price}</strong> ต่อสัปดาห์",
+  "info": {
+    "billingDetails": "รายละเอียดการเรียกเก็บเงิน",
+    "plan": "แพ็กเกจ",
+    "untilYouCancel": "จนกว่าคุณจะยกเลิก",
+    "upgradeDate": "วันที่อัปเกรด",
+    "validUtil": "ใช้ได้ถึง",
+    "nextPayment": "การชำระเงินครั้งถัดไป",
+    "totalPayment": "ยอดชำระรวม",
+    "due": "ครบกำหนด",
+    "dueToday": "ครบกำหนดวันนี้"
+  },
+  "paywall": {
+    "title": "เพื่อใช้งาน <highlight>ฟีเจอร์ PRO</highlight><break></break> ต่อไป โปรดซื้อการสมัครสมาชิกบนแอปมือถือของเรา",
+    "subTitle": "เพื่อใช้งานฟีเจอร์ PRO ต่อไป โปรดซื้อการสมัครสมาชิกบนแอปมือถือของเรา",
+    "purchasing": "หลังจากซื้อแล้ว <highlight>โปรดเข้าสู่ระบบบนเว็บด้วยบัญชีเดียวกัน</highlight> เพื่อซิงค์สิทธิประโยชน์ PRO ของ bạnทันที"
+  },
+  "purchase": {
+    "success": "ซื้อการสมัครสมาชิกสำเร็จ"
+  },
+  "unlimitedChat": "แชทไม่จำกัด",
+  "topTierModels": "โมเดลชั้นนำ",
+  "imageGeneration": "สร้างภาพ",
+  "deepResearch": "วิจัยเชิงลึก",
+  "voiceInteraction": "โต้ตอบด้วยเสียง",
+  "syncAcrossDevices": "ซิงก์ทุกอุปกรณ์",
+  "limited": "จำกัด",
+  "userJoinDescription": "ผู้ใช้ 1M+ เข้าร่วมเดือนนี้",
+  "bestOffer": "ข้อเสนอที่ดีที่สุด",
+  "expressDescription": "ใช้แชทไม่จำกัด หลายโมเดล AI สร้างภาพ ซิงก์เว็บและมือถือ และอื่นๆ",
+  "benefits": "สิทธิประโยชน์",
+  "allInOneAI": "ครบจบในที่เดียว",
+  "andMore": "และอื่นๆ..."
+}

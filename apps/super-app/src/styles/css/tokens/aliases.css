@@ -1,0 +1,147 @@
+/* Extend default theme: --text-*, --leading-*, --tracking-* for utilities like text-body-scale-150 */
+@theme {
+  --text-body-scale-150: 12px;
+  --text-body-scale-175: 14px;
+  --text-body-scale-200: 16px;
+  --text-body-scale-225: 18px;
+  --text-heading-scale-0: 16px;
+  --text-heading-scale-1: 20px;
+  --text-heading-scale-2: 24px;
+  --text-heading-scale-3: 32px;
+  --text-heading-scale-4: 40px;
+  --text-heading-scale-n1: 14px;
+  --text-display-scale-1: 28px;
+  --text-display-scale-2: 36px;
+  --text-display-scale-3: 44px;
+  --text-functional-scale-0: 12px;
+  --text-functional-scale-1: 14px;
+  --text-functional-scale-2: 16px;
+  --text-functional-scale-3: 18px;
+  --text-functional-scale-n2: 8px;
+  --text-functional-scale-n1: 10px;
+  --text-meta-scale-0: 10px;
+  --text-meta-scale-1: 12px;
+  --text-meta-scale-2: 14px;
+  --text-meta-scale-n1: 8px;
+  --leading-body-scale-150: 20px;
+  --leading-body-scale-175: 20px;
+  --leading-body-scale-200: 24px;
+  --leading-body-scale-225: 28px;
+  --leading-heading-scale-0: 20px;
+  --leading-heading-scale-1: 28px;
+  --leading-heading-scale-2: 32px;
+  --leading-heading-scale-3: 44px;
+  --leading-heading-scale-4: 52px;
+  --leading-heading-scale-n1: 20px;
+  --leading-display-scale-1: 36px;
+  --leading-display-scale-2: 44px;
+  --leading-display-scale-3: 56px;
+  --leading-functional-scale-0: 16px;
+  --leading-functional-scale-1: 20px;
+  --leading-functional-scale-2: 20px;
+  --leading-functional-scale-3: 24px;
+  --leading-functional-scale-n2: 12px;
+  --leading-functional-scale-n1: 12px;
+  --leading-meta-scale-0: 12px;
+  --leading-meta-scale-1: 16px;
+  --leading-meta-scale-2: 20px;
+  --leading-meta-scale-n1: 12px;
+  --tracking-body-scale-150: 0px;
+  --tracking-body-scale-175: 0px;
+  --tracking-body-scale-200: 0px;
+  --tracking-body-scale-225: 0px;
+  --tracking-heading-scale-0: 0px;
+  --tracking-heading-scale-1: 0px;
+  --tracking-heading-scale-2: 0px;
+  --tracking-heading-scale-3: -0.18000000715255737px;
+  --tracking-heading-scale-4: -0.23999999463558197px;
+  --tracking-heading-scale-n1: 0.8399999737739563px;
+  --tracking-display-scale-1: -0.3199999928474426px;
+  --tracking-display-scale-2: -0.4399999976158142px;
+  --tracking-display-scale-3: -0.5600000023841858px;
+  --tracking-functional-scale-sentence-0: 0.11999999731779099px;
+  --tracking-functional-scale-sentence-1: 0.14000000059604645px;
+  --tracking-functional-scale-sentence-2: 0px;
+  --tracking-functional-scale-sentence-3: 0px;
+  --tracking-functional-scale-sentence-n2: 0.07999999821186066px;
+  --tracking-functional-scale-sentence-n1: 0.10000000149011612px;
+  --tracking-functional-scale-allcap-0: 0.9599999785423279px;
+  --tracking-functional-scale-allcap-1: 0.8399999737739563px;
+  --tracking-functional-scale-allcap-2: 0.9599999785423279px;
+  --tracking-functional-scale-allcap-3: 1.0800000429153442px;
+  --tracking-functional-scale-allcap-n2: 0.6399999856948853px;
+  --tracking-functional-scale-allcap-n1: 0.800000011920929px;
+  --tracking-meta-scale-sentence-0: 0.20000000298023224px;
+  --tracking-meta-scale-sentence-1: 0.23999999463558197px;
+  --tracking-meta-scale-sentence-2: 0.2800000011920929px;
+  --tracking-meta-scale-sentence-n1: 0.1599999964237213px;
+  --tracking-meta-scale-allcap-0: 0.800000011920929px;
+  --tracking-meta-scale-allcap-1: 0.9599999785423279px;
+  --tracking-meta-scale-allcap-2: 0.8399999737739563px;
+  --tracking-meta-scale-allcap-n1: 0.6399999856948853px;
+}
+
+/* Thickness utilities: @utility thickness-v1-* (border-width, not auto-mapped by Tailwind v4) */
+@utility thickness-v1-0 {
+  border-width: var(--border-v1-0);
+}
+
+@utility thickness-v1-1 {
+  border-width: var(--border-v1-1);
+}
+
+@utility thickness-v1-2 {
+  border-width: var(--border-v1-2);
+}
+
+@utility thickness-v1-3 {
+  border-width: var(--border-v1-3);
+}
+
+@utility thickness-v1-4 {
+  border-width: var(--border-v1-4);
+}
+
+@utility thickness-v1-6 {
+  border-width: var(--border-v1-6);
+}
+
+@utility thickness-v1-0_5 {
+  border-width: var(--border-v1-0_5);
+}
+
+@utility thickness-v1-1_5 {
+  border-width: var(--border-v1-1_5);
+}
+
+@utility thickness-v1-none {
+  border-width: var(--border-v1-0);
+}
+
+@utility thickness-v1-hairline {
+  border-width: var(--border-v1-0_5);
+}
+
+@utility thickness-v1-subtle {
+  border-width: var(--border-v1-1);
+}
+
+@utility thickness-v1-focus {
+  border-width: var(--border-v1-1_5);
+}
+
+@utility thickness-v1-strong {
+  border-width: var(--border-v1-2);
+}
+
+@utility thickness-v1-emphasis {
+  border-width: var(--border-v1-3);
+}
+
+@utility thickness-v1-heavy {
+  border-width: var(--border-v1-4);
+}
+
+@utility thickness-v1-extreme {
+  border-width: var(--border-v1-6);
+}

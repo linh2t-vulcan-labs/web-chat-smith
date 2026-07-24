@@ -1,0 +1,24 @@
+{
+  "name": "@cs/design-tokens",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./generated-token/tokens_v1.1.2/index.css",
+    "./latest": "./generated-token/tokens_v1.1.2/index.css",
+    "./v1.1.2": "./generated-token/tokens_v1.1.2/index.css",
+    "./v1.1.1": "./generated-token/tokens_v1.1.1/index.css",
+    "./v1.1.0": "./generated-token/tokens_v1.1.0/index.css"
+  },
+  "scripts": {
+    "tokens": "bun run scripts/tokens.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules .turbo .cache"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/bun": "catalog:tools",
+    "tailwindcss": "catalog:ui",
+    "typescript": "catalog:tools"
+  }
+}

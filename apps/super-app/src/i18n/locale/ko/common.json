@@ -1,0 +1,160 @@
+{
+  "errorPage": {
+    "title": "오류",
+    "code": "50x",
+    "subTitle": "일시적인 오류입니다.",
+    "description": "일시적인 오류입니다. 몇 분 후 다시 시도해 주세요. 오류가 계속될 경우 <link>{url}</link>로 문의해 주세요."
+  },
+  "contactUs": "문의하기",
+  "notFound": {
+    "title": "오류",
+    "code": "404",
+    "description": "이런! 찾으시는 페이지를 찾을 수 없습니다. 다시 확인하고 재시도해 주세요",
+    "cta": "홈 페이지로 이동"
+  },
+  "metadata": {
+    "title": "Chat Smith: 업무와 학습을 위한 올인원 AI 채팅",
+    "description": "GPT, Gemini, Claude를 한곳에서 이용하세요. 생산성과 창의성을 위해 설계된 AI 채팅으로 글쓰기, 리서치, 이미지 생성을 경험해 보세요. 지금 시작하세요.",
+    "keywords": "Chat Smith, AI 채팅, AI 챗봇, 온라인 AI 채팅, AI 채팅 온라인, AI와 대화하기, AI 채팅 앱"
+  },
+  "cta": {
+    "edit": "편집",
+    "submit": "제출",
+    "copy": "복사",
+    "rename": "이름 바꾸기",
+    "delete": "삭제",
+    "new": "새로 만들기",
+    "expand": "펼치기",
+    "yes": "예",
+    "no ": "아니요",
+    "stay": "여기에 머무르기",
+    "removeSwitch": "제거 후 전환",
+    "gotIt": "확인",
+    "skip": "건너뛰기",
+    "next": "다음",
+    "cancel": "취소",
+    "uploadPhoto": "사진 업로드",
+    "regenerate": "다시 생성",
+    "accept": "수락",
+    "apply": "적용",
+    "beta": "Beta",
+    "back": "뒤로",
+    "tryAgain": "다시 시도",
+    "tryNow": "지금 사용해 보기",
+    "exploreNow": "지금 둘러보기",
+    "letGo": "시작하기",
+    "more": "더보기",
+    "failLoadResult": "결과를 불러오지 못했습니다",
+    "failLoadMoreResult": "추가 결과를 불러오지 못했습니다",
+    "failLoadMoreHistory": "추가 채팅 기록을 불러오지 못했습니다"
+  },
+  "toast": {
+    "error": {
+      "somethingWentWrong": "문제가 발생했습니다. 다시 시도해 주세요",
+      "unableFindConversation": "대화를 찾을 수 없습니다",
+      "unexpectedError": "예상치 못한 오류가 발생했습니다. 나중에 다시 시도해 주세요",
+      "tooManyImages": "메시지당 최대 {maxImage}개의 이미지를 업로드할 수 있습니다",
+      "tooManyFiles": "한 번에 최대 {maxFiles}개의 파일만 업로드할 수 있습니다.",
+      "fileInvalidType": "파일이 손상되었거나 처리할 수 없습니다. 파일을 확인하고 다시 시도해 주세요.",
+      "fileTooLarge": "파일 크기가 {maxSizeInMB}MB 제한을 초과했습니다. 더 작은 파일을 업로드해 주세요.",
+      "fileNotSupport": "이 기능은 파일 업로드를 지원하지 않습니다",
+      "singleImage": "이 스타일은 최대 {maxImage}개의 이미지만 허용합니다",
+      "reachMaxImages": "{maxImage}개 이하의 이미지를 선택해 주세요. 이 스타일은 최대 {maxImage}개의 이미지만 허용합니다",
+      "modelNotAllowImages": "이 모델은 이미지 추가를 허용하지 않습니다"
+    },
+    "copy": {
+      "successfully": "복사 완료"
+    }
+  },
+  "downloadApp": "앱 다운로드",
+  "termsOfUse": "이용약관",
+  "privacyPolicy": "개인정보 처리방침",
+  "refundPolicy": "환불 정책",
+  "community": "커뮤니티",
+  "signOut": "로그아웃",
+  "getPro": "Pro 받기",
+  "getProV2": "PRO 받기",
+  "unlockAllFeature": "지금 모든 기능 잠금 해제",
+  "expire": "만료됨",
+  "pro": "Pro",
+  "free": "무료",
+  "upgrade": "업그레이드",
+  "upgradeNow": "지금 업그레이드",
+  "createImage": "이미지 생성",
+  "imageCreation": "이미지 생성",
+  "deepResearch": "딥 리서치",
+  "webSearch": "웹 검색",
+  "limited": "제한적",
+  "perDuration": "{duration}당",
+  "savePercentage": "{percent}% 절약",
+  "mostFlexible": "가장 유연한",
+  "pricePerDuration": "{price}/{duration}",
+  "duration": {
+    "day": "일",
+    "week": "주",
+    "month": "월",
+    "year": "년"
+  },
+  "imageCreationDescription": "텍스트나 사진으로 이미지를 생성하세요",
+  "deepResearchDescription": "고급 검색 및 추론",
+  "webSearchDescription": "최신 정보를 위해 웹 검색",
+  "uploadNeedSignIn": "파일을 첨부하려면 로그인해 주세요",
+  "loading": "로드 중",
+  "loadingVerifyCaptcha": "사용자 확인 중…",
+  "signIn": "로그인",
+  "inProgress": "진행 중",
+  "planning": "계획 중",
+  "released": "출시됨",
+  "viewMore": "더 보기",
+  "none ": "없음",
+  "frequency": {
+    "daily": "일별",
+    "monthly": "월간",
+    "quarterly": "분기별",
+    "yearly": "연간"
+  },
+  "amountPerDuration": "{amount, plural, one {# 개월} other {# 개월}}",
+  "unknownUser": "알 수 없는 사용자",
+  "freeTrial": "무료 체험",
+  "currentPlan": "현재 플랜",
+  "only": "단",
+  "newFeature": "새로운 기능",
+  "viewDetail": "상세 보기",
+  "whatsNew": "새로운 기능",
+  "availableNow": "지금 이용 가능",
+  "sessionEnd": "세션이 종료되었거나 다른 창에서 변경되었습니다!",
+  "close": "닫기",
+  "noNotificationsYet": "아직 알림이 없습니다",
+  "couldntLoadNotifications": "알림을 불러올 수 없습니다",
+  "errorLoadingNotifications": "알림을 불러오는 중 오류가 발생했습니다",
+  "weWillNotifyWhenNew": "새로운 소식이 있으면 알려드리겠습니다",
+  "reload": "새로 고침",
+  "timeAgo": {
+    "justNow": "방금",
+    "secondsAgo": "{count}초 전",
+    "minutesAgo": "{count}분 전",
+    "hoursAgo": "{count}시간 전",
+    "daysAgo": "{count}일 전",
+    "monthsAgo": "{count}개월 전",
+    "yearsAgo": "{count}년 전"
+  },
+  "notification": {
+    "stayUpdate": "지금 알림을 활성화하여 최신 정보를 받아보세요",
+    "enableNow": "지금 활성화",
+    "skip": "건너뛰기",
+    "later": "나중에",
+    "alert": {
+      "title": "업데이트를 놓치지 마세요",
+      "description": "알림을 활성화하여 업데이트, 뉴스, 혜택을 받아보세요!"
+    },
+    "popup": {
+      "title": "항상 최신 정보를 받아보세요",
+      "description": "지금 알림을 켜서 실시간 진행 상황, 새로운 기능, 회원 전용 혜택을 받아보세요",
+      "enable": "알림 활성화"
+    },
+    "task": {
+      "title": "완료 시 알림",
+      "description": "백그라운드에서 작업을 처리 중입니다 — 결과가 준비되면 알림을 받으시겠습니까?"
+    }
+  }
+}

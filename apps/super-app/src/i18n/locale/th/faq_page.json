@@ -1,0 +1,23 @@
+{
+  "header": {
+    "brandName": "Chat Smith",
+    "helpCenter": "ศูนย์ช่วยเหลือ",
+    "faqsMobile": "คำถามที่พบบ่อย",
+    "backToHome": "กลับหน้าหลัก"
+  },
+  "search": {
+    "heroTitle": "มีคำถามใช่ไหม? ค้นหาคำตอบได้ที่นี่",
+    "inputPlaceholder": "พิมพ์เพื่อค้นหา",
+    "resultsFor": "ผลการค้นหาสำหรับ:",
+    "noResultsFor": "ไม่พบบทความสำหรับ:"
+  },
+  "accordion": {
+    "viewMore": "ดูเพิ่มเติม"
+  },
+  "metadata": {
+    "categoryTitlePrefix": "คำถามที่พบบ่อย:"
+  },
+  "breadcrumb": {
+    "allFaqs": "คำถามที่พบบ่อยทั้งหมด"
+  }
+}

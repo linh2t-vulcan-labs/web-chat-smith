@@ -1,0 +1,36 @@
+<svg width="1280" height="1962" viewBox="0 0 1280 1962" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.5" filter="url(#filter0_f_2020_3807)">
+<path d="M-180.335 1134.77C-223.916 1072.32 -340.731 1073.85 -354.481 998.946C-386.312 825.534 -41.0562 742.899 97.1317 852.352C180.278 918.209 229.657 965.701 224.22 1071.64C218.915 1174.99 198.038 1222.11 133.047 1302.6C109.417 1331.87 60.3362 1374.18 15.3871 1378.42C-35.8776 1383.26 -71.0322 1355.3 -98.3371 1311.61C-126.447 1266.63 -126.248 1212.28 -180.335 1134.77Z" fill="#019B64" fill-opacity="0.8"/>
+</g>
+<g opacity="0.5" filter="url(#filter1_f_2020_3807)">
+<ellipse cx="82.2943" cy="705.116" rx="248.227" ry="213.055" transform="rotate(111.911 82.2943 705.116)" fill="#00FFE0" fill-opacity="0.2"/>
+</g>
+<g filter="url(#filter2_f_2020_3807)">
+<ellipse cx="116.184" cy="116.606" rx="116.184" ry="116.606" transform="matrix(4.37114e-08 -1 -1 -4.37114e-08 1458.66 773.175)" fill="#00A681"/>
+</g>
+<g filter="url(#filter3_f_2020_3807)">
+<ellipse cx="130.836" cy="157.157" rx="130.836" ry="157.157" transform="matrix(0.582782 -0.812629 -0.812629 -0.582782 1454.88 693.132)" fill="#7EFFD8" fill-opacity="0.6"/>
+</g>
+<defs>
+<filter id="filter0_f_2020_3807" x="-939.242" y="220.221" width="1746.57" height="1741.44" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="291.35" result="effect1_foregroundBlur_2020_3807"/>
+</filter>
+<filter id="filter1_f_2020_3807" x="-490.939" y="106.526" width="1146.47" height="1197.18" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="177.445" result="effect1_foregroundBlur_2020_3807"/>
+</filter>
+<filter id="filter2_f_2020_3807" x="701.567" y="16.9231" width="1280.98" height="1280.14" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="261.942" result="effect1_foregroundBlur_2020_3807"/>
+</filter>
+<filter id="filter3_f_2020_3807" x="899.768" y="0" width="1007.31" height="990.444" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="177.445" result="effect1_foregroundBlur_2020_3807"/>
+</filter>
+</defs>
+</svg>

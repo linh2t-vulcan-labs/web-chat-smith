@@ -1,0 +1,80 @@
+/* `/home` — tokens on scope; fixed/blur on bar only so mobile drawer can use full viewport height. */
+.home-header-scope.ai-tool-scope {
+  min-height: 0;
+  height: auto;
+  width: 100%;
+  color: inherit;
+  --ai-drawer-top-offset: calc(64px + env(safe-area-inset-top, 0px));
+
+  --ai-text-header: #f3f4f6;
+  --ai-text-body: #e5e7eb;
+  --ai-text-muted: #9ca3af;
+  --ai-text-nav: #a1a1aa;
+  --ai-text-link: #60a5fa;
+  --ai-header-brand-text: #f3f4f6;
+
+  --ai-surface-card: #111827;
+  --ai-border-default: rgba(243, 244, 246, 0.14);
+  --ai-shadow-popover: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+  --ai-header-bg: var(--color-black-100, rgba(0, 0, 0, 0.1));
+  --ai-header-backdrop-blur: 24px;
+
+  --ai-control-bg: rgba(255, 255, 255, 0.08);
+  --ai-control-bg-strong: rgba(255, 255, 255, 0.1);
+  --ai-control-hover: rgba(255, 255, 255, 0.08);
+
+  --ai-lang-trigger-bg: rgba(255, 255, 255, 0.1);
+  --ai-lang-trigger-bg-hover: rgba(255, 255, 255, 0.14);
+  --ai-lang-trigger-border: rgba(243, 244, 246, 0.2);
+  --ai-lang-trigger-text: #f3f4f6;
+  --ai-lang-chevron: var(--ai-text-nav);
+  --ai-lang-item-selected-bg: transparent;
+  --ai-lang-item-hover-bg: rgba(255, 255, 255, 0.1);
+  --ai-lang-item-active-text: #2dd4bf;
+  --ai-lang-trigger-min-height-mobile: 32px;
+  --ai-lang-trigger-padding-mobile: 4px 8px;
+  --ai-lang-trigger-radius-mobile: 10px;
+  --ai-lang-trigger-font-size-mobile: 12px;
+  --ai-lang-trigger-font-weight-mobile: 600;
+  --ai-lang-trigger-line-height-mobile: 16px;
+
+  --ai-mobile-drawer-bg: #111827;
+  --ai-mobile-drawer-search-placeholder: rgba(255, 255, 255, 0.45);
+  --ai-mobile-drawer-backdrop: rgba(0, 0, 0, 0.45);
+}
+
+@media (min-width: 900px) {
+  .home-header-scope.ai-tool-scope {
+    --ai-drawer-top-offset: 72px;
+  }
+}
+
+/* Landing shell: fixed bar only (not the wrapper — avoids clipping the mobile drawer). */
+.home-header-scope [data-header-root] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  width: 100%;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Mobile drawer: full viewport below the header bar. */
+.home-header-scope [data-home-mobile-drawer] {
+  top: var(--ai-drawer-top-offset);
+  height: calc(100dvh - var(--ai-drawer-top-offset));
+  bottom: auto;
+}
+
+/* Matches legacy BannerV2 `pt-[88px] md:pt-[132px]` — header clearance + breathing room below the bar. */
+.home-header-spacer {
+  height: calc(88px + env(safe-area-inset-top, 0px));
+}
+
+@media (min-width: 900px) {
+  .home-header-spacer {
+    height: 132px;
+  }
+}

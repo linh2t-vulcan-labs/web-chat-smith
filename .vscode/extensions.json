@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "github.copilot-chat",
+    "oxc.oxc-vscode",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "ms-playwright.playwright",
+    "oven.bun-vscode",
+    "antfu.pnpm-catalog-lens",
+    "wix.vscode-import-cost",
+    "pflannery.vscode-versionlens",
+    "eamodio.gitlens",
+    "formulahendry.auto-rename-tag"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-eslint",
+    "kavod-io.vscode-jest-test-adapter"
+  ]
+}

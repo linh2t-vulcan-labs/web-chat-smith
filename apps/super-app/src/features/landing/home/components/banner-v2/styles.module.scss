@@ -1,0 +1,51 @@
+.banner-overlay-background {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  inset: 0;
+  position: absolute;
+  transition: opacity 0.3s ease-in-out;
+  will-change: background-image;
+  contain: layout style paint;
+  content-visibility: auto;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.3) 2.35%,
+      rgba(0, 0, 0, 0.5) 45.56%,
+      rgba(0, 0, 0, 0.2) 57.25%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    z-index: 1;
+  }
+}
+
+.banner-overlay-background.loaded {
+  opacity: 1;
+  &::before {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.3) 2.35%,
+      rgba(0, 0, 0, 0.5) 45.56%,
+      rgba(0, 0, 0, 0.2) 57.25%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    z-index: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

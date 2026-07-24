@@ -1,0 +1,22 @@
+{
+  "LanguageSwitcher": {
+    "y1Z3or": "Language"
+  },
+  "TyYyh3": "A web chat application built with Next.js and Tailwind CSS.",
+  "EheUi0": "Web Chat Smith",
+  "VgH3tb": "Look ma, no keys!",
+  "wafoOY": "Hello {name}!",
+  "hNm84b": "You clicked {count, plural, =0 {not once} one {one time} other {# times}}.",
+  "a8UnD_": "Status: {status, select, online {🟢 Online} offline {⚪ Offline} other {Unknown}}.",
+  "lcNWLc": "Please refer to the <link>guidelines</link>.",
+  "ExtractionDemo": {
+    "cta": "Click me",
+    "design-system": {
+      "tQLRmz": "Increment"
+    }
+  },
+  "kX235w": "Project ready!",
+  "i2Dojj": "You may now add components and start building.",
+  "IHwlxa": "We've already added the button component for you.",
+  "KP63fg": "Button"
+}

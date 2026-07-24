@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "title": "ログイン | Chat Smith",
+    "description": "Chat Smith アカウントにログインして、AI アシスタントとのチャットを続けましょう。今すぐ登録して、会話の管理やプレミアム機能へのアクセスを開始してください。",
+    "keywords": "chat smith ログイン, chat smith サインイン, chat smith 新規登録"
+  },
+  "hero": {
+    "writeBetter": "より良く、より速く書きましょう",
+    "askSearch": "質問して、検索して、発見しましょう",
+    "masterDocument": "ドキュメントを完璧に扱いましょう"
+  },
+  "trustedByHighlight": "<brand>信頼する</brand><highlight> {count}<break></break>世界中のユーザー</highlight>",
+  "feedback": {
+    "1": "AI画像生成器はスタイルと色の調整で、まるで指先にデザイナーがいるような感覚を与えてくれます。",
+    "2": "Chat Smithの画像生成のおかげでデザイン作業を何時間も節約でき、毎回素晴らしいデザインを受け取ることができます！",
+    "3": "リアルタイム検索は最新イベントのライブ更新を提供します。専任のリサーチアシスタントがいるようです！"
+  },
+  "aiChatPlatform": "AIチャット<break></break>プラットフォーム",
+  "loginForm": {
+    "page": {
+      "welcome": "今すぐ参加して <break></break> <emphasize>AIの力を解放しましょう</emphasize>",
+      "description": "<highlight>お好みのアカウント</highlight>でProの機能と保存された履歴をご利用ください",
+      "agreement": "続けることで、<break></break>私たちの<terms>利用規約</terms>、<privacy>プライバシーポリシー</privacy>、<refund>返金ポリシー</refund>に同意したことになります"
+    },
+    "cta": "{platform}で続ける",
+    "guestPanel": {
+      "guest": "ゲスト",
+      "title": "サインインしてアカウントを作成",
+      "description": "すべての機能と履歴のロックを解除",
+      "descV2": "さらに多くの機能を利用するにはログインしてください",
+      "agreement": "続けることで、<break></break><terms>利用規約</terms>、<privacy>プライバシーポリシー</privacy>&<breakDesktop></breakDesktop> <refund>返金ポリシー</refund>に同意したことになります"
+    },
+    "guestBanner": {
+      "title": "チャットを保存するにはログインしてください",
+      "description": "履歴、同期、無制限チャット"
+    },
+    "guestModal": {
+      "title": "Chat Smithへようこそ",
+      "description": "続けるにはサインインまたはサインアップしてください",
+      "agreement": "続けることで、<break></break><terms>利用規約</terms>、<privacy>プライバシーポリシー</privacy>&<breakDesktop></breakDesktop> <refund>返金ポリシー</refund>に同意したことになります"
+    },
+    "floatingLogin": {
+      "title": "Chat Smithで続ける",
+      "description": "無料メッセージの上限に達しました。サインインして10件の無料メッセージを追加取得しましょう"
+    },
+    "guestConfirmModal": {
+      "title": "ゲストのチャットは保存されません",
+      "description": "チャット履歴を保持するにはサインインしてください"
+    }
+  }
+}

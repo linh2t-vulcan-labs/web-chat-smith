@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "title": "Iniciar sesión | Chat Smith",
+    "description": "Inicie sesión en su cuenta de Chat Smith para seguir chateando con su asistente de IA. Regístrese hoy para administrar sus conversaciones y acceder a funciones premium.",
+    "keywords": "chat smith iniciar sesión, chat smith entrar, chat smith registrarse"
+  },
+  "hero": {
+    "writeBetter": "Escribe mejor, más rápido",
+    "askSearch": "Pregunta, busca, descubre",
+    "masterDocument": "Domina documentos"
+  },
+  "trustedByHighlight": "<brand>Confiado por</brand><highlight> {count}<break></break>Usuarios globales</highlight>",
+  "feedback": {
+    "1": "El Generador de Imágenes IA se siente como tener un diseñador a tu alcance con ajustes de estilo y color",
+    "2": "La generación de imágenes de Chat Smith me ayuda a ahorrar horas de trabajo de diseño y ofrece diseños impresionantes cada vez",
+    "3": "La búsqueda en tiempo real ofrece actualizaciones en vivo de eventos actuales—como tener un asistente de investigación dedicado"
+  },
+  "aiChatPlatform": "CHAT IA<break></break>PLATAFORMA",
+  "loginForm": {
+    "page": {
+      "welcome": "Únete ahora para <break></break> <emphasize>Desbloquear el Poder de la IA</emphasize>",
+      "description": "<highlight>Usa tu cuenta preferida</highlight> para disfrutar de las funciones Pro y el historial guardado",
+      "agreement": "Al continuar, aceptas <break></break> nuestros <terms>Términos de uso</terms>, <privacy>Política de privacidad</privacy> y <refund>Política de reembolso</refund>"
+    },
+    "cta": "Continuar con {platform}",
+    "guestPanel": {
+      "guest": "Invitado",
+      "title": "Inicia sesión y crea una cuenta",
+      "description": "Desbloquea todas las funciones y el historial",
+      "descV2": "Inicia sesión para obtener más funciones",
+      "agreement": "Al continuar, aceptas <break></break> nuestros <terms>Términos de uso</terms>, <privacy>Política de privacidad</privacy> y <refund>Política de reembolso</refund>"
+    },
+    "guestBanner": {
+      "title": "Inicia sesión para guardar tus chats",
+      "description": "Historial, sincronización, chats ilimitados"
+    },
+    "guestModal": {
+      "title": "Bienvenido a Chat Smith",
+      "description": "Inicia sesión o regístrate para continuar",
+      "agreement": "Al continuar, aceptas <break></break> nuestros <terms>Términos de uso</terms>, <privacy>Política de privacidad</privacy> y <refund>Política de reembolso</refund>"
+    },
+    "floatingLogin": {
+      "title": "Continuar con Chat Smith",
+      "description": "Has alcanzado el límite de mensajes gratuitos. Inicia sesión para obtener 10 mensajes gratis más."
+    },
+    "guestConfirmModal": {
+      "title": "Los chats de invitado no se guardan",
+      "description": "Inicia sesión para guardar tu historial de chats"
+    }
+  }
+}

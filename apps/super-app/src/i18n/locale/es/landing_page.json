@@ -1,0 +1,161 @@
+{
+  "CTA": "Chatea ahora",
+  "header": {
+    "features": "Funciones",
+    "useCases": "Casos de uso",
+    "plan": "Plan",
+    "blog": "Blog"
+  },
+  "hero": {
+    "title": "Chat Smith: Asistente IA Pro<breakMobile></breakMobile><break></break>con IA todo-en-uno<breakMobile></breakMobile>y modelos de primer nivel",
+    "subtitle": "Tu solución de chat de IA todo en uno que combina los principales<break></break> modelos IA de primer nivel (<highlight>GPT-5, Grok</highlight> y <highlight>Gemini</highlight>)",
+    "CTA": "Prueba gratis"
+  },
+  "stats": {
+    "users": "usuarios",
+    "aiChat": "Chat IA",
+    "countries": "Países lo utilizan",
+    "usersValue": "{value}M"
+  },
+  "search": "Buscar",
+  "feature": {
+    "title": "Una plataforma. Posibilidades infinitas",
+    "subtitle": "Chatea, crea y analiza — experimenta <breakMobile></breakMobile> todo el poder de la IA en Chat Smith",
+    "CTA": "Prueba ahora",
+    "discoverCTA": "Descubre más",
+    "imageCreation": {
+      "title": "Creación de imágenes",
+      "description": "Deja que Chat Smith plasme tus ideas con creatividad, precisión y estilo"
+    },
+    "deepResearch": {
+      "title": "Investigación profunda",
+      "description": "Obtén información rápida y confiable con GPT-4o y GPT-5 — busca, filtra y resume en cualquier momento y lugar"
+    },
+    "writing": {
+      "title": "Escribe mejor, más rápido",
+      "description": "Académico, negocios, marketing o personal—Assistant Writing se adapta al instante"
+    },
+    "research": {
+      "title": "Pregunta, busca, descubre",
+      "description": "Desde noticias de última hora hasta datos especializados, encuentra lo que necesitas sin desorden"
+    },
+    "document": {
+      "title": "Domina documentos",
+      "description": "Trabaja más inteligentemente con archivos grandes: resume, traduce y perfecciónalos todos en un espacio de trabajo único"
+    },
+    "discover": {
+      "title": "Descubre lo posible",
+      "description": "Descubre formas inteligentes en que la gente usa Chat Smith cada día"
+    }
+  },
+  "useCase": {
+    "title": "Hecho para todos",
+    "contentCreator": {
+      "title": "Creador de contenido",
+      "description": "Crea <b>contenido viral</b> en segundos con GPT-4o y <b>GPT-5</b>. Desde títulos llamativos para Instagram hasta publicaciones atractivas en Facebook o guiones de video adictivos, <b>la IA transforma las ideas en éxitos listos para compartir</b> que captan la atención al instante"
+    },
+    "analyst": {
+      "title": "Analista",
+      "description": "Analice de forma más inteligente con GPT-4o y GPT-5. Detecte patrones ocultos, descubra tendencias rentables y genere información útil para informes, lo que le ayudará a tomar decisiones basadas en datos con rapidez y confianza."
+    },
+    "researcher": {
+      "title": "Investigador",
+      "description": "Pasa de <b>una pregunta compleja a una respuesta clara</b> en segundos usando GPT-4o y GPT-5. Busca, filtra y resume información de fuentes confiables para <b>trabajos académicos</b>, informes de la industria o <b>investigaciones innovadoras</b>."
+    },
+    "student": {
+      "title": "Estudiante",
+      "description": "Eleva tu aprendizaje con GPT-4o y GPT-5. Resume libros de texto, crea <b>notas listas para el examen</b>, o perfecciona ensayos—ahorrando horas mientras mejoras <b>la precisión, claridad</b> y tu <b>perfil académico</b> en línea."
+    },
+    "marketing": {
+      "title": "Marketing",
+      "description": "Muestra tu <b>voz única</b> con GPT-4o y GPT-5. Ya sea ingeniosa, audaz o inspiradora, la IA ayuda a crear historias auténticas, <b>citas distintivas</b> y actualizaciones que fortalecen tu <b>marca personal</b> en LinkedIn, Facebook, Instagram y otras plataformas."
+    },
+    "personality": {
+      "title": "Personalidad",
+      "description": "Muestra tu voz única con GPT-4o y GPT-5. Ya sea ingeniosa, audaz o inspiradora, la IA ayuda a crear historias auténticas, <b>citas distintivas</b> y actualizaciones que fortalecen tu <b>marca personal</b> en LinkedIn, Facebook, Instagram y otras plataformas."
+    }
+  },
+  "plan": {
+    "title": "Descubre todo el poder <breakMobile></breakMobile> de Chat Smith",
+    "sectionTitle": "Tus beneficios",
+    "CTA": "Descubre ahora",
+    "freeLabel": "Gratis",
+    "proLabel": "Pro",
+    "limited": "Limitado",
+    "basicModels": {
+      "title": "GPT-4o mini, Gemini 1.5 Flash",
+      "description": "Acceso a mensajes de Chat IA"
+    },
+    "advancedModels": {
+      "title": "GPT-5, Gemini 2.5 Pro, Grok-4, DeepSeek",
+      "description": "Acceso a otros modelos avanzados de IA"
+    },
+    "fileUploads": {
+      "title": "Subida de archivos",
+      "description": "Acceso a la carga de archivos (png, jpg, jpeg, pdf, etc.)"
+    },
+    "realtimeSearch": {
+      "title": "Búsqueda en tiempo real",
+      "description": "Obtenga respuestas de IA actualizadas con información web en tiempo real"
+    },
+    "deepResearch": {
+      "title": "Investigación profunda",
+      "description": "Aborda tus tareas de investigación complejas"
+    },
+    "artGeneration": {
+      "title": "Generación de arte",
+      "description": "Una nueva forma de convertir tu imaginación en realidad"
+    }
+  },
+  "feedback": {
+    "title": "Mayores números, mayor impacto.",
+    "subtitle": "Un impacto global medido en millones, <breakMobile></breakMobile>con la confianza de usuarios en todo el mundo.",
+    "user": {
+      "content1": "El generador de imágenes AI mostró <b>gran capacidad</b> para ajustar <b>estilos y colores</b>, lo que me hizo sentir como si tuviera <b>un diseñador profesional</b> al alcance de mi mano.",
+      "content2": "¡La generación de imágenes de Chat Smith me ayuda a <b>ahorrar horas de trabajo de diseño</b> y entrega diseños impresionantes cada vez!",
+      "content3": "¡Me encanta cómo la búsqueda en tiempo real obtiene <b>actualizaciones en vivo sobre eventos actuales</b>. ¡Es como tener <b>un asistente de investigación</b> que nunca duerme!",
+      "content4": "¡La función de <b>mejora gramatical</b> es de primera! Ayuda a corregir errores y sugiere <b>mejoras estilísticas</b> para mi escritura profesional.",
+      "content5": "Fácil para <b>transmitir el flujo de trabajo</b> con <b>archivos PDF</b> y la interacción de <b>enlaces incrustados</b>. Extraer <b>información clave</b> de los informes rápidamente sin perder horas leyendo.",
+      "content6": "Solo coloca un enlace, y <b>extraerá la información clave</b>, destacará los datos importantes e incluso <b>proporcionará un resumen conciso</b>. ¡Una <b>herramienta imprescindible</b> para cualquiera que maneje grandes volúmenes de información!"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Un impacto global medido en millones, <breakMobile></breakMobile>con la confianza de usuarios en todo el mundo."
+  },
+  "community": {
+    "title": "Comunidad",
+    "subtitle": "Un impacto global medido en millones, <breakMobile></breakMobile>con la confianza de usuarios en todo el mundo.",
+    "CTA": "Únete a nuestra comunidad global"
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "question1": "¿Qué es Chat Smith?",
+    "answer1": "Chat Smith es un asistente de IA que te ayuda a investigar, escribir, analizar y automatizar tareas mediante indicaciones conversacionales naturales.",
+    "question2": "¿Qué puedo hacer con Chat Smith?",
+    "answer2": "- Redactar, editar y traducir textos y correos electrónicos\n- Resumir artículos, PDFs y reuniones\n- Lluvia de ideas y crear esquemas o presentaciones\n- Responder preguntas y encontrar fuentes\n- Escribir, revisar y depurar código\n- Analizar datos o hojas de cálculo y crear gráficos\n- Crear plantillas y automatizar flujos de trabajo repetitivos",
+    "question3": "¿Dónde puedo acceder a Chat Smith?",
+    "answer3": "- En la web (cualquier navegador)\n- Aplicaciones móviles (iOS y Android)\n- Extensión de navegador opcional para uso rápido mientras navegas",
+    "question4": "¿Para quién está diseñado Chat Smith?",
+    "answer4": "- Estudiantes, freelancers y creadores\n- Profesionales en marketing, ventas, operaciones, soporte al cliente e ingeniería\n- Equipos que desean realizar investigaciones, crear contenido y documentar más rápidamente",
+    "question5": "¿Qué modelos de IA alimentan Chat Smith?",
+    "answer5": "Chat Smith usa una combinación de modelos de lenguaje grande de última generación elegidos por su calidad, velocidad y costo, incluyendo modelos comerciales de alta gama (como los modelos GPT‑4 y Claude) y modelos de código abierto sólidos (como las familias Llama/Mistral)."
+  },
+  "footer": {
+    "title": "Mejora tu trabajo, <breakMobile></breakMobile> ¡a solo un clic de distancia!",
+    "subtitle": "Todo lo que necesitas para impulsar tus proyectos está al alcance de tu mano.",
+    "CTA": "Desbloquea el poder de la IA",
+    "about": {
+      "title": "Acerca de nosotros",
+      "description": "Chat Smith está diseñado para ayudar a los usuarios a desbloquear su potencial, reduciendo la fricción en su pensamiento, acelerando sus tareas y mejorando su creatividad."
+    },
+    "follow": {
+      "title": "Síguenos"
+    },
+    "copyright": "© Copyright {year} Chat Smith Pte, Ltd. Todos los derechos reservados <break></break>\nChat Smith es operado por Chat Smith Pte, Ltd.\n"
+  },
+  "aiAir": "AI Air",
+  "aiAnalytic": "Analítica de IA",
+  "seeMore": "Ver más",
+  "seeMoreLink": "Ver más entradas del blog"
+}

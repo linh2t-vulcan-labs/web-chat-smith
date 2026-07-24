@@ -1,0 +1,228 @@
+{
+  "sidebar": {
+    "newChat": "새 채팅",
+    "assistantWriting": "어시스턴트 글쓰기",
+    "chatHistory": "채팅 기록",
+    "others": "기타",
+    "pinned": "고정됨",
+    "today": "오늘",
+    "yesterday": "어제",
+    "lastWeek": "최근 7일",
+    "twoWeeksAgo": "최근 15일",
+    "getProButton": {
+      "upgrade": "Pro 업그레이드",
+      "title": "Chat Smith Pro 받기",
+      "description": "지금 업그레이드"
+    },
+    "qr": {
+      "description": "QR 코드를 스캔하여<break></break>Chat Smith 앱을 받으세요",
+      "openLink": "링크 열기",
+      "copyLink": "링크 복사"
+    },
+    "emptyThread": {
+      "title": "아직 대화가 없습니다",
+      "description": "저장된 대화가 여기에 표시됩니다."
+    }
+  },
+  "sidebarV2": {
+    "newChat": "채팅",
+    "home": "홈",
+    "writing": "글쓰기",
+    "chatHistory": "기록",
+    "creativeSuite": "디자인 스튜디오"
+  },
+  "helpCenter": {
+    "title": "도움말 센터",
+    "faq": {
+      "title": "자주 묻는 질문",
+      "description": "자주 묻는 질문에 대한 빠른 답변을 찾아보세요."
+    },
+    "community": {
+      "description": "커뮤니티에 참여하여 경험을 공유하세요."
+    },
+    "contactSupport": {
+      "description": "지원팀의 도움을 받으세요.",
+      "title": "지원팀 문의"
+    },
+    "termsOfUse": {
+      "description": "Chat Smith 이용 약관을 검토하세요."
+    },
+    "privacyPolicy": {
+      "description": "데이터 보호 및 사용 방법을 알아보세요."
+    },
+    "refundPolicy": {
+      "description": "환불 및 취소 방법을 알아보세요."
+    }
+  },
+  "helpButton": {
+    "featureRequests": "기능 요청",
+    "whatNews": "새로운 기능",
+    "aboutUs": "회사 소개"
+  },
+  "header": {
+    "notification": {
+      "title": "알림 ({count})",
+      "markAllAsRead": "모두 읽음으로 표시",
+      "upToDate": "최신 상태입니다!"
+    },
+    "userInfo": {
+      "manageSubscription": "구독 관리",
+      "upgradeToPro": "Pro로 업그레이드",
+      "upgradeToProV2": "PRO로 업그레이드",
+      "manageAccount": "계정 관리"
+    }
+  },
+  "chatSuggestion": {
+    "title": "채팅 제안",
+    "description": "채팅 대화 중 제안 질문 표시"
+  },
+  "floatingUpgradeBanner": {
+    "content": "올인원 AI 챗봇의 즐거움을 발견하세요"
+  },
+  "floatingUpgradeBlock": {
+    "title": "Chat Smith Pro로 더 많은 것을 잠금 해제하세요",
+    "upgradeNow": "지금 <span>업그레이드</span>",
+    "description": "더 높은 한도, 파일 업로드, 실시간 검색, 딥 리서치, 아트 생성을 즐기세요",
+    "hitDailyLimit": {
+      "title": "오늘의 한도에 도달했습니다!",
+      "description": "무료 메시지는 00:00에 초기화됩니다 — 또는 지금 바로 업그레이드하여 계속 이용하세요"
+    },
+    "hasRemainingMessages": {
+      "title": "{usage}개의 무료 메시지가 남아 있습니다.",
+      "description": "더 높은 한도, 파일 업로드, 실시간 검색, 딥 리서치, 아트 생성을 즐기세요"
+    },
+    "greatProgress": {
+      "title": "정말 잘 하고 계십니다!",
+      "description": "지금 업그레이드하여 제한 없이 학습, 창작, 채팅을 계속하세요"
+    }
+  },
+  "featureRequest": {
+    "modal": {
+      "title": "기능을 제안하거나 추천하세요"
+    },
+    "field": {
+      "title": {
+        "label": "제목",
+        "placeholder": "짧고 설명적인 텍스트"
+      },
+      "detail": {
+        "label": "세부 정보를 추가하고 필요한 사항을 명시하세요",
+        "placeholder": "기능 요청에 대한 더 많은 맥락을 제공하세요"
+      },
+      "search": {
+        "placeholder": "검색어를 입력하세요"
+      }
+    },
+    "filter": {
+      "sortBy": {
+        "newest": "최신순",
+        "vote": "투표 수"
+      }
+    },
+    "cta": {
+      "submit": "요청 전송"
+    },
+    "result": {
+      "none": "다음에 대한 도움말을 찾을 수 없습니다: <strong>{searchInput}</strong>"
+    }
+  },
+  "webReminder": {
+    "modal": {
+      "subTitle": "사용 팁",
+      "title": "데스크톱에서 더 편리합니다",
+      "desc": "이 사이트는 데스크톱에 최적화되어 있습니다. 더 편리하게 이용해 보세요."
+    }
+  },
+  "manageAccount": {
+    "account": {
+      "title": "계정",
+      "description": "개인 정보 관리"
+    },
+    "preference": {
+      "title": "환경설정",
+      "description": "경험 및 알림 설정을 맞춤화하세요"
+    }
+  },
+  "system": {
+    "title": "시스템",
+    "description": "로그인 및 보안 설정 관리"
+  },
+  "logout": {
+    "title": "로그아웃",
+    "description": "계정에서 로그아웃"
+  },
+  "deleteAccount": {
+    "title": "계정 삭제",
+    "description": "계정과 모든 데이터를 영구적으로 삭제"
+  },
+  "generalTab": "일반",
+  "myPlan": "내 플랜",
+  "language": {
+    "title": "언어",
+    "description": "사용자 인터페이스에 사용되는 언어."
+  },
+  "theme": {
+    "title": "테마",
+    "description": "인터페이스에 사용할 외관을 선택하세요",
+    "light": "라이트",
+    "dark": "다크",
+    "system": "시스템"
+  },
+  "confirmModal": {
+    "signout": {
+      "title": "로그아웃",
+      "description": "로그아웃하시겠습니까?",
+      "actionLabel": "로그아웃"
+    },
+    "deleteAccountNoActiveSubscription": {
+      "title": "계정 삭제",
+      "description": "계정을 삭제하시겠습니까? <break></break><warning>이 작업은 취소할 수 없으며 모든 데이터가 영구적으로 삭제됩니다</warning>",
+      "confirmInstruction": "확인하려면 아래에 \"{confirmText}\"를 입력해 주세요.",
+      "confirmPlaceholder": "확인을 위해 \"{confirmText}\"를 입력하세요",
+      "actionLabel": "계정 삭제",
+      "cancelText": "취소",
+      "confirmText": "Delete Account"
+    },
+    "deleteAccountWithActiveSubscriptionFromWeb": {
+      "title": "계정 삭제",
+      "description": "계정을 삭제하시겠습니까? <break></break><subscriptionInfo>현재 자동 갱신으로 구독 중입니다. 결제는 결제 시스템을 통해 계속되며 Chat Smith를 계속 사용할 수 있습니다.</subscriptionInfo> <break></break><cancelPlanInstruction>원치 않는 청구를 피하려면</cancelPlanInstruction> <cancelPlanLink>플랜 취소</cancelPlanLink> <beforeDeleting>계정 삭제 전에 해주세요.</beforeDeleting>",
+      "actionLabel": "플랜 취소 및 계정 삭제",
+      "cancelText": "취소",
+      "confirmText": "delete"
+    },
+    "deleteAccountWithActiveSubscriptionFromMobile": {
+      "title": "계정 삭제",
+      "description": "<span>계정을 삭제하려면 구매한 플랫폼에서 먼저 활성 구독을 취소해 주세요.</span><break></break><afterCancellation>해당 플랫폼에서 구독이 취소되면 안전하게 계정을 삭제할 수 있습니다</afterCancellation>",
+      "actionLabel": "확인",
+      "cancelText": "도움이 필요하신가요"
+    }
+  },
+  "paymentUnavailableModal": {
+    "title": "일시적으로 사용 불가",
+    "description": "현재 결제 시스템을 업그레이드하고 있습니다. Chat Smith Pro 구독은 활성 상태이며 모든 프리미엄 기능은 정상적으로 계속 작동합니다. 구독 관리는 곧 다시 이용 가능해집니다.",
+    "privacy": "구독 및 결제 정보는 안전합니다"
+  },
+  "onboardingPro": {
+    "step1": {
+      "title": "Pro에 오신 것을 환영합니다",
+      "description": "프리미엄 이용 권한이 활성화되었습니다 — 더 빠르고, 무제한이며, 더 스마트한 도구를 즐겨보세요."
+    },
+    "step2": {
+      "title": "무제한 채팅",
+      "description": "GPT-5, Gemini 2.5 Pro 등 최첨단 모델과 자유롭게 채팅하며 더 깊은 인사이트와 더 나은 결과를 얻으세요."
+    },
+    "step3": {
+      "title": "AI 아트 및 비전 도구",
+      "description": "차세대 AI 도구로 이미지를 생성, 편집하고 이해해 보세요. 인기 아트 스타일을 탐색하고 최신 크리에이티브 트렌드를 따라가며 아이디어를 몇 초 만에 비주얼로 바꿀 수 있습니다."
+    },
+    "step4": {
+      "title": "업무와 학습을 더 스마트하게",
+      "description": "차세대 AI 도구로 이미지를 생성, 편집하고 이해해 보세요. 인기 아트 스타일을 탐색하고 최신 크리에이티브 트렌드를 따라가며 아이디어를 몇 초 만에 비주얼로 바꿀 수 있습니다."
+    }
+  },
+  "expiredPlan": {
+    "title": "Pro 플랜이 만료되었습니다",
+    "description": "기다리고 있었어요! Pro 혜택을 놓치지 말고 다시 시작해 흐름을 이어가세요.",
+    "cta": "Pro 다시 시작하기"
+  }
+}

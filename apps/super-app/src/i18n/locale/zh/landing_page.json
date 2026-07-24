@@ -1,0 +1,161 @@
+{
+  "CTA": "立即聊天",
+  "header": {
+    "features": "特征",
+    "useCases": "使用场景",
+    "plan": "方案",
+    "blog": "博客"
+  },
+  "hero": {
+    "title": "Chat Smith：AI 专业<breakMobile></breakMobile>助手<break></break>配备一体化 AI<breakMobile></breakMobile>顶级模型",
+    "subtitle": "您的一体化 AI 聊天解决方案，集成领先的 <break></break> AI顶级模型（<highlight>GPT-5、Grok</highlight>和<highlight>Gemini</highlight>）",
+    "CTA": "免费试用"
+  },
+  "stats": {
+    "users": "用户",
+    "aiChat": "AI 聊天",
+    "countries": "个国家使用",
+    "usersValue": "{value}M"
+  },
+  "search": "搜索",
+  "feature": {
+    "title": "一个平台，无限可能",
+    "subtitle": "聊天、创作、分析——体验 <breakMobile></breakMobile> Chat Smith 中 AI 的全部威力",
+    "CTA": "立即尝试",
+    "discoverCTA": "了解更多",
+    "imageCreation": {
+      "title": "图像生成",
+      "description": "让 Chat Smith 用创造力、精准与风格呈现你的想法"
+    },
+    "deepResearch": {
+      "title": "深度研究",
+      "description": "使用 GPT-4o 和 GPT-5 快速获取可信洞察—随时随地搜索、筛选与总结"
+    },
+    "writing": {
+      "title": "写得更好、更快",
+      "description": "学术、商业、营销或个人——助手写作立即适应"
+    },
+    "research": {
+      "title": "提问、搜索、发现",
+      "description": "从突发新闻到小众信息，轻松找到所需内容，无杂乱干扰"
+    },
+    "document": {
+      "title": "文档大师",
+      "description": "高效处理大文件——在一个无缝工作区内总结、翻译并完善所有内容"
+    },
+    "discover": {
+      "title": "发现可能性",
+      "description": "探索人们每天使用 Chat Smith 的巧妙方式"
+    }
+  },
+  "useCase": {
+    "title": "适合所有人",
+    "contentCreator": {
+      "title": "内容创作者",
+      "description": "使用 GPT-4o 和 <b>GPT-5</b> 在几秒钟内创建 <b>病毒式内容</b>。从吸引人的 Instagram 标题到引人入胜的 Facebook 帖子或令人沉迷的视频脚本，<b>AI 将创意转化为即刻吸引注意力的热门内容</b>"
+    },
+    "analyst": {
+      "title": "分析师",
+      "description": "使用 GPT-4o 和 GPT-5 更智能地分析。检测 <b>隐藏模式</b>，发现有利的趋势，并 <b>提供可操作的报告见解</b> —— 帮助您快速且自信地做出数据支持的 <b>决策，速度与信心并重</b>"
+    },
+    "researcher": {
+      "title": "研究员",
+      "description": "使用 GPT-4o 和 GPT-5 在几秒钟内将 <b>复杂问题转化为清晰答案</b>。从可信的来源中搜索、筛选和总结 <b>学术论文</b>、行业报告或 <b>突破性研究</b> 的信息。"
+    },
+    "student": {
+      "title": "学生",
+      "description": "使用 GPT-4o 和 GPT-5 提升您的学习效果。总结教科书，创建 <b>考试准备笔记</b>，或润色论文——节省时间，同时提高 <b>准确性、清晰度</b> 和您在网上的 <b>学术资料</b>。"
+    },
+    "marketing": {
+      "title": "营销",
+      "description": "使用 GPT-4o 和 GPT-5 展示您的 <b>独特声音</b>。无论是机智、大胆还是富有启发性，AI 帮助创作真实的故事、<b>标志性引用</b> 和更新，增强您在 LinkedIn、Facebook、Instagram 等平台上的 <b>个人品牌</b>。"
+    },
+    "personality": {
+      "title": "个性",
+      "description": "使用 GPT-4o 和 GPT-5 展示您的独特声音。无论是机智、大胆还是富有启发性，AI 帮助创作真实的故事、<b>标志性引用</b> 和更新，增强您在 LinkedIn、Facebook、Instagram 等平台上的 <b>个人品牌</b>。"
+    }
+  },
+  "plan": {
+    "title": "发 现全部威力 <breakMobile></breakMobile> Chat Smith",
+    "sectionTitle": "您的福利",
+    "CTA": "立即探索",
+    "freeLabel": "免费",
+    "proLabel": "专业版",
+    "limited": "有限的",
+    "basicModels": {
+      "title": "GPT-4o mini、Gemini 1.5 Flash",
+      "description": "访问人工智能聊天消息"
+    },
+    "advancedModels": {
+      "title": "GPT-5、Gemini 2.5 Pro、Grok-4、DeepSeek",
+      "description": "可访问其他高级 AI 模型"
+    },
+    "fileUploads": {
+      "title": "文件上传",
+      "description": "可上传文件 (png, jpg, jpeg, pdf 等)"
+    },
+    "realtimeSearch": {
+      "title": "实时搜索",
+      "description": "获取最新 AI 答案与实时网络信息"
+    },
+    "deepResearch": {
+      "title": "深度研究",
+      "description": "处理你的复杂研究任务"
+    },
+    "artGeneration": {
+      "title": "艺术创作",
+      "description": "用全新方式将你的想象变为现实"
+    }
+  },
+  "feedback": {
+    "title": "更大的数字，更大的影响力。",
+    "subtitle": "全球影响力达数百万，<breakMobile></breakMobile>深受全球用户信赖。",
+    "user": {
+      "content1": "AI 图像生成器展示了 <b>强大的能力</b>，调整 <b>风格和颜色</b> 让我感觉就像手头有 <b>一位专业设计师</b>。",
+      "content2": "Chat Smith 图像生成帮助我 <b>节省了数小时的设计工作</b>，每次都能提供令人惊叹的设计！",
+      "content3": "我喜欢实时搜索如何拉取 <b>当前事件的实时更新</b>。就像拥有一个 <b>永不休息的研究助手</b>！",
+      "content4": "<b>语法增强</b> 功能一流！它帮助纠正错误并建议我的专业写作中的 <b>风格改进</b>。",
+      "content5": "轻松地通过 <b>PDF</b> 和 <b>嵌入式链接</b> 交互来 <b>流畅工作流程</b>。快速 <b>提取报告中的关键信息</b>，无需浪费时间逐字阅读。",
+      "content6": "只需放入一个链接，它就会 <b>提取关键信息</b>，突出重要数据，甚至 <b>提供简明摘要</b>。这是处理大量信息的 <b>必备工具</b>！"
+    }
+  },
+  "blog": {
+    "title": "博客",
+    "subtitle": "全球影响力达数百万，<breakMobile></breakMobile>深受全球用户信赖。"
+  },
+  "community": {
+    "title": "社区",
+    "subtitle": "全球影响力达数百万，<breakMobile></breakMobile>深受全球用户信赖。",
+    "CTA": "加入我们的全球社区"
+  },
+  "faq": {
+    "title": "常见问题",
+    "question1": "什么是 Chat Smith",
+    "answer1": "Chat Smith 是一款 AI 助手，可通过自然、对话式的提示帮助你进行调研、写作、分析，并自动化处理各类任务。",
+    "question2": "我可以用 Chat Smith 做什么？",
+    "answer2": "- 草拟、编辑和翻译文本和电子邮件\n- 总结文章、PDF 和会议内容\n- 头脑风暴，创建大纲或演示文稿\n- 回答问题并寻找资料来源\n- 编写、审核和调试代码\n- 分析数据或电子表格并创建图表\n- 创建模板并自动化重复的工作流程",
+    "question3": "我在哪里可以访问 Chat Smith？",
+    "answer3": "- 在网页上（任何浏览器）\n- 移动应用（iOS 和 Android)\n- 可选的浏览器扩展，方便在浏览时使用",
+    "question4": "Chat Smith 是为谁设计的？",
+    "answer4": "- 学生、自由职业者和创作者\n- 营销、销售、运营、客户支持和工程领域的专业人士\n- 希望更快进行研究、内容创作和文档编写的团队",
+    "question5": "什么 AI 模型驱动 Chat Smith？",
+    "answer5": "Chat Smith 使用了一种结合最新的大型语言模型的方式，这些模型在质量、速度和成本方面都经过精心选择，包括顶级商业模型（如 GPT‑4 类和 Claude 类模型）以及强大的开源模型（如 Llama/Mistral 系列）。"
+  },
+  "footer": {
+    "title": "提升您的工作效率，<breakMobile></breakMobile> 一键轻松实现！",
+    "subtitle": "推动项目前进所需的一切都触手可得。",
+    "CTA": "解锁 AI 能力",
+    "about": {
+      "title": "关于我们",
+      "description": "Chat Smith 的设计目的是帮助用户释放潜力——通过减少思维的摩擦，加速任务的完成，并增强创造力。"
+    },
+    "follow": {
+      "title": "关注我们"
+    },
+    "copyright": "© 版权所有 {year} Chat Smith Pte, Ltd。保留所有权利 <break></break>\nChat Smith 由 Chat Smith Pte, Ltd 运营。"
+  },
+  "aiAir": "AI 空气",
+  "aiAnalytic": "AI 分析",
+  "seeMore": "查看更多",
+  "seeMoreLink": "查看更多博客文章"
+}

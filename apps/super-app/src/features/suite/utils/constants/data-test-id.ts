@@ -1,0 +1,45 @@
+export const DATA_TEST_ID = {
+  suite: {
+    custom: {
+      chatHeader: "suite-custom-chat-header",
+      customSideBar: "suite-custom-side-bar",
+      dropdown: "suite-custom-dropdown",
+      messageBotError: "suite-custom-message-bot-error",
+      previewLogoModal: "suite-custom-preview-logo-modal",
+      promptInputAttachmentsPreview:
+        "suite-custom-prompt-input-attachments-preview",
+      promptInputCharacterCounter:
+        "suite-custom-prompt-input-character-counter",
+      promptInputHitLimitCard: "suite-custom-prompt-input-hit-limit-card",
+      promptInputTextTypePlaceholder:
+        "suite-custom-prompt-input-text-type-placeholder",
+      promptInputUploadDialog: "suite-custom-prompt-input-upload-dialog",
+      promptInputUsecaseChip: "suite-custom-prompt-input-usecase-chip",
+      promptingInputLogoHeader: "suite-custom-prompting-input-logo-header",
+      submitButton: "suite-custom-submit-button",
+      suiteBotMessage: "suite-custom-suite-bot-message",
+      suiteConversation: "suite-custom-suite-conversation",
+      suiteDesignGuidelines: "suite-custom-suite-design-guidelines",
+      suiteDialog: "suite-custom-suite-dialog",
+      suiteGenerated: "suite-custom-suite-generated",
+      suiteGenerating: "suite-custom-suite-generating",
+      suiteImageSkeleton: "suite-custom-suite-image-skeleton",
+      suiteModeChip: "suite-custom-suite-mode-chip",
+      suitePromptInput: "suite-custom-suite-prompt-input",
+      suiteSidebarOffset: "suite-custom-suite-sidebar-offset",
+      suiteThinking: "suite-custom-suite-thinking",
+      suiteUserMessage: "suite-custom-suite-user-message",
+    },
+    home: {
+      createProjectCard: "suite-home-create-project-card",
+      homeAllProjectsPage: "suite-home-all-projects-page",
+      homeLogoTemplatesSection: "suite-home-logo-templates-section",
+      homePromptingSection: "suite-home-prompting-section",
+      homeRecentProjectsSection: "suite-home-recent-projects-section",
+      logoImage: "suite-home-logo-image",
+      projectCard: "suite-home-project-card",
+      templateCard: "suite-home-template-card",
+      upcomingBadge: "suite-home-upcoming-badge",
+    },
+  },
+} as const;

@@ -1,0 +1,473 @@
+{
+  "styles": {
+    "colors": [
+      {
+        "name": "onboarding/text/premium",
+        "token": "onboarding-text-premium",
+        "type": "solid"
+      },
+      {
+        "name": "onboarding/text/brand",
+        "token": "onboarding-text-brand",
+        "type": "solid"
+      },
+      {
+        "name": "onboarding/gradient/default",
+        "token": "onboarding-gradient-default",
+        "type": "gradient_linear"
+      },
+      {
+        "name": "onboarding/badge/gradient",
+        "token": "onboarding-badge-gradient",
+        "type": "gradient_linear"
+      }
+    ],
+    "effectStyles": [
+      {
+        "name": "elevation/glass/1_common",
+        "token": "elevation-glass-1-common",
+        "type": "effect",
+        "value": "box-shadow: 0px 2px 4px 0px rgba(21, 22, 27, 0.04), 0px 1px 3px 0px rgba(21, 22, 27, 0.03)",
+        "description": "Standard class cards, modern UI ⭐️",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.04)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 1,
+            "blur": 3,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.03)"
+          },
+          {
+            "type": "background-blur"
+          }
+        ]
+      },
+      {
+        "name": "elevation/glass/2_navbar",
+        "token": "elevation-glass-2-navbar",
+        "type": "effect",
+        "value": "box-shadow: 0px 4px 8px 0px rgba(21, 22, 27, 0.06), 0px 2px 4px 0px rgba(21, 22, 27, 0.04)",
+        "description": "Glass sticky navbar, persitent glass headers",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 4,
+            "blur": 8,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.06)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.04)"
+          },
+          {
+            "type": "background-blur"
+          }
+        ]
+      },
+      {
+        "name": "elevation/glass/3_dropdown",
+        "token": "elevation-glass-3-dropdown",
+        "type": "effect",
+        "value": "box-shadow: 0px 6px 12px 1px rgba(21, 22, 27, 0.08), 0px 4px 8px 0px rgba(21, 22, 27, 0.06), 0px 0px 3px 1px rgba(21, 22, 27, 0.02)",
+        "description": "Glass dropdown menus, glass popovers",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 6,
+            "blur": 12,
+            "spread": 1,
+            "color": "rgba(21, 22, 27, 0.08)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 4,
+            "blur": 8,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.06)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 0,
+            "blur": 3,
+            "spread": 1,
+            "color": "rgba(21, 22, 27, 0.02)"
+          },
+          {
+            "type": "background-blur"
+          }
+        ]
+      },
+      {
+        "name": "elevation/glass/4_modal",
+        "token": "elevation-glass-4-modal",
+        "type": "effect",
+        "value": "box-shadow: 0px 12px 24px 0px rgba(21, 22, 27, 0.12), 0px 6px 12px 0px rgba(21, 22, 27, 0.08), 0px 0px 3px 1px rgba(21, 22, 27, 0.04)",
+        "description": "Glass modals, glass dialogs, glass drawers",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 12,
+            "blur": 24,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.12)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 6,
+            "blur": 12,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.08)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 0,
+            "blur": 3,
+            "spread": 1,
+            "color": "rgba(21, 22, 27, 0.04)"
+          },
+          {
+            "type": "background-blur"
+          }
+        ]
+      },
+      {
+        "name": "elevation/glass/5_subtle",
+        "token": "elevation-glass-5-subtle",
+        "type": "effect",
+        "value": "box-shadow: 0px 2px 4px 0px rgba(21, 22, 27, 0.04), 0px 1px 3px 0px rgba(21, 22, 27, 0.03)",
+        "description": "Subtle glass cards, gentle glass aesthetic",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.04)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 1,
+            "blur": 3,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.03)"
+          },
+          {
+            "type": "background-blur"
+          }
+        ]
+      },
+      {
+        "name": "elevation/glass/6_very_subtle",
+        "token": "elevation-glass-6-very-subtle",
+        "type": "effect",
+        "value": "box-shadow: 0px 2px 4px 0px rgba(21, 22, 27, 0.04), 0px 1px 3px 0px rgba(21, 22, 27, 0.03)",
+        "description": "Only on very calm backgrounds",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.04)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 1,
+            "blur": 3,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.03)"
+          },
+          {
+            "type": "background-blur"
+          }
+        ]
+      },
+      {
+        "name": "elevation/glass/7_prominent",
+        "token": "elevation-glass-7-prominent",
+        "type": "effect",
+        "value": "box-shadow: 0px 2px 4px 0px rgba(21, 22, 27, 0.04), 0px 1px 3px 0px rgba(21, 22, 27, 0.03)",
+        "description": "Featured content cards",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.04)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 1,
+            "blur": 3,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.03)"
+          },
+          {
+            "type": "background-blur"
+          }
+        ]
+      },
+      {
+        "name": "elevation/glass/8_subtle_sticky",
+        "token": "elevation-glass-8-subtle-sticky",
+        "type": "effect",
+        "value": "box-shadow: 0px 4px 8px 0px rgba(21, 22, 27, 0.06), 0px 2px 4px 0px rgba(21, 22, 27, 0.04)",
+        "description": "Gentle sticky header",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 4,
+            "blur": 8,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.06)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.04)"
+          },
+          {
+            "type": "background-blur"
+          }
+        ]
+      },
+      {
+        "name": "elevation/glass/9_prominent_glass_modal",
+        "token": "elevation-glass-9-prominent-glass-modal",
+        "type": "effect",
+        "value": "box-shadow: 0px 12px 24px 0px rgba(21, 22, 27, 0.12), 0px 6px 12px 0px rgba(21, 22, 27, 0.08), 0px 0px 3px 1px rgba(21, 22, 27, 0.04)",
+        "description": "Prominent glass modal - hero moments",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 12,
+            "blur": 24,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.12)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 6,
+            "blur": 12,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.08)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 0,
+            "blur": 3,
+            "spread": 1,
+            "color": "rgba(21, 22, 27, 0.04)"
+          },
+          {
+            "type": "background-blur"
+          }
+        ]
+      },
+      {
+        "name": "elevation/solid/1_raised",
+        "token": "elevation-solid-1-raised",
+        "type": "effect",
+        "value": "box-shadow: 0px 1px 3px 0px rgba(21, 22, 27, 0.02), 0px 1px 3px 0px rgba(21, 22, 27, 0.03)",
+        "description": "Raised elevation - minimal lift from base.",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 1,
+            "blur": 3,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.02)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 1,
+            "blur": 3,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.03)"
+          }
+        ]
+      },
+      {
+        "name": "elevation/solid/2_lifted",
+        "token": "elevation-solid-2-lifted",
+        "type": "effect",
+        "value": "box-shadow: 0px 2px 4px 0px rgba(21, 22, 27, 0.04), 0px 1px 3px 0px rgba(21, 22, 27, 0.03)",
+        "description": "Lifted elevation - STANDARD card elevation.",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.04)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 1,
+            "blur": 3,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.03)"
+          }
+        ]
+      },
+      {
+        "name": "elevation/solid/3_floating",
+        "token": "elevation-solid-3-floating",
+        "type": "effect",
+        "value": "box-shadow: 0px 4px 8px 0px rgba(21, 22, 27, 0.06), 0px 2px 4px 0px rgba(21, 22, 27, 0.04)",
+        "description": "Floating elevation - sticky persistent elements.",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 4,
+            "blur": 8,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.06)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 2,
+            "blur": 4,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.04)"
+          }
+        ]
+      },
+      {
+        "name": "elevation/solid/4_hovering",
+        "token": "elevation-solid-4-hovering",
+        "type": "effect",
+        "value": "box-shadow: 0px 6px 12px 1px rgba(21, 22, 27, 0.08), 0px 4px 8px 0px rgba(21, 22, 27, 0.06), 0px 0px 3px 1px rgba(21, 22, 27, 0.02)",
+        "description": "Hovering elevation - ELEGANT floating menus.",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 6,
+            "blur": 12,
+            "spread": 1,
+            "color": "rgba(21, 22, 27, 0.08)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 4,
+            "blur": 8,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.06)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 0,
+            "blur": 3,
+            "spread": 1,
+            "color": "rgba(21, 22, 27, 0.02)"
+          }
+        ]
+      },
+      {
+        "name": "elevation/solid/5_overlay",
+        "token": "elevation-solid-5-overlay",
+        "type": "effect",
+        "value": "box-shadow: 0px 12px 24px 0px rgba(21, 22, 27, 0.12), 0px 6px 12px 0px rgba(21, 22, 27, 0.08), 0px 0px 3px 1px rgba(21, 22, 27, 0.04)",
+        "description": "Overlay elevation - MAXIMUM refined depth.",
+        "effects": [
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 12,
+            "blur": 24,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.12)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 6,
+            "blur": 12,
+            "spread": 0,
+            "color": "rgba(21, 22, 27, 0.08)"
+          },
+          {
+            "type": "drop-shadow",
+            "x": 0,
+            "y": 0,
+            "blur": 3,
+            "spread": 1,
+            "color": "rgba(21, 22, 27, 0.04)"
+          }
+        ]
+      }
+    ],
+    "gridStyles": [
+      {
+        "name": "max_width",
+        "token": "max-width",
+        "type": "grid",
+        "grids": [
+          {
+            "pattern": "columns",
+            "count": 12,
+            "gutter": 32,
+            "margin": 0
+          }
+        ]
+      },
+      {
+        "name": "full_with",
+        "token": "full-with",
+        "type": "grid",
+        "grids": [
+          {
+            "pattern": "columns",
+            "count": 12,
+            "gutter": 32,
+            "margin": 16
+          }
+        ]
+      }
+    ]
+  }
+}

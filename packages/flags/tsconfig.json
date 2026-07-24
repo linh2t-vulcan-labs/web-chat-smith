@@ -1,0 +1,12 @@
+{
+  "extends": "@cs/ts-config/react-library.json",
+  "compilerOptions": {
+    "paths": {
+      "@cs/flags/*": ["./src/*"]
+    },
+    "strictNullChecks": true,
+    "types": ["bun"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
+}

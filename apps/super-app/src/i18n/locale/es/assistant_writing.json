@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "Chatbot IA: Escritura académica"
+  },
+  "settings": {
+    "title": "Configuración",
+    "resetCta": "Restablecer",
+    "submitCta": "Enviar",
+    "length": {
+      "title": "Longitud",
+      "short": "Corto",
+      "medium": "Medio",
+      "long": "Largo"
+    },
+    "tone": {
+      "title": "Tono",
+      "friendly": "Amistoso",
+      "formal": "Formal",
+      "informal": "Informal",
+      "optimistic": "Optimista",
+      "worried": "Preocupado",
+      "curious": "Curioso",
+      "assertive": "Asertivo",
+      "encouraging": "Alentador",
+      "surprised": "Sorprendido",
+      "cooperative": "Cooperativo"
+    },
+    "technique": {
+      "title": "Usando técnica",
+      "none": "Ninguno",
+      "framework": "Marco de 5 objeciones básicas",
+      "aida": "Redacción AIDA",
+      "pas": "Redacción PAS",
+      "webinar": "Fórmula de webinar perfecto por Russell Brunson",
+      "pastor": "Marco PASTOR"
+    },
+    "feedback": {
+      "label": "Tus comentarios <span>(opcional)</span>",
+      "placeholder": "Por favor proporciona tus comentarios…"
+    }
+  },
+  "cta": {
+    "stop": "Detener generación",
+    "regenerate": "Regenerar"
+  },
+  "result": {
+    "placeholder": "¿Sobre qué tema o asunto te gustaría escribir?",
+    "loading": "Generando",
+    "suggestion": {
+      "title": "Puede que te interese saber"
+    }
+  },
+  "toast": {
+    "error": {
+      "reachedLimit": "Has alcanzado el límite de uso avanzado. Actualiza para continuar experimentando la función más rápida y avanzada"
+    }
+  },
+  "promoteSignIn": "Inicia sesión para acceder a tus mensajes gratuitos restantes",
+  "usage": {
+    "remaining": "Solo te quedan {count, plural, one {# mensaje gratis} other {# mensajes gratuitos}}.",
+    "getPremium": "Obtener Premium"
+  },
+  "title": "Escritura académica"
+}

@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "AI चैटबॉट: अकादमिक लेखन"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "resetCta": "रीसेट करें",
+    "submitCta": "सबमिट करें",
+    "length": {
+      "title": "लंबाई",
+      "short": "छोटा",
+      "medium": "मध्यम",
+      "long": "लंबा"
+    },
+    "tone": {
+      "title": "टोन",
+      "friendly": "दोस्ताना",
+      "formal": "औपचारिक",
+      "informal": "अनौपचारिक",
+      "optimistic": "आशावादी",
+      "worried": "चिंतित",
+      "curious": "जिज्ञासु",
+      "assertive": "दृढ़",
+      "encouraging": "प्रोत्साहक",
+      "surprised": "हैरान",
+      "cooperative": "सहयोगी"
+    },
+    "technique": {
+      "title": "तकनीक चुनें",
+      "none": "कोई नहीं",
+      "framework": "5 बेसिक ऑब्जेक्शन्स फ्रेमवर्क",
+      "aida": "AIDA कॉपीराइटिंग",
+      "pas": "PAS कॉपीराइटिंग",
+      "webinar": "Russell Brunson का परफेक्ट वेबिनार फ़ॉर्मूला",
+      "pastor": "PASTOR फ्रेमवर्क"
+    },
+    "feedback": {
+      "label": "आपकी प्रतिक्रिया <span>(वैकल्पिक)</span>",
+      "placeholder": "अपनी प्रतिक्रिया यहाँ लिखें..."
+    }
+  },
+  "cta": {
+    "stop": "जनरेशन रोकें",
+    "regenerate": "फिर से जनरेट करें"
+  },
+  "result": {
+    "placeholder": "आप किस विषय पर लिखना चाहते हैं?",
+    "loading": "जनरेट हो रहा है",
+    "suggestion": {
+      "title": "यह भी जानना चाहेंगे आप"
+    }
+  },
+  "toast": {
+    "error": {
+      "reachedLimit": "आपकी एडवांस्ड यूसेज लिमिट खत्म हो गई। सबसे तेज़ और एडवांस्ड फ़ीचर्स जारी रखने के लिए अपग्रेड करें"
+    }
+  },
+  "promoteSignIn": "बचे हुए फ्री मैसेज पाने के लिए साइन इन करें",
+  "usage": {
+    "remaining": "केवल {count, plural, one {# फ्री मैसेज} other {# फ्री मैसेज}} बचे हैं।",
+    "getPremium": "प्रीमियम लें"
+  },
+  "title": "अकादमिक लेखन"
+}

@@ -1,0 +1,321 @@
+{
+  "brand": {
+    "name": "Chat Smith"
+  },
+  "languages": {
+    "en": "英语 (US)",
+    "zh": "中文 (简体)",
+    "th": "泰语 (ไทย)",
+    "ar": "阿拉伯语 (العربية)",
+    "es": "西班牙语 (Español)",
+    "ko": "韩语 (한국어)",
+    "ja": "日语 (日本語)",
+    "hi": "印地语 (हिंदी)"
+  },
+  "header": {
+    "nav": {
+      "home": "首页",
+      "products": "功能",
+      "blog": "博客",
+      "pricing": "价格"
+    },
+    "sections": {
+      "features": "功能",
+      "useCases": "应用场景"
+    },
+    "search": {
+      "placeholder": "搜索分类",
+      "noResults": "没有符合条件的分类",
+      "ariaLabel": "按名称筛选分类"
+    },
+    "auth": {
+      "signIn": "登录"
+    },
+    "fallback": {
+      "untitled": "未命名"
+    },
+    "aria": {
+      "toggleMenu": "切换菜单",
+      "navigationDrawer": "网站菜单",
+      "closeMenu": "关闭菜单",
+      "toggleTheme": "切换主题",
+      "language": "语言",
+      "account": "账户"
+    }
+  },
+  "banner": {
+    "title": {
+      "muted": "AI",
+      "image": "图像",
+      "generator": "生成器"
+    },
+    "subtitle": "体验最强大的 AI 图像生成工具。从专业创意到艺术作品,Chat Smith 都能在几秒内完成。",
+    "promptPlaceholder": "漂浮在太空中的未来主义图书馆,电影级光照,...",
+    "promptPlaceholderTranslate": "将以下文本翻译成专业的商务中文语气",
+    "promptPlaceholderQa": "输入问题，拖放或上传图片或 PDF，或使用 Ctrl+V 粘贴",
+    "promptPlaceholderQaSimple": "输入您的问题...",
+    "modelLabel": "GPT-5 Nano",
+    "tryTheseOptional": "试试这些（可选）",
+    "tryThese": {
+      "label": "试试这些",
+      "optional": "（可选）"
+    },
+    "cta": {
+      "generate": "生成",
+      "translate": "翻译",
+      "getAnswer": "获取答案"
+    },
+    "uploadFile": {
+      "title": "上传文件",
+      "instructionPrefix": "拖放文件或",
+      "chooseFiles": "选择文件",
+      "instructionSuffix": "以上传",
+      "supportedTypes": "支持的文件类型：pdf、png、jpg、jpeg。最大文件大小：20MB。",
+      "aria": {
+        "chooseFiles": "选择要上传的文件"
+      }
+    },
+    "qaCards": {
+      "selectedAttachments": "已选附件",
+      "removeAttachment": "移除 {name}"
+    },
+    "loading": {
+      "artStyles": "正在加载艺术风格",
+      "savingDraft": "正在保存草稿…"
+    },
+    "breadcrumb": {
+      "home": "首页",
+      "current": "AI 图像生成器"
+    },
+    "referenceStyle": {
+      "label": "参考风格",
+      "optional": "（可选）"
+    },
+    "aria": {
+      "section": "AI 图像生成器",
+      "breadcrumb": "面包屑导航",
+      "referenceImages": "参考图片",
+      "removeReference": "移除参考图",
+      "addReference": "从本机添加参考图片",
+      "generate": "生成"
+    }
+  },
+  "groupPage": {
+    "aria": {
+      "tools": "此分组中的 AI 工具"
+    },
+    "groups": {
+      "image": "图像",
+      "text": "文本",
+      "study": "学习",
+      "model": "模型",
+      "code": "代码",
+      "doc": "文档"
+    }
+  },
+  "metrics": {
+    "title": {
+      "prefix": "加入超过",
+      "highlight": "5000 万",
+      "suffix": "位快乐的 AI Chat 用户"
+    },
+    "fallback": [
+      {
+        "value": "+43M",
+        "text": "活跃用户"
+      },
+      {
+        "value": "#1",
+        "text": "AI 聊天"
+      },
+      {
+        "value": "236",
+        "text": "使用国家"
+      }
+    ],
+    "aria": {
+      "section": "成就",
+      "list": "指标"
+    }
+  },
+  "hero": {
+    "title": {
+      "prefix": "顶级",
+      "highlight": "AI 模型",
+      "suffix": ""
+    },
+    "subtitle": "体验最强大的 AI 图像生成工具。从专业创意到艺术作品,Chat Smith 都能在几秒内完成。",
+    "fallbackItems": [
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      },
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      },
+      {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
+      }
+    ],
+    "cta": {
+      "generate": "立即生成",
+      "tryNow": "立即试用"
+    },
+    "aria": {
+      "section": "AI 模型",
+      "list": "AI 模型列表"
+    }
+  },
+  "steps": {
+    "title": {
+      "prefix": "This is how to create picture using",
+      "highlight": "AI Imagine Generator?",
+      "suffix": ""
+    },
+    "subtitle": "Experience the most powerful AI image generation tool. From professional concepts, to creative art, Chat Smith does it all in seconds.",
+    "fallbackItems": [
+      {
+        "title": "Step 1",
+        "description": "Switch between DALL-E, Gemini, and custom Stable Diffusion models to get the exact style you need."
+      },
+      {
+        "title": "Step 2",
+        "description": "Switch between DALL-E, Gemini, and custom Stable Diffusion models to get the exact style you need."
+      },
+      {
+        "title": "Step 3",
+        "description": "Switch between DALL-E, Gemini, and custom Stable Diffusion models to get the exact style you need."
+      }
+    ],
+    "cta": {
+      "generate": "立即生成",
+      "generateShort": "生成"
+    },
+    "aria": {
+      "section": "How it works",
+      "list": "Steps"
+    }
+  },
+  "feature": {
+    "title": {
+      "prefix": "Unlimited Creativity.",
+      "highlight": "Simplified.",
+      "suffix": ""
+    },
+    "subtitle": "Professional tool designed for everyone, from hobbyists to brand designers.",
+    "fallbackItems": [
+      {
+        "title": "Multi-model Fusion",
+        "description": "Switch between models to get the exact look and mood you want."
+      },
+      {
+        "title": "Fast, High-quality Outputs",
+        "description": "Generate sharp results in seconds, ready to share or iterate."
+      },
+      {
+        "title": "Designed for Creators",
+        "description": "From quick ideas to polished visuals—simple controls, powerful results."
+      }
+    ],
+    "aria": {
+      "section": "Key benefits",
+      "list": "Benefits list"
+    }
+  },
+  "horizontalCards": {
+    "title": {
+      "prefix": "Ideas to images,",
+      "highlight": "in one scroll.",
+      "suffix": ""
+    },
+    "subtitle": "Swipe through real-style examples—each card pairs a preview with a short explanation.",
+    "defaults": {
+      "main": "用 AI 创造更多可能",
+      "subtitle": "解锁持续更新的 AI 工具库，涵盖智能写作、灵感创作、头脑风暴与高效办公，全面提升工作效率。"
+    },
+    "imageFallbackAlt": "Example preview",
+    "fallbackItems": [
+      {
+        "title": "Product shots",
+        "description": "Clean lighting and crisp detail for listings, ads, and social posts."
+      },
+      {
+        "title": "Concept art",
+        "description": "Explore moods fast—iterate compositions before you commit to a final render."
+      },
+      {
+        "title": "Social creatives",
+        "description": "Bold visuals sized for feeds—keep copy space and brand color in mind."
+      }
+    ],
+    "aria": {
+      "section": "Example gallery",
+      "list": "Horizontal cards",
+      "previous": "Previous cards",
+      "next": "Next cards"
+    }
+  },
+  "resourceBlog": {
+    "title": {
+      "prefix": "更多",
+      "highlight": "资源",
+      "suffix": ""
+    },
+    "seeMore": "查看更多",
+    "fallbackCategory": "博客",
+    "fallbackAuthor": "Chat Smith",
+    "aria": {
+      "section": "博客更多资源",
+      "blogList": "最新博客文章",
+      "seeMoreLink": "查看更多博客文章"
+    }
+  },
+  "footer": {
+    "aria": {
+      "section": "页脚"
+    },
+    "legalNavAria": "法律政策",
+    "featureColumnTitle": "功能",
+    "productNavAria": "产品链接",
+    "logoAlt": "Chat Smith",
+    "brandName": "Chat Smith",
+    "aboutTitle": "关于我们",
+    "aboutDescription": "Chat Smith 旨在帮助用户释放潜能——减少思维阻力、加快任务推进，并激发创造力。",
+    "followTitle": "关注我们",
+    "emailPlaceholder": "输入你的邮箱",
+    "subscribeCta": "订阅",
+    "copyright": "© {year} Vulcan Labs 版权所有",
+    "copyrightSub": "Chat Smith 是 Vulcan Labs 的产品。",
+    "socialAria": {
+      "facebook": "Chat Smith 在 Facebook",
+      "discord": "Chat Smith 在 Discord",
+      "youtube": "Chat Smith 在 YouTube",
+      "instagram": "Chat Smith 在 Instagram",
+      "tiktok": "Chat Smith 在 TikTok",
+      "x": "Chat Smith 在 X"
+    }
+  },
+  "ctaFooter": {
+    "title": {
+      "prefix": "提升工作效率，",
+      "highlight": "一键即达！",
+      "suffix": ""
+    },
+    "subtitle": "推动项目前进所需的一切，都在指尖。",
+    "cta": {
+      "signUp": "立即注册"
+    },
+    "aria": {
+      "section": "注册以提升工作效率"
+    }
+  },
+  "faq": {
+    "sectionAria": "常见问题",
+    "title": {
+      "prefix": "问我们",
+      "main": "任何问题"
+    }
+  }
+}

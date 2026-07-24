@@ -1,4 +1,6 @@
 {
-  "extends": "@workspace/typescript-config/base.json"
+  "extends": "@cs/ts-config/base.json",
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
 }
-

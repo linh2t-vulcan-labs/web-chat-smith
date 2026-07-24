@@ -1,0 +1,31 @@
+{
+  "name": "@cs/security",
+  "version": "0.0.1",
+  "private": true,
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./proxy": "./src/proxy.ts"
+  },
+  "scripts": {
+    "clean": "rm -rf dist node_modules .turbo .cache",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@cs/env": "workspace:*"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/bun": "catalog:tools",
+    "@types/node": "catalog:tools",
+    "next": "catalog:framework"
+  },
+  "peerDependencies": {
+    "next": "catalog:framework"
+  }
+}

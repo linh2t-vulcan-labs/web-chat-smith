@@ -1,0 +1,39 @@
+{
+  "name": "@cs/api-client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./core/*": "./src/core/*.ts",
+    "./errors/*": "./src/errors/*.ts",
+    "./endpoints/*": "./src/endpoints/*.ts",
+    "./services/*": "./src/services/*/index.ts",
+    "./server/*": "./src/server/*.ts",
+    "./proxy/*": "./src/proxy/*.ts",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./providers/*": "./src/providers/*.tsx",
+    "./types": "./src/types/index.ts",
+    "./utils/*": "./src/utils/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "@cs/core": "workspace:*",
+    "@cs/env": "workspace:*",
+    "@cs/validation": "workspace:*",
+    "@tanstack/react-query": "catalog:data",
+    "eventsource-parser": "catalog:utils",
+    "next": "catalog:framework",
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework",
+    "server-only": "catalog:framework"
+  },
+  "devDependencies": {
+    "@cs/ts-config": "workspace:*",
+    "@types/react": "catalog:framework",
+    "@types/react-dom": "catalog:framework",
+    "typescript": "catalog:tools"
+  }
+}

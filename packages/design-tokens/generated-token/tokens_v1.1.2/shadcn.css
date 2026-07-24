@@ -1,0 +1,35 @@
+:root {
+  --accent: var(--cs-surface-overlay-interactive-hover);
+  --accent-foreground: var(--cs-text-hierarchy-primary);
+  --background: var(--cs-surface-hierarchy-base);
+  --border: var(--cs-border-structural-default);
+  --card: var(--cs-surface-hierarchy-raised);
+  --card-foreground: var(--cs-text-hierarchy-primary);
+  --chart-1: var(--cs-color-brand-500);
+  --chart-2: var(--cs-color-hue-teal-600);
+  --chart-3: var(--cs-color-hue-blue-700);
+  --chart-4: var(--cs-color-hue-amber-600);
+  --chart-5: var(--cs-color-hue-purple-600);
+  --destructive: var(--cs-action-background-destructive);
+  --destructive-foreground: var(--cs-action-text-destructive);
+  --foreground: var(--cs-text-hierarchy-primary);
+  --input: var(--cs-border-structural-default);
+  --muted: var(--cs-surface-hierarchy-container);
+  --muted-foreground: var(--cs-text-hierarchy-secondary);
+  --popover: var(--cs-surface-hierarchy-raised);
+  --popover-foreground: var(--cs-text-hierarchy-primary);
+  --primary: var(--cs-action-background-primary);
+  --primary-foreground: var(--cs-action-text-primary);
+  --radius: var(--cs-radius-standard);
+  --ring: var(--cs-border-interactive-focus);
+  --secondary: var(--cs-action-background-secondary);
+  --secondary-foreground: var(--cs-action-text-secondary);
+  --sidebar: var(--cs-surface-hierarchy-raised);
+  --sidebar-accent: var(--cs-surface-overlay-interactive-hover);
+  --sidebar-accent-foreground: var(--cs-text-hierarchy-primary);
+  --sidebar-border: var(--cs-border-structural-default);
+  --sidebar-foreground: var(--cs-text-hierarchy-primary);
+  --sidebar-primary: var(--cs-action-background-primary);
+  --sidebar-primary-foreground: var(--cs-action-text-primary);
+  --sidebar-ring: var(--cs-border-interactive-focus);
+}
