@@ -100,7 +100,23 @@ export const ThemeProvider = ({
   //                   For non-CSS consumers (charts, Monaco, etc.) that need the real
   //                   color without re-deriving it from theme + OS. Undefined until
   //                   mounted to prevent SSR/client hydration mismatches.
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  // Lazily initialized from storage (not `defaultTheme`) so `theme` is already
+  // correct on the very first client render. Reading localStorage here is safe
+  // despite differing from the server's render (which has no storage and falls
+  // back to `defaultTheme`): this component renders no DOM of its own, and every
+  // consumer of `theme`/`resolvedTheme` is masked by `mounted` until this same
+  // effect pass completes, so there's no server/client markup to mismatch.
+  // This used to be synced from an effect instead, which left a window — during
+  // the initial mount effects, before that sync effect's `setTheme` took hold —
+  // where the effect below could still see the stale `defaultTheme` ('system')
+  // and briefly force the DOM to the OS preference even when an explicit stored
+  // 'light'/'dark' preference disagreed with it (visible as a light→dark→light
+  // flash whenever the stored preference differs from the current OS setting).
+  const [theme, setTheme] = useState<Theme>(() =>
+    typeof window === "undefined"
+      ? defaultTheme
+      : (readStored() ?? defaultTheme)
+  );
   const [mounted, setMounted] = useState(false);
   // Mirrors the OS preference for the `resolvedTheme` returned to consumers.
   // Kept as state (not read live via prefersDark() at render time) so a
@@ -119,8 +135,8 @@ export const ThemeProvider = ({
   // root layout remounting on a language switch), when React re-reconciles
   // <html>'s static className and strips whatever class isn't in that prop —
   // this restores it before the browser paints. We read from storage (not
-  // `theme` state) because state is still `defaultTheme` on that first
-  // render, whereas storage already has the user's real choice.
+  // `theme` state) so this stays correct even immediately after such a
+  // remount, before the freshly re-initialized `theme` state has settled.
   useLayoutEffect(() => {
     const resolved = resolveTheme(readStored() ?? "system");
     if (!document.documentElement.classList.contains(resolved)) {
@@ -128,18 +144,17 @@ export const ThemeProvider = ({
     }
   });
 
-  // Hydrates React state from storage once the client is interactive. This
-  // one-time sync from an external source (not a subscription) is exactly
-  // the "adjust state on mount" case useEffect exists for; a lazy useState
-  // initializer can't do this instead because it would read localStorage
-  // during the client's first render, before hydration, producing a
-  // server/client text mismatch.
+  // `theme` is already correct from the lazy initializer above — this effect
+  // only flips `mounted` once the client is interactive, unblocking consumers
+  // gated on it (e.g. `ThemeToggle`'s disabled state, `resolvedTheme`). It
+  // can't be initialized render-safely instead: `mounted` must start `false`
+  // on both server and client so a consumer's first client render matches the
+  // server-rendered markup, only flipping once hydration is confirmed done.
+  // oxlint-disable-next-line react-doctor/rendering-hydration-no-flicker -- the flash this rule warns about is exactly what `mounted` is for: consumers render their non-mounted fallback until this fires, by design
   useEffect(() => {
-    // eslint-disable-next-line react/react-compiler -- intentional mount-only sync from an external source (localStorage), not a subscription; can't use a lazy useState initializer since it would read localStorage before hydration and mismatch the server-rendered defaultTheme
-    setTheme(readStored() ?? defaultTheme);
-    // eslint-disable-next-line react-doctor/no-adjust-state-on-prop-change -- not a prop-change sync, this is the one-time mount hydration from localStorage described above; the brief stale value (defaultTheme) is required to avoid an SSR/client hydration mismatch
+    // oxlint-disable-next-line react/react-compiler -- setState in an effect body is intentional here, not a subscription callback: this is the one-time "confirm hydration is done" signal, not synchronizing with an external system
     setMounted(true);
-  }, [defaultTheme]);
+  }, []);
 
   const applyTheme = (next: Theme) => {
     const restore = disableTransitionOnChange ? suppressTransitions() : null;
