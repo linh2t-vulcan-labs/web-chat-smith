@@ -1,5 +1,3 @@
-import { ApiAuthProvider } from "@cs/api-client/providers/auth-provider";
-import { ApiQueryProvider } from "@cs/api-client/providers/query-client-provider";
 import { routing } from "@cs/i18n/routing";
 import { getLocaleConfig, isValidLocale } from "@cs/i18n/utils";
 import { NextIntlClientProvider } from "next-intl";
@@ -7,8 +5,7 @@ import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { HtmlLangSync } from "@/components/html-lang-sync";
-import { FlagsProvider } from "@/components/providers/flags-provider";
-import { NotificationsProvider } from "@/components/providers/notifications-provider";
+import { Header } from "@/components/layout/header";
 
 export const instant = false;
 
@@ -38,15 +35,16 @@ const LocaleLayout = async ({
     <body dir={direction}>
       <NextIntlClientProvider>
         <HtmlLangSync locale={locale} />
-        <ApiQueryProvider>
-          <FlagsProvider>
-            <ApiAuthProvider>
-              <NotificationsProvider>
-                <main>{children}</main>
-              </NotificationsProvider>
-            </ApiAuthProvider>
-          </FlagsProvider>
-        </ApiQueryProvider>
+        {/* ApiQueryProvider/FlagsProvider/AuthSyncProvider/NotificationsProvider
+            all mount in the root `app/layout.tsx` now (locale-independent —
+            see that file's comment) so none of them remount on a locale
+            switch. */}
+        {/* Shared across BOTH the (workspace) and (marketing) route groups —
+            one mount point here covers every page instead of each page
+            re-assembling login/logout, language switch, and theme toggle
+            itself (see `apps/web/components/layout/header.tsx`). */}
+        <Header />
+        <main>{children}</main>
       </NextIntlClientProvider>
     </body>
   );

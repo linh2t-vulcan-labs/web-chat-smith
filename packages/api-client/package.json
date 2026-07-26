@@ -25,6 +25,7 @@
     "@cs/validation": "workspace:*",
     "@tanstack/react-query": "catalog:data",
     "eventsource-parser": "catalog:utils",
+    "jose": "catalog:integrations",
     "next": "catalog:framework",
     "react": "catalog:framework",
     "react-dom": "catalog:framework",

@@ -69,11 +69,55 @@ const UserOnboardingSchema = z.object({
   metadata: z.optional(z.record(z.string(), z.unknown())),
 });
 
+const BootstrapGuestSessionResponseSchema = z.object({
+  csrfToken: z.string(),
+  nonce: z.string(),
+});
+
+/**
+ * The backend names the guest access token field `access_jwt`, not
+ * `access_token` (confirmed against `apps/super-app/src/features/guest-mode/models/index.ts`'s
+ * `GuestSessionModel`) — the global snake_case->camelCase transform
+ * (core/http-client.ts) turns it into `accessJwt`, so it needs an explicit
+ * rename here, the same `z.pipe`/`z.transform` shape `UserProfileSchema`
+ * already uses for its `infos` envelope unwrap.
+ */
+const CreateGuestSessionResponseSchema = z.pipe(
+  z.object({
+    accessJwt: z.string(),
+    anonId: z.string(),
+    deviceId: z.string(),
+    refreshToken: z.string(),
+    sessionId: z.string(),
+  }),
+  z.transform(({ accessJwt, ...rest }) => ({ accessToken: accessJwt, ...rest }))
+);
+
+const RefreshGuestTokenResponseSchema = z.pipe(
+  z.object({
+    accessJwt: z.string(),
+    refreshToken: z.optional(z.string()),
+  }),
+  z.transform(({ accessJwt, refreshToken }) => ({
+    accessToken: accessJwt,
+    refreshToken,
+  }))
+);
+
 export type RefreshTokenResult = z.infer<typeof RefreshTokenResponseSchema>;
 export type VerifyOAuthTokenResult = z.infer<
   typeof VerifyOAuthTokenResponseSchema
 >;
 export type UserInfoResult = z.infer<typeof UserProfileSchema>;
+export type BootstrapGuestSessionResult = z.infer<
+  typeof BootstrapGuestSessionResponseSchema
+>;
+export type CreateGuestSessionResult = z.infer<
+  typeof CreateGuestSessionResponseSchema
+>;
+export type RefreshGuestTokenResult = z.infer<
+  typeof RefreshGuestTokenResponseSchema
+>;
 
 interface VerifyOAuthTokenInput {
   provider: string;
@@ -81,6 +125,31 @@ interface VerifyOAuthTokenInput {
   projectId: string;
   countryCode?: string;
 }
+
+/** `origin` is resolved server-side only (see `server/guest/session.ts`'s `resolveCsrfOrigin`, which reads the server-only `ANON_CSRF_ORIGIN` secret) and passed in as plain call input so this service file never imports `@cs/env`'s server-only accessor itself. */
+interface BootstrapGuestSessionInput {
+  origin: string;
+}
+
+interface CsrfProtectedGuestInput {
+  csrfToken: string;
+  /** From the same bootstrap call as `csrfToken` — the backend rejects the request without it ("Nonce validation failed: nonce cannot be empty", confirmed live). */
+  nonce: string;
+  origin: string;
+}
+
+const CSRF_TOKEN_HEADER = "x-csrf-token";
+const NONCE_HEADER = "x-nonce";
+
+/** Double-submit CSRF pair the backend expects: the token both as a cookie and as a header (see apps/super-app's anon route handlers), plus the paired nonce. */
+const csrfHeaders = (
+  input: CsrfProtectedGuestInput
+): Record<string, string> => ({
+  cookie: `csrf_token=${input.csrfToken}`,
+  [CSRF_TOKEN_HEADER]: input.csrfToken,
+  [NONCE_HEADER]: input.nonce,
+  origin: input.origin,
+});
 
 /**
  * First domain migrated off `temp/` as a proof of concept (see
@@ -160,5 +229,50 @@ export const userManagement = defineService("user-management")
     method: "POST",
     path: "/auth/logout",
     retry: false,
+    version: "v1",
+  })
+  .endpoint<
+    "bootstrapGuestSession",
+    BootstrapGuestSessionInput,
+    BootstrapGuestSessionResult
+  >("bootstrapGuestSession", {
+    auth: "none",
+    headers: (input: BootstrapGuestSessionInput) => ({ origin: input.origin }),
+    method: "GET",
+    path: "/anon/bootstrap",
+    responseSchema: BootstrapGuestSessionResponseSchema,
+    retry: false,
+    version: "v1",
+  })
+  .endpoint<
+    "createGuestSession",
+    CsrfProtectedGuestInput & { captchaToken: string },
+    CreateGuestSessionResult
+  >("createGuestSession", {
+    auth: "none",
+    headers: csrfHeaders,
+    method: "POST",
+    path: "/anon/sessions",
+    responseSchema: CreateGuestSessionResponseSchema,
+    retry: false,
+    toBody: (input: { captchaToken: string }) => ({
+      captchaToken: input.captchaToken,
+    }),
+    version: "v1",
+  })
+  .endpoint<
+    "refreshGuestToken",
+    CsrfProtectedGuestInput & { refreshToken: string },
+    RefreshGuestTokenResult
+  >("refreshGuestToken", {
+    auth: "none",
+    headers: csrfHeaders,
+    method: "POST",
+    path: "/anon/tokens:refresh",
+    responseSchema: RefreshGuestTokenResponseSchema,
+    retry: false,
+    toBody: (input: { refreshToken: string }) => ({
+      refreshToken: input.refreshToken,
+    }),
     version: "v1",
   });

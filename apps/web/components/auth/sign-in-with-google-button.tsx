@@ -1,6 +1,7 @@
 "use client";
 
 import { getTokenManager } from "@cs/api-client/core/token-manager";
+import { useApiAuth } from "@cs/api-client/providers/auth-provider";
 import { FirebaseError } from "firebase/app";
 import { signInWithPopup } from "firebase/auth";
 import { useState } from "react";
@@ -15,17 +16,25 @@ interface SessionExchangeResponse {
 /**
  * Exchanges a Firebase Google sign-in for a Vulcan session via the existing
  * `/api/auth/session` route (already implemented server-side — see
- * app/api/auth/session/route.ts). `provider` must be Firebase's dotted
- * `sign_in_provider` format ("google.com"), not `@cs/firebase/auth`'s bare
- * `AuthProviderKind` ("google") — the route decodes the token expecting the
- * former.
+ * app/api/auth/session/route.ts). `provider` is the bare provider key the
+ * Vulcan backend expects as the `/oauth/{provider}/token` path segment
+ * ("google", not Firebase's dotted `sign_in_provider` format "google.com") —
+ * confirmed against `apps/super-app/src/core/repositories/user-service.ts`
+ * (`verifyOAuthToken`), which calls that same backend route with
+ * `EAUTH_PROVIDER.GOOGLE = "google"`. Sending "google.com" gets rejected by
+ * the backend with a "requested feature is not supported by the provider"
+ * error.
+ *
+ * `isPending` is cross-tab (see `TokenManager.setPending()`): while a
+ * *different* tab has its own Google popup open, this button disables too,
+ * instead of letting two concurrent sign-in attempts race the same session.
  */
 export const SignInWithGoogleButton = () => {
-  const [isSigningIn, setIsSigningIn] = useState(false);
+  const { isPending, setPending } = useApiAuth();
   const [error, setError] = useState<string | null>(null);
 
   const handleSignIn = async () => {
-    setIsSigningIn(true);
+    setPending(true);
     setError(null);
     try {
       const { user } = await signInWithPopup(
@@ -37,7 +46,7 @@ export const SignInWithGoogleButton = () => {
         body: JSON.stringify({
           idToken,
           projectId: firebaseApp().options.projectId,
-          provider: "google.com",
+          provider: "google",
         }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -47,6 +56,9 @@ export const SignInWithGoogleButton = () => {
       }
       const { accessToken, accessTokenExpiresAt } =
         (await response.json()) as SessionExchangeResponse;
+      // AuthSyncProvider's onAccessTokenChange listener (wired at the app
+      // root) reacts to this and calls router.refresh() so server-rendered
+      // auth state picks up the new session cookie.
       getTokenManager().setSession(accessToken, accessTokenExpiresAt);
     } catch (signInError) {
       // Popup closed/blocked by the user is an expected outcome, not an error.
@@ -61,14 +73,14 @@ export const SignInWithGoogleButton = () => {
         signInError instanceof Error ? signInError.message : "Sign-in failed."
       );
     } finally {
-      setIsSigningIn(false);
+      setPending(false);
     }
   };
 
   return (
     <div>
-      <button disabled={isSigningIn} onClick={handleSignIn} type="button">
-        {isSigningIn ? "Signing in…" : "Sign in with Google"}
+      <button disabled={isPending} onClick={handleSignIn} type="button">
+        {isPending ? "Signing in…" : "Sign in with Google"}
       </button>
       {error && <p role="alert">{error}</p>}
     </div>

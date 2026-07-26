@@ -7,7 +7,7 @@
 ## Mục lục
 
 1. [Bối cảnh & vấn đề cần giải quyết](#1-bối-cảnh--vấn-đề-cần-giải-quyết)
-2. [Vì sao source code cũ (`temp/`) chưa tốt](#2-vì-sao-source-code-cũ-temp-chưa-tốt)
+2. [Vì sao source code cũ (`apps/super-app`) chưa tốt](#2-vì-sao-source-code-cũ-appssuper-app-chưa-tốt)
 3. [Quyết định kiến trúc cốt lõi](#3-quyết-định-kiến-trúc-cốt-lõi)
 4. [Vòng đời token & xác thực](#4-vòng-đời-token--xác-thực)
 5. [Kiến trúc xử lý lỗi](#5-kiến-trúc-xử-lý-lỗi)
@@ -35,13 +35,13 @@ Chat Smith (`chatsmith.io`) là một Turborepo (Bun workspaces, Next.js 16 cana
 - **Auth qua Firebase**: client đăng nhập bằng Firebase SDK, lấy Firebase ID token, đem token này "đổi" (exchange) lấy access/refresh token của Vulcan.
 - **Deploy trên GKE**: nhiều pod chạy song song, không có sticky-session, không được giả định pod nào giữ state trong RAM.
 - **Có luồng chat/streaming, upload file** — là các endpoint có tần suất/khối lượng traffic lớn, phải thiết kế transport tiết kiệm băng thông.
-- **Có tồn tại một bộ code cũ** (`temp/`) theo kiến trúc ports-and-adapters — cần học từ đó cả điều nên giữ lẫn điều phải sửa (xem mục 2).
+- **Có tồn tại một bộ code cũ** (`apps/super-app`) theo kiến trúc ports-and-adapters — cần học từ đó cả điều nên giữ lẫn điều phải sửa (xem mục 2).
 
 ---
 
-## 2. Vì sao source code cũ (`temp/`) chưa tốt
+## 2. Vì sao source code cũ (`apps/super-app`) chưa tốt
 
-> Đã chuyển sang [`docs/runbook/api-client-history.md`](./api-client-history.md#a-vì-sao-source-code-cũ-temp-chưa-tốt) — `temp/`/`apps/super-app` không còn trong repo này (không phải workspace member), nên phần phân tích chi tiết chỉ còn giá trị lịch sử ("vì sao ngày đó chọn X"), không phải tài liệu tham chiếu để verify lại bằng code. Tóm tắt 3 hệ quả còn tác động trực tiếp tới cách package hoạt động hôm nay:
+> `apps/super-app` là app cũ, giữ lại trong repo chỉ để tham chiếu ("đã từng làm việc này như thế nào") — không phải workspace member, không build/deploy, không phải tài liệu kiến trúc để làm theo. Không cần đọc/giải thích thêm gì về nó ngoài 3 hệ quả còn tác động trực tiếp tới cách package `@cs/api-client` hoạt động hôm nay:
 
 - **Không có SSE thật cho hầu hết domain** — `conversation`/`research` vẫn là poll-based, chỉ `design-studio` có SSE thật (mục 10).
 - **1 base URL duy nhất** (`CS_PUBLIC_API_BASE_URL`), service là 1 path segment — không phải 1 biến môi trường/microservice như code cũ (mục 3/8).
@@ -87,7 +87,7 @@ Chat Smith (`chatsmith.io`) là một Turborepo (Bun workspaces, Next.js 16 cana
 
 1. Client đăng nhập bằng Firebase Auth SDK → nhận Firebase ID token.
 2. Client `POST` token này tới Route Handler `app/api/auth/session/route.ts` (same-origin, không cần CORS).
-3. Handler gọi `api.vulcanlabs.co/.../exchange` (server-to-server) để đổi lấy `{access_token, refresh_token}` của Vulcan. **Đã xác nhận: backend không trả `expires_in` tường minh** (không tìm thấy field này ở bất kỳ đâu trong `temp/` — `RefreshTokenModel`/`VerifyOAuthTokenModel` cũ đều tự giải mã JWT bằng `jwtDecode` để lấy claim `exp` rồi tính `accessTokenMaxAge`). Handler (hoặc `TokenManager`) **giải mã JWT lấy `exp`** để tính TTL, đúng cách `temp/` đã làm — đây là cách chính thức, không phải fallback.
+3. Handler gọi `api.vulcanlabs.co/.../exchange` (server-to-server) để đổi lấy `{access_token, refresh_token}` của Vulcan. **Đã xác nhận: backend không trả `expires_in` tường minh** (`apps/super-app` cũng tự giải mã JWT bằng `jwtDecode` để lấy claim `exp` rồi tính `accessTokenMaxAge`, không dùng `expires_in`). Handler (hoặc `TokenManager`) **giải mã JWT lấy `exp`** để tính TTL, đúng cách `apps/super-app` đã làm — đây là cách chính thức, không phải fallback.
 4. Handler set 2 cookie **httpOnly, Secure, SameSite=Lax, Domain=chatsmith.io**:
    - `refresh_token` — TTL dài, theo `exp` của refresh token.
    - `access_token` (bản sao, dùng riêng cho Server Components/Actions — xem mục 4.3) — TTL ngắn, đúng bằng TTL suy ra từ `exp` của access token. Đồng thời trả `{access_token, accessTokenExpiresAt}` **trong JSON body** (không phải chỉ dựa vào cookie) để client có giá trị nạp vào memory ngay lập tức.
@@ -119,11 +119,11 @@ Nhiều backend hiện đại áp dụng **refresh token rotation**: mỗi lần
 
 6. **Cố tình không dùng Redis/distributed lock** cho race giữa nhiều pod GKE — điểm 1 (cookie mirror) đã loại bỏ gần hết nhu cầu đó bằng cách giảm tần suất SSR tự gọi refresh xuống rất thấp; nếu sau khi triển khai, log/telemetry cho thấy conflict vẫn xảy ra thường xuyên, đó là lúc cân nhắc thêm 1 lock phân tán — không làm trước khi có dữ liệu chứng minh cần thiết.
 
-### 4.4. Proactive refresh (đã có ý tưởng trong `temp/`, kiến trúc mới hoàn thiện)
+### 4.4. Proactive refresh (đã có ý tưởng trong `apps/super-app`, kiến trúc mới hoàn thiện)
 
-`temp/models/signin.ts` đã tính sẵn `accessTokenMaxAge`/`refreshTokenMaxAge` bằng cách giải mã JWT lấy claim `exp`, và `ITokenHandler` có hook `onExpire`. Đây rõ ràng là ý định "refresh trước khi hết hạn", không chỉ refresh khi gặp 401. Kiến trúc mới hiện thực hoá đầy đủ:
+`apps/super-app` đã tính sẵn `accessTokenMaxAge`/`refreshTokenMaxAge` bằng cách giải mã JWT lấy claim `exp`, và có hook `onExpire` cho token handler. Đây rõ ràng là ý định "refresh trước khi hết hạn", không chỉ refresh khi gặp 401. Kiến trúc mới hiện thực hoá đầy đủ:
 
-- Ngay sau khi có `{access_token}`, `TokenManager` **giải mã JWT lấy `exp`** (dùng thư viện nhẹ tương đương `jwt-decode` mà `temp/` đã dùng) để tính thời điểm hết hạn — đây là cách chính thức vì **đã xác nhận backend không trả `expires_in` tường minh** (mục 4.1). Nếu 1 phiên bản backend sau này bổ sung `expires_in` trong response, ưu tiên dùng giá trị đó (đáng tin hơn, không phụ thuộc format JWT), nhưng không chờ điều đó mới build.
+- Ngay sau khi có `{access_token}`, `TokenManager` **giải mã JWT lấy `exp`** (dùng thư viện nhẹ tương đương `jwt-decode` mà `apps/super-app` đã dùng) để tính thời điểm hết hạn — đây là cách chính thức vì **đã xác nhận backend không trả `expires_in` tường minh** (mục 4.1). Nếu 1 phiên bản backend sau này bổ sung `expires_in` trong response, ưu tiên dùng giá trị đó (đáng tin hơn, không phụ thuộc format JWT), nhưng không chờ điều đó mới build.
 - `TokenManager` lên lịch 1 timer refresh chủ động tại thời điểm `exp - SAFETY_BUFFER` (khuyến nghị trừ trước 60–90 giây), không chờ tới khi request thật sự nhận 401. Đây là cơ chế **giảm thiểu chính** cho ràng buộc "không có grace period" ở mục 4.3.
 - Refresh phản ứng (reactive, khi 401 xảy ra bất ngờ — ví dụ token bị thu hồi sớm, đồng hồ máy lệch) vẫn được giữ làm lớp phòng vệ thứ 2, dùng chung `TokenManager`/single-flight với refresh chủ động (không phải 2 cơ chế tách rời).
 
@@ -153,7 +153,7 @@ Shape lỗi backend cố định (gRPC-style):
 }
 ```
 
-- **`ApiError`** (trong `core/errors/api-error.ts`): chuẩn hoá **cả** lỗi transport (network error, timeout, JSON parse fail) **lẫn** lỗi backend về đúng 1 shape: `{ code, reason, status, httpStatus, message, details, isRetryable, cause }`. Đây là điểm thay thế trực tiếp cho 4 kiểu lỗi trùng lặp (`TError`, `TErrorResponseHttp`, `TErrorDTO`, `TErrorResponseDTO`) từng tồn tại song song trong `temp/`.
+- **`ApiError`** (trong `core/errors/api-error.ts`): chuẩn hoá **cả** lỗi transport (network error, timeout, JSON parse fail) **lẫn** lỗi backend về đúng 1 shape: `{ code, reason, status, httpStatus, message, details, isRetryable, cause }`. Đây là điểm thay thế trực tiếp cho 4 kiểu lỗi trùng lặp (`TError`, `TErrorResponseHttp`, `TErrorDTO`, `TErrorResponseDTO`) từng tồn tại song song trong `apps/super-app`.
 - **Bảng tra `reasons.ts`** (`core/errors/reasons.ts`): map 1-1 từ `reason` → `{ httpStatus, retryable, category, i18nKey }`, phản ánh đúng bảng bạn đã cung cấp:
 
   | reason | HTTP | retryable | category |
@@ -310,7 +310,7 @@ Nhiều version cùng 1 nghiệp vụ (`v1`/`v2`) không cần nhân bản DTO �
 
 ## 9. Upload file
 
-Giữ nguyên pattern đã đúng trong `temp/` (presigned URL, không qua BFF):
+Giữ nguyên pattern đã đúng trong `apps/super-app` (presigned URL, không qua BFF):
 
 ```mermaid
 sequenceDiagram
@@ -395,13 +395,13 @@ Ví dụ đầy đủ nằm ở `packages/api-client/README.md` mục 2. `server
 
 ## 15. Các câu hỏi đã xác nhận với backend
 
-Toàn bộ câu hỏi ban đầu chặn tiến độ đã được xác nhận — không còn mục nào mở. Kết luận áp dụng đã nằm trong thiết kế chính thức ở mục 4 (grace period, `expires_in`, refresh-conflict retry ở §4.3 điểm 5). Nhật ký Q&A đầy đủ (bảng câu hỏi + chi tiết thực nghiệm `TOKEN_EXPIRED`/`INVALID_TOKEN` trên `stg-api.vulcanlabs.co`) đã chuyển sang [`docs/runbook/api-client-history.md`](./api-client-history.md#b-các-câu-hỏi-đã-xác-nhận-với-backend) — đọc mục 4 ở đây trước, chỉ cần tra history nếu muốn xem lại chính bằng chứng thực nghiệm.
+Toàn bộ câu hỏi ban đầu chặn tiến độ đã được xác nhận — không còn mục nào mở. Kết luận áp dụng đã nằm trong thiết kế chính thức ở mục 4 (grace period, `expires_in`, refresh-conflict retry ở §4.3 điểm 5, thực nghiệm `TOKEN_EXPIRED`/`INVALID_TOKEN` trên `stg-api.vulcanlabs.co` 2026-07-21).
 
 ---
 
 ## 16. Phụ lục A: Danh mục endpoint kế thừa từ code cũ
 
-**Bảng gốc trích từ `temp/`, đã sửa lại mọi chỗ sai theo xác nhận thật** (empirical test trên `stg-api.vulcanlabs.co`, hoặc đối chiếu lại bản đầy đủ của app cũ — mục 2). Nguồn đáng tin nhất vẫn là code thật trong `services/*` — bảng này chỉ để tra cứu nhanh, không thay thế đọc code khi có nghi ngờ. Tất cả `baseURL` cũ (theo biến môi trường riêng từng service) đã quy về **1 base URL duy nhất + service làm path segment** (mục 2/3) — cột "service segment" là tên service dùng trong `defineService(...)` thật.
+**Bảng gốc trích từ `apps/super-app`, đã sửa lại mọi chỗ sai theo xác nhận thật** (empirical test trên `stg-api.vulcanlabs.co`, hoặc đối chiếu lại bản đầy đủ của app cũ — mục 2). Nguồn đáng tin nhất vẫn là code thật trong `services/*` — bảng này chỉ để tra cứu nhanh, không thay thế đọc code khi có nghi ngờ. Tất cả `baseURL` cũ (theo biến môi trường riêng từng service) đã quy về **1 base URL duy nhất + service làm path segment** (mục 2/3) — cột "service segment" là tên service dùng trong `defineService(...)` thật.
 
 ### Auth / User management
 
@@ -498,9 +498,9 @@ Toàn bộ câu hỏi ban đầu chặn tiến độ đã được xác nhận �
 | GET | `/payments/payment_information` | `payment` | ⚠️ Response đọc `result.extended`, không phải `result.data` |
 | GET | `/payments/products` | `payment` | ⚠️ Response đọc `result.items`; params cố định `{global_only: true}` |
 
-⚠️ **Cần chuẩn hoá khi viết lại**: `payment`, `order`, `product` mỗi domain đọc field response bọc ngoài khác nhau (`extended`/`items`/`data`) trong code cũ — với schema-driven registry mới, đây không còn là vấn đề (mỗi endpoint tự khai báo `responseSchema` đúng shape của nó), chỉ ghi chú lại để không nhầm khi đối chiếu với `temp/`.
+⚠️ **Cần chuẩn hoá khi viết lại**: `payment`, `order`, `product` mỗi domain đọc field response bọc ngoài khác nhau (`extended`/`items`/`data`) trong code cũ — với schema-driven registry mới, đây không còn là vấn đề (mỗi endpoint tự khai báo `responseSchema` đúng shape của nó), chỉ ghi chú lại để không nhầm khi đối chiếu với `apps/super-app`.
 
-⚠️ `http/dto/payment.ts` (cũ) có định nghĩa thêm các response type cho subscription/methods/transactions/detail-transaction/preview-upgrade-downgrade nhưng **không thấy method gọi tương ứng** trong phạm vi đã đọc — cần xác nhận thêm với đội backend/BE cũ nếu cần đầy đủ domain payment (có thể nằm ở phần code khác chưa được copy vào `temp/`).
+⚠️ `http/dto/payment.ts` (cũ) có định nghĩa thêm các response type cho subscription/methods/transactions/detail-transaction/preview-upgrade-downgrade nhưng **không thấy method gọi tương ứng** trong phạm vi đã đọc — cần xác nhận thêm với đội backend/BE cũ nếu cần đầy đủ domain payment (có thể nằm ở phần code khác chưa được copy vào `apps/super-app`).
 
 ### Usage
 
@@ -514,7 +514,7 @@ Toàn bộ câu hỏi ban đầu chặn tiến độ đã được xác nhận �
 
 ### Design Studio / Creative Studio (service segment `creative-studio`, `pathPrefix: "/creative-studio/v1/creative"` — không theo convention `/api/{version}` mặc định)
 
-Domain thêm sau, không nằm trong `temp/` gốc — xác nhận trực tiếp từ app cũ đầy đủ. Xem `services/design-studio/`.
+Domain thêm sau, không nằm trong `apps/super-app` gốc — xác nhận trực tiếp từ app cũ đầy đủ. Xem `services/design-studio/`.
 
 | Method | Path | Ghi chú |
 | --- | --- | --- |

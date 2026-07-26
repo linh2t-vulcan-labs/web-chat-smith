@@ -1,5 +1,3 @@
-import { ThemeToggle } from "@cs/themes";
-import { LanguageSwitcher } from "@cs/ui/components/language-switcher";
 import { getExtracted } from "next-intl/server";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
@@ -41,28 +39,30 @@ export const generateMetadata = async ({ params }: Props) => {
 
   return {
     description: t(
-      "A web chat application built with Next.js and Tailwind CSS."
+      "Starter scaffold and i18n-extraction demo — moved out of the app's root."
     ),
-    title: t("Web Chat Smith"),
+    title: t("Playground"),
   };
 };
 
-const Page = ({ params }: Props) => (
+/**
+ * Former root ("/") content — the create-next-app-style welcome screen plus
+ * the `useExtracted` demo — moved here once "/" became the chat page (see
+ * `(workspace)/page.tsx`). `LanguageSwitcher`/`ThemeToggle`/`AuthStatus`,
+ * previously assembled ad hoc in this page's body, are dropped here: they
+ * now live once in the shared `<Header>` (`apps/web/components/layout/header.tsx`),
+ * mounted in `[locale]/layout.tsx` for every page.
+ */
+const PlaygroundPage = ({ params }: Props) => (
   <div className="flex min-h-svh flex-col gap-6 p-6">
-    <LanguageSwitcher />
-
     <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-      <div>
-        <Suspense fallback={<ProjectWelcomeSkeleton />}>
-          <ProjectWelcome params={params} />
-        </Suspense>
-      </div>
+      <Suspense fallback={<ProjectWelcomeSkeleton />}>
+        <ProjectWelcome params={params} />
+      </Suspense>
 
       <ExtractionDemo />
-
-      <ThemeToggle />
     </div>
   </div>
 );
 
-export default Page;
+export default PlaygroundPage;

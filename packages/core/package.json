@@ -5,6 +5,7 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
+    "./broadcast": "./src/broadcast/index.ts",
     "./jwt": "./src/jwt/index.ts",
     "./package.json": "./package.json"
   },

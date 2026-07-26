@@ -1,12 +1,14 @@
 import type { ApiResult } from "../errors/api-error";
-import type { AuthMode } from "../types";
+import type { AuthMode, IdentityMode } from "../types";
 import { httpRequest } from "./http-client";
 import type { HttpRequestOptions } from "./http-client";
 import { withRetry } from "./retry";
-import { getTokenManager } from "./token-manager";
+import { getGuestTokenManager, getTokenManager } from "./token-manager";
 
 export type AuthenticatedRequestOptions = HttpRequestOptions & {
   auth: AuthMode;
+  /** Which credential source to attach for `auth: "required"` — default "authenticated". See docs/runbook/api-client.md §4.5. */
+  identity?: IdentityMode;
   /** Disable generic backoff retry for non-idempotent calls (e.g. POST that isn't safe to repeat). Default: true. */
   retry?: boolean;
 };
@@ -30,7 +32,10 @@ export const authenticatedRequest = <T>(
     let { headers } = options;
 
     if (options.auth === "required") {
-      const tokenManager = getTokenManager();
+      const tokenManager =
+        options.identity === "guest"
+          ? getGuestTokenManager()
+          : getTokenManager();
       const [tokenError, accessToken] = await tokenManager.ensureAccessToken();
       if (tokenError) {
         return [tokenError, null];
@@ -42,7 +47,11 @@ export const authenticatedRequest = <T>(
     const [error] = result;
 
     if (error?.isAuthError && options.auth === "required" && !hasRetriedAuth) {
-      const [refreshError] = await getTokenManager().refresh();
+      const tokenManager =
+        options.identity === "guest"
+          ? getGuestTokenManager()
+          : getTokenManager();
+      const [refreshError] = await tokenManager.refresh();
       if (refreshError) {
         return [refreshError, null];
       }

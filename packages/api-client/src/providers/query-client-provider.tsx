@@ -1,34 +1,9 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 
-const isServer = typeof window === "undefined";
-
-const makeQueryClient = (): QueryClient =>
-  new QueryClient({
-    defaultOptions: {
-      queries: {
-        // Retry classification for queries lives in hooks/use-api-query.ts —
-        // this default only covers the (rare) query that bypasses that hook.
-        retry: false,
-        staleTime: 60_000,
-      },
-    },
-  });
-
-let browserQueryClient: QueryClient | undefined;
-
-/** SSR-safe singleton per the TanStack Query v5 docs: fresh instance per request on the server, one instance per browser tab. */
-export const getQueryClient = (): QueryClient => {
-  if (isServer) {
-    return makeQueryClient();
-  }
-  if (!browserQueryClient) {
-    browserQueryClient = makeQueryClient();
-  }
-  return browserQueryClient;
-};
+import { getQueryClient } from "../core/query-client";
 
 /**
  * Calls `getQueryClient()` directly instead of stashing it in `useState` — per

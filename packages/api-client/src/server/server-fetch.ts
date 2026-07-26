@@ -61,8 +61,16 @@ export const refreshServerSession = cache(
   }
 );
 
-/** Reads the mirrored `access_token` cookie first — only refreshes when it's missing (see §4.1/§4.3 point 1). */
-const ensureServerAccessToken = async (): Promise<ApiResult<string>> => {
+/**
+ * Reads the mirrored `access_token` cookie first — only refreshes when it's
+ * missing (see §4.1/§4.3 point 1). Exported for the app's `GET
+ * /api/auth/session` Route Handler, which the browser `TokenManager` calls
+ * exactly once per tab (`restoreSessionOnce()`) — reusing this instead of
+ * unconditionally calling `refreshServerSession()` is what avoids forcing a
+ * real refresh-token rotation on every page reload when the mirrored access
+ * token is still valid.
+ */
+export const ensureServerAccessToken = async (): Promise<ApiResult<string>> => {
   const cached = await getAccessTokenCookie();
   if (cached) {
     return [null, cached];

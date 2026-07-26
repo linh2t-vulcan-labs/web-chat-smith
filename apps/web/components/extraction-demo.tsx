@@ -66,13 +66,13 @@ export const ExtractionDemo = () => {
       {/* ✅ Explicit id + description: gives translators context without
           changing the rendered text. Useful when the same English string
           needs different translations depending on where it's used. */}
-      <p>
+      <Link href="/design-studio-templates">
         {t({
           description: "Button label for the extraction demo counter",
           id: "ExtractionDemo.cta",
           message: "Click me",
         })}
-      </p>
+      </Link>
 
       {/* ✅ Namespaced usage */}
       <Button onClick={onClick} type="button">

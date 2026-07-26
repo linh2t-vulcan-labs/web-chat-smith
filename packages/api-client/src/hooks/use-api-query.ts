@@ -3,8 +3,6 @@ import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 
 import type { ApiError, ApiResult } from "../errors/api-error";
 
-const MAX_QUERY_RETRIES = 3;
-
 export type UseApiQueryOptions<T> = Omit<
   UseQueryOptions<T, ApiError>,
   "queryFn"
@@ -15,8 +13,15 @@ export type UseApiQueryOptions<T> = Omit<
 
 /**
  * Thin wrapper over TanStack Query that unwraps the package's `ApiResult`
- * tuple and wires retry to `ApiError.isRetryable` — the same classification
- * `core/retry.ts` uses, so callers don't re-decide retry policy per query.
+ * tuple. Retry is always `false` here — `options.queryFn` calls an endpoint
+ * that already went through `authenticatedRequest`'s `withRetry()`
+ * (core/retry.ts), which retries `ApiError.isRetryable` errors with backoff
+ * BEFORE this hook ever sees a result. Retrying again at this layer for the
+ * same `isRetryable` classification would double-apply backoff on top of an
+ * already-exhausted transport-level retry — e.g. a transient network error
+ * compounds to ~9-12 real HTTP attempts (3 transport retries × up to 4
+ * query-level retries) instead of the intended ~3, and takes proportionally
+ * longer to finally surface as an error.
  */
 export const useApiQuery = <T>(
   options: UseApiQueryOptions<T>
@@ -30,6 +35,5 @@ export const useApiQuery = <T>(
       }
       return data;
     },
-    retry: (failureCount, error) =>
-      error.isRetryable && failureCount < MAX_QUERY_RETRIES,
+    retry: false,
   });

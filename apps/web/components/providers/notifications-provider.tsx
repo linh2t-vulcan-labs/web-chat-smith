@@ -38,11 +38,23 @@ export const NotificationsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { accessToken, isAuthenticated } = useApiAuth();
+  const { accessToken, isAuthenticated, isInitializing } = useApiAuth();
   const userId = accessToken ? decodeUserId(accessToken) : null;
   const vapidKey = getRuntimeEnv().CS_PUBLIC_FIREBASE_VAPID_KEY;
 
-  if (!vapidKey) {
+  // `ApiAuthProvider` starts every fresh mount with `accessToken: null`
+  // before its restore effect resolves the real value a moment later — on a
+  // genuine cold load (page reload), this component (mounted once in the
+  // locale-independent root `app/layout.tsx`, see that file's comment) would
+  // otherwise see a momentarily wrong `userId: null` first, which
+  // `syncFcmToken`'s dedup check (comparing against the last-synced value in
+  // `tokenStore`) reads as "changed" — once for the spurious `null`, again
+  // when `userId` flips back to the real value a moment later —
+  // re-registering the SAME token with the backend twice for no reason.
+  // Waiting for `isInitializing` to settle means `userId` is already correct
+  // on this component's first real render, so the dedup check sees
+  // "unchanged" and skips both calls.
+  if (!vapidKey || isInitializing) {
     return children;
   }
 

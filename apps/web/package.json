@@ -24,6 +24,7 @@
     "@cs/security": "workspace:*",
     "@cs/themes": "workspace:*",
     "@cs/ui": "workspace:*",
+    "@marsidev/react-turnstile": "catalog:integrations",
     "@tanstack/react-query": "catalog:data",
     "firebase": "catalog:integrations",
     "next": "catalog:framework",

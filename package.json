@@ -13,18 +13,18 @@
         "react-dom": "^19.2.8",
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19.2.3",
-        "next": "16.3.0-canary.95",
-        "@next/third-parties": "16.3.0-canary.95",
+        "next": "16.3.0-canary.96",
+        "@next/third-parties": "16.3.0-canary.96",
         "next-intl": "^4.13.4",
         "server-only": "^0.0.1",
         "@swc/helpers": "^0.5.23"
       },
       "ui": {
         "@base-ui/react": "^1.6.0",
-        "radix-ui": "^1.6.5",
-        "@radix-ui/react-radio-group": "^1.4.5",
-        "@radix-ui/react-select": "^2.3.5",
-        "@radix-ui/react-use-controllable-state": "^1.2.5",
+        "radix-ui": "^1.6.7",
+        "@radix-ui/react-radio-group": "^1.4.7",
+        "@radix-ui/react-select": "^2.3.7",
+        "@radix-ui/react-use-controllable-state": "^1.2.6",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "cmdk": "^1.1.1",
@@ -52,7 +52,7 @@
         "@tanstack/react-query-devtools": "^5.101.4",
         "@tanstack/react-table": "^8.21.3",
         "zustand": "^5.0.14",
-        "nuqs": "^2.9.1",
+        "nuqs": "^2.9.2",
         "immer": "^11.1.15"
       },
       "validation": {
@@ -119,8 +119,8 @@
         "msw": "^2.15.0",
         "webpack-bundle-analyzer": "^5.3.1",
         "@svgr/webpack": "^8.1.0",
-        "postcss": "^8.5.22",
-        "sass": "^1.101.7"
+        "postcss": "^8.5.23",
+        "sass": "^1.102.0"
       }
     }
   },

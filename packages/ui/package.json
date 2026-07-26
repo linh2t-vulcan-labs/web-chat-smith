@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@base-ui/react": "catalog:ui",
+    "@cs/core": "workspace:*",
     "@cs/design-tokens": "workspace:*",
     "@cs/i18n": "workspace:*",
     "@cs/icons": "workspace:*",

@@ -1,9 +1,14 @@
+import { ApiQueryProvider } from "@cs/api-client/providers/query-client-provider";
 import { PublicEnvScript } from "@cs/env/bridge";
 import { ThemeProvider, ThemeScript } from "@cs/themes";
 import { cn } from "@cs/ui/lib/utils";
 
 import "@cs/ui/globals.css";
 import { Geist_Mono, Inter } from "next/font/google";
+
+import { AuthSyncProvider } from "@/components/providers/auth-sync-provider";
+import { FlagsProvider } from "@/components/providers/flags-provider";
+import { NotificationsProvider } from "@/components/providers/notifications-provider";
 
 // Locale-independent shell: fonts, the anti-FOUC theme script, the
 // @cs/env public-config bridge script, and the single <html>/<body> the App
@@ -74,7 +79,33 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
     {/* Locale-independent: theme has no i18n dependency, so it lives here
         rather than in `[locale]/layout.tsx` — state survives a locale
         switch instead of resetting on every remount. */}
-    <ThemeProvider>{children}</ThemeProvider>
+    <ThemeProvider>
+      {/*
+        Auth/flags/notifications are ALL locale-independent (none of the 3
+        packages behind them touches next-intl/useLocale — confirmed by grep,
+        not assumed), so all 3 mount here instead of `[locale]/layout.tsx`.
+        Each has a real, verified cost if remounted on every locale switch,
+        not just a UI flicker:
+          - `AuthSyncProvider`/`ApiAuthProvider`: see its own doc comment
+            (isInitializing reset).
+          - `FlagsProvider`: `flagsEngine().init()` has no idempotency guard
+            (`packages/flags/src/core/engine.ts`'s `init()` always calls
+            `adapter.init()`) — a remount is a real repeat Firebase Remote
+            Config fetch, not a no-op.
+          - `NotificationsProvider`: `@cs/notifications/react`'s provider
+            re-runs its FCM-token-sync effect (a real `getToken()` call) and
+            tears down/re-subscribes the foreground-message listener on
+            every mount — the dedup mentioned in its doc comment only skips
+            re-registering with OUR backend, not that SDK-level work.
+      */}
+      <ApiQueryProvider>
+        <FlagsProvider>
+          <AuthSyncProvider>
+            <NotificationsProvider>{children}</NotificationsProvider>
+          </AuthSyncProvider>
+        </FlagsProvider>
+      </ApiQueryProvider>
+    </ThemeProvider>
   </html>
 );
 

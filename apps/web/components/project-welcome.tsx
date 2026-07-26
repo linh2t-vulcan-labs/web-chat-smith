@@ -1,4 +1,5 @@
 import { Button } from "@cs/ui/components/button";
+import { Skeleton } from "@cs/ui/components/skeleton";
 import { getExtracted, setRequestLocale } from "next-intl/server";
 
 interface Props {
@@ -23,10 +24,10 @@ export const ProjectWelcome = async ({ params }: Props) => {
 
 export const ProjectWelcomeSkeleton = () => (
   <>
-    <div className="h-8 w-48 bg-gray-200 rounded animate-pulse" />
-    <div className="h-4 w-full bg-gray-200 rounded animate-pulse mt-4" />
-    <div className="h-4 w-full bg-gray-200 rounded animate-pulse mt-2" />
-    <div className="h-4 w-3/4 bg-gray-200 rounded animate-pulse mt-2" />
-    <div className="h-10 w-20 bg-gray-200 rounded animate-pulse mt-2" />
+    <Skeleton className="h-8 w-48" />
+    <Skeleton className="mt-4 h-4 w-full" />
+    <Skeleton className="mt-2 h-4 w-full" />
+    <Skeleton className="mt-2 h-4 w-3/4" />
+    <Skeleton className="mt-2 h-10 w-20" />
   </>
 );
