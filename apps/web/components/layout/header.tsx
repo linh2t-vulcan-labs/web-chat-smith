@@ -1,6 +1,6 @@
 import { Link } from "@cs/i18n/navigation";
 import { ThemeToggle } from "@cs/themes";
-import { LanguageSwitcher } from "@cs/ui/components/language-switcher";
+import { LanguageSwitcher } from "@cs/ui/components/cs/language-switcher";
 
 import { AuthStatus } from "@/components/auth/auth-status";
 

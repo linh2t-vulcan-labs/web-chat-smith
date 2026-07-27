@@ -1,7 +1,7 @@
 "use client";
 
 import { useApiAuth } from "@cs/api-client/providers/auth-provider";
-import { Skeleton } from "@cs/ui/components/skeleton";
+import { Skeleton } from "@cs/ui/components/shadcn/skeleton";
 
 import { useGuestSession } from "@/components/providers/guest-session-provider";
 

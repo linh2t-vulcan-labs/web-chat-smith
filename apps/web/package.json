@@ -26,11 +26,16 @@
     "@cs/ui": "workspace:*",
     "@marsidev/react-turnstile": "catalog:integrations",
     "@tanstack/react-query": "catalog:data",
+    "ai": "catalog:integrations",
     "firebase": "catalog:integrations",
+    "lucide-react": "catalog:ui",
+    "nanoid": "catalog:utils",
     "next": "catalog:framework",
     "next-intl": "catalog:framework",
     "react": "catalog:framework",
-    "react-dom": "catalog:framework"
+    "react-dom": "catalog:framework",
+    "recharts": "catalog:ui",
+    "shiki": "catalog:content"
   },
   "devDependencies": {
     "@cs/ts-config": "workspace:*",

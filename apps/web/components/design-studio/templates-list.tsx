@@ -2,7 +2,7 @@
 
 import { useApiQuery } from "@cs/api-client/hooks/use-api-query";
 import { designStudio } from "@cs/api-client/services/design-studio";
-import { Skeleton } from "@cs/ui/components/skeleton";
+import { Skeleton } from "@cs/ui/components/shadcn/skeleton";
 
 import { TEMPLATES_QUERY_KEY } from "@/components/design-studio/templates-query-key";
 

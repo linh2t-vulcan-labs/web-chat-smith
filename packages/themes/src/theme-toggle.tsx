@@ -2,7 +2,7 @@
 
 import { IconMoon } from "@cs/icons/moon";
 import { IconSunMedium } from "@cs/icons/sun-medium";
-import { Button } from "@cs/ui/components/button";
+import { Button } from "@cs/ui/components/shadcn/button";
 import type { ComponentProps } from "react";
 
 import { useTheme } from "./provider";

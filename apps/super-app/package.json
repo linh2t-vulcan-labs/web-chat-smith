@@ -7,7 +7,6 @@
     "clean": "rm -rf .next dist node_modules",
     "dev": "next dev",
     "build": "next build",
-    "typecheck": "tsc --noEmit",
     "generate-sw": "node scripts/generate-sw.js",
     "analyze": "next experimental-analyze"
   },

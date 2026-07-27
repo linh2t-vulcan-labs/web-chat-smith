@@ -5,12 +5,12 @@ import { Suspense } from "react";
 import {
   ProjectWelcome,
   ProjectWelcomeSkeleton,
-} from "@/components/project-welcome";
+} from "@/components/playground/project-welcome";
 
 // Demo-only component, not needed for initial paint — deferred out of the
 // main bundle.
 const ExtractionDemo = dynamic(async () => {
-  const mod = await import("@/components/extraction-demo");
+  const mod = await import("@/components/playground/extraction-demo");
   return mod.ExtractionDemo;
 });
 

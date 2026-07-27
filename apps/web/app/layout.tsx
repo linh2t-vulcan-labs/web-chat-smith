@@ -1,6 +1,7 @@
 import { ApiQueryProvider } from "@cs/api-client/providers/query-client-provider";
 import { PublicEnvScript } from "@cs/env/bridge";
 import { ThemeProvider, ThemeScript } from "@cs/themes";
+import { TooltipProvider } from "@cs/ui/components/shadcn/tooltip";
 import { cn } from "@cs/ui/lib/utils";
 
 import "@cs/ui/globals.css";
@@ -98,13 +99,15 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
             every mount — the dedup mentioned in its doc comment only skips
             re-registering with OUR backend, not that SDK-level work.
       */}
-      <ApiQueryProvider>
-        <FlagsProvider>
-          <AuthSyncProvider>
-            <NotificationsProvider>{children}</NotificationsProvider>
-          </AuthSyncProvider>
-        </FlagsProvider>
-      </ApiQueryProvider>
+      <TooltipProvider>
+        <ApiQueryProvider>
+          <FlagsProvider>
+            <AuthSyncProvider>
+              <NotificationsProvider>{children}</NotificationsProvider>
+            </AuthSyncProvider>
+          </FlagsProvider>
+        </ApiQueryProvider>
+      </TooltipProvider>
     </ThemeProvider>
   </html>
 );

@@ -3,8 +3,8 @@
 import { useApiQuery } from "@cs/api-client/hooks/use-api-query";
 import { useApiAuth } from "@cs/api-client/providers/auth-provider";
 import { userManagement } from "@cs/api-client/services/user-management";
-import { Button } from "@cs/ui/components/button";
-import { Skeleton } from "@cs/ui/components/skeleton";
+import { Button } from "@cs/ui/components/shadcn/button";
+import { Skeleton } from "@cs/ui/components/shadcn/skeleton";
 
 import { SignInWithGoogleButton } from "@/components/auth/sign-in-with-google-button";
 

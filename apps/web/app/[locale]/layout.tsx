@@ -1,10 +1,10 @@
 import { routing } from "@cs/i18n/routing";
 import { getLocaleConfig, isValidLocale } from "@cs/i18n/utils";
+import { HtmlLangSync } from "@cs/ui/components/cs/html-lang-sync";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { HtmlLangSync } from "@/components/html-lang-sync";
 import { Header } from "@/components/layout/header";
 
 export const instant = false;
