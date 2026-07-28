@@ -6,8 +6,9 @@ export const metadata = {
 
 /**
  * Placeholder page — proves the `(marketing)` route group (no
- * `GuestSessionProvider`, shared `<Header>` from `[locale]/layout.tsx`)
- * works on a real route, not a full feature build.
+ * `GuestSessionProvider`, shared `<Header>` from
+ * `app/(marketing)/[locale]/layout.tsx`) works on a real route, not a full
+ * feature build.
  */
 const LandingPage = () => (
   <div className="flex min-h-svh flex-col gap-4 p-6">

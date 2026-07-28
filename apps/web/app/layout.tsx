@@ -6,10 +6,10 @@ import { cn } from "@cs/ui/lib/utils";
 
 import "@cs/ui/globals.css";
 import { Geist_Mono, Inter } from "next/font/google";
+import { Suspense } from "react";
 
+import { AuthSessionInitialState } from "@/components/providers/auth-session-initial-state";
 import { AuthSyncProvider } from "@/components/providers/auth-sync-provider";
-import { FlagsProvider } from "@/components/providers/flags-provider";
-import { NotificationsProvider } from "@/components/providers/notifications-provider";
 
 // Locale-independent shell: fonts, the anti-FOUC theme script, the
 // @cs/env public-config bridge script, and the single <html>/<body> the App
@@ -31,19 +31,21 @@ import { NotificationsProvider } from "@/components/providers/notifications-prov
 // read from a request-scoped source, keeping that part of this layout
 // locale-independent.
 //
-// This layout has no dynamic API reads (no `headers()`/`cookies()`), so it
-// can fully prerender under `cacheComponents` — no Suspense boundary needed
-// here. (An earlier version read a per-request CSP nonce via `headers()`
-// behind a Suspense boundary; that's gone — see packages/security/README.md
-// for why nonce-based CSP was dropped.)
+// `AuthSessionInitialState` reads `cookies()` (access/refresh token
+// *presence* only) to give `ApiAuthProvider` an optimistic initial state
+// instead of always cold-starting `isInitializing: true` and waiting on a
+// client effect + fetch. Under `cacheComponents`, any `cookies()`/`headers()`
+// read must sit behind its own `<Suspense>` boundary or the build fails
+// static-shell validation — everything else in this layout (fonts, theme
+// script, env bridge) still has no dynamic API reads and prerenders fully.
 //
 // This doesn't make the *app* fully static, though: the nested
-// `[locale]/layout.tsx` reads `params` to validate the locale and gate
-// `notFound()` before rendering anything, which can't move behind a
-// <Suspense> boundary either — so no real route in this app produces an
-// instant/static shell as long as i18n routing works this way. The
-// static-shell check only respects this setting on the root layout (this
-// file), not on `[locale]`.
+// `[locale]/layout.tsx` (in both `(marketing)` and `(workspace)`) reads
+// `params` to validate the locale and gate `notFound()` before rendering
+// anything, which can't move behind a <Suspense> boundary either — so no
+// real route in this app produces an instant/static shell as long as i18n
+// routing works this way. The static-shell check only respects this setting
+// on the root layout (this file), not on `[locale]`.
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/instant#disabling-static-shell-validation
 // export const instant = false;
 // export const prefetch = "allow-runtime";
@@ -82,30 +84,20 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         switch instead of resetting on every remount. */}
     <ThemeProvider>
       {/*
-        Auth/flags/notifications are ALL locale-independent (none of the 3
-        packages behind them touches next-intl/useLocale — confirmed by grep,
-        not assumed), so all 3 mount here instead of `[locale]/layout.tsx`.
-        Each has a real, verified cost if remounted on every locale switch,
-        not just a UI flicker:
-          - `AuthSyncProvider`/`ApiAuthProvider`: see its own doc comment
-            (isInitializing reset).
-          - `FlagsProvider`: `flagsEngine().init()` has no idempotency guard
-            (`packages/flags/src/core/engine.ts`'s `init()` always calls
-            `adapter.init()`) — a remount is a real repeat Firebase Remote
-            Config fetch, not a no-op.
-          - `NotificationsProvider`: `@cs/notifications/react`'s provider
-            re-runs its FCM-token-sync effect (a real `getToken()` call) and
-            tears down/re-subscribes the foreground-message listener on
-            every mount — the dedup mentioned in its doc comment only skips
-            re-registering with OUR backend, not that SDK-level work.
+        Auth is locale-independent (doesn't touch next-intl/useLocale), so it
+        mounts here instead of `[locale]/layout.tsx` — see
+        `AuthSyncProvider`'s own doc comment for why remounting on a locale
+        switch would matter (isInitializing reset). `FlagsProvider`/
+        `NotificationsProvider`/`GuestSessionProvider` live one level lower,
+        in `app/(workspace)/layout.tsx` — see that file's comment: they're
+        workspace-only, so mounting them here would make marketing pages pay
+        for Remote Config/FCM/guest-session JS they never use.
       */}
       <TooltipProvider>
         <ApiQueryProvider>
-          <FlagsProvider>
-            <AuthSyncProvider>
-              <NotificationsProvider>{children}</NotificationsProvider>
-            </AuthSyncProvider>
-          </FlagsProvider>
+          <Suspense fallback={<AuthSyncProvider>{children}</AuthSyncProvider>}>
+            <AuthSessionInitialState>{children}</AuthSessionInitialState>
+          </Suspense>
         </ApiQueryProvider>
       </TooltipProvider>
     </ThemeProvider>

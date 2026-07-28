@@ -8,7 +8,8 @@ import { useEffect } from "react";
  * corrects it client-side once the real locale is known. Purely a
  * lang/a11y/SEO attribute with no visual effect, so unlike `dir` there's no
  * flash to worry about; `dir` is set correctly at SSR time on `<body>`
- * instead (see app/[locale]/layout.tsx).
+ * instead (see the app's own `[locale]/layout.tsx`, e.g.
+ * `apps/web/app/(workspace)/[locale]/layout.tsx`).
  */
 export const HtmlLangSync = ({ locale }: { locale: string }) => {
   useEffect(() => {

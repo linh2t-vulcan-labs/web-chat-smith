@@ -48,10 +48,11 @@ export const generateMetadata = async ({ params }: Props) => {
 /**
  * Former root ("/") content — the create-next-app-style welcome screen plus
  * the `useExtracted` demo — moved here once "/" became the chat page (see
- * `(workspace)/page.tsx`). `LanguageSwitcher`/`ThemeToggle`/`AuthStatus`,
- * previously assembled ad hoc in this page's body, are dropped here: they
- * now live once in the shared `<Header>` (`apps/web/components/layout/header.tsx`),
- * mounted in `[locale]/layout.tsx` for every page.
+ * `(workspace)/[locale]/page.tsx`). `LanguageSwitcher`/`ThemeToggle`/
+ * `AuthStatus`, previously assembled ad hoc in this page's body, are dropped
+ * here: they now live once in the shared `<Header>`
+ * (`apps/web/components/layout/header.tsx`), mounted in both
+ * `(marketing)/[locale]/layout.tsx` and `(workspace)/[locale]/layout.tsx`.
  */
 const PlaygroundPage = ({ params }: Props) => (
   <div className="flex min-h-svh flex-col gap-6 p-6">

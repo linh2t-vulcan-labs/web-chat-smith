@@ -8,7 +8,8 @@ import { TEMPLATES_QUERY_KEY } from "@/components/design-studio/templates-query-
 
 /**
  * `<Suspense fallback>` for the Server Component boundary in
- * `app/[locale]/design-studio-templates/page.tsx` — sized to roughly match
+ * `app/(marketing)/[locale]/design-studio-templates/page.tsx` — sized to
+ * roughly match
  * a few rows of the real list so the swap doesn't reflow (see
  * `skeleton_loading_convention` — one skeleton, sized for the real content).
  */
