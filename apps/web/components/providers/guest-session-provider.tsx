@@ -93,9 +93,10 @@ interface CreateGuestSessionResponse {
  * Guest session CREATION requires a Turnstile token (the backend rejects
  * `POST /anon/sessions` without one — confirmed live against staging), which
  * is an async, invisible client-side challenge — `GET /api/anon/session`
- * (the `TokenManager` restore path) is restore-ONLY and 404s when no guest
- * session exists yet, at which point this component renders the invisible
- * widget and, on success, creates the session itself and injects it into
+ * (the `TokenManager` restore path) is restore-ONLY and reports `{
+ * accessToken: null }` (a `200`, not an error) when no guest session exists
+ * yet, at which point this component renders the invisible widget and, on
+ * success, creates the session itself and injects it into
  * `getGuestTokenManager()` via `setSession()` (the same public method the
  * authenticated flow already uses right after its own Firebase→Vulcan
  * exchange).
@@ -108,9 +109,11 @@ export const GuestSessionProvider = ({
   /**
    * Server-read `guest_session` cookie presence from
    * `GuestSessionInitialState`. When it's absent, the mount effect skips
-   * `restoreSessionOnce()` (a call already known to 404 with no cookie at
-   * all) and jumps straight to `needsCaptcha: true`. Omitted (e.g. any other
-   * call site) keeps the old behavior: always attempt the restore first.
+   * `restoreSessionOnce()` — not to dodge an error (the route returns a
+   * clean `200` either way, see its doc comment), but to skip waiting on a
+   * network round-trip already known to come back empty — and jumps
+   * straight to `needsCaptcha: true`. Omitted (e.g. any other call site)
+   * keeps the old behavior: always attempt the restore first.
    */
   initialState?: GuestSessionInitialState;
 }) => {
@@ -204,8 +207,10 @@ export const GuestSessionProvider = ({
 
     // A server-read `guest_session` cookie presence check
     // (`GuestSessionInitialState`) already told us there's no cookie at all —
-    // skip a `restoreSessionOnce()` call already known to 404 instead of
-    // waiting on it before showing the captcha.
+    // skip the round-trip a `restoreSessionOnce()` call would need (it
+    // returns a clean `200 { accessToken: null }` either way, not an error —
+    // see route.ts — so this is purely about not waiting on it, not about
+    // dodging a failure) instead of blocking the captcha on it.
     const hasNoGuestCookie =
       initialState !== undefined && !initialState.hasGuestSessionCookie;
 

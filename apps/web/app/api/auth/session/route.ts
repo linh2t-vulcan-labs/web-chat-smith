@@ -78,11 +78,28 @@ export const POST = async (request: Request) => {
  * proactive timer and reactive 401 handling, which both need a REAL rotation
  * every time), this route deliberately avoids forcing a refresh-token
  * rotation just because the tab reloaded.
+ *
+ * A logged-out visitor (no `refresh_token` cookie at all) is reported as a
+ * plain `200` with `accessToken: null`, NOT a `401` — this is a "check if a
+ * session exists" endpoint called unconditionally on every page load
+ * (including public marketing pages), and `TokenManager` already treats "no
+ * session" as a legitimate, non-error outcome (see its doc comments). A real
+ * `401` status still shows up as a browser-level "Failed to load resource"
+ * console entry regardless of how gracefully the app handles it — which
+ * Lighthouse's Best Practices audit flags on every single page load for
+ * every logged-out visitor. Only THIS specific "isAuthError" case is
+ * downgraded to `200`; a genuine backend/network failure below still
+ * returns its real error status, since that's an actual problem worth
+ * surfacing. `TokenManager.performCacheFirstRestore()` reconstructs the
+ * equivalent client-side outcome from `accessToken: null`.
  */
 export const GET = async () => {
   const [error, accessToken] = await ensureServerAccessToken();
 
   if (error) {
+    if (error.isAuthError) {
+      return NextResponse.json({ accessToken: null });
+    }
     return NextResponse.json(
       {
         code: error.code,

@@ -1,7 +1,6 @@
 "use client";
 
 import { ApiAuthProvider } from "@cs/api-client/providers/auth-provider";
-import type { ApiAuthProviderInitialState } from "@cs/api-client/providers/auth-provider";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import type { ReactNode } from "react";
@@ -37,13 +36,7 @@ import type { ReactNode } from "react";
  * re-showing a loading skeleton) on every language change, even though the
  * underlying `TokenManager` singleton never actually re-fetched anything.
  */
-export const AuthSyncProvider = ({
-  children,
-  initialState,
-}: {
-  children: ReactNode;
-  initialState?: ApiAuthProviderInitialState;
-}) => {
+export const AuthSyncProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const isFirstChange = useRef(true);
   const wasAuthenticated = useRef(false);
@@ -62,10 +55,7 @@ export const AuthSyncProvider = ({
   };
 
   return (
-    <ApiAuthProvider
-      initialState={initialState}
-      options={{ onAccessTokenChange: handleAccessTokenChange }}
-    >
+    <ApiAuthProvider options={{ onAccessTokenChange: handleAccessTokenChange }}>
       {children}
     </ApiAuthProvider>
   );

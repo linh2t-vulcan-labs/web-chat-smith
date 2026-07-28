@@ -1,10 +1,5 @@
-import { routing } from "@cs/i18n/routing";
-
 import type { LocaleLayoutShellProps } from "@/components/layout/locale-layout-shell";
 import { LocaleLayoutShell } from "@/components/layout/locale-layout-shell";
-
-export const generateStaticParams = () =>
-  routing.locales.map((locale) => ({ locale }));
 
 /**
  * FlagsProvider/NotificationsProvider/GuestSessionProvider mount one level

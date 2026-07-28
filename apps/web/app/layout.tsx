@@ -6,9 +6,7 @@ import { cn } from "@cs/ui/lib/utils";
 
 import "@cs/ui/globals.css";
 import { Geist_Mono, Inter } from "next/font/google";
-import { Suspense } from "react";
 
-import { AuthSessionInitialState } from "@/components/providers/auth-session-initial-state";
 import { AuthSyncProvider } from "@/components/providers/auth-sync-provider";
 
 // Locale-independent shell: fonts, the anti-FOUC theme script, the
@@ -31,13 +29,25 @@ import { AuthSyncProvider } from "@/components/providers/auth-sync-provider";
 // read from a request-scoped source, keeping that part of this layout
 // locale-independent.
 //
-// `AuthSessionInitialState` reads `cookies()` (access/refresh token
-// *presence* only) to give `ApiAuthProvider` an optimistic initial state
-// instead of always cold-starting `isInitializing: true` and waiting on a
-// client effect + fetch. Under `cacheComponents`, any `cookies()`/`headers()`
-// read must sit behind its own `<Suspense>` boundary or the build fails
-// static-shell validation — everything else in this layout (fonts, theme
-// script, env bridge) still has no dynamic API reads and prerenders fully.
+// This layout has no dynamic API reads (no `headers()`/`cookies()`), so it
+// can fully prerender under `cacheComponents`. `AuthSyncProvider` mounts
+// directly here (not behind a `cookies()`-reading Suspense) on purpose: an
+// earlier version read cookie presence here to give `ApiAuthProvider` an
+// optimistic initial auth state, but since this root layout is shared by
+// BOTH `(marketing)` and `(workspace)`, that `cookies()` read dragged the
+// ENTIRE app — including CMS-driven, SEO-sensitive marketing pages that have
+// nothing to do with auth cookies — down to fully dynamic rendering (any
+// unwrapped-or-not `cookies()`/`headers()` read anywhere in a page's tree
+// forces that whole route dynamic under `cacheComponents`, and Suspense only
+// isolates the hole if genuine static content exists *outside* it — here it
+// didn't, since the boundary wrapped `{children}`, i.e. nearly the entire
+// page). Reverted: `ApiAuthProvider` goes back to always running its normal
+// client-side restore effect (a brief `isInitializing: true` on cold load),
+// trading that minor first-paint nicety for marketing keeping its
+// static/PPR eligibility. If a per-request auth-aware UI is needed
+// server-side (e.g. showing the signed-in user's name with no client flash),
+// scope a `cookies()` read to just that small widget (e.g. inside `Header`),
+// not the whole app.
 //
 // This doesn't make the *app* fully static, though: the nested
 // `[locale]/layout.tsx` (in both `(marketing)` and `(workspace)`) reads
@@ -95,9 +105,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
       */}
       <TooltipProvider>
         <ApiQueryProvider>
-          <Suspense fallback={<AuthSyncProvider>{children}</AuthSyncProvider>}>
-            <AuthSessionInitialState>{children}</AuthSessionInitialState>
-          </Suspense>
+          <AuthSyncProvider>{children}</AuthSyncProvider>
         </ApiQueryProvider>
       </TooltipProvider>
     </ThemeProvider>

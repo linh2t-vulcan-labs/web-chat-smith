@@ -20,24 +20,9 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-export interface ApiAuthProviderInitialState {
-  hasAccessTokenCookie: boolean;
-  hasRefreshTokenCookie: boolean;
-}
-
 export interface ApiAuthProviderProps {
   children: ReactNode;
   options?: TokenManagerOptions;
-  /**
-   * Server-read cookie *presence* (never the token value — both are
-   * httpOnly) from `AuthSessionInitialState`. When neither cookie exists,
-   * the mount effect skips `restoreSessionOnce()` entirely and settles
-   * `isInitializing: false` immediately — a visitor who was never logged in
-   * has nothing to restore, so there's no reason to show a loading state
-   * first. Omitted (e.g. any other call site) keeps the old behavior:
-   * always run the restore.
-   */
-  initialState?: ApiAuthProviderInitialState;
 }
 
 interface AuthState {
@@ -65,7 +50,6 @@ const INITIAL_STATE: AuthState = {
  */
 export const ApiAuthProvider = ({
   children,
-  initialState,
   options,
 }: ApiAuthProviderProps) => {
   const [state, setState] = useState<AuthState>(INITIAL_STATE);
@@ -82,29 +66,16 @@ export const ApiAuthProvider = ({
         options?.onPendingChange?.(isPending);
       },
     });
-    // A server-read cookie presence check (`AuthSessionInitialState`) already
-    // told us neither cookie exists — there's nothing to restore, so settle
-    // immediately instead of showing `isInitializing: true` for a session
-    // that's already known to not exist.
-    const definitelyLoggedOut =
-      initialState !== undefined &&
-      !initialState.hasAccessTokenCookie &&
-      !initialState.hasRefreshTokenCookie;
-
     // Initializing local state from a freshly-constructed external
     // singleton on mount — the sanctioned "subscribe to an external system"
     // effect shape, just without an extra render cycle in between.
     // oxlint-disable-next-line react/react-compiler -- initial sync from the TokenManager singleton, not a derivable render value
     setState({
       accessToken: tokenManager.getAccessToken(),
-      isInitializing: !definitelyLoggedOut,
+      isInitializing: true,
       isPending: tokenManager.getPending(),
       tokenManager,
     });
-
-    if (definitelyLoggedOut) {
-      return;
-    }
 
     // On a cold load, the TokenManager instance above is fresh (in-memory
     // only) even when a valid `refresh_token` httpOnly cookie survived the
@@ -112,14 +83,13 @@ export const ApiAuthProvider = ({
     // something else happens to call an `auth: "required"` endpoint.
     // `restoreSessionOnce()` only actually hits `GET /api/auth/session` the
     // FIRST time this runs for the tab — this effect re-runs on every
-    // `ApiAuthProvider` remount, and repeating a doomed-to-401 restore call
-    // each time when already known to be logged out would be both wasted
-    // requests and console noise (the `definitelyLoggedOut` check above
-    // already short-circuits that case whenever a cookie presence hint is
-    // available). That restore call is itself cache-first (reads the
-    // mirrored `access_token` cookie server-side, only forces a real
-    // refresh-token rotation if it's missing/expired — see
-    // `TokenManager.restoreSessionOnce()`), so a warm reload settles
+    // `ApiAuthProvider` remount (e.g. a locale switch remounts everything
+    // under `[locale]/layout.tsx`), and repeating a doomed-to-401 restore
+    // call each time when already known to be logged out would be both
+    // wasted requests and console noise. That restore call is itself
+    // cache-first (reads the mirrored `access_token` cookie server-side,
+    // only forces a real refresh-token rotation if it's missing/expired —
+    // see `TokenManager.restoreSessionOnce()`), so a warm reload settles
     // near-instantly with zero backend rotations. A settled error (e.g. no
     // cookie) is just as legitimate an outcome as success, not a failure to
     // surface — success is reported separately via `onAccessTokenChange`.

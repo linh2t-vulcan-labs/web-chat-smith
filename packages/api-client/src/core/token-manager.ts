@@ -2,6 +2,7 @@ import { createBroadcastChannel } from "@cs/core/broadcast";
 import type { BroadcastChannelBus } from "@cs/core/broadcast";
 import { decodeJwtExpiryMs } from "@cs/core/jwt";
 
+import { ApiError } from "../errors/api-error";
 import type { ApiResult } from "../errors/api-error";
 import type { IdentityMode } from "../types";
 import { httpRequest } from "./http-client";
@@ -25,6 +26,17 @@ const REFRESH_RACE_RETRY_JITTER_MS = 300;
 
 interface RefreshResponse {
   accessToken: string;
+  accessTokenExpiresAt?: number;
+}
+
+/**
+ * `GET /api/auth/session` (restore-only) reports "no session" as a `200`
+ * with `accessToken: null` instead of a `401` — see that route's doc
+ * comment. `POST /api/auth/refresh` (`RefreshResponse` above) never has
+ * this ambiguity: a failed rotation is always a real error.
+ */
+interface RestoreResponse {
+  accessToken: string | null;
   accessTokenExpiresAt?: number;
 }
 
@@ -307,6 +319,24 @@ export class TokenManager {
       return [error, null];
     }
 
+    if (result.accessToken === null) {
+      // "No session" reported as a `200` (see route.ts's doc comment), not
+      // a `401` — reconstruct the same outcome `restoreSessionOnce()`'s
+      // only caller already handles (`isAuthError` → `clearSession()`) so
+      // nothing downstream needs to know this didn't arrive as a real HTTP
+      // error this time.
+      this.clearSession();
+      return [
+        new ApiError({
+          httpStatus: 401,
+          kind: "backend",
+          message: "No session to restore",
+          reason: "ERROR_INVALID_AUTHORIZATION",
+        }),
+        null,
+      ];
+    }
+
     this.applySession({
       accessToken: result.accessToken,
       expiresAt:
@@ -321,8 +351,8 @@ export class TokenManager {
     });
   }
 
-  private callRestoreEndpoint(): Promise<ApiResult<RefreshResponse>> {
-    return httpRequest<RefreshResponse>(this.restoreEndpoint, {
+  private callRestoreEndpoint(): Promise<ApiResult<RestoreResponse>> {
+    return httpRequest<RestoreResponse>(this.restoreEndpoint, {
       method: "GET",
     });
   }
