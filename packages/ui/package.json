@@ -50,6 +50,7 @@
     "media-chrome": "catalog:ui",
     "motion": "catalog:ui",
     "nanoid": "catalog:utils",
+    "next": "catalog:framework",
     "next-intl": "catalog:framework",
     "react": "catalog:framework",
     "react-day-picker": "catalog:ui",

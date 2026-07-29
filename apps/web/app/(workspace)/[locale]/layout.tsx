@@ -8,6 +8,8 @@ import { LocaleLayoutShell } from "@/components/layout/locale-layout-shell";
  * non-idempotent init effects) on a language switch. See that file's
  * comment for the full rationale.
  */
+export const instant = false;
+
 const WorkspaceLocaleLayout = (props: LocaleLayoutShellProps) => (
   <LocaleLayoutShell {...props} />
 );

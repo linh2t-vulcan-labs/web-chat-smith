@@ -4,8 +4,8 @@
 @import "@cs/design-tokens";
 
 @custom-variant dark (&:is(.dark *));
-@source "../../../apps/**/*.{ts,tsx}";
-@source "../../../components/**/*.{ts,tsx}";
+@source "../../../../apps/**/*.{ts,tsx}";
+@source "../../../../packages/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 @source "../../node_modules/streamdown/dist/*.js";
 

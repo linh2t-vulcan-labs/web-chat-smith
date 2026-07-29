@@ -23,6 +23,10 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 export interface ApiAuthProviderProps {
   children: ReactNode;
   options?: TokenManagerOptions;
+  /** Registered via `TokenManager.addListener()` — see `AuthSyncProvider` (apps/web) for the router-refresh-on-auth-transition use case this exists for. */
+  onAccessTokenChange?: (accessToken: string | null) => void;
+  /** Registered via `TokenManager.addListener()` — fires on every tab, see `TokenManager.setPending()`. */
+  onPendingChange?: (pending: boolean) => void;
 }
 
 interface AuthState {
@@ -51,19 +55,22 @@ const INITIAL_STATE: AuthState = {
 export const ApiAuthProvider = ({
   children,
   options,
+  onAccessTokenChange,
+  onPendingChange,
 }: ApiAuthProviderProps) => {
   const [state, setState] = useState<AuthState>(INITIAL_STATE);
 
+  // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- false positive: this rule only recognizes the Node EventEmitter addListener/removeListener(event, handler) shape, not TokenManager.addListener()'s React-idiomatic "returns its own disposer" contract — cleanup IS registered via the `return () => unsubscribe()` below.
   useEffect(() => {
-    const tokenManager = getTokenManager({
-      ...options,
+    const tokenManager = getTokenManager(options);
+    const unsubscribe = tokenManager.addListener({
       onAccessTokenChange: (accessToken) => {
         setState((previous) => ({ ...previous, accessToken }));
-        options?.onAccessTokenChange?.(accessToken);
+        onAccessTokenChange?.(accessToken);
       },
       onPendingChange: (isPending) => {
         setState((previous) => ({ ...previous, isPending }));
-        options?.onPendingChange?.(isPending);
+        onPendingChange?.(isPending);
       },
     });
     // Initializing local state from a freshly-constructed external
@@ -98,6 +105,8 @@ export const ApiAuthProvider = ({
       setState((previous) => ({ ...previous, isInitializing: false }));
     };
     void restoreSession();
+
+    return () => unsubscribe();
     // getTokenManager() is a per-tab singleton — options only take effect on
     // the first construction, so this intentionally runs once on mount.
     // oxlint-disable-next-line react-hooks/exhaustive-deps

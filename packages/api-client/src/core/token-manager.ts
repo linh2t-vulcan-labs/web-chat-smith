@@ -57,6 +57,10 @@ export interface TokenManagerOptions {
   /** Same-origin Route Handler — reads the mirrored `access_token` cookie first, only rotates if it's missing/expired. Used ONLY by `restoreSessionOnce()` on cold load, so a reload with a still-valid access token costs zero backend rotations. */
   restoreEndpoint?: string;
   logoutEndpoint?: string;
+}
+
+/** A subscriber added via `TokenManager.addListener()` — see that method's doc comment. */
+export interface TokenManagerListener {
   onAccessTokenChange?: (accessToken: string | null) => void;
   /** Fires on every tab, including the one that called `setPending()` — see `setPending()`. */
   onPendingChange?: (pending: boolean) => void;
@@ -77,8 +81,7 @@ export class TokenManager {
   private readonly refreshEndpoint: string;
   private readonly restoreEndpoint: string;
   private readonly logoutEndpoint: string;
-  private readonly onAccessTokenChange?: (token: string | null) => void;
-  private readonly onPendingChange?: (pending: boolean) => void;
+  private readonly listeners = new Set<TokenManagerListener>();
   private inFlightRefresh: Promise<ApiResult<string>> | null = null;
   private proactiveTimer: ReturnType<typeof setTimeout> | null = null;
   private readonly lockName: string;
@@ -90,8 +93,6 @@ export class TokenManager {
     this.refreshEndpoint = options.refreshEndpoint ?? "/api/auth/refresh";
     this.restoreEndpoint = options.restoreEndpoint ?? "/api/auth/session";
     this.logoutEndpoint = options.logoutEndpoint ?? "/api/auth/logout";
-    this.onAccessTokenChange = options.onAccessTokenChange;
-    this.onPendingChange = options.onPendingChange;
 
     // Scoped by identity — a guest and an authenticated TokenManager can be
     // live in the same tab at once (see `getGuestTokenManager()`), and must
@@ -121,6 +122,21 @@ export class TokenManager {
   }
 
   /**
+   * Subscribes to access-token/pending-state changes on this singleton —
+   * unlike the constructor options (which only take effect the first time
+   * `getTokenManager()`/`getGuestTokenManager()` actually constructs the
+   * instance), this always registers, so every mount of a consumer (e.g.
+   * `ApiAuthProvider` remounting on a locale switch) gets notified from here
+   * on, not just the one that happened to win construction. Returns an
+   * unsubscribe function — call it from the consumer's own cleanup, never
+   * `dispose()` the shared singleton itself.
+   */
+  addListener(listener: TokenManagerListener): () => void {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+
+  /**
    * Marks a sign-in/sign-out as in progress across every tab — for UI that
    * wants to disable its own auth button while a *different* tab is mid-flow
    * (e.g. a Firebase popup awaiting the user), not just while this tab's own
@@ -129,7 +145,9 @@ export class TokenManager {
    */
   setPending(pending: boolean, broadcast = true): void {
     this.pending = pending;
-    this.onPendingChange?.(pending);
+    for (const listener of this.listeners) {
+      listener.onPendingChange?.(pending);
+    }
     if (broadcast) {
       this.channel.publish({
         pending,
@@ -359,7 +377,9 @@ export class TokenManager {
 
   private applySession(session: Session, broadcast = true): void {
     this.session = session;
-    this.onAccessTokenChange?.(session.accessToken);
+    for (const listener of this.listeners) {
+      listener.onAccessTokenChange?.(session.accessToken);
+    }
     this.scheduleProactiveRefresh();
     if (broadcast) {
       this.channel.publish({
@@ -373,7 +393,9 @@ export class TokenManager {
   private clearSession(broadcast = true): void {
     this.session = null;
     this.clearProactiveTimer();
-    this.onAccessTokenChange?.(null);
+    for (const listener of this.listeners) {
+      listener.onAccessTokenChange?.(null);
+    }
     if (broadcast) {
       this.channel.publish({ type: "logout" } satisfies BroadcastMessage);
     }

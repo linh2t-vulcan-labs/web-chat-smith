@@ -2,6 +2,7 @@ import type { ApiResult } from "../errors/api-error";
 import type {
   AuthMode,
   HttpMethod,
+  IdentityMode,
   QueryParams,
   TransportMode,
 } from "../types";
@@ -24,6 +25,8 @@ export interface EndpointConfig<
   path: string | ((input: TInput) => string);
   version?: string;
   auth: AuthMode;
+  /** Which credential source to attach for `auth: "required"` — default "authenticated". See docs/runbook/api-client.md §4.5. */
+  identity?: IdentityMode;
   /** Per-endpoint escape hatch — default "direct" (see §3). */
   transport?: TransportMode;
   /** Set false for non-idempotent calls that shouldn't be silently retried on a transient error. Default: true. */

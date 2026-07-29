@@ -12,6 +12,8 @@ export const generateStaticParams = () =>
  * `app/(workspace)/layout.tsx` instead, so marketing pages don't pay for
  * Firebase Remote Config / FCM / guest-session JS they never use.
  */
+export const instant = false;
+
 const MarketingLocaleLayout = (props: LocaleLayoutShellProps) => (
   <LocaleLayoutShell {...props} />
 );

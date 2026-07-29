@@ -121,6 +121,7 @@ const makeCaller =
       auth: config.auth,
       body,
       headers,
+      identity: config.identity,
       method,
       retry: config.retry,
       signal: callOptions?.signal,

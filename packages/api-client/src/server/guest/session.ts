@@ -165,7 +165,14 @@ export const refreshGuestSession = async (
     if (error.httpStatus === 403 && retryAttempt === 0) {
       return refreshGuestSession(1);
     }
-    await clearGuestSessionCookie();
+    // Only a genuine auth failure (invalid/expired/revoked refresh token)
+    // means the stored refresh token is actually dead — clearing the cookie
+    // on a transient error (5xx, network failure) would throw away a still-good
+    // refresh token that a later retry could have used, same gate
+    // `TokenManager.performRefresh()` applies client-side.
+    if (error.isAuthError) {
+      await clearGuestSessionCookie();
+    }
     return [error, null];
   }
 

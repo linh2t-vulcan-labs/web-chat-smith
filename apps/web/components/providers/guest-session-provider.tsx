@@ -149,6 +149,7 @@ export const GuestSessionProvider = ({
     }
   };
 
+  // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- false positive: this rule only recognizes the Node EventEmitter addListener/removeListener(event, handler) shape, not TokenManager.addListener()'s React-idiomatic "returns its own disposer" contract — cleanup IS registered via the `return () => unsubscribe()` below.
   useEffect(() => {
     // Wait for the authenticated identity to settle first so a
     // still-restoring auth session doesn't cause a guest session to be
@@ -172,7 +173,9 @@ export const GuestSessionProvider = ({
       return;
     }
 
-    const guestTokenManager = getGuestTokenManager({
+    const guestTokenManager = getGuestTokenManager();
+    // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- false positive: this rule only recognizes the Node EventEmitter addListener/removeListener(event, handler) shape, not TokenManager.addListener()'s React-idiomatic "returns its own disposer" contract — cleanup IS registered via the `return () => unsubscribe()` below.
+    const unsubscribe = guestTokenManager.addListener({
       onAccessTokenChange: (accessToken) => {
         if (accessToken === null) {
           // Re-provisioning from scratch (a fresh Turnstile challenge, not a
@@ -225,6 +228,8 @@ export const GuestSessionProvider = ({
       }));
     };
     void restore();
+
+    return () => unsubscribe();
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- `initialState` is a one-time server-read hint used only to decide the first run's fast path, not a value this effect should re-run for
   }, [isAuthenticated, isAuthInitializing]);
 

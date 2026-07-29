@@ -55,7 +55,7 @@ export const AuthSyncProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <ApiAuthProvider options={{ onAccessTokenChange: handleAccessTokenChange }}>
+    <ApiAuthProvider onAccessTokenChange={handleAccessTokenChange}>
       {children}
     </ApiAuthProvider>
   );

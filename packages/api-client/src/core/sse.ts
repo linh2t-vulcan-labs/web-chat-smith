@@ -1,10 +1,10 @@
 import { createParser } from "eventsource-parser";
 
 import { ApiError } from "../errors/api-error";
-import type { AuthMode } from "../types";
+import type { AuthMode, IdentityMode } from "../types";
 import { mergeSignals } from "./http-client";
 import { sleep } from "./retry";
-import { getTokenManager } from "./token-manager";
+import { getGuestTokenManager, getTokenManager } from "./token-manager";
 
 const RECONNECT_BASE_DELAY_MS = 1000;
 const RECONNECT_MAX_DELAY_MS = 15_000;
@@ -52,6 +52,8 @@ export interface SubscribeSseOptions<TEventName extends string> {
   signal?: AbortSignal;
   /** Default "required" — attaches `Authorization` and does a refresh-and-retry-once on an initial 401, same contract as core/interceptors.ts. */
   auth?: AuthMode;
+  /** Which credential source to attach for `auth: "required"` — default "authenticated". See docs/runbook/api-client.md §4.5. */
+  identity?: IdentityMode;
   /** Resume cursor from a previous subscription's `onDone(lastEventId)` — sent as the standard `Last-Event-ID` header. */
   lastEventId?: string | null;
   /** Only frames whose `event:` name is one of these are dispatched — anything else (including unnamed/comment frames) is ignored. */
@@ -101,8 +103,11 @@ const openStream = <TEventName extends string>(
     };
 
     if ((options.auth ?? "required") === "required") {
-      const [tokenError, accessToken] =
-        await getTokenManager().ensureAccessToken();
+      const tokenManager =
+        options.identity === "guest"
+          ? getGuestTokenManager()
+          : getTokenManager();
+      const [tokenError, accessToken] = await tokenManager.ensureAccessToken();
       if (tokenError) {
         throw tokenError;
       }
@@ -122,7 +127,11 @@ const openStream = <TEventName extends string>(
       (options.auth ?? "required") === "required" &&
       !hasRetriedAuth
     ) {
-      const [refreshError] = await getTokenManager().refresh();
+      const tokenManager =
+        options.identity === "guest"
+          ? getGuestTokenManager()
+          : getTokenManager();
+      const [refreshError] = await tokenManager.refresh();
       if (refreshError) {
         // Surface the real refresh failure instead of letting the caller
         // see only the original 401 and a generic "SSE connection failed" —

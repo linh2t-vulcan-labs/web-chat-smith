@@ -9,7 +9,7 @@ import {
 } from "../core/process-storage";
 import { subscribeSse } from "../core/sse";
 import type { ApiError, ApiResult } from "../errors/api-error";
-import type { ProcessStatus, ProcessTransport } from "../types";
+import type { IdentityMode, ProcessStatus, ProcessTransport } from "../types";
 
 export interface UseProcessOptions<T> {
   transport: ProcessTransport;
@@ -26,6 +26,8 @@ export interface UseProcessOptions<T> {
   /** Which of `sseEventNames` end the subscription (default: none — only stream-close/error end it). */
   sseTerminalEventNames?: string[];
   sseHeaders?: Record<string, string>;
+  /** Which credential source the SSE stream attaches — default "authenticated". See docs/runbook/api-client.md §4.5. */
+  identity?: IdentityMode;
   enabled?: boolean;
   /**
    * Caller-scoped key (e.g. `conversation:${conversationId}`) to persist
@@ -135,6 +137,7 @@ export const useProcess = <T>(
       const subscription = subscribeSse(sseUrl(processId), {
         eventNames: sseEventNames,
         headers: options.sseHeaders,
+        identity: options.identity,
         onDone: () => {
           setStatus("done");
           clearPersisted();

@@ -81,11 +81,9 @@ export const createNextConfig = (
     reactStrictMode: true,
     typedRoutes: true,
     typescript: { ignoreBuildErrors: true },
-    // Not a forced default: `partialPrefetching` throws at config validation
-    // unless `cacheComponents` is also true, and Cache Components changes
-    // data-fetching/caching semantics enough that apps must opt into both
-    // deliberately (see `overrides`) rather than inherit it silently.
     reactCompiler: true,
+    cacheComponents: true,
+    partialPrefetching: true,
     images: {
       dangerouslyAllowSVG: false,
       formats: ["image/avif", "image/webp"],
@@ -124,6 +122,9 @@ export const createNextConfig = (
       useOffline: true,
       useTypeScriptCli: true,
       webVitalsAttribution: ["FCP", "LCP", "CLS", "FID", "TTFB", "INP"],
+      instantInsights: {
+        validationLevel: "warning",
+      },
     },
     headers: async () => {
       const routes = [
