@@ -4,6 +4,58 @@
   },
   "J0jcl1": "Starter scaffold and i18n-extraction demo — moved out of the app's root.",
   "XqRXu6": "Playground",
+  "Common": {
+    "notFound": {
+      "title": "Not found",
+      "description": "The page you're looking for doesn't exist or was removed.",
+      "homeLink": "Return home"
+    },
+    "actions": {
+      "retry": "Try again"
+    },
+    "errors": {
+      "route": {
+        "description": "An unexpected error occurred while loading this page.",
+        "title": "Something went wrong"
+      },
+      "notFound": {
+        "description": "The item you're looking for doesn't exist or was removed.",
+        "title": "Not found"
+      },
+      "auth": {
+        "description": "Please sign in again to continue.",
+        "title": "Your session has expired"
+      },
+      "transient": {
+        "description": "This usually resolves itself — try again in a moment.",
+        "title": "Something went wrong"
+      },
+      "rateLimit": {
+        "description": "You've made too many requests. Please wait and try again.",
+        "title": "Too many requests"
+      },
+      "billing": {
+        "description": "This action requires a plan upgrade.",
+        "title": "Upgrade required"
+      },
+      "validation": {
+        "description": "Please check your input and try again.",
+        "title": "Invalid request"
+      },
+      "platform": {
+        "description": "This feature isn't available on your current plan or platform.",
+        "title": "Not available"
+      },
+      "unknown": {
+        "description": "An unexpected error occurred.",
+        "title": "Something went wrong"
+      }
+    },
+    "connectivity": {
+      "backOnline": "Back online",
+      "offline": "You're offline — some features may not work."
+    }
+  },
   "VgH3tb": "Look ma, no keys!",
   "wafoOY": "Hello {name}!",
   "hNm84b": "You clicked {count, plural, =0 {not once} one {one time} other {# times}}.",

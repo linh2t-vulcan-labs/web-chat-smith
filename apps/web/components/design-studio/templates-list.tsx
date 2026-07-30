@@ -2,9 +2,12 @@
 
 import { useApiQuery } from "@cs/api-client/hooks/use-api-query";
 import { designStudio } from "@cs/api-client/services/design-studio";
+import { InlineError } from "@cs/ui/components/cs/inline-error";
 import { Skeleton } from "@cs/ui/components/shadcn/skeleton";
+import { useExtracted } from "next-intl";
 
 import { TEMPLATES_QUERY_KEY } from "@/components/design-studio/templates-query-key";
+import { useApiErrorCopy } from "@/hooks/use-api-error-copy";
 
 /**
  * `<Suspense fallback>` for the Server Component boundary in
@@ -38,7 +41,9 @@ export const TemplatesListSkeleton = () => (
  * scratch client-side.
  */
 export const TemplatesList = () => {
-  const { data, error, isPending } = useApiQuery({
+  const t = useExtracted();
+  const { getErrorCopy } = useApiErrorCopy();
+  const { data, error, isPending, refetch } = useApiQuery({
     queryFn: ({ signal }) => designStudio.listTemplates({}, { signal }),
     queryKey: TEMPLATES_QUERY_KEY,
   });
@@ -48,7 +53,15 @@ export const TemplatesList = () => {
   }
 
   if (error) {
-    return <p role="alert">Failed to load templates: {error.message}</p>;
+    const copy = getErrorCopy(error);
+    return (
+      <InlineError
+        description={copy.description}
+        onRetry={copy.retryable ? () => refetch() : undefined}
+        retryLabel={t({ id: "Common.actions.retry", message: "Try again" })}
+        title={copy.title}
+      />
+    );
   }
 
   if (data.templates.length === 0) {

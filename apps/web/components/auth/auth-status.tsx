@@ -3,10 +3,13 @@
 import { useApiQuery } from "@cs/api-client/hooks/use-api-query";
 import { useApiAuth } from "@cs/api-client/providers/auth-provider";
 import { userManagement } from "@cs/api-client/services/user-management";
+import { InlineError } from "@cs/ui/components/cs/inline-error";
 import { Button } from "@cs/ui/components/shadcn/button";
 import { Skeleton } from "@cs/ui/components/shadcn/skeleton";
+import { useExtracted } from "next-intl";
 
 import { SignInWithGoogleButton } from "@/components/auth/sign-in-with-google-button";
+import { useApiErrorCopy } from "@/hooks/use-api-error-copy";
 
 const PROFILE_QUERY_KEY = ["user-management", "profile"];
 
@@ -74,6 +77,8 @@ export interface AuthStatusProps {
  * load — isn't worth that risk for a peripheral demo widget.
  */
 export const AuthStatus = ({ compact = false }: AuthStatusProps) => {
+  const t = useExtracted();
+  const { getErrorCopy } = useApiErrorCopy();
   const { isAuthenticated, isInitializing, isPending, logout, setPending } =
     useApiAuth();
 
@@ -107,6 +112,10 @@ export const AuthStatus = ({ compact = false }: AuthStatusProps) => {
     return <SignInWithGoogleButton />;
   }
 
+  const profileErrorCopy = profileQuery.isError
+    ? getErrorCopy(profileQuery.error)
+    : null;
+
   if (compact) {
     return (
       <div className="flex items-center gap-2 text-sm">
@@ -126,8 +135,17 @@ export const AuthStatus = ({ compact = false }: AuthStatusProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      {profileQuery.isError && (
-        <p role="alert">Failed to load profile: {profileQuery.error.message}</p>
+      {profileErrorCopy && (
+        <InlineError
+          description={profileErrorCopy.description}
+          onRetry={
+            profileErrorCopy.retryable
+              ? () => profileQuery.refetch()
+              : undefined
+          }
+          retryLabel={t({ id: "Common.actions.retry", message: "Try again" })}
+          title={profileErrorCopy.title}
+        />
       )}
       {profileQuery.data && (
         <dl className="grid grid-cols-[auto_1fr] gap-x-2">

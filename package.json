@@ -13,8 +13,8 @@
         "react-dom": "^19.2.8",
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19.2.3",
-        "next": "16.3.0-canary.102",
-        "@next/third-parties": "16.3.0-canary.102",
+        "next": "16.3.0-canary.103",
+        "@next/third-parties": "16.3.0-canary.103",
         "next-intl": "^4.13.4",
         "server-only": "^0.0.1",
         "@swc/helpers": "^0.5.23"
@@ -61,7 +61,7 @@
         "@tanstack/react-query-devtools": "^5.101.4",
         "@tanstack/react-table": "^8.21.3",
         "zustand": "^5.0.14",
-        "nuqs": "^2.9.2",
+        "nuqs": "^2.9.3",
         "immer": "^11.1.15"
       },
       "validation": {
@@ -95,12 +95,12 @@
       },
       "integrations": {
         "firebase": "^12.16.0",
-        "jose": "^6.2.4",
+        "jose": "^6.2.5",
         "jwt-decode": "^4.0.0",
         "@paddle/paddle-js": "^1.6.4",
         "@coralogix/browser": "^3.20.0",
         "@marsidev/react-turnstile": "^1.5.4",
-        "ai": "^7.0.41"
+        "ai": "^7.0.42"
       },
       "utils": {
         "lodash-es": "^4.18.1",
@@ -108,7 +108,7 @@
         "dayjs": "^1.11.21",
         "uuid": "^14.0.1",
         "@types/uuid": "^11.0.0",
-        "axios": "^1.18.1",
+        "axios": "^1.19.0",
         "eventsource-parser": "^3.1.0",
         "use-stick-to-bottom": "^1.1.6",
         "react-infinite-scroll-hook": "^6.0.1",
@@ -133,7 +133,7 @@
         "msw": "^2.15.0",
         "webpack-bundle-analyzer": "^5.3.1",
         "@svgr/webpack": "^8.1.0",
-        "postcss": "^8.5.24",
+        "postcss": "^8.5.25",
         "sass": "^1.102.0"
       }
     }

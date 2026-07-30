@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin(
   createNextIntlConfig({
     messagesPath: "./messages",
     requestConfig: "./i18n/request.ts",
-    srcPath: ["./app", "./components", "../../packages/ui/src"],
+    srcPath: ["./app", "./components", "./hooks", "../../packages/ui/src"],
   })
 );
 

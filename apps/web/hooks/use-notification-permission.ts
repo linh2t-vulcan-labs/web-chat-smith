@@ -1,5 +1,5 @@
+import type { NotificationPermissionState } from "@cs/notifications/permission";
 import { NotificationsContext } from "@cs/notifications/react";
-import type { NotificationPermissionState } from "@cs/notifications/react";
 import { useContext } from "react";
 
 export interface UseNotificationPermissionResult {
