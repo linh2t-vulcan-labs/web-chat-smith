@@ -56,6 +56,22 @@ export const BASE_OPTIMIZE_PACKAGES = [
   "konva",
   "react-konva",
   "@tanstack/react-table",
+  "zod",
+  "zod/mini",
+  "zod/v4-mini",
+  "@cs/api-client",
+  "@cs/core",
+  "@cs/env",
+  "@cs/firebase",
+  "@cs/flags",
+  "@cs/i18n",
+  "@cs/icons",
+  "@cs/next-config",
+  "@cs/notifications",
+  "@cs/security",
+  "@cs/themes",
+  "@cs/ui",
+  "@cs/validation",
 ] as const;
 
 export const IMMUTABLE_CACHE_CONTROL = "public, max-age=31536000, immutable";

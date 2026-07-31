@@ -84,6 +84,7 @@ export const createNextConfig = (
     reactCompiler: true,
     cacheComponents: true,
     partialPrefetching: true,
+    serverExternalPackages: ["sharp"],
     images: {
       dangerouslyAllowSVG: false,
       formats: ["image/avif", "image/webp"],
