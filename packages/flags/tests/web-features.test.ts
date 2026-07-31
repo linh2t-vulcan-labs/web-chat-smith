@@ -6,7 +6,11 @@ import { createWebFeatures } from "../src/web-features";
 import { createTestAdapter } from "./test-adapter";
 
 const schema = defineFlagSchema({
-  webFeatures: { decoder: "json", defaultValue: {} as Record<string, unknown> },
+  webFeatures: {
+    decoder: "json",
+    defaultValue: {} as Record<string, unknown>,
+    governance: { owner: "test", type: "config" },
+  },
 });
 
 describe("createWebFeatures", () => {

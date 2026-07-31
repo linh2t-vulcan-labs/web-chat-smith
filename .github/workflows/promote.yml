@@ -1,0 +1,66 @@
+name: Promote build
+
+# Manual, deliberate promotion of an already-built image to an environment —
+# never rebuilds. This is the "deploy" half of build-once-deploy-many: the
+# image named here was already built and pushed by build-and-push.yml on
+# some earlier merge; this workflow only adds/moves a tag on the SAME image
+# digest so the infra side (ArgoCD/GKE, a different repo — not touched here)
+# can pick it up. See docs/runbook/deployment.md for the full handoff
+# contract.
+#
+# workflow_dispatch (not automatic) is deliberate — promoting to prod is a
+# release decision gated on QA sign-off, not something that should fire on
+# every merge. See docs/runbook/flags-and-release-workflow.md §6/§8.
+on:
+  workflow_dispatch:
+    inputs:
+      image_sha:
+        description: "Git SHA of the already-built image to promote (the tag build-and-push.yml pushed)"
+        required: true
+      environment:
+        description: "Target environment"
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }} # GitHub Environment protection rule gates production approval
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ vars.GAR_LOCATION }}-docker.pkg.dev --quiet
+
+      - name: Verify the image exists (fail loudly, don't silently no-op)
+        run: |
+          IMAGE="${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPOSITORY }}/web:${{ inputs.image_sha }}"
+          docker manifest inspect "$IMAGE" > /dev/null || {
+            echo "::error::$IMAGE was never built by build-and-push.yml — nothing to promote." >&2
+            exit 1
+          }
+
+      # Environment alias tag (e.g. `:production`) is the interface point —
+      # devops configures ArgoCD (Image Updater, or their own sync tooling,
+      # in their own repo) to watch this tag per environment. This repo never
+      # writes to their manifests/Application resources directly.
+      - name: Retag image for ${{ inputs.environment }} (no rebuild)
+        run: |
+          SRC="${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPOSITORY }}/web:${{ inputs.image_sha }}"
+          DEST="${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPOSITORY }}/web:${{ inputs.environment }}"
+          docker buildx imagetools create --tag "$DEST" "$SRC"
+
+      - name: Summary
+        run: |
+          echo "Promoted ${{ inputs.image_sha }} → ${{ inputs.environment }}" >> "$GITHUB_STEP_SUMMARY"

@@ -50,6 +50,20 @@ export const createFirebaseAdapter = (
 ): FlagAdapter => ({
   getRawValue: (key) => toRawFlagValue(getValue(remoteConfig, key)),
   init: async () => {
+    // `firebase/remote-config` is a browser-only SDK (relies on IndexedDB) —
+    // there is no supported way to run it in a Server Component/Route
+    // Handler (Firebase's own SSR guide only covers Auth/Firestore/App Check,
+    // not Remote Config). Throwing a clear message here beats letting the
+    // engine's catch-all report a cryptic IndexedDB error — see
+    // docs/runbook/flags-and-release-workflow.md §5.
+    if (typeof window === "undefined") {
+      throw new TypeError(
+        "[@cs/flags/firebase] createFirebaseAdapter only runs in the browser. " +
+          "Don't call engine.init() from a Server Component/Route Handler — " +
+          "gate the flag-dependent UI behind a client subtree instead (see " +
+          "docs/runbook/flags-and-release-workflow.md §5)."
+      );
+    }
     remoteConfig.defaultConfig = toFirebaseDefaultConfig(schema);
     await fetchAndActivate(remoteConfig);
   },

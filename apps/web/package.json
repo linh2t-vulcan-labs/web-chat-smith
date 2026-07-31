@@ -9,6 +9,7 @@
     "prestart": "cp -r .next/static .next/standalone/apps/web/.next/",
     "start": "bun run .next/standalone/apps/web/server.js",
     "typecheck": "tsc --noEmit",
+    "audit:flags": "bun scripts/audit-flags.ts",
     "clean": "rm -rf .next node_modules",
     "analyze": "next experimental-analyze"
   },

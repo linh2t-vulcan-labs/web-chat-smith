@@ -1,3 +1,4 @@
+export * from "./audit";
 export * from "./core/engine";
 export * from "./core/types";
 export * from "./experiments/define-experiment";

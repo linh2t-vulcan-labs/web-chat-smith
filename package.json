@@ -145,9 +145,11 @@
     "start": "turbo start",
     "analyze": "turbo analyze",
     "typecheck": "turbo typecheck",
+    "test": "turbo test",
     "clean": "turbo clean && rm -rf node_modules bun.lock",
     "check": "ultracite check",
     "fix": "ultracite fix",
+    "docker": "bun tools/scripts/docker.ts",
     "prepare": "lefthook install"
   },
   "devDependencies": {

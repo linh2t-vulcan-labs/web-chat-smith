@@ -4,11 +4,29 @@ import { createFlagsEngine } from "../src/core/engine";
 import { defineFlagSchema } from "../src/schema";
 import { createTestAdapter } from "./test-adapter";
 
+const testGovernance = {
+  expiresAt: "2999-01-01",
+  owner: "test",
+  type: "release",
+} as const;
+
 const schema = defineFlagSchema({
-  syncBeta: { decoder: "boolean", defaultValue: false },
-  uiVersion: { decoder: "number", defaultValue: 3 },
-  webFeatures: { decoder: "json", defaultValue: {} as Record<string, unknown> },
-  welcomeLabel: { decoder: "string", defaultValue: "hi" },
+  syncBeta: {
+    decoder: "boolean",
+    defaultValue: false,
+    governance: testGovernance,
+  },
+  uiVersion: { decoder: "number", defaultValue: 3, governance: testGovernance },
+  webFeatures: {
+    decoder: "json",
+    defaultValue: {} as Record<string, unknown>,
+    governance: testGovernance,
+  },
+  welcomeLabel: {
+    decoder: "string",
+    defaultValue: "hi",
+    governance: testGovernance,
+  },
 });
 
 describe("createFlagsEngine", () => {

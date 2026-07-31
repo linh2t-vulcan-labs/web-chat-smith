@@ -7,7 +7,11 @@ import { defineFlagSchema } from "../src/schema";
 import { createTestAdapter } from "./test-adapter";
 
 const schema = defineFlagSchema({
-  subscriptionUiVersion: { decoder: "number", defaultValue: 6 },
+  subscriptionUiVersion: {
+    decoder: "number",
+    defaultValue: 6,
+    governance: { expiresAt: "2999-01-01", owner: "test", type: "experiment" },
+  },
 });
 
 const TIER_BY_OFFSET = ["tier1", "tier2", "tier3"] as const;

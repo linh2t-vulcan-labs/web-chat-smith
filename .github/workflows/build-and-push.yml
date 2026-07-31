@@ -1,0 +1,69 @@
+name: Build & Push (staging)
+
+# Runs once per merge to main: builds the image exactly once (build-once,
+# deploy-many — see docs/runbook/deployment.md) and pushes it immutably
+# tagged by git SHA. Deploying it anywhere (staging auto-deploy, prod
+# promotion) is out of scope here — see promote.yml and
+# docs/runbook/deployment.md for the handoff to the infra/ArgoCD side, which
+# lives in a different repo this workflow never touches.
+on:
+  push:
+    branches: [main]
+
+# If a second merge lands while a build is still running, cancel the
+# in-flight one — only the newest commit's image matters for "staging = the
+# latest main", so the older build isn't worth finishing. See
+# docs/runbook/flags-and-release-workflow.md §8.
+concurrency:
+  group: build-push-main
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write # for keyless auth to the registry (Workload Identity Federation)
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- Auth to the image registry the infra side (ArgoCD/GKE) polls. ---
+      # Placeholders — devops supplies the real Workload Identity
+      # provider/service account and registry host as repo secrets/vars; this
+      # workflow doesn't assume or hardcode their project layout.
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ vars.GAR_LOCATION }}-docker.pkg.dev --quiet
+
+      - uses: docker/setup-buildx-action@v3
+
+      # No build-args: every CS_PUBLIC_* var is read at runtime only
+      # (Vault-injected into the container) — nothing is baked in at build
+      # time. See docs/runbook/deployment.md §3.
+      - name: Build & push (tag = git SHA, immutable)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: tools/docker/Dockerfile
+          push: true
+          tags: |
+            ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPOSITORY }}/web:${{ github.sha }}
+            ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPOSITORY }}/web:staging
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # `:staging` is a moving alias pointing at whatever main's latest SHA
+      # is — the interface point for the infra side to poll (e.g. ArgoCD
+      # Image Updater watching this repository/tag) without this repo
+      # needing to know anything about how ArgoCD/GKE is configured. The
+      # immutable `:<sha>` tag alongside it is what actually gets promoted to
+      # prod in promote.yml — never `:staging` itself, since it keeps moving.
+      - name: Summary
+        run: |
+          echo "Pushed ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPOSITORY }}/web:${{ github.sha }}" >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,84 @@
+# Local simulation of the real deployment flow: build the exact same image
+# CI builds (tools/docker/Dockerfile), run it against a local Vault dev
+# server instead of the real one, and have it fetch its runtime env from
+# Vault the same way the running pod does in GKE — instead of `docker run -e
+# ...` by hand. See docs/runbook/deployment.md §6.
+#
+# This does NOT reproduce ArgoCD/GKE — it only exercises "build once, fetch
+# config from Vault at container start, serve requests," which is the part
+# that lives in this repo. Run via `bun run docker up` (see
+# tools/scripts/docker.ts), not `docker compose` directly, so logs/stop/
+# restart stay consistent — see that script's usage.
+name: chatsmith-web-local
+
+services:
+  vault:
+    image: hashicorp/vault:latest
+    cap_add: [IPC_LOCK]
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: root
+      VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+      # `vault status` (used below, and by the CLI's own default) assumes
+      # `https://127.0.0.1:8200` when VAULT_ADDR is unset — the dev server
+      # only listens on plain HTTP, so without this the healthcheck fails
+      # with "server gave HTTP response to HTTPS client" forever. Confirmed
+      # directly: this was the actual reason `up` failed on first try.
+      VAULT_ADDR: http://127.0.0.1:8200
+      # Also needed for `bun run docker vault ...` (docker.ts's passthrough,
+      # `docker compose exec vault vault ...`) to authenticate — without it,
+      # the CLI has no token and every command 403s. Confirmed directly.
+      VAULT_TOKEN: root
+    ports:
+      - "8200:8200"
+    healthcheck:
+      test: ["CMD", "vault", "status"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+  # One-shot: seeds Vault's KV store from apps/web/.env.local — the same
+  # file already used for `bun dev` — via tools/docker/seed-vault.sh, so
+  # there's one source of local secrets, not two to keep in sync. Requires
+  # apps/web/.env.local to exist (`bun run docker up` checks this upfront
+  # with a friendlier error than Docker's own bind-mount failure would give).
+  vault-init:
+    image: hashicorp/vault:latest
+    depends_on:
+      vault:
+        condition: service_healthy
+    environment:
+      VAULT_ADDR: http://vault:8200
+      VAULT_TOKEN: root
+      ENV_FILE: /env.local
+    entrypoint: ["sh", "/seed-vault.sh"]
+    volumes:
+      - ./seed-vault.sh:/seed-vault.sh:ro
+      - type: bind
+        source: ../../apps/web/.env.local
+        target: /env.local
+        read_only: true
+        bind:
+          create_host_path: false
+
+  web:
+    build:
+      context: ../..
+      dockerfile: tools/docker/Dockerfile
+    depends_on:
+      vault-init:
+        condition: service_completed_successfully
+    environment:
+      VAULT_ADDR: http://vault:8200
+      VAULT_TOKEN: root
+      VAULT_SECRET_PATH: secret/data/chatsmith-web
+    # Overrides the production image's CMD — only for this local simulation.
+    # The image itself never bakes in Vault-fetching logic (see
+    # tools/docker/Dockerfile's comments on why nothing is build-time here);
+    # this script is mounted in, not part of what CI actually ships.
+    entrypoint: ["bun", "/vault-entrypoint.ts"]
+    volumes:
+      - ./vault-entrypoint.ts:/vault-entrypoint.ts:ro
+    ports:
+      # Override with WEB_PORT=<port> bun run docker up if 3000 is already
+      # taken by a local `bun dev` — see tools/scripts/docker.ts.
+      - "${WEB_PORT:-3000}:3000"

@@ -69,7 +69,11 @@ export const LanguageSwitcher = ({ className }: LanguageSwitcherProps) => {
   return (
     <Select disabled={isPending} onValueChange={onValueChange} value={locale}>
       <span className="sr-only">{t("Language")}</span>
-      <SelectTrigger className={cn("text-sm", className)} size="sm">
+      <SelectTrigger
+        className={cn("text-sm", className)}
+        size="sm"
+        aria-label="Language"
+      >
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

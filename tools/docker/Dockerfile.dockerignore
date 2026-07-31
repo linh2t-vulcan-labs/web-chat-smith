@@ -1,0 +1,14 @@
+**/node_modules
+**/.next
+**/.turbo
+**/dist
+**/.cache
+**/.git
+**/.vscode
+**/*.log
+**/.env
+**/.env.*
+!**/.env.example
+**/coverage
+docs
+.claude

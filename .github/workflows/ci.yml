@@ -1,0 +1,44 @@
+name: CI
+
+# Required status check for branch protection on `main` — see
+# docs/runbook/flags-and-release-workflow.md §6 ("main phải luôn xanh").
+# Every PR must pass this before merge; nothing here pushes an image.
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.14"
+
+      # --linker=hoisted: matches tools/docker/Dockerfile — keeps CI's
+      # node_modules layout identical to what's actually shipped, so a
+      # tracing/resolution bug (see Dockerfile comments) doesn't slip through
+      # CI green and only surface in the built image.
+      - name: Install dependencies
+        run: bun install --frozen-lockfile --linker=hoisted
+
+      - name: Lint & format check
+        run: bun x ultracite check
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Unit tests
+        run: bun run test
+
+      - name: Flag lifecycle audit
+        run: bun run --cwd apps/web audit:flags
+
+      - name: Build
+        run: bun run build --filter=web
