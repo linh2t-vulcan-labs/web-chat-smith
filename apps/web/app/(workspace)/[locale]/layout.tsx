@@ -1,5 +1,6 @@
 import type { LocaleLayoutShellProps } from "@/components/layout/locale-layout-shell";
 import { LocaleLayoutShell } from "@/components/layout/locale-layout-shell";
+import { ThemeToggleGated } from "@/components/layout/theme-toggle-gated";
 
 /**
  * FlagsProvider/NotificationsProvider/GuestSessionProvider mount one level
@@ -10,8 +11,8 @@ import { LocaleLayoutShell } from "@/components/layout/locale-layout-shell";
  */
 export const instant = false;
 
-const WorkspaceLocaleLayout = (props: LocaleLayoutShellProps) => (
-  <LocaleLayoutShell {...props} />
-);
+const WorkspaceLocaleLayout = (
+  props: Omit<LocaleLayoutShellProps, "themeToggle">
+) => <LocaleLayoutShell {...props} themeToggle={<ThemeToggleGated />} />;
 
 export default WorkspaceLocaleLayout;

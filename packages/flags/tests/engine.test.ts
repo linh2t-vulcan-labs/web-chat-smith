@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { createFlagsEngine } from "../src/core/engine";
 import { defineFlagSchema } from "../src/schema";
-import { createTestAdapter } from "./test-adapter";
+import { createTestAdapter } from "../src/testing/test-adapter";
 
 const testGovernance = {
   expiresAt: "2999-01-01",

@@ -12,6 +12,8 @@ import { OfflineBanner } from "@/components/layout/offline-banner";
 export interface LocaleLayoutShellProps {
   children: ReactNode;
   params: Promise<{ locale: string }>;
+  /** See `Header`'s doc comment — `(workspace)` vs `(marketing)` pass different things here. */
+  themeToggle: ReactNode;
 }
 
 /**
@@ -26,6 +28,7 @@ export interface LocaleLayoutShellProps {
 export const LocaleLayoutShell = async ({
   children,
   params,
+  themeToggle,
 }: LocaleLayoutShellProps) => {
   const { locale } = await params;
   if (!isValidLocale(locale)) {
@@ -53,7 +56,7 @@ export const LocaleLayoutShell = async ({
             nothing. */}
         <Toaster />
         <OfflineBanner />
-        <Header />
+        <Header themeToggle={themeToggle} />
         <main>{children}</main>
       </NextIntlClientProvider>
     </body>

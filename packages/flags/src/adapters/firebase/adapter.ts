@@ -50,12 +50,16 @@ export const createFirebaseAdapter = (
 ): FlagAdapter => ({
   getRawValue: (key) => toRawFlagValue(getValue(remoteConfig, key)),
   init: async () => {
-    // `firebase/remote-config` is a browser-only SDK (relies on IndexedDB) —
-    // there is no supported way to run it in a Server Component/Route
-    // Handler (Firebase's own SSR guide only covers Auth/Firestore/App Check,
-    // not Remote Config). Throwing a clear message here beats letting the
-    // engine's catch-all report a cryptic IndexedDB error — see
-    // docs/runbook/flags-and-release-workflow.md §5.
+    // `firebase/remote-config`'s own type declarations say so explicitly —
+    // "This SDK does not work in a Node.js environment" (verified directly
+    // against the installed @firebase/remote-config, both its CJS and ESM
+    // builds ship the same warning). It falls back to in-memory storage when
+    // IndexedDB is missing rather than throwing, but that path isn't
+    // supported or tested by Firebase, so don't rely on it — not even via
+    // `FirebaseServerApp`, which only extends Auth/Firestore/App Check to
+    // SSR per Firebase's own SSR guide, not Remote Config. Throwing a clear
+    // message here beats letting the engine's catch-all report a cryptic
+    // IndexedDB error — see docs/runbook/flags-and-release-workflow.md §5.
     if (typeof window === "undefined") {
       throw new TypeError(
         "[@cs/flags/firebase] createFirebaseAdapter only runs in the browser. " +

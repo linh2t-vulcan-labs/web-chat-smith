@@ -3,7 +3,6 @@ import type { FlagAdapter } from "@cs/flags";
 import { createFlagsEngine } from "@cs/flags";
 import { createFirebaseAdapter } from "@cs/flags/firebase";
 import { REMOTE_CONFIG_KEYS } from "@cs/flags/keys";
-import { createFlagsReact } from "@cs/flags/react";
 import { defineFlagSchema } from "@cs/flags/schema";
 import { getRemoteConfig } from "firebase/remote-config";
 
@@ -74,6 +73,3 @@ export const flagsEngine = () => {
   }
   return engine;
 };
-
-export const { FlagsProvider, Feature, useFlag } =
-  createFlagsReact<typeof flagSchema>();

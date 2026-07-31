@@ -4,7 +4,7 @@ App bootstrap and auth for Firebase — the shared foundation `@cs/flags` and `@
 
 ## Why this exists
 
-Before this package, every app that touched Firebase re-implemented its own `getFirebaseApp()`/`getFirebaseAuth()` singletons, re-exported the whole Firebase Auth SDK from the same module as unrelated features (Remote Config), and manually diffed `localStorage` to track the signed-in user. This package is just the small, reusable slice: one singleton app, one singleton auth client, and an `AuthProvider` other packages can read `uid` from.
+Before this package, every app that touched Firebase re-implemented its own `getFirebaseApp()`/`getFirebaseAuth()` singletons, re-exported the whole Firebase Auth SDK from the same module as unrelated features (Remote Config), and manually diffed `localStorage` to track the signed-in user. This package is just the small, reusable slice: one singleton app, one singleton auth client, and helpers for decoding an ID token's claims.
 
 ## Usage
 
@@ -23,26 +23,6 @@ export const getAuth = () => getFirebaseAuth(getApp());
 ```
 
 If you need to source the raw config string from somewhere other than `@cs/env` (a test double, a non-`@cs/env` app), use the lower-level `parseFirebaseConfig(rawJsonString)` instead.
-
-```tsx
-// app/layout.tsx
-import { AuthProvider } from "@cs/firebase/react";
-import { auth } from "@/lib/firebase";
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <AuthProvider auth={auth}>{children}</AuthProvider>;
-}
-```
-
-```tsx
-import { useAuth } from "@cs/firebase/react";
-
-const { user, uid, isReady } = useAuth();
-```
 
 ## Social sign-in
 
@@ -76,4 +56,3 @@ const uid = extractUserId(idToken); // -> string, "" if malformed
 | `@cs/firebase` | `getFirebaseApp` |
 | `@cs/firebase/auth` | `getFirebaseAuth`, `getAuthProvider`, `getGoogleAuthProvider`/`getAppleAuthProvider`/`getFacebookAuthProvider`, `decodeFirebaseToken`, `extractUserId` |
 | `@cs/firebase/config` | `getFirebaseConfigFromEnv`, `parseFirebaseConfig` |
-| `@cs/firebase/react` | `AuthProvider`, `useAuth` |

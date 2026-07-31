@@ -4,7 +4,7 @@ import { createFlagsEngine } from "../src/core/engine";
 import { defineExperiment } from "../src/experiments/define-experiment";
 import { resolveExperiment } from "../src/experiments/resolve-experiment";
 import { defineFlagSchema } from "../src/schema";
-import { createTestAdapter } from "./test-adapter";
+import { createTestAdapter } from "../src/testing/test-adapter";
 
 const schema = defineFlagSchema({
   subscriptionUiVersion: {

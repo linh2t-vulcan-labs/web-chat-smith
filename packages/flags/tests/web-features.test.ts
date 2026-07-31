@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import { createFlagsEngine } from "../src/core/engine";
 import { defineFlagSchema } from "../src/schema";
+import { createTestAdapter } from "../src/testing/test-adapter";
 import { createWebFeatures } from "../src/web-features";
-import { createTestAdapter } from "./test-adapter";
 
 const schema = defineFlagSchema({
   webFeatures: {

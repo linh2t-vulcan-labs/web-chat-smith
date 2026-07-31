@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 
-import { FlagsProvider as FlagsProviderImpl, flagsEngine } from "@/lib/flags";
+import { flagsEngine } from "@/lib/flags";
+import { FlagsProvider as FlagsProviderImpl } from "@/lib/flags-react";
 
 /**
  * `createFlagsEngine` doesn't auto-fetch — `init()` must be called once

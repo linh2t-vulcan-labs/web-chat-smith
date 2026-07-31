@@ -1,4 +1,4 @@
-import type { FlagAdapter, FlagSource, RawFlagValue } from "../src/core/types";
+import type { FlagAdapter, FlagSource, RawFlagValue } from "../core/types";
 
 /**
  * An in-memory {@link FlagAdapter} for tests: `values` holds the raw text

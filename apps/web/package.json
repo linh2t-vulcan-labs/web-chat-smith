@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "audit:flags": "bun scripts/audit-flags.ts",
     "clean": "rm -rf .next node_modules",
-    "analyze": "next experimental-analyze"
+    "analyze": "next experimental-analyze",
+    "test": "vitest run"
   },
   "dependencies": {
     "@cs/api-client": "workspace:*",
@@ -41,11 +42,16 @@
   "devDependencies": {
     "@cs/ts-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:ui",
+    "@testing-library/jest-dom": "catalog:tools",
+    "@testing-library/react": "catalog:tools",
     "@types/bun": "catalog:tools",
     "@types/node": "catalog:tools",
     "@types/react": "catalog:framework",
     "@types/react-dom": "catalog:framework",
-    "typescript": "catalog:tools"
+    "@vitejs/plugin-react": "catalog:tools",
+    "jsdom": "catalog:tools",
+    "typescript": "catalog:tools",
+    "vitest": "catalog:tools"
   },
   "browserslist": [
     "last 2 chrome versions",

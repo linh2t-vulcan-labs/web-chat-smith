@@ -42,8 +42,14 @@ import { flagSchema } from "./schema";
 const remoteConfig = getRemoteConfig(app);
 // `@cs/env`'s schema already declares this fetch-interval override —
 // `remoteConfig.settings` is owned by the caller, this package never touches it.
-remoteConfig.settings.minimumFetchIntervalMillis =
-  getRuntimeEnv().CS_PUBLIC_FIREBASE_REMOTE_CONFIG_INTERVAL_FETCH ?? 43_200_000; // 12h default
+// Leave the env var unset in staging/prod to fall through to the Firebase
+// SDK's own default (12h) — only override when a call site has a real reason
+// to (e.g. `0` for local dev), don't hardcode the SDK's default here.
+const fetchIntervalMs =
+  getRuntimeEnv().CS_PUBLIC_FIREBASE_REMOTE_CONFIG_INTERVAL_FETCH;
+if (fetchIntervalMs) {
+  remoteConfig.settings.minimumFetchIntervalMillis = fetchIntervalMs;
+}
 
 export const flagsEngine = createFlagsEngine({
   adapter: createFirebaseAdapter(remoteConfig, flagSchema),
