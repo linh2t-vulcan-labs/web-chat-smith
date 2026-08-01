@@ -13,8 +13,8 @@
         "react-dom": "^19.2.8",
         "@types/react": "^19.2.18",
         "@types/react-dom": "^19.2.4",
-        "next": "16.3.0-canary.104",
-        "@next/third-parties": "16.3.0-canary.104",
+        "next": "16.3.0-canary.105",
+        "@next/third-parties": "16.3.0-canary.105",
         "next-intl": "^4.13.4",
         "server-only": "^0.0.1",
         "@swc/helpers": "^0.5.23"
@@ -36,7 +36,7 @@
         "@tailwindcss/postcss": "^4.3.3",
         "@tailwindcss/typography": "^0.5.20",
         "tailwindcss-animate": "^1.0.7",
-        "shadcn": "^4.16.0",
+        "shadcn": "^4.16.1",
         "sonner": "^2.0.7",
         "motion": "^12.43.0",
         "lottie-react": "^2.4.1",
@@ -61,7 +61,7 @@
         "@tanstack/react-query-devtools": "^5.101.4",
         "@tanstack/react-table": "^8.21.3",
         "zustand": "^5.0.14",
-        "nuqs": "^2.9.3",
+        "nuqs": "^2.9.4",
         "immer": "^11.1.15"
       },
       "validation": {
@@ -91,16 +91,16 @@
         "@types/jszip": "^3.4.1",
         "ansi-to-react": "^6.2.6",
         "react-jsx-parser": "^2.4.1",
-        "shiki": "^4.3.1"
+        "shiki": "^4.4.1"
       },
       "integrations": {
         "firebase": "^12.17.0",
-        "jose": "^6.2.5",
+        "jose": "^6.2.6",
         "jwt-decode": "^4.0.0",
         "@paddle/paddle-js": "^1.6.4",
         "@coralogix/browser": "^3.20.0",
         "@marsidev/react-turnstile": "^1.5.4",
-        "ai": "^7.0.44"
+        "ai": "^7.0.47"
       },
       "utils": {
         "lodash-es": "^4.18.1",
@@ -126,7 +126,7 @@
         "oxfmt": "^0.61.0",
         "oxlint": "^1.76.0",
         "oxlint-plugin-react-doctor": "^0.9.2",
-        "turbo": "^2.10.7",
+        "turbo": "^2.10.8",
         "ultracite": "7.9.4",
         "vitest": "^4.1.10",
         "tsdown": "^0.22.14",
