@@ -42,6 +42,22 @@ const MicSelectorContext = createContext<MicSelectorContextType>({
   width: 200,
 });
 
+const getAudioInputDevices = async (): Promise<MediaDeviceInfo[]> => {
+  const deviceList = await navigator.mediaDevices.enumerateDevices();
+  return deviceList.filter((device) => device.kind === "audioinput");
+};
+
+const getDeviceLoadErrorMessage = (caughtError: unknown) =>
+  caughtError instanceof Error
+    ? caughtError.message
+    : "Failed to get audio devices";
+
+const stopMediaStreamTracks = (stream: MediaStream) => {
+  for (const track of stream.getTracks()) {
+    track.stop();
+  }
+};
+
 export const useAudioDevices = () => {
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,19 +68,9 @@ export const useAudioDevices = () => {
     try {
       setLoading(true);
       setError(null);
-
-      const deviceList = await navigator.mediaDevices.enumerateDevices();
-      const audioInputs = deviceList.filter(
-        (device) => device.kind === "audioinput"
-      );
-
-      setDevices(audioInputs);
+      setDevices(await getAudioInputDevices());
     } catch (caughtError) {
-      const message =
-        caughtError instanceof Error
-          ? caughtError.message
-          : "Failed to get audio devices";
-
+      const message = getDeviceLoadErrorMessage(caughtError);
       setError(message);
       console.error("Error getting audio devices:", message);
     } finally {
@@ -84,24 +90,12 @@ export const useAudioDevices = () => {
       const tempStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
+      stopMediaStreamTracks(tempStream);
 
-      for (const track of tempStream.getTracks()) {
-        track.stop();
-      }
-
-      const deviceList = await navigator.mediaDevices.enumerateDevices();
-      const audioInputs = deviceList.filter(
-        (device) => device.kind === "audioinput"
-      );
-
-      setDevices(audioInputs);
+      setDevices(await getAudioInputDevices());
       setHasPermission(true);
     } catch (caughtError) {
-      const message =
-        caughtError instanceof Error
-          ? caughtError.message
-          : "Failed to get audio devices";
-
+      const message = getDeviceLoadErrorMessage(caughtError);
       setError(message);
       console.error("Error getting audio devices:", message);
     } finally {

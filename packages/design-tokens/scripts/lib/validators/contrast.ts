@@ -4,9 +4,10 @@ import {
   isHexColor,
   normalizeHexColor,
 } from "../utils/color-math";
+import type { FlatTokenEntry } from "../utils/token-tree";
 import { flattenTokenMap } from "../utils/token-tree";
 
-export interface ContrastValidationError {
+interface ContrastValidationError {
   bgPath: string;
   bgValue: string;
   code: "low_contrast";
@@ -16,7 +17,7 @@ export interface ContrastValidationError {
   textValue: string;
 }
 
-export interface ContrastValidationResult {
+interface ContrastValidationResult {
   errors: ContrastValidationError[];
   isValid: boolean;
 }
@@ -70,47 +71,64 @@ const CONTRAST_PAIRS: ContrastPair[] = [
   },
 ];
 
-const collectColorTokens = (tokens: TokenMap): Map<string, string> => {
-  const output = new Map<string, string>();
+const toNormalizedHexEntry = (
+  entry: FlatTokenEntry
+): [path: string, hex: string] | null => {
+  const { $type, $value } = entry.token;
 
-  for (const entry of flattenTokenMap(tokens)) {
-    const { $type, $value } = entry.token;
-
-    if ($type === "color" && typeof $value === "string" && isHexColor($value)) {
-      output.set(entry.path, normalizeHexColor($value));
-    }
+  if ($type !== "color") {
+    return null;
   }
 
-  return output;
+  if (typeof $value !== "string" || !isHexColor($value)) {
+    return null;
+  }
+
+  return [entry.path, normalizeHexColor($value)];
+};
+
+const collectColorTokens = (tokens: TokenMap): Map<string, string> => {
+  const entries = flattenTokenMap(tokens)
+    .map(toNormalizedHexEntry)
+    .filter((entry): entry is [string, string] => entry !== null);
+
+  return new Map(entries);
+};
+
+const checkContrastPair = (
+  pair: ContrastPair,
+  tokenValues: Map<string, string>
+): ContrastValidationError | null => {
+  const textValue = tokenValues.get(pair.textPath);
+  const bgValue = tokenValues.get(pair.bgPath);
+
+  if (!textValue || !bgValue) {
+    return null;
+  }
+
+  const ratio = getContrastRatio(textValue, bgValue);
+  if (ratio >= pair.minRatio) {
+    return null;
+  }
+
+  return {
+    bgPath: pair.bgPath,
+    bgValue,
+    code: "low_contrast",
+    contrastRatio: Number(ratio.toFixed(2)),
+    message: `Low contrast between ${pair.textPath} and ${pair.bgPath}`,
+    textPath: pair.textPath,
+    textValue,
+  };
 };
 
 export const validateContrast = (
   tokens: TokenMap
 ): ContrastValidationResult => {
-  const errors: ContrastValidationError[] = [];
   const tokenValues = collectColorTokens(tokens);
-
-  for (const pair of CONTRAST_PAIRS) {
-    const textValue = tokenValues.get(pair.textPath);
-    const bgValue = tokenValues.get(pair.bgPath);
-
-    if (!textValue || !bgValue) {
-      continue;
-    }
-
-    const ratio = getContrastRatio(textValue, bgValue);
-    if (ratio < pair.minRatio) {
-      errors.push({
-        bgPath: pair.bgPath,
-        bgValue,
-        code: "low_contrast",
-        contrastRatio: Number(ratio.toFixed(2)),
-        message: `Low contrast between ${pair.textPath} and ${pair.bgPath}`,
-        textPath: pair.textPath,
-        textValue,
-      });
-    }
-  }
+  const errors = CONTRAST_PAIRS.map((pair) =>
+    checkContrastPair(pair, tokenValues)
+  ).filter((error): error is ContrastValidationError => error !== null);
 
   return {
     errors,

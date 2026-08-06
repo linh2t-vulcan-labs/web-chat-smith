@@ -3,9 +3,10 @@
 import Ansi from "ansi-to-react";
 import { CheckIcon, CopyIcon, TerminalIcon, Trash2Icon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
 
 import { Button } from "#components/shadcn/button";
+import { useCopyToClipboard } from "#hooks/use-copy-to-clipboard";
 import { cn } from "#lib/utils";
 
 interface TerminalContextType {
@@ -104,32 +105,12 @@ export const TerminalCopyButton = ({
   className,
   ...props
 }: TerminalCopyButtonProps) => {
-  const [isCopied, setIsCopied] = useState(false);
-  const timeoutRef = useRef<number>(0);
   const { output } = useContext(TerminalContext);
-
-  const copyToClipboard = async () => {
-    if (typeof window === "undefined" || !navigator?.clipboard?.writeText) {
-      onError?.(new Error("Clipboard API not available"));
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(output);
-      setIsCopied(true);
-      onCopy?.();
-      timeoutRef.current = window.setTimeout(() => setIsCopied(false), timeout);
-    } catch (error) {
-      onError?.(error as Error);
-    }
-  };
-
-  useEffect(
-    () => () => {
-      window.clearTimeout(timeoutRef.current);
-    },
-    []
-  );
+  const { isCopied, copyToClipboard } = useCopyToClipboard({
+    onCopy,
+    onError,
+    timeout,
+  });
 
   const Icon = isCopied ? CheckIcon : CopyIcon;
 
@@ -139,7 +120,7 @@ export const TerminalCopyButton = ({
         "size-7 shrink-0 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100",
         className
       )}
-      onClick={copyToClipboard}
+      onClick={() => copyToClipboard(output)}
       size="icon"
       variant="ghost"
       {...props}

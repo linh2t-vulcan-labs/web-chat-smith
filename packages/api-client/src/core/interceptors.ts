@@ -1,9 +1,9 @@
-import type { ApiResult } from "../errors/api-error";
+import type { ApiError, ApiResult } from "../errors/api-error";
 import type { AuthMode, IdentityMode } from "../types";
 import { httpRequest } from "./http-client";
 import type { HttpRequestOptions } from "./http-client";
 import { withRetry } from "./retry";
-import { getGuestTokenManager, getTokenManager } from "./token-manager";
+import { resolveTokenManager } from "./token-manager";
 
 export type AuthenticatedRequestOptions = HttpRequestOptions & {
   auth: AuthMode;
@@ -12,6 +12,35 @@ export type AuthenticatedRequestOptions = HttpRequestOptions & {
   /** Disable generic backoff retry for non-idempotent calls (e.g. POST that isn't safe to repeat). Default: true. */
   retry?: boolean;
 };
+
+/**
+ * Attaches the `Authorization` header for `auth: "required"` calls, leaving
+ * `headers` untouched for `auth: "none"` endpoints (refreshToken,
+ * verifyOAuthToken/exchange, ...) so they work in any environment, including
+ * server-to-server calls from a Route Handler (`getTokenManager()` throws
+ * outside the browser — see core/token-manager.ts).
+ */
+const withAuthHeader = async (
+  headers: Record<string, string> | undefined,
+  options: AuthenticatedRequestOptions
+): Promise<ApiResult<Record<string, string> | undefined>> => {
+  if (options.auth !== "required") {
+    return [null, headers];
+  }
+  const tokenManager = resolveTokenManager(options.identity);
+  const [tokenError, accessToken] = await tokenManager.ensureAccessToken();
+  if (tokenError) {
+    return [tokenError, null];
+  }
+  return [null, { ...headers, Authorization: `Bearer ${accessToken}` }];
+};
+
+const isRetryableAuthFailure = (
+  error: ApiError | null,
+  options: AuthenticatedRequestOptions,
+  hasRetriedAuth: boolean
+): boolean =>
+  Boolean(error?.isAuthError) && options.auth === "required" && !hasRetriedAuth;
 
 /**
  * The single place that:
@@ -24,34 +53,22 @@ export const authenticatedRequest = <T>(
   url: string,
   options: AuthenticatedRequestOptions
 ): Promise<ApiResult<T>> => {
-  // Lazy: only resolved for `auth: "required"` so `auth: "none"` endpoints
-  // (refreshToken, verifyOAuthToken/exchange, ...) work in any environment,
-  // including server-to-server calls from a Route Handler (getTokenManager()
-  // throws outside the browser — see core/token-manager.ts).
   const attempt = async (hasRetriedAuth: boolean): Promise<ApiResult<T>> => {
-    let { headers } = options;
-
-    if (options.auth === "required") {
-      const tokenManager =
-        options.identity === "guest"
-          ? getGuestTokenManager()
-          : getTokenManager();
-      const [tokenError, accessToken] = await tokenManager.ensureAccessToken();
-      if (tokenError) {
-        return [tokenError, null];
-      }
-      headers = { ...headers, Authorization: `Bearer ${accessToken}` };
+    const [headerError, headers] = await withAuthHeader(
+      options.headers,
+      options
+    );
+    if (headerError) {
+      return [headerError, null];
     }
 
     const result = await httpRequest<T>(url, { ...options, headers });
     const [error] = result;
 
-    if (error?.isAuthError && options.auth === "required" && !hasRetriedAuth) {
-      const tokenManager =
-        options.identity === "guest"
-          ? getGuestTokenManager()
-          : getTokenManager();
-      const [refreshError] = await tokenManager.refresh();
+    if (isRetryableAuthFailure(error, options, hasRetriedAuth)) {
+      const [refreshError] = await resolveTokenManager(
+        options.identity
+      ).refresh();
       if (refreshError) {
         return [refreshError, null];
       }

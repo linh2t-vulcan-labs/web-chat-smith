@@ -96,20 +96,24 @@ const DrawerSwipeHandle = ({
   />
 );
 
+/** `"y"` for vertical (down/up) swipe drawers, `"x"` for horizontal (left/right) ones. */
+const resolveSwipeAxis = (
+  swipeDirection: DrawerContextProps["swipeDirection"]
+): "x" | "y" =>
+  swipeDirection === "down" || swipeDirection === "up" ? "y" : "x";
+
 const DrawerContent = ({
   className,
   children,
   ...props
 }: DrawerPrimitive.Popup.Props) => {
   const { hasSnapPoints, modal, showSwipeHandle, swipeDirection } = useDrawer();
-  const swipeAxis =
-    swipeDirection === "down" || swipeDirection === "up" ? "y" : "x";
+  const swipeAxis = resolveSwipeAxis(swipeDirection);
+  const snapPointsAttr = hasSnapPoints ? "" : undefined;
 
   return (
     <DrawerPortal data-slot="drawer-portal">
-      {modal === true && (
-        <DrawerOverlay data-snap-points={hasSnapPoints ? "" : undefined} />
-      )}
+      {modal === true && <DrawerOverlay data-snap-points={snapPointsAttr} />}
       <DrawerPrimitive.Viewport
         data-slot="drawer-viewport"
         data-modal={modal}
@@ -118,7 +122,7 @@ const DrawerContent = ({
         <DrawerPrimitive.Popup
           data-slot="drawer-popup"
           data-swipe-axis={swipeAxis}
-          data-snap-points={hasSnapPoints ? "" : undefined}
+          data-snap-points={snapPointsAttr}
           className={cn(
             // Base.
             "group/drawer-popup pointer-events-auto fixed z-50 m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col bg-popover text-sm text-popover-foreground transition-[transform,height,opacity,filter] duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform outline-none select-none [interpolate-size:allow-keywords] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=down]:border-t data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=left]:border-e data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=right]:border-s data-[swipe-direction=up]:rounded-b-xl data-[swipe-direction=up]:border-b",

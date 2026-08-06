@@ -200,47 +200,29 @@ export type VoiceSelectorGenderProps = ComponentProps<"span"> & {
     | "intersex";
 };
 
+const genderIcons: Record<
+  NonNullable<VoiceSelectorGenderProps["value"]>,
+  typeof MarsIcon
+> = {
+  androgyne: MarsStrokeIcon,
+  female: VenusIcon,
+  intersex: VenusAndMarsIcon,
+  male: MarsIcon,
+  "non-binary": NonBinaryIcon,
+  transgender: TransgenderIcon,
+};
+
 export const VoiceSelectorGender = ({
   className,
   value,
   children,
   ...props
 }: VoiceSelectorGenderProps) => {
-  let icon: ReactNode | null = null;
-
-  switch (value) {
-    case "male": {
-      icon = <MarsIcon className="size-4" />;
-      break;
-    }
-    case "female": {
-      icon = <VenusIcon className="size-4" />;
-      break;
-    }
-    case "transgender": {
-      icon = <TransgenderIcon className="size-4" />;
-      break;
-    }
-    case "androgyne": {
-      icon = <MarsStrokeIcon className="size-4" />;
-      break;
-    }
-    case "non-binary": {
-      icon = <NonBinaryIcon className="size-4" />;
-      break;
-    }
-    case "intersex": {
-      icon = <VenusAndMarsIcon className="size-4" />;
-      break;
-    }
-    default: {
-      icon = <CircleSmallIcon className="size-4" />;
-    }
-  }
+  const Icon = value ? genderIcons[value] : CircleSmallIcon;
 
   return (
     <span className={cn("text-muted-foreground text-xs", className)} {...props}>
-      {children ?? icon}
+      {children ?? <Icon className="size-4" />}
     </span>
   );
 };

@@ -6,10 +6,7 @@ import { STUDIO_PREFIX } from "./constants";
 import type { EnvEntries, InferEntries } from "./parse";
 import { lazyEnv, parseEntries } from "./parse";
 
-export const assertAllStudioPrefixed = (
-  entries: EnvEntries,
-  label: string
-): void => {
+const assertAllStudioPrefixed = (entries: EnvEntries, label: string): void => {
   for (const key of Object.keys(entries)) {
     if (!key.startsWith(STUDIO_PREFIX)) {
       throw new Error(
@@ -19,10 +16,7 @@ export const assertAllStudioPrefixed = (
   }
 };
 
-export const assertNoneStudioPrefixed = (
-  entries: EnvEntries,
-  label: string
-): void => {
+const assertNoneStudioPrefixed = (entries: EnvEntries, label: string): void => {
   for (const key of Object.keys(entries)) {
     if (key.startsWith(STUDIO_PREFIX)) {
       throw new Error(

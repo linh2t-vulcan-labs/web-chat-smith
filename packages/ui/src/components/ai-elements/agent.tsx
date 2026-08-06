@@ -92,18 +92,20 @@ export type AgentToolProps = ComponentProps<typeof AccordionItem> & {
   tool: Tool;
 };
 
+const getToolSchema = (tool: Tool) =>
+  "jsonSchema" in tool && tool.jsonSchema ? tool.jsonSchema : tool.inputSchema;
+
+const getToolDescription = (tool: Tool) =>
+  typeof tool.description === "string" ? tool.description : undefined;
+
 export const AgentTool = ({
   className,
   tool,
   value,
   ...props
 }: AgentToolProps) => {
-  const schema =
-    "jsonSchema" in tool && tool.jsonSchema
-      ? tool.jsonSchema
-      : tool.inputSchema;
-  const description =
-    typeof tool.description === "string" ? tool.description : undefined;
+  const schema = getToolSchema(tool);
+  const description = getToolDescription(tool);
 
   return (
     <AccordionItem

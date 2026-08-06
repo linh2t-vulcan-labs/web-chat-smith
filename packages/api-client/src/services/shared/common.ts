@@ -11,14 +11,14 @@ export const ReadSourceSchema = z.enum([
   "READ_SOURCE_CONVERSATION_NEXUS",
 ]);
 
-export const SyncAllowSchema = z.enum([
+const SyncAllowSchema = z.enum([
   "SYNC_ALLOW_UNSPECIFIED",
   "SYNC_ALLOW_REQUEST_AND_RESPONSE",
   "SYNC_ALLOW_RESPONSE_ONLY",
   "SYNC_ALLOW_NONE",
 ]);
 
-export const SyncConversationMessageSchema = z.object({
+const SyncConversationMessageSchema = z.object({
   clientMessageId: z.string(),
   content: z.string(),
   conversationMessageId: z.string(),
@@ -41,15 +41,13 @@ export const SyncSchema = z.object({
   useMemory: z.optional(z.boolean()),
 });
 
-export type Sync = z.infer<typeof SyncSchema>;
-
-export const MessageContentPartSchema = z.object({
+const MessageContentPartSchema = z.object({
   imageUrl: z.optional(z.string()),
   text: z.optional(z.string()),
   type: z.enum(["text", "image"]),
 });
 
-export const AttachmentSchema = z.object({
+const AttachmentSchema = z.object({
   downloadUrl: z.string(),
   fileId: z.string(),
   mimeType: z.string(),
@@ -61,8 +59,6 @@ export const MessageContentSchema = z.object({
   id: z.string(),
   role: z.enum(["user", "assistant", "developer"]),
 });
-
-export type MessageContent = z.infer<typeof MessageContentSchema>;
 
 /** AI provider enum (`provider` wire field) — see temp/models/model.ts. */
 export const AIProviderSchema = z.enum([
@@ -98,7 +94,7 @@ export const AIModelSchema = z.enum([
 ]);
 
 /** `type` on chat/regenerate/prediction responses. */
-export const MessageTypeSchema = z.enum([
+const MessageTypeSchema = z.enum([
   "chat",
   "deep_research",
   "deep_research_analyze",
@@ -107,7 +103,7 @@ export const MessageTypeSchema = z.enum([
 ]);
 
 /** `type` on `TMessageDTO2` (persisted message) — distinct enum from MessageTypeSchema above, do not conflate. */
-export const MessageTypeSyncSchema = z.enum([
+const MessageTypeSyncSchema = z.enum([
   "text",
   "text_to_image",
   "image_to_text",
@@ -199,8 +195,6 @@ export const PersistedMessageSchema = z.object({
   type: MessageTypeSyncSchema,
   updatedAt: z.string(),
 });
-
-export type PersistedMessage = z.infer<typeof PersistedMessageSchema>;
 
 /** Shared shape for every `.../tracing` and generic process-poll response. */
 export const TracingResponseSchema = z.object({

@@ -1,5 +1,4 @@
 export { generateManifest } from "./manifest";
-export type { BuildManifest } from "./manifest";
 export {
   flattenTokens,
   generateDarkModeCss,
@@ -8,8 +7,7 @@ export {
   generateShadowsCss,
   generateTokensCss,
   generateTypographyCss,
-  tokenPathToCssVar,
 } from "./mode-generator";
-export type { FlatToken, ModeOverrideSources } from "./mode-generator";
+export type { FlatToken } from "./mode-generator";
 export { generateRecipeCss } from "./recipe-generator";
 export { generateShadcnBridgeCss } from "./shadcn-bridge";

@@ -1,6 +1,6 @@
 import { authenticatedRequest } from "../core/interceptors";
 import type { ApiResult } from "../errors/api-error";
-import type { HttpMethod } from "../types";
+import type { HttpMethod, QueryParams } from "../types";
 import { buildProxyUrl, buildUrl } from "../utils/build-url";
 import { parseWithSchema } from "../utils/parse-response";
 import { resolveBaseUrl } from "../utils/runtime-env";
@@ -26,6 +26,94 @@ export interface BuildEndpointRequestOptions {
   forceDirect?: boolean;
 }
 
+const isBodylessMethod = (method: AnyEndpointConfig["method"]): boolean =>
+  method === "GET" || method === "DELETE";
+
+const resolveRawBody = (
+  config: AnyEndpointConfig,
+  input: EndpointCallInput
+): unknown => config.toBody?.(input) ?? input;
+
+const shouldStringifyBody = (
+  config: AnyEndpointConfig,
+  rawBody: unknown
+): boolean => Boolean(config.skipBodyCaseConversion) && rawBody !== undefined;
+
+/**
+ * Pre-stringifying (for `skipBodyCaseConversion` endpoints) hands
+ * http-client's `serializeBody` an already-JSON string, whose
+ * `typeof body === "string"` branch returns it verbatim — the one way to opt
+ * a single endpoint out of the global body-casing transform without
+ * threading a flag through core/http-client.ts.
+ */
+const resolveRequestBody = (
+  config: AnyEndpointConfig,
+  input: EndpointCallInput
+): unknown => {
+  if (isBodylessMethod(config.method)) {
+    return;
+  }
+  const rawBody = resolveRawBody(config, input);
+  return shouldStringifyBody(config, rawBody)
+    ? JSON.stringify(rawBody)
+    : rawBody;
+};
+
+const isProxyTransport = (
+  config: AnyEndpointConfig,
+  requestOptions: BuildEndpointRequestOptions
+): boolean => !requestOptions.forceDirect && config.transport === "proxy";
+
+const resolveDirectBaseUrl = (
+  requestOptions: BuildEndpointRequestOptions,
+  serviceOptions: ServiceOptions
+): string =>
+  requestOptions.baseUrl ?? serviceOptions.baseUrl ?? resolveBaseUrl();
+
+/**
+ * "proxy" endpoints call the app's own same-origin Route Handler (see
+ * proxy/route-handler.ts) instead of the backend directly — the browser
+ * never resolves/needs the real backend host for these (see §3/§8).
+ */
+const resolveRequestUrl = (
+  serviceName: string,
+  serviceOptions: ServiceOptions,
+  config: AnyEndpointConfig,
+  path: string,
+  query: QueryParams | undefined,
+  requestOptions: BuildEndpointRequestOptions
+): string => {
+  if (isProxyTransport(config, requestOptions)) {
+    return buildProxyUrl({
+      params: query,
+      path,
+      pathPrefix: serviceOptions.pathPrefix,
+      proxyBasePath: serviceOptions.proxyBasePath,
+      service: serviceName,
+      version: config.version,
+    });
+  }
+  return buildUrl({
+    baseUrl: resolveDirectBaseUrl(requestOptions, serviceOptions),
+    params: query,
+    path,
+    pathPrefix: serviceOptions.pathPrefix,
+    service: serviceName,
+    version: config.version,
+  });
+};
+
+/**
+ * Generated once per call (outside authenticatedRequest's internal retry
+ * loop) so every automatic retry of THIS call — transient backoff in
+ * core/retry.ts, refresh-and-retry-on-401 in core/interceptors.ts — reuses
+ * the same key, while a separate caller-triggered call always gets a fresh one.
+ */
+const resolveIdempotencyHeaders = (
+  config: AnyEndpointConfig
+): Record<string, string> | undefined =>
+  config.idempotent ? { "Idempotency-Key": crypto.randomUUID() } : undefined;
+
 /**
  * Builds the URL/method/headers/body for one endpoint call from its
  * `EndpointConfig` — the single source of truth shared by the client caller
@@ -44,61 +132,23 @@ export const buildEndpointRequest = (
   const path =
     typeof config.path === "function" ? config.path(input) : config.path;
   const query = config.toQuery?.(input);
-  const rawBody =
-    config.method === "GET" || config.method === "DELETE"
-      ? undefined
-      : (config.toBody?.(input) ?? input);
-  // Pre-stringifying hands http-client's serializeBody an already-JSON
-  // string, whose `typeof body === "string"` branch returns it verbatim —
-  // the one way to opt a single endpoint out of the global body-casing
-  // transform without threading a flag through core/http-client.ts.
-  const body =
-    config.skipBodyCaseConversion && rawBody !== undefined
-      ? JSON.stringify(rawBody)
-      : rawBody;
-
-  // "proxy" endpoints call the app's own same-origin Route Handler (see
-  // proxy/route-handler.ts) instead of the backend directly — the browser
-  // never resolves/needs the real backend host for these (see §3/§8).
-  const url =
-    !requestOptions.forceDirect && config.transport === "proxy"
-      ? buildProxyUrl({
-          params: query,
-          path,
-          pathPrefix: serviceOptions.pathPrefix,
-          proxyBasePath: serviceOptions.proxyBasePath,
-          service: serviceName,
-          version: config.version,
-        })
-      : buildUrl({
-          baseUrl:
-            requestOptions.baseUrl ??
-            serviceOptions.baseUrl ??
-            resolveBaseUrl(),
-          params: query,
-          path,
-          pathPrefix: serviceOptions.pathPrefix,
-          service: serviceName,
-          version: config.version,
-        });
-
+  const body = resolveRequestBody(config, input);
+  const url = resolveRequestUrl(
+    serviceName,
+    serviceOptions,
+    config,
+    path,
+    query,
+    requestOptions
+  );
   const headers =
     typeof config.headers === "function"
       ? config.headers(input)
       : config.headers;
 
-  // Generated once per call (here, outside authenticatedRequest's internal
-  // retry loop) so every automatic retry of THIS call — transient backoff
-  // in core/retry.ts, refresh-and-retry-on-401 in core/interceptors.ts —
-  // reuses the same key, while a separate caller-triggered call always gets
-  // a fresh one.
-  const idempotencyHeaders = config.idempotent
-    ? { "Idempotency-Key": crypto.randomUUID() }
-    : undefined;
-
   return {
     body,
-    headers: { ...headers, ...idempotencyHeaders },
+    headers: { ...headers, ...resolveIdempotencyHeaders(config) },
     method: config.method,
     url,
   };

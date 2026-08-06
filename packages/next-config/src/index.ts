@@ -10,4 +10,4 @@ export {
 } from "./constants";
 export type { HeaderEntry } from "./security-headers";
 export { buildSecurityHeaders } from "./security-headers";
-export { isNonEmptyString, toDomainWildcard } from "./utils";
+export { isNonEmptyString, toDomainWildcard } from "@cs/core/domain";

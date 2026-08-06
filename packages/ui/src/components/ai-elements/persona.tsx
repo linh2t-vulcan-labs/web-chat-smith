@@ -150,6 +150,12 @@ interface PersonaWithModelProps {
   children: React.ReactNode;
 }
 
+const RGB_WHITE: [number, number, number] = [255, 255, 255];
+const RGB_BLACK: [number, number, number] = [0, 0, 0];
+
+const getThemeRgb = (theme: "light" | "dark"): [number, number, number] =>
+  theme === "dark" ? RGB_WHITE : RGB_BLACK;
+
 const PersonaWithModel = ({
   rive,
   source,
@@ -171,7 +177,7 @@ const PersonaWithModel = ({
       return;
     }
 
-    const [r, g, b] = theme === "dark" ? [255, 255, 255] : [0, 0, 0];
+    const [r, g, b] = getThemeRgb(theme);
     viewModelInstanceColor.setRgb(r, g, b);
   }, [viewModelInstanceColor, theme, source.dynamicColor]);
 
@@ -185,24 +191,21 @@ interface PersonaWithoutModelProps {
 const PersonaWithoutModel = ({ children }: PersonaWithoutModelProps) =>
   children;
 
-export const Persona: FC<PersonaProps> = ({
-  variant = "obsidian",
-  state = "idle",
+type PersonaRiveCallbacks = Pick<
+  PersonaProps,
+  "onLoad" | "onLoadError" | "onPause" | "onPlay" | "onReady" | "onStop"
+>;
+
+// Stabilizes callbacks to prevent useRive from reinitializing when the
+// caller passes a new function identity on every render.
+const useStableRiveCallbacks = ({
   onLoad,
   onLoadError,
-  onReady,
   onPause,
   onPlay,
+  onReady,
   onStop,
-  className,
-}) => {
-  const source = sources[variant];
-
-  if (!source) {
-    throw new Error(`Invalid variant: ${variant}`);
-  }
-
-  // Stabilize callbacks to prevent useRive from reinitializing
+}: PersonaRiveCallbacks) => {
   const callbacksRef = useRef({
     onLoad,
     onLoadError,
@@ -223,7 +226,7 @@ export const Persona: FC<PersonaProps> = ({
     };
   }, [onLoad, onLoadError, onPause, onPlay, onReady, onStop]);
 
-  const stableCallbacks = {
+  return {
     onLoad: ((loadedRive) =>
       callbacksRef.current.onLoad?.(loadedRive)) as RiveParameters["onLoad"],
     onLoadError: ((err) =>
@@ -236,6 +239,64 @@ export const Persona: FC<PersonaProps> = ({
     onStop: ((event) =>
       callbacksRef.current.onStop?.(event)) as RiveParameters["onStop"],
   };
+};
+
+// Wires the four Rive state-machine boolean inputs to the current persona
+// state. Rive inputs are mutable objects that must be set via direct
+// property assignment — this is the intended Rive API, not a React
+// anti-pattern.
+type StateMachineInput = ReturnType<typeof useStateMachineInput>;
+
+/** Rive inputs are mutable objects set via direct property assignment — this is the intended Rive API, not a React anti-pattern. */
+const applyStateMachineInput = (input: StateMachineInput, active: boolean) => {
+  if (input) {
+    // oxlint-disable-next-line react/react-compiler -- Rive state machine inputs are mutable by design, set via direct property assignment
+    input.value = active;
+  }
+};
+
+const usePersonaStateMachineInputs = (
+  rive: ReturnType<typeof useRive>["rive"],
+  state: PersonaState
+) => {
+  const listeningInput = useStateMachineInput(rive, stateMachine, "listening");
+  const thinkingInput = useStateMachineInput(rive, stateMachine, "thinking");
+  const speakingInput = useStateMachineInput(rive, stateMachine, "speaking");
+  const asleepInput = useStateMachineInput(rive, stateMachine, "asleep");
+
+  useEffect(() => {
+    applyStateMachineInput(listeningInput, state === "listening");
+    applyStateMachineInput(thinkingInput, state === "thinking");
+    applyStateMachineInput(speakingInput, state === "speaking");
+    applyStateMachineInput(asleepInput, state === "asleep");
+  }, [state, listeningInput, thinkingInput, speakingInput, asleepInput]);
+};
+
+export const Persona: FC<PersonaProps> = ({
+  variant = "obsidian",
+  state = "idle",
+  onLoad,
+  onLoadError,
+  onReady,
+  onPause,
+  onPlay,
+  onStop,
+  className,
+}) => {
+  const source = sources[variant];
+
+  if (!source) {
+    throw new Error(`Invalid variant: ${variant}`);
+  }
+
+  const stableCallbacks = useStableRiveCallbacks({
+    onLoad,
+    onLoadError,
+    onPause,
+    onPlay,
+    onReady,
+    onStop,
+  });
 
   // Delay initialisation by one frame to avoid creating (and leaking)
   // a WebGL2 context during React Strict Mode's first throw-away mount.
@@ -257,31 +318,7 @@ export const Persona: FC<PersonaProps> = ({
       : null
   );
 
-  const listeningInput = useStateMachineInput(rive, stateMachine, "listening");
-  const thinkingInput = useStateMachineInput(rive, stateMachine, "thinking");
-  const speakingInput = useStateMachineInput(rive, stateMachine, "speaking");
-  const asleepInput = useStateMachineInput(rive, stateMachine, "asleep");
-
-  // Rive state machine inputs are mutable objects that must be set via direct
-  // property assignment — this is the intended Rive API, not a React anti-pattern.
-  useEffect(() => {
-    if (listeningInput) {
-      // oxlint-disable-next-line react/react-compiler -- Rive state machine inputs are mutable by design, set via direct property assignment
-      listeningInput.value = state === "listening";
-    }
-    if (thinkingInput) {
-      // oxlint-disable-next-line react/react-compiler -- Rive state machine inputs are mutable by design, set via direct property assignment
-      thinkingInput.value = state === "thinking";
-    }
-    if (speakingInput) {
-      // oxlint-disable-next-line react/react-compiler -- Rive state machine inputs are mutable by design, set via direct property assignment
-      speakingInput.value = state === "speaking";
-    }
-    if (asleepInput) {
-      // oxlint-disable-next-line react/react-compiler -- Rive state machine inputs are mutable by design, set via direct property assignment
-      asleepInput.value = state === "asleep";
-    }
-  }, [state, listeningInput, thinkingInput, speakingInput, asleepInput]);
+  usePersonaStateMachineInputs(rive, state);
 
   const Component = source.hasModel ? PersonaWithModel : PersonaWithoutModel;
 

@@ -41,10 +41,13 @@ Examples:
   bun run tokens diff --json --out generated-token/diff-report.json
   bun run tokens codemod apps/web --fix`;
 
+const isHelpToken = (command: string): boolean =>
+  command === "help" || command === "--help";
+
 const run = async (): Promise<void> => {
   const [command, ...rest] = process.argv.slice(2);
 
-  if (!command || command === "help" || command === "--help") {
+  if (!command || isHelpToken(command)) {
     console.log(HELP);
     return;
   }

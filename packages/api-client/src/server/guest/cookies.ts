@@ -4,8 +4,8 @@ import { EncryptJWT, jwtDecrypt } from "jose";
 import { cookies } from "next/headers";
 
 export const GUEST_SESSION_COOKIE = "guest_session";
-export const GUEST_CSRF_COOKIE = "guest_csrf_token";
-export const GUEST_NONCE_COOKIE = "guest_nonce";
+const GUEST_CSRF_COOKIE = "guest_csrf_token";
+const GUEST_NONCE_COOKIE = "guest_nonce";
 
 const ISSUER = "cs-guest-session";
 const ALGORITHM = "dir";

@@ -149,6 +149,42 @@ export const GuestSessionProvider = ({
     }
   };
 
+  /**
+   * `guestTokenManager.addListener` callback below — reacts to a guest
+   * access token appearing/disappearing (restored, created via the captcha
+   * flow, or cleared by the proactive-refresh timer hitting an
+   * expired/rotated refresh token).
+   */
+  const handleGuestAccessTokenChange = (accessToken: string | null) => {
+    if (accessToken === null) {
+      // Re-provisioning from scratch (a fresh Turnstile challenge, not a
+      // continuation of whatever attempt count an earlier session's
+      // provisioning left behind) — otherwise a single failure here could
+      // inherit an already-high count from months ago and hit
+      // `MAX_CAPTCHA_ATTEMPTS` after just one real retry.
+      captchaAttemptsRef.current = 0;
+    }
+    setState((previous) => ({
+      ...previous,
+      guestAccessToken: accessToken,
+      isGuest: accessToken !== null,
+      // A session appearing (restored, or created via the captcha flow
+      // below) always means the challenge is no longer needed. The reverse —
+      // a token going away, e.g. the proactive-refresh timer hitting an
+      // expired/rotated guest refresh token — always means a NEW guest
+      // session must be provisioned, so re-arm the captcha instead of
+      // leaving `needsCaptcha` at its old (possibly `false`) value: without
+      // this, a guest session that silently expires mid-visit never
+      // recovers (no captcha ever shows again to re-provision one). Safe
+      // even during the authenticated-teardown path above: `value` below
+      // ignores `state` entirely whenever `isAuthenticated` is true.
+      needsCaptcha: accessToken === null,
+    }));
+    if (accessToken !== null) {
+      flushWaiters({ token: accessToken });
+    }
+  };
+
   // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- false positive: this rule only recognizes the Node EventEmitter addListener/removeListener(event, handler) shape, not TokenManager.addListener()'s React-idiomatic "returns its own disposer" contract — cleanup IS registered via the `return () => unsubscribe()` below.
   useEffect(() => {
     // Wait for the authenticated identity to settle first so a
@@ -176,36 +212,7 @@ export const GuestSessionProvider = ({
     const guestTokenManager = getGuestTokenManager();
     // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- false positive: this rule only recognizes the Node EventEmitter addListener/removeListener(event, handler) shape, not TokenManager.addListener()'s React-idiomatic "returns its own disposer" contract — cleanup IS registered via the `return () => unsubscribe()` below.
     const unsubscribe = guestTokenManager.addListener({
-      onAccessTokenChange: (accessToken) => {
-        if (accessToken === null) {
-          // Re-provisioning from scratch (a fresh Turnstile challenge, not a
-          // continuation of whatever attempt count an earlier session's
-          // provisioning left behind) — otherwise a single failure here
-          // could inherit an already-high count from months ago and hit
-          // `MAX_CAPTCHA_ATTEMPTS` after just one real retry.
-          captchaAttemptsRef.current = 0;
-        }
-        setState((previous) => ({
-          ...previous,
-          guestAccessToken: accessToken,
-          isGuest: accessToken !== null,
-          // A session appearing (restored, or created via the captcha flow
-          // below) always means the challenge is no longer needed. The
-          // reverse — a token going away, e.g. the proactive-refresh timer
-          // hitting an expired/rotated guest refresh token — always means a
-          // NEW guest session must be provisioned, so re-arm the captcha
-          // instead of leaving `needsCaptcha` at its old (possibly `false`)
-          // value: without this, a guest session that silently expires mid
-          // -visit never recovers (no captcha ever shows again to
-          // re-provision one). Safe even during the authenticated-teardown
-          // path above: `value` below ignores `state` entirely whenever
-          // `isAuthenticated` is true.
-          needsCaptcha: accessToken === null,
-        }));
-        if (accessToken !== null) {
-          flushWaiters({ token: accessToken });
-        }
-      },
+      onAccessTokenChange: handleGuestAccessTokenChange,
     });
 
     // A server-read `guest_session` cookie presence check
@@ -320,7 +327,7 @@ export const GuestSessionProvider = ({
           <Turnstile
             onError={retryOrGiveUp}
             onExpire={retryOrGiveUp}
-            onSuccess={(token) => void handleCaptchaSuccess(token)}
+            onSuccess={(token) => handleCaptchaSuccess(token)}
             options={{ size: "invisible" }}
             ref={turnstileRef}
             siteKey={siteKey}

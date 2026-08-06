@@ -40,15 +40,59 @@ export const pollProcess = <T>(
   const controller = new AbortController();
   let timer: ReturnType<typeof setTimeout> | null = null;
 
-  const tick = async (): Promise<void> => {
-    if (cancelled) {
+  /**
+   * Connectivity dropped mid-request rather than before it — same
+   * "wait for `online`" behavior as the `isOffline()` guard in `tick`, not a
+   * user-facing error.
+   */
+  const isTransientOfflineDrop = (error: ApiError): boolean =>
+    error.kind === "network" && isOffline();
+
+  /**
+   * Skip the network call entirely while offline; `handleOnline` below
+   * resumes the poll as soon as connectivity returns instead of leaving it
+   * dead until the next scheduled interval (there is none — no timer is
+   * set here on purpose).
+   */
+  const shouldSkipTick = (): boolean => cancelled || isOffline();
+
+  /** Takes the next-tick callback as a parameter (rather than closing over `tick` by name) so this doesn't forward-reference a function defined below it. */
+  const scheduleNextTick = (retryTick: () => void): void => {
+    timer = setTimeout(
+      retryTick,
+      poller.intervalMs ?? DEFAULT_POLL_INTERVAL_MS
+    );
+  };
+
+  const handleTickError = (error: ApiError, retryTick: () => void): void => {
+    if (isTransientOfflineDrop(error) || error.kind === "aborted") {
       return;
     }
-    // Skip the network call entirely while offline; `handleOnline` below
-    // resumes the poll as soon as connectivity returns instead of leaving it
-    // dead until the next scheduled interval (there is none — no timer is
-    // set here on purpose).
-    if (isOffline()) {
+    // This one tick already exhausted authenticatedRequest's own backoff
+    // retries (core/retry.ts) — but the underlying long-running job (chat,
+    // image gen, deep research) can easily outlive a single transient
+    // blip, so a still-retryable error shouldn't end the whole polling
+    // session. Keep polling on the normal interval; only a non-retryable
+    // error (auth, validation, permanent failure) is reported and stops it.
+    if (error.isRetryable) {
+      scheduleNextTick(retryTick);
+      return;
+    }
+    callbacks.onError(error);
+  };
+
+  const handleTickSuccess = (
+    snapshot: ProcessSnapshot<T>,
+    retryTick: () => void
+  ): void => {
+    callbacks.onUpdate(snapshot);
+    if (snapshot.status === "pending") {
+      scheduleNextTick(retryTick);
+    }
+  };
+
+  const tick = async (): Promise<void> => {
+    if (shouldSkipTick()) {
       return;
     }
 
@@ -56,40 +100,16 @@ export const pollProcess = <T>(
     if (cancelled) {
       return;
     }
+
+    const retryTick = () => {
+      void tick();
+    };
     if (error) {
-      // Connectivity dropped mid-request rather than before it — same
-      // "wait for `online`" behavior as the isOffline() guard above, not a
-      // user-facing error.
-      if (error.kind === "network" && isOffline()) {
-        return;
-      }
-      if (error.kind === "aborted") {
-        return;
-      }
-      // This one tick already exhausted authenticatedRequest's own backoff
-      // retries (core/retry.ts) — but the underlying long-running job (chat,
-      // image gen, deep research) can easily outlive a single transient
-      // blip, so a still-retryable error shouldn't end the whole polling
-      // session. Keep polling on the normal interval; only a non-retryable
-      // error (auth, validation, permanent failure) is reported and stops it.
-      if (error.isRetryable) {
-        timer = setTimeout(
-          () => void tick(),
-          poller.intervalMs ?? DEFAULT_POLL_INTERVAL_MS
-        );
-        return;
-      }
-      callbacks.onError(error);
+      handleTickError(error, retryTick);
       return;
     }
 
-    callbacks.onUpdate(snapshot);
-    if (snapshot.status === "pending") {
-      timer = setTimeout(
-        () => void tick(),
-        poller.intervalMs ?? DEFAULT_POLL_INTERVAL_MS
-      );
-    }
+    handleTickSuccess(snapshot, retryTick);
   };
 
   const handleOnline = (): void => {

@@ -7,7 +7,7 @@ import {
   CopyIcon,
 } from "lucide-react";
 import type { ComponentProps } from "react";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext } from "react";
 
 import { Button } from "#components/shadcn/button";
 import {
@@ -16,6 +16,7 @@ import {
   CollapsibleTrigger,
 } from "#components/shadcn/collapsible";
 import { useControllableState } from "#hooks/use-controllable-state";
+import { useCopyToClipboard } from "#hooks/use-copy-to-clipboard";
 import { cn } from "#lib/utils";
 
 // Regex patterns for parsing stack traces
@@ -60,6 +61,14 @@ const useStackTrace = () => {
   return context;
 };
 
+const isInternalFilePath = (filePath: string) =>
+  filePath.includes("node_modules") ||
+  filePath.startsWith("node:") ||
+  filePath.includes("internal/");
+
+const toLineOrColumnNumber = (value: string | undefined) =>
+  value ? Math.trunc(Number(value)) : null;
+
 const stackFrameFromMatch = (
   raw: string,
   groups: {
@@ -70,49 +79,52 @@ const stackFrameFromMatch = (
   }
 ): StackFrame => {
   const { functionName, filePath, line, column } = groups;
-  const isInternal =
-    filePath.includes("node_modules") ||
-    filePath.startsWith("node:") ||
-    filePath.includes("internal/");
 
   return {
-    columnNumber: column ? Math.trunc(Number(column)) : null,
+    columnNumber: toLineOrColumnNumber(column),
     filePath,
     functionName: functionName ?? null,
-    isInternal,
-    lineNumber: line ? Math.trunc(Number(line)) : null,
+    isInternal: isInternalFilePath(filePath),
+    lineNumber: toLineOrColumnNumber(line),
     raw,
   };
 };
 
+// Ordered from most to least specific: "at fn (path:line:col)" before the
+// function-less "at path:line:col" form.
+const STACK_FRAME_PATTERNS = [
+  STACK_FRAME_WITH_PARENS_REGEX,
+  STACK_FRAME_WITHOUT_FN_REGEX,
+];
+
+interface StackFrameMatchGroups {
+  functionName?: string;
+  filePath: string;
+  line: string;
+  column: string;
+}
+
+const matchStackFramePattern = (
+  trimmed: string
+): StackFrameMatchGroups | null => {
+  for (const pattern of STACK_FRAME_PATTERNS) {
+    const match = trimmed.match(pattern);
+    if (match?.groups) {
+      return match.groups as unknown as StackFrameMatchGroups;
+    }
+  }
+  return null;
+};
+
+const isUnparseableLineInternal = (trimmed: string) =>
+  trimmed.includes("node_modules") || trimmed.includes("node:");
+
 const parseStackFrame = (line: string): StackFrame => {
   const trimmed = line.trim();
+  const groups = matchStackFramePattern(trimmed);
 
-  // Pattern: at functionName (filePath:line:column)
-  const withParensMatch = trimmed.match(STACK_FRAME_WITH_PARENS_REGEX);
-  if (withParensMatch?.groups) {
-    return stackFrameFromMatch(
-      trimmed,
-      withParensMatch.groups as {
-        functionName: string;
-        filePath: string;
-        line: string;
-        column: string;
-      }
-    );
-  }
-
-  // Pattern: at filePath:line:column (no function name)
-  const withoutFnMatch = trimmed.match(STACK_FRAME_WITHOUT_FN_REGEX);
-  if (withoutFnMatch?.groups) {
-    return stackFrameFromMatch(
-      trimmed,
-      withoutFnMatch.groups as {
-        filePath: string;
-        line: string;
-        column: string;
-      }
-    );
+  if (groups) {
+    return stackFrameFromMatch(trimmed, groups);
   }
 
   // Fallback: unparseable line
@@ -120,10 +132,41 @@ const parseStackFrame = (line: string): StackFrame => {
     columnNumber: null,
     filePath: null,
     functionName: null,
-    isInternal: trimmed.includes("node_modules") || trimmed.includes("node:"),
+    isInternal: isUnparseableLineInternal(trimmed),
     lineNumber: null,
     raw: trimmed,
   };
+};
+
+const toErrorHeader = (
+  type: string | undefined,
+  message: string | undefined
+) => ({
+  errorMessage: message || "",
+  errorType: type ?? null,
+});
+
+/** Splits the first line of a stack trace into its error type and message, when it follows the "ErrorType: message" format. */
+const parseErrorHeader = (
+  firstLine: string
+): { errorType: string | null; errorMessage: string } => {
+  const groups = firstLine.match(ERROR_TYPE_REGEX)?.groups;
+  if (!groups) {
+    return { errorMessage: firstLine, errorType: null };
+  }
+
+  return toErrorHeader(groups.errorType, groups.message);
+};
+
+/** The parsed `StackFrame`s for every "at ..." line after the header line. */
+const parseStackFrames = (lines: string[]): StackFrame[] => {
+  const frames: StackFrame[] = [];
+  for (const line of lines) {
+    if (line.trim().startsWith("at ")) {
+      frames.push(parseStackFrame(line));
+    }
+  }
+  return frames;
 };
 
 const parseStackTrace = (trace: string): ParsedStackTrace => {
@@ -139,24 +182,8 @@ const parseStackTrace = (trace: string): ParsedStackTrace => {
   }
 
   const firstLine = (lines[0] ?? "").trim();
-  let errorType: string | null = null;
-  let errorMessage = firstLine;
-
-  // Try to extract error type from "ErrorType: message" format
-  const errorMatch = firstLine.match(ERROR_TYPE_REGEX);
-  if (errorMatch?.groups) {
-    const { errorType: type, message } = errorMatch.groups;
-    errorType = type ?? null;
-    errorMessage = message || "";
-  }
-
-  // Parse stack frames (lines starting with "at")
-  const frames: StackFrame[] = [];
-  for (const line of lines.slice(1)) {
-    if (line.trim().startsWith("at ")) {
-      frames.push(parseStackFrame(line));
-    }
-  }
+  const { errorType, errorMessage } = parseErrorHeader(firstLine);
+  const frames = parseStackFrames(lines.slice(1));
 
   return {
     errorMessage,
@@ -335,39 +362,19 @@ export const StackTraceCopyButton = ({
   children,
   ...props
 }: StackTraceCopyButtonProps) => {
-  const [isCopied, setIsCopied] = useState(false);
-  const timeoutRef = useRef<number>(0);
   const { raw } = useStackTrace();
-
-  const copyToClipboard = async () => {
-    if (typeof window === "undefined" || !navigator?.clipboard?.writeText) {
-      onError?.(new Error("Clipboard API not available"));
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(raw);
-      setIsCopied(true);
-      onCopy?.();
-      timeoutRef.current = window.setTimeout(() => setIsCopied(false), timeout);
-    } catch (error) {
-      onError?.(error as Error);
-    }
-  };
-
-  useEffect(
-    () => () => {
-      window.clearTimeout(timeoutRef.current);
-    },
-    []
-  );
+  const { isCopied, copyToClipboard } = useCopyToClipboard({
+    onCopy,
+    onError,
+    timeout,
+  });
 
   const Icon = isCopied ? CheckIcon : CopyIcon;
 
   return (
     <Button
       className={cn("size-7", className)}
-      onClick={copyToClipboard}
+      onClick={() => copyToClipboard(raw)}
       size="icon"
       variant="ghost"
       {...props}
@@ -444,15 +451,19 @@ interface FilePathButtonProps {
   ) => void;
 }
 
+const toOptionalNumber = (value: number | null) => value ?? undefined;
+
 const FilePathButton = ({ frame, onFilePathClick }: FilePathButtonProps) => {
   const handleClick = () => {
-    if (frame.filePath) {
-      onFilePathClick?.(
-        frame.filePath,
-        frame.lineNumber ?? undefined,
-        frame.columnNumber ?? undefined
-      );
+    if (!frame.filePath) {
+      return;
     }
+
+    onFilePathClick?.(
+      frame.filePath,
+      toOptionalNumber(frame.lineNumber),
+      toOptionalNumber(frame.columnNumber)
+    );
   };
 
   return (
@@ -474,6 +485,62 @@ const FilePathButton = ({ frame, onFilePathClick }: FilePathButtonProps) => {
 
 FilePathButton.displayName = "FilePathButton";
 
+interface StackTraceFrameRowProps {
+  frame: StackFrame;
+  onFilePathClick?: FilePathButtonProps["onFilePathClick"];
+}
+
+const StackTraceFrameFunctionName = ({ frame }: { frame: StackFrame }) => {
+  if (!frame.functionName) {
+    return null;
+  }
+
+  return (
+    <span className={frame.isInternal ? "" : "text-foreground"}>
+      {frame.functionName}{" "}
+    </span>
+  );
+};
+
+const StackTraceFrameLocation = ({
+  frame,
+  onFilePathClick,
+}: StackTraceFrameRowProps) => {
+  if (frame.filePath) {
+    return (
+      <>
+        <span className="text-muted-foreground">(</span>
+        <FilePathButton frame={frame} onFilePathClick={onFilePathClick} />
+        <span className="text-muted-foreground">)</span>
+      </>
+    );
+  }
+
+  if (frame.functionName) {
+    return null;
+  }
+
+  return <span>{frame.raw.replace(AT_PREFIX_REGEX, "")}</span>;
+};
+
+const StackTraceFrameRow = ({
+  frame,
+  onFilePathClick,
+}: StackTraceFrameRowProps) => (
+  <div
+    className={cn(
+      "text-xs",
+      frame.isInternal ? "text-muted-foreground/50" : "text-foreground/90"
+    )}
+  >
+    <span className="text-muted-foreground">at </span>
+    <StackTraceFrameFunctionName frame={frame} />
+    <StackTraceFrameLocation frame={frame} onFilePathClick={onFilePathClick} />
+  </div>
+);
+
+StackTraceFrameRow.displayName = "StackTraceFrameRow";
+
 export const StackTraceFrames = ({
   className,
   showInternalFrames = true,
@@ -488,30 +555,11 @@ export const StackTraceFrames = ({
   return (
     <div className={cn("space-y-1 p-3", className)} {...props}>
       {framesToShow.map((frame) => (
-        <div
-          className={cn(
-            "text-xs",
-            frame.isInternal ? "text-muted-foreground/50" : "text-foreground/90"
-          )}
+        <StackTraceFrameRow
+          frame={frame}
           key={frame.raw}
-        >
-          <span className="text-muted-foreground">at </span>
-          {frame.functionName && (
-            <span className={frame.isInternal ? "" : "text-foreground"}>
-              {frame.functionName}{" "}
-            </span>
-          )}
-          {frame.filePath && (
-            <>
-              <span className="text-muted-foreground">(</span>
-              <FilePathButton frame={frame} onFilePathClick={onFilePathClick} />
-              <span className="text-muted-foreground">)</span>
-            </>
-          )}
-          {!(frame.filePath || frame.functionName) && (
-            <span>{frame.raw.replace(AT_PREFIX_REGEX, "")}</span>
-          )}
-        </div>
+          onFilePathClick={onFilePathClick}
+        />
       ))}
       {framesToShow.length === 0 && (
         <div className="text-muted-foreground text-xs">No stack frames</div>

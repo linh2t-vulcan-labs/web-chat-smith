@@ -6,6 +6,7 @@
   "sideEffects": false,
   "exports": {
     "./broadcast": "./src/broadcast/index.ts",
+    "./domain": "./src/domain/index.ts",
     "./jwt": "./src/jwt/index.ts",
     "./package.json": "./package.json"
   },

@@ -1,3 +1,5 @@
+import { isNonEmptyString } from "@cs/core/domain";
+
 import {
   CSP_BING_ADS,
   CSP_CORALOGIX,
@@ -10,7 +12,6 @@ import {
   CSP_PADDLE,
   CSP_TURNSTILE,
 } from "./constants";
-import { isNonEmptyString } from "./utils";
 
 export type CspDirectives = Record<string, string | (string | undefined)[]>;
 

@@ -5,6 +5,37 @@ import { Skeleton } from "@cs/ui/components/shadcn/skeleton";
 
 import { useGuestSession } from "@/components/providers/guest-session-provider";
 
+type GuestStatus = "active" | "captcha-failed" | "provisioning" | "verifying";
+
+const GUEST_STATUS_LABEL: Record<GuestStatus, string> = {
+  active: " — session active",
+  "captcha-failed": " — verification failed, reload to try again",
+  provisioning: " — provisioning session…",
+  // The invisible Turnstile challenge (see GuestSessionProvider) is
+  // resolving in the background — no visible widget, just this hint.
+  verifying: " — verifying…",
+};
+
+const resolveGuestStatus = ({
+  isGuest,
+  guestAccessToken,
+  captchaFailed,
+  needsCaptcha,
+}: {
+  isGuest: boolean;
+  guestAccessToken: string | null;
+  captchaFailed: boolean;
+  needsCaptcha: boolean;
+}): GuestStatus => {
+  if (isGuest && guestAccessToken) {
+    return "active";
+  }
+  if (captchaFailed) {
+    return "captcha-failed";
+  }
+  return needsCaptcha ? "verifying" : "provisioning";
+};
+
 /**
  * Proves the guest-session infra end-to-end on a real page: shows the guest
  * session's status while signed out (provisioned transparently by
@@ -22,7 +53,9 @@ export const WorkspaceSessionStatus = () => {
     captchaFailed,
   } = useGuestSession();
 
-  if (isAuthInitializing || (!isAuthenticated && isGuestInitializing)) {
+  const isLoading =
+    isAuthInitializing || (!isAuthenticated && isGuestInitializing);
+  if (isLoading) {
     return <Skeleton className="h-6 w-48" />;
   }
 
@@ -30,22 +63,17 @@ export const WorkspaceSessionStatus = () => {
     return null;
   }
 
-  const guestStatusLabel = () => {
-    if (isGuest && guestAccessToken) {
-      return " — session active";
-    }
-    if (captchaFailed) {
-      return " — verification failed, reload to try again";
-    }
-    // The invisible Turnstile challenge (see GuestSessionProvider) is
-    // resolving in the background — no visible widget, just this hint.
-    return needsCaptcha ? " — verifying…" : " — provisioning session…";
-  };
+  const guestStatus = resolveGuestStatus({
+    captchaFailed,
+    guestAccessToken,
+    isGuest,
+    needsCaptcha,
+  });
 
   return (
     <p className="text-muted-foreground text-sm">
       Browsing as guest
-      {guestStatusLabel()}
+      {GUEST_STATUS_LABEL[guestStatus]}
     </p>
   );
 };

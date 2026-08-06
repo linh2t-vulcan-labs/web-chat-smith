@@ -13,6 +13,28 @@ interface SessionExchangeResponse {
   accessTokenExpiresAt: number;
 }
 
+/** Exchanges a Firebase ID token for a Vulcan session via `/api/auth/session` — see that route's doc comment for the request contract. */
+const exchangeFirebaseSessionForVulcan = async (
+  idToken: string,
+  projectId?: string
+): Promise<SessionExchangeResponse> => {
+  const response = await fetch("/api/auth/session", {
+    body: JSON.stringify({ idToken, projectId, provider: "google" }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  });
+  if (!response.ok) {
+    throw new Error(`Session exchange failed (${response.status})`);
+  }
+  return (await response.json()) as SessionExchangeResponse;
+};
+
+/** The user closing/blocking the popup is an expected outcome, not an error. */
+const isExpectedSignInCancellation = (error: unknown): boolean =>
+  error instanceof FirebaseError &&
+  (error.code === "auth/popup-closed-by-user" ||
+    error.code === "auth/cancelled-popup-request");
+
 /**
  * Exchanges a Firebase Google sign-in for a Vulcan session via the existing
  * `/api/auth/session` route (already implemented server-side — see
@@ -42,31 +64,17 @@ export const SignInWithGoogleButton = () => {
         googleAuthProvider()
       );
       const idToken = await user.getIdToken();
-      const response = await fetch("/api/auth/session", {
-        body: JSON.stringify({
-          idToken,
-          projectId: firebaseApp().options.projectId,
-          provider: "google",
-        }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-      });
-      if (!response.ok) {
-        throw new Error(`Session exchange failed (${response.status})`);
-      }
       const { accessToken, accessTokenExpiresAt } =
-        (await response.json()) as SessionExchangeResponse;
+        await exchangeFirebaseSessionForVulcan(
+          idToken,
+          firebaseApp().options.projectId
+        );
       // AuthSyncProvider's onAccessTokenChange listener (wired at the app
       // root) reacts to this and calls router.refresh() so server-rendered
       // auth state picks up the new session cookie.
       getTokenManager().setSession(accessToken, accessTokenExpiresAt);
     } catch (signInError) {
-      // Popup closed/blocked by the user is an expected outcome, not an error.
-      if (
-        signInError instanceof FirebaseError &&
-        (signInError.code === "auth/popup-closed-by-user" ||
-          signInError.code === "auth/cancelled-popup-request")
-      ) {
+      if (isExpectedSignInCancellation(signInError)) {
         return;
       }
       setError(

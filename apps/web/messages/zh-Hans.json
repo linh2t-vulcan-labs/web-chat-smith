@@ -26,25 +26,25 @@
         "description": "请重新登录以继续。",
         "title": "您的登录已过期"
       },
-      "transient": {
-        "description": "此问题通常会自行恢复——请稍后再试。",
-        "title": "出错了"
+      "billing": {
+        "description": "此操作需要升级套餐。",
+        "title": "需要升级"
+      },
+      "platform": {
+        "description": "此功能在您当前的套餐或平台上不可用。",
+        "title": "不可用"
       },
       "rateLimit": {
         "description": "您的请求过于频繁，请稍候再试。",
         "title": "请求过于频繁"
       },
-      "billing": {
-        "description": "此操作需要升级套餐。",
-        "title": "需要升级"
+      "transient": {
+        "description": "此问题通常会自行恢复——请稍后再试。",
+        "title": "出错了"
       },
       "validation": {
         "description": "请检查您的输入内容后重试。",
         "title": "请求无效"
-      },
-      "platform": {
-        "description": "此功能在您当前的套餐或平台上不可用。",
-        "title": "不可用"
       },
       "unknown": {
         "description": "发生了意外错误。",

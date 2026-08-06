@@ -9,9 +9,13 @@ import { existsSync, readdirSync } from "node:fs";
 import nodePath from "node:path";
 
 import {
+  collectFromValue,
   extractRefPath,
+  flattenTokenMap,
   isObjectRecord,
   isTokenValue,
+  mapTokenTree,
+  mapValueLeaves,
 } from "./utils/token-tree";
 
 const { resolve } = nodePath;
@@ -62,7 +66,7 @@ interface EffectStyleEntry {
 
 export type ColorMode = "dark" | "light";
 
-export class TokenResolver {
+class TokenResolver {
   private tokensDir: string;
   private version: string;
   private colorMode: ColorMode;
@@ -211,32 +215,56 @@ export class TokenResolver {
     );
   }
 
+  private static toTrimmedTokenName(entry: EffectStyleEntry): string {
+    return typeof entry.token === "string" ? entry.token.trim() : "";
+  }
+
+  private static toEntryDescription(
+    entry: EffectStyleEntry
+  ): string | undefined {
+    return typeof entry.description === "string"
+      ? entry.description
+      : undefined;
+  }
+
+  private static parseEffectStyleEntry(
+    entry: EffectStyleEntry
+  ): { path: string[]; token: TokenValue } | null {
+    const rawToken = TokenResolver.toTrimmedTokenName(entry);
+    if (!rawToken) {
+      return null;
+    }
+
+    const path = rawToken.replaceAll("_", "-").split("-");
+    if (path.length === 0) {
+      return null;
+    }
+
+    const normalizedValue = TokenResolver.toShadowTokenValue(entry);
+    if (!normalizedValue) {
+      return null;
+    }
+
+    return {
+      path,
+      token: {
+        $description: TokenResolver.toEntryDescription(entry),
+        $type: "shadow",
+        $value: normalizedValue,
+      },
+    };
+  }
+
   private static effectStylesToTokenMap(entries: EffectStyleEntry[]): TokenMap {
     const tokens: TokenMap = {};
 
     for (const entry of entries) {
-      const rawToken =
-        typeof entry.token === "string" ? entry.token.trim() : "";
-      if (!rawToken) {
+      const parsed = TokenResolver.parseEffectStyleEntry(entry);
+      if (!parsed) {
         continue;
       }
 
-      const path = rawToken.replaceAll("_", "-").split("-");
-      if (path.length === 0) {
-        continue;
-      }
-
-      const normalizedValue = TokenResolver.toShadowTokenValue(entry);
-      if (!normalizedValue) {
-        continue;
-      }
-
-      TokenResolver.setTokenAtPath(tokens, path, {
-        $description:
-          typeof entry.description === "string" ? entry.description : undefined,
-        $type: "shadow",
-        $value: normalizedValue,
-      });
+      TokenResolver.setTokenAtPath(tokens, parsed.path, parsed.token);
     }
 
     return tokens;
@@ -262,6 +290,22 @@ export class TokenResolver {
     return trimmed.replace(/^box-shadow:\s*/iu, "");
   }
 
+  private static toDropShadowLayer(
+    effect: unknown
+  ): Record<string, unknown> | null {
+    if (!isObjectRecord(effect) || effect.type !== "drop-shadow") {
+      return null;
+    }
+
+    return {
+      blur: TokenResolver.toCssLength(effect.blur),
+      color: effect.color,
+      offsetX: TokenResolver.toCssLength(effect.x),
+      offsetY: TokenResolver.toCssLength(effect.y),
+      spread: TokenResolver.toCssLength(effect.spread),
+    };
+  }
+
   private static extractDropShadowLayers(
     effects: unknown
   ): Record<string, unknown>[] {
@@ -272,24 +316,27 @@ export class TokenResolver {
     const layers: Record<string, unknown>[] = [];
 
     for (const effect of effects) {
-      if (!isObjectRecord(effect)) {
-        continue;
+      const layer = TokenResolver.toDropShadowLayer(effect);
+      if (layer) {
+        layers.push(layer);
       }
-
-      if (effect.type !== "drop-shadow") {
-        continue;
-      }
-
-      layers.push({
-        blur: TokenResolver.toCssLength(effect.blur),
-        color: effect.color,
-        offsetX: TokenResolver.toCssLength(effect.x),
-        offsetY: TokenResolver.toCssLength(effect.y),
-        spread: TokenResolver.toCssLength(effect.spread),
-      });
     }
 
     return layers;
+  }
+
+  private static ensureNestedTokenMap(
+    cursor: TokenMap,
+    segment: string
+  ): TokenMap {
+    const existing = cursor[segment];
+    if (existing && !isTokenValue(existing)) {
+      return existing as TokenMap;
+    }
+
+    const nested: TokenMap = {};
+    cursor[segment] = nested;
+    return nested;
   }
 
   private static setTokenAtPath(
@@ -300,16 +347,7 @@ export class TokenResolver {
     let cursor: TokenMap = root;
 
     for (const segment of segments.slice(0, -1)) {
-      const existing = cursor[segment];
-
-      if (!existing || isTokenValue(existing)) {
-        const nested: TokenMap = {};
-        cursor[segment] = nested;
-        cursor = nested;
-        continue;
-      }
-
-      cursor = existing as TokenMap;
+      cursor = TokenResolver.ensureNestedTokenMap(cursor, segment);
     }
 
     const last = segments.at(-1);
@@ -324,53 +362,72 @@ export class TokenResolver {
     return typeof value === "number" ? `${value}px` : "0px";
   }
 
-  private flattenTokens(
-    tokens: TokenMap,
-    prefix = ""
-  ): Map<string, TokenValue> {
-    const output = new Map<string, TokenValue>();
-
-    for (const [key, value] of Object.entries(tokens)) {
-      const fullPath = prefix ? `${prefix}.${key}` : key;
-
-      if (isTokenValue(value)) {
-        output.set(fullPath, value);
-        continue;
-      }
-
-      if (isObjectRecord(value)) {
-        const nested = this.flattenTokens(value as TokenMap, fullPath);
-        for (const [path, token] of nested) {
-          output.set(path, token);
-        }
-      }
-    }
-
-    return output;
+  private static flattenTokens(tokens: TokenMap): Map<string, TokenValue> {
+    return new Map(
+      flattenTokenMap(tokens).map(({ path, token }) => [path, token])
+    );
   }
 
-  private collectRefsFromValue(value: TokenValue["$value"]): string[] {
-    if (typeof value === "string") {
-      const ref = extractRefPath(value);
+  private static collectRefsFromValue(value: TokenValue["$value"]): string[] {
+    return collectFromValue(value, (leaf) => {
+      const ref = extractRefPath(leaf);
       return ref ? [ref] : [];
-    }
-
-    if (Array.isArray(value)) {
-      return value.flatMap((item) =>
-        this.collectRefsFromValue(item as TokenValue["$value"])
-      );
-    }
-
-    if (isObjectRecord(value)) {
-      return Object.values(value).flatMap((item) =>
-        this.collectRefsFromValue(item as TokenValue["$value"])
-      );
-    }
-
-    return [];
+    });
   }
 
-  private buildFileDependencyGraph(
+  private static isEligibleDependencyRef(
+    ref: string,
+    path: string,
+    filePaths: Set<string>
+  ): boolean {
+    if (!filePaths.has(ref)) {
+      return false;
+    }
+
+    return ref !== path;
+  }
+
+  private static incrementInDegree(
+    inDegree: Map<string, number>,
+    path: string
+  ): void {
+    inDegree.set(path, (inDegree.get(path) ?? 0) + 1);
+  }
+
+  private static registerDependencyEdge(
+    edges: Map<string, Set<string>>,
+    inDegree: Map<string, number>,
+    path: string,
+    ref: string
+  ): void {
+    const neighbors = edges.get(ref);
+    if (!neighbors) {
+      return;
+    }
+
+    if (neighbors.has(path)) {
+      return;
+    }
+
+    neighbors.add(path);
+    TokenResolver.incrementInDegree(inDegree, path);
+  }
+
+  private static addDependencyEdge(
+    edges: Map<string, Set<string>>,
+    inDegree: Map<string, number>,
+    filePaths: Set<string>,
+    path: string,
+    ref: string
+  ): void {
+    if (!TokenResolver.isEligibleDependencyRef(ref, path, filePaths)) {
+      return;
+    }
+
+    TokenResolver.registerDependencyEdge(edges, inDegree, path, ref);
+  }
+
+  private static buildFileDependencyGraph(
     fileFlat: Map<string, TokenValue>,
     filePaths: Set<string>
   ): {
@@ -386,36 +443,60 @@ export class TokenResolver {
     }
 
     for (const [path, token] of fileFlat) {
-      const refs = this.collectRefsFromValue(token.$value);
+      const refs = TokenResolver.collectRefsFromValue(token.$value);
 
       for (const ref of refs) {
-        if (!filePaths.has(ref) || ref === path) {
-          continue;
-        }
-
-        const neighbors = edges.get(ref);
-        if (!neighbors || neighbors.has(path)) {
-          continue;
-        }
-
-        neighbors.add(path);
-        inDegree.set(path, (inDegree.get(path) ?? 0) + 1);
+        TokenResolver.addDependencyEdge(edges, inDegree, filePaths, path, ref);
       }
     }
 
     return { edges, inDegree };
   }
 
-  private static getTopologicalOrder(
-    edges: Map<string, Set<string>>,
-    inDegree: Map<string, number>
-  ): string[] {
+  private static seedZeroDegreeQueue(inDegree: Map<string, number>): string[] {
     const queue: string[] = [];
     for (const [path, degree] of inDegree) {
       if (degree === 0) {
         queue.push(path);
       }
     }
+
+    return queue;
+  }
+
+  private static decrementAndEnqueueIfReady(
+    neighbor: string,
+    inDegree: Map<string, number>,
+    queue: string[]
+  ): void {
+    const nextDegree = (inDegree.get(neighbor) ?? 0) - 1;
+    inDegree.set(neighbor, nextDegree);
+    if (nextDegree === 0) {
+      queue.push(neighbor);
+    }
+  }
+
+  private static releaseDependents(
+    current: string,
+    edges: Map<string, Set<string>>,
+    inDegree: Map<string, number>,
+    queue: string[]
+  ): void {
+    const neighbors = edges.get(current);
+    if (!neighbors) {
+      return;
+    }
+
+    for (const neighbor of neighbors) {
+      TokenResolver.decrementAndEnqueueIfReady(neighbor, inDegree, queue);
+    }
+  }
+
+  private static getTopologicalOrder(
+    edges: Map<string, Set<string>>,
+    inDegree: Map<string, number>
+  ): string[] {
+    const queue = TokenResolver.seedZeroDegreeQueue(inDegree);
     const order: string[] = [];
 
     while (queue.length > 0) {
@@ -425,21 +506,101 @@ export class TokenResolver {
       }
 
       order.push(current);
-      const neighbors = edges.get(current);
-      if (!neighbors) {
-        continue;
-      }
-
-      for (const neighbor of neighbors) {
-        const nextDegree = (inDegree.get(neighbor) ?? 0) - 1;
-        inDegree.set(neighbor, nextDegree);
-        if (nextDegree === 0) {
-          queue.push(neighbor);
-        }
-      }
+      TokenResolver.releaseDependents(current, edges, inDegree, queue);
     }
 
     return order;
+  }
+
+  private static resolveOrderedTokens(
+    order: string[],
+    fileFlat: Map<string, TokenValue>,
+    filePaths: Set<string>
+  ): Map<string, TokenValue> {
+    const localResolved = new Map<string, TokenValue>();
+
+    for (const path of order) {
+      const token = fileFlat.get(path);
+      if (!token) {
+        continue;
+      }
+
+      localResolved.set(path, {
+        ...token,
+        $value: TokenResolver.resolveLocalValue(
+          token.$value,
+          path,
+          filePaths,
+          localResolved
+        ),
+      });
+    }
+
+    return localResolved;
+  }
+
+  private static findCycleNodes(inDegree: Map<string, number>): string[] {
+    const cycleNodes: string[] = [];
+    for (const [path, degree] of inDegree) {
+      if (degree > 0) {
+        cycleNodes.push(path);
+      }
+    }
+
+    return cycleNodes;
+  }
+
+  private static fillUnresolved(
+    fileFlat: Map<string, TokenValue>,
+    localResolved: Map<string, TokenValue>
+  ): void {
+    for (const [path, token] of fileFlat) {
+      if (!localResolved.has(path)) {
+        localResolved.set(path, token);
+      }
+    }
+  }
+
+  private recordCycleIfPresent(
+    file: string,
+    inDegree: Map<string, number>
+  ): void {
+    const cycleNodes = TokenResolver.findCycleNodes(inDegree);
+    if (cycleNodes.length === 0) {
+      return;
+    }
+
+    this.errors.push({
+      file,
+      message: `Cycle detected in ${file}: ${cycleNodes.join(" → ")}`,
+      path: cycleNodes,
+      type: "cycle_detected",
+    });
+  }
+
+  private resolveFileDependencies(
+    file: string,
+    tree: TokenMap
+  ): Map<string, TokenValue> {
+    const fileFlat = TokenResolver.flattenTokens(tree);
+    const filePaths = new Set(fileFlat.keys());
+    const { edges, inDegree } = TokenResolver.buildFileDependencyGraph(
+      fileFlat,
+      filePaths
+    );
+    const order = TokenResolver.getTopologicalOrder(edges, inDegree);
+    const localResolved = TokenResolver.resolveOrderedTokens(
+      order,
+      fileFlat,
+      filePaths
+    );
+
+    if (order.length !== fileFlat.size) {
+      this.recordCycleIfPresent(file, inDegree);
+      TokenResolver.fillUnresolved(fileFlat, localResolved);
+    }
+
+    return localResolved;
   }
 
   private resolveLocalFileDependencies(
@@ -448,56 +609,7 @@ export class TokenResolver {
     const resolved = new Map<string, TokenValue>();
 
     for (const [file, tree] of Object.entries(fileTokens)) {
-      const fileFlat = this.flattenTokens(tree);
-      const filePaths = new Set(fileFlat.keys());
-      const { edges, inDegree } = this.buildFileDependencyGraph(
-        fileFlat,
-        filePaths
-      );
-      const order = TokenResolver.getTopologicalOrder(edges, inDegree);
-
-      const localResolved = new Map<string, TokenValue>();
-
-      for (const path of order) {
-        const token = fileFlat.get(path);
-        if (!token) {
-          continue;
-        }
-
-        localResolved.set(path, {
-          ...token,
-          $value: this.resolveLocalValue(
-            token.$value,
-            path,
-            filePaths,
-            localResolved
-          ),
-        });
-      }
-
-      if (order.length !== fileFlat.size) {
-        const cycleNodes: string[] = [];
-        for (const [path, degree] of inDegree) {
-          if (degree > 0) {
-            cycleNodes.push(path);
-          }
-        }
-
-        if (cycleNodes.length > 0) {
-          this.errors.push({
-            file,
-            message: `Cycle detected in ${file}: ${cycleNodes.join(" → ")}`,
-            path: cycleNodes,
-            type: "cycle_detected",
-          });
-        }
-
-        for (const [path, token] of fileFlat) {
-          if (!localResolved.has(path)) {
-            localResolved.set(path, token);
-          }
-        }
-      }
+      const localResolved = this.resolveFileDependencies(file, tree);
 
       for (const [path, token] of localResolved) {
         resolved.set(path, token);
@@ -507,53 +619,51 @@ export class TokenResolver {
     return resolved;
   }
 
-  private resolveLocalValue(
+  private static isResolvableLocalRef(
+    refPath: string | null,
+    tokenPath: string,
+    filePaths: Set<string>
+  ): refPath is string {
+    if (!refPath) {
+      return false;
+    }
+
+    if (!filePaths.has(refPath)) {
+      return false;
+    }
+
+    return refPath !== tokenPath;
+  }
+
+  private static resolveLocalRefString(
+    value: string,
+    tokenPath: string,
+    filePaths: Set<string>,
+    localResolved: Map<string, TokenValue>
+  ): TokenValue["$value"] {
+    const refPath = extractRefPath(value);
+    if (!TokenResolver.isResolvableLocalRef(refPath, tokenPath, filePaths)) {
+      return value;
+    }
+
+    const refToken = localResolved.get(refPath);
+    return refToken ? refToken.$value : value;
+  }
+
+  private static resolveLocalValue(
     value: TokenValue["$value"],
     tokenPath: string,
     filePaths: Set<string>,
     localResolved: Map<string, TokenValue>
   ): TokenValue["$value"] {
-    if (typeof value === "string") {
-      const refPath = extractRefPath(value);
-      if (!refPath || !filePaths.has(refPath)) {
-        return value;
-      }
-
-      if (refPath === tokenPath) {
-        return value;
-      }
-
-      const refToken = localResolved.get(refPath);
-      return refToken ? refToken.$value : value;
-    }
-
-    if (Array.isArray(value)) {
-      return value.map((item) =>
-        this.resolveLocalValue(
-          item as TokenValue["$value"],
-          tokenPath,
-          filePaths,
-          localResolved
-        )
-      );
-    }
-
-    if (isObjectRecord(value)) {
-      const resolvedObject: Record<string, unknown> = {};
-
-      for (const [key, nested] of Object.entries(value)) {
-        resolvedObject[key] = this.resolveLocalValue(
-          nested as TokenValue["$value"],
-          tokenPath,
-          filePaths,
-          localResolved
-        );
-      }
-
-      return resolvedObject;
-    }
-
-    return value;
+    return mapValueLeaves(value, (leaf) =>
+      TokenResolver.resolveLocalRefString(
+        leaf,
+        tokenPath,
+        filePaths,
+        localResolved
+      )
+    );
   }
 
   private mergeTokens(fileTokens: Record<string, TokenMap>): TokenMap {
@@ -570,19 +680,33 @@ export class TokenResolver {
     return merged;
   }
 
+  private static isExcludedModeFile(
+    lower: string,
+    prefix: string,
+    keepSuffix: string
+  ): boolean {
+    return lower.startsWith(prefix) && !lower.includes(keepSuffix);
+  }
+
   private static shouldIncludeInBaseMerge(fileName: string): boolean {
     const lower = fileName.toLowerCase();
 
     if (
-      lower.startsWith("primitive_densitive_mode") &&
-      !lower.includes("default")
+      TokenResolver.isExcludedModeFile(
+        lower,
+        "primitive_densitive_mode",
+        "default"
+      )
     ) {
       return false;
     }
 
     if (
-      lower.startsWith("primitive_device_mode") &&
-      !lower.includes("desktop")
+      TokenResolver.isExcludedModeFile(
+        lower,
+        "primitive_device_mode",
+        "desktop"
+      )
     ) {
       return false;
     }
@@ -590,35 +714,39 @@ export class TokenResolver {
     return true;
   }
 
+  private mergeEntry(
+    target: TokenMap,
+    key: string,
+    value: TokenValue | TokenMap
+  ): void {
+    if (isTokenValue(value)) {
+      target[key] = value;
+      return;
+    }
+
+    if (!isObjectRecord(value)) {
+      return;
+    }
+
+    const existing = target[key];
+    const nestedTarget = isObjectRecord(existing)
+      ? (existing as TokenMap)
+      : ({} as TokenMap);
+    target[key] = nestedTarget;
+    this.deepMerge(nestedTarget, value as TokenMap);
+  }
+
   private deepMerge(target: TokenMap, source: TokenMap): void {
     for (const [key, value] of Object.entries(source)) {
-      if (isTokenValue(value)) {
-        target[key] = value;
-      } else if (isObjectRecord(value)) {
-        if (!target[key]) {
-          target[key] = {} as TokenMap;
-        }
-        if (isObjectRecord(target[key])) {
-          this.deepMerge(target[key] as TokenMap, value as TokenMap);
-        }
-      }
+      this.mergeEntry(target, key, value);
     }
   }
 
-  private resolveReferencesTree(tokens: TokenMap, prefix = ""): TokenMap {
-    const result: TokenMap = {};
-
-    for (const [key, value] of Object.entries(tokens)) {
-      const fullPath = prefix ? `${prefix}.${key}` : key;
-
-      if (isTokenValue(value)) {
-        result[key] = this.resolveTokenByPath(fullPath) ?? value;
-      } else if (isObjectRecord(value)) {
-        result[key] = this.resolveReferencesTree(value as TokenMap, fullPath);
-      }
-    }
-
-    return result;
+  private resolveReferencesTree(tokens: TokenMap): TokenMap {
+    return mapTokenTree(
+      tokens,
+      (token, path) => this.resolveTokenByPath(path) ?? token
+    );
   }
 
   private resolveTokenByPath(path: string): TokenValue | null {
@@ -655,60 +783,46 @@ export class TokenResolver {
     return resolvedToken;
   }
 
+  private resolveStringValue(
+    value: string,
+    tokenPath: string
+  ): TokenValue["$value"] {
+    const refPath = extractRefPath(value);
+    if (!refPath) {
+      return value;
+    }
+
+    if (refPath === tokenPath) {
+      this.errors.push({
+        message: `Token ${tokenPath} references itself`,
+        ref: value,
+        token: tokenPath,
+        type: "invalid_reference",
+      });
+      return value;
+    }
+
+    const refToken = this.resolveTokenByPath(refPath);
+    if (!refToken) {
+      this.errors.push({
+        message: `Unresolved reference in ${tokenPath}: ${value}`,
+        ref: value,
+        token: tokenPath,
+        type: "unresolved_ref",
+      });
+      return value;
+    }
+
+    return refToken.$value;
+  }
+
   private resolveValue(
     value: TokenValue["$value"],
     tokenPath: string
   ): TokenValue["$value"] {
-    if (typeof value === "string") {
-      const refPath = extractRefPath(value);
-      if (!refPath) {
-        return value;
-      }
-
-      if (refPath === tokenPath) {
-        this.errors.push({
-          message: `Token ${tokenPath} references itself`,
-          ref: value,
-          token: tokenPath,
-          type: "invalid_reference",
-        });
-        return value;
-      }
-
-      const refToken = this.resolveTokenByPath(refPath);
-      if (!refToken) {
-        this.errors.push({
-          message: `Unresolved reference in ${tokenPath}: ${value}`,
-          ref: value,
-          token: tokenPath,
-          type: "unresolved_ref",
-        });
-        return value;
-      }
-
-      return refToken.$value;
-    }
-
-    if (Array.isArray(value)) {
-      return value.map((item) =>
-        this.resolveValue(item as TokenValue["$value"], tokenPath)
-      );
-    }
-
-    if (isObjectRecord(value)) {
-      const resolvedObject: Record<string, unknown> = {};
-
-      for (const [key, nested] of Object.entries(value)) {
-        resolvedObject[key] = this.resolveValue(
-          nested as TokenValue["$value"],
-          tokenPath
-        );
-      }
-
-      return resolvedObject;
-    }
-
-    return value;
+    return mapValueLeaves(value, (leaf) =>
+      this.resolveStringValue(leaf, tokenPath)
+    );
   }
 
   private countTokens(tokens: TokenMap): number {

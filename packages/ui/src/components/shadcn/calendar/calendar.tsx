@@ -21,6 +21,15 @@ const CalendarLocaleContext = React.createContext<Partial<Locale> | undefined>(
   undefined
 );
 
+/** Whether `day` is a standalone selected day, i.e. selected but not part of a range. */
+const isSingleSelectedDay = (modifiers: DayButtonProps["modifiers"]): boolean =>
+  Boolean(
+    modifiers.selected &&
+    !modifiers.range_start &&
+    !modifiers.range_end &&
+    !modifiers.range_middle
+  );
+
 const CalendarDayButton = ({
   className,
   day,
@@ -43,12 +52,7 @@ const CalendarDayButton = ({
       variant="ghost"
       size="icon"
       data-day={day.date.toLocaleDateString(locale?.code)}
-      data-selected-single={
-        modifiers.selected &&
-        !modifiers.range_start &&
-        !modifiers.range_end &&
-        !modifiers.range_middle
-      }
+      data-selected-single={isSingleSelectedDay(modifiers)}
       data-range-start={modifiers.range_start}
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}

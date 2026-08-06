@@ -43,6 +43,70 @@ const useCarousel = () => {
   return context;
 };
 
+/** Subscribes to the embla `api`'s scroll-position events, re-rendering on `reInit`/`select`. */
+const useCarouselScrollSubscription =
+  (api: ReturnType<typeof useEmblaCarousel>[1]) =>
+  (onStoreChange: () => void) => {
+    if (!api) {
+      return () => {
+        // no-op
+      };
+    }
+    api.on("reInit", onStoreChange);
+    api.on("select", onStoreChange);
+    return () => {
+      api.off("select", onStoreChange);
+      api.off("reInit", onStoreChange);
+    };
+  };
+
+/** Whether the carousel can currently scroll prev/next, kept in sync with the embla `api`. */
+const useCarouselScrollability = (
+  api: ReturnType<typeof useEmblaCarousel>[1]
+) => {
+  const subscribe = useCarouselScrollSubscription(api);
+  const canScrollPrev = React.useSyncExternalStore(
+    subscribe,
+    () => api?.canScrollPrev() ?? false,
+    getFalseSnapshot
+  );
+  const canScrollNext = React.useSyncExternalStore(
+    subscribe,
+    () => api?.canScrollNext() ?? false,
+    getFalseSnapshot
+  );
+
+  return { canScrollNext, canScrollPrev };
+};
+
+/** Notifies `setApi` the first time the embla `api` instance becomes available. */
+const useNotifyCarouselApi = (
+  api: CarouselApi,
+  setApi: ((api: CarouselApi) => void) | undefined
+) => {
+  const notifiedApiRef = React.useRef<CarouselApi | null>(null);
+
+  React.useEffect(() => {
+    if (!(api && setApi) || notifiedApiRef.current === api) {
+      return;
+    }
+    notifiedApiRef.current = api;
+    // embla-carousel-react only creates the api instance asynchronously
+    // (internal effect after the viewport ref mounts), so handing it to
+    // setApi at the same lifecycle point requires an effect; the ref latch
+    // guard above keeps this a one-time notification, not a per-render sync.
+    // oxlint-disable-next-line react-doctor/no-pass-data-to-parent, react-doctor/no-pass-live-state-to-parent
+    setApi(api);
+  }, [api, setApi]);
+};
+
+/** The carousel's effective orientation — the explicit `orientation` prop, falling back to the axis embla was configured with. */
+const resolveCarouselOrientation = (
+  orientation: CarouselProps["orientation"],
+  opts: CarouselOptions
+): NonNullable<CarouselProps["orientation"]> =>
+  orientation || (opts?.axis === "y" ? "vertical" : "horizontal");
+
 const Carousel = ({
   orientation = "horizontal",
   opts,
@@ -59,29 +123,7 @@ const Carousel = ({
     },
     plugins
   );
-  const subscribe = (onStoreChange: () => void) => {
-    if (!api) {
-      return () => {
-        // no-op
-      };
-    }
-    api.on("reInit", onStoreChange);
-    api.on("select", onStoreChange);
-    return () => {
-      api.off("select", onStoreChange);
-      api.off("reInit", onStoreChange);
-    };
-  };
-  const canScrollPrev = React.useSyncExternalStore(
-    subscribe,
-    () => api?.canScrollPrev() ?? false,
-    getFalseSnapshot
-  );
-  const canScrollNext = React.useSyncExternalStore(
-    subscribe,
-    () => api?.canScrollNext() ?? false,
-    getFalseSnapshot
-  );
+  const { canScrollNext, canScrollPrev } = useCarouselScrollability(api);
 
   const scrollPrev = () => {
     api?.scrollPrev();
@@ -101,20 +143,7 @@ const Carousel = ({
     }
   };
 
-  const notifiedApiRef = React.useRef<CarouselApi | null>(null);
-
-  React.useEffect(() => {
-    if (!(api && setApi) || notifiedApiRef.current === api) {
-      return;
-    }
-    notifiedApiRef.current = api;
-    // embla-carousel-react only creates the api instance asynchronously
-    // (internal effect after the viewport ref mounts), so handing it to
-    // setApi at the same lifecycle point requires an effect; the ref latch
-    // guard above keeps this a one-time notification, not a per-render sync.
-    // oxlint-disable-next-line react-doctor/no-pass-data-to-parent, react-doctor/no-pass-live-state-to-parent
-    setApi(api);
-  }, [api, setApi]);
+  useNotifyCarouselApi(api, setApi);
 
   const contextValue: CarouselContextProps = {
     api,
@@ -122,8 +151,7 @@ const Carousel = ({
     canScrollPrev,
     carouselRef,
     opts,
-    orientation:
-      orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
+    orientation: resolveCarouselOrientation(orientation, opts),
     scrollNext,
     scrollPrev,
   };

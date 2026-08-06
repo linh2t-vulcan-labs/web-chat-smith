@@ -15,7 +15,13 @@ export const normalizeHexColor = (value: string): string => {
   return `#${expanded}`;
 };
 
-export const hexToRgb = (value: string): [number, number, number] => {
+/** Normalizes a value to a canonical hex color if it is one, otherwise passes it through. */
+export const normalizeColorIfHex = (value: unknown): unknown =>
+  typeof value === "string" && isHexColor(value)
+    ? normalizeHexColor(value)
+    : value;
+
+const hexToRgb = (value: string): [number, number, number] => {
   const hex = normalizeHexColor(value).slice(1);
   const red = Number.parseInt(hex.slice(0, 2), 16);
   const green = Number.parseInt(hex.slice(2, 4), 16);
@@ -28,7 +34,7 @@ const normalizeChannel = (channel: number): number => {
   return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
 };
 
-export const relativeLuminance = (hex: string): number => {
+const relativeLuminance = (hex: string): number => {
   const [red, green, blue] = hexToRgb(hex);
   const r = normalizeChannel(red);
   const g = normalizeChannel(green);

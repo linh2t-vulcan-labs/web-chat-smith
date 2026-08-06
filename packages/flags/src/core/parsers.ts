@@ -5,7 +5,7 @@ import type { RawFlagValue } from "./types";
  * back to a caller-provided default instead of throwing.
  */
 
-export const parseBoolean = (raw: RawFlagValue, fallback: boolean): boolean => {
+const parseBoolean = (raw: RawFlagValue, fallback: boolean): boolean => {
   try {
     return raw.asBoolean();
   } catch {
@@ -13,7 +13,7 @@ export const parseBoolean = (raw: RawFlagValue, fallback: boolean): boolean => {
   }
 };
 
-export const parseString = (raw: RawFlagValue, fallback: string): string => {
+const parseString = (raw: RawFlagValue, fallback: string): string => {
   try {
     return raw.asString();
   } catch {
@@ -21,7 +21,7 @@ export const parseString = (raw: RawFlagValue, fallback: string): string => {
   }
 };
 
-export const parseNumber = (raw: RawFlagValue, fallback: number): number => {
+const parseNumber = (raw: RawFlagValue, fallback: number): number => {
   try {
     const parsed = raw.asNumber();
     return Number.isFinite(parsed) ? parsed : fallback;
@@ -30,29 +30,36 @@ export const parseNumber = (raw: RawFlagValue, fallback: number): number => {
   }
 };
 
+const isObjectLike = (value: unknown): boolean =>
+  value !== null && typeof value === "object";
+
+/** True when `parsed`'s shape (object-vs-primitive, or primitive type) matches `fallback`'s. */
+const matchesFallbackShape = <TValue>(
+  parsed: unknown,
+  fallback: TValue
+): boolean => {
+  const fallbackIsObject = isObjectLike(fallback);
+  if (fallbackIsObject !== isObjectLike(parsed)) {
+    return false;
+  }
+  return fallbackIsObject || typeof parsed === typeof fallback;
+};
+
 /**
  * Reads the value as a string and `JSON.parse`s it. Falls back for an empty
  * string, a parse failure, or a parsed value whose shape doesn't match the
  * fallback's (object-vs-primitive, or primitive type mismatch).
  */
-export const parseJSON = <TValue>(
-  raw: RawFlagValue,
-  fallback: TValue
-): TValue => {
+const parseJSON = <TValue>(raw: RawFlagValue, fallback: TValue): TValue => {
   try {
     const text = raw.asString();
     if (text.trim() === "") {
       return fallback;
     }
     const parsed: unknown = JSON.parse(text);
-    const fallbackIsObject = fallback !== null && typeof fallback === "object";
-    if (fallbackIsObject !== (typeof parsed === "object" && parsed !== null)) {
-      return fallback;
-    }
-    if (!fallbackIsObject && typeof parsed !== typeof fallback) {
-      return fallback;
-    }
-    return parsed as TValue;
+    return matchesFallbackShape(parsed, fallback)
+      ? (parsed as TValue)
+      : fallback;
   } catch {
     return fallback;
   }

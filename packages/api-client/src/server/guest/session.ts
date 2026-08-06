@@ -78,20 +78,50 @@ interface CsrfAndNonce {
   nonce: string;
 }
 
+const readCachedCsrfAndNonce = async (): Promise<CsrfAndNonce | null> => {
+  const [existingCsrf, existingNonce] = await Promise.all([
+    getGuestCsrfCookie(),
+    getGuestNonceCookie(),
+  ]);
+  return existingCsrf && existingNonce
+    ? { csrfToken: existingCsrf, nonce: existingNonce }
+    : null;
+};
+
 const ensureCsrfAndNonce = async (
   forceRefetch = false
 ): Promise<CsrfAndNonce | null> => {
   if (!forceRefetch) {
-    const [existingCsrf, existingNonce] = await Promise.all([
-      getGuestCsrfCookie(),
-      getGuestNonceCookie(),
-    ]);
-    if (existingCsrf && existingNonce) {
-      return { csrfToken: existingCsrf, nonce: existingNonce };
+    const cached = await readCachedCsrfAndNonce();
+    if (cached) {
+      return cached;
     }
   }
   const [error, bootstrap] = await bootstrapGuestSession();
   return error ? null : bootstrap;
+};
+
+/**
+ * A stale CSRF token is the one transient, retryable failure — re-bootstrap
+ * once and try again, same as apps/super-app's create-session route. A
+ * captcha failure comes back as a different status (confirmed live: 500, not
+ * 403) and is NOT retried here — the caller must get a fresh Turnstile token
+ * and call again.
+ *
+ * Takes `retry` as a callback (rather than calling `createGuestSession`
+ * directly) so this helper doesn't forward-reference the function it's
+ * defined above.
+ */
+const handleCreateSessionError = async (
+  error: ApiError,
+  retryAttempt: number,
+  retry: () => Promise<ApiResult<GuestSession>>
+): Promise<ApiResult<GuestSession>> => {
+  if (error.httpStatus === 403 && retryAttempt === 0) {
+    return retry();
+  }
+  await clearGuestSessionCookie();
+  return [error, null];
 };
 
 /**
@@ -123,20 +153,61 @@ export const createGuestSession = async (
   });
 
   if (error) {
-    // A stale CSRF token is the one transient, retryable failure — re-bootstrap
-    // once and try again, same as apps/super-app's create-session route.
-    // A captcha failure comes back as a different status (confirmed live:
-    // 500, not 403) and is NOT retried here — the caller must get a fresh
-    // Turnstile token and call again.
-    if (error.httpStatus === 403 && retryAttempt === 0) {
-      return createGuestSession(captchaToken, 1);
-    }
-    await clearGuestSessionCookie();
-    return [error, null];
+    return handleCreateSessionError(error, retryAttempt, () =>
+      createGuestSession(captchaToken, 1)
+    );
   }
 
   await setGuestSessionCookie(session);
   return [null, session];
+};
+
+interface RefreshGuestTokenResult {
+  accessToken: string;
+  refreshToken?: string;
+}
+
+const applyRefreshedGuestSession = async (
+  current: GuestSession,
+  result: RefreshGuestTokenResult
+): Promise<ApiResult<{ accessToken: string }>> => {
+  const updated: GuestSession = {
+    ...current,
+    accessToken: result.accessToken,
+    ...(result.refreshToken ? { refreshToken: result.refreshToken } : {}),
+  };
+  await setGuestSessionCookie(updated);
+  return [null, { accessToken: updated.accessToken }];
+};
+
+const hasRefreshToken = (
+  session: GuestSession | null
+): session is GuestSession => Boolean(session?.refreshToken);
+
+/**
+ * A retryable stale CSRF token (403, not yet retried) re-bootstraps and
+ * retries the whole rotation once. Only a genuine auth failure
+ * (invalid/expired/revoked refresh token) means the stored refresh token is
+ * actually dead — any other error (5xx, network) is left as-is so a later
+ * retry can still use the still-good refresh token, same gate
+ * `TokenManager.performRefresh()` applies client-side.
+ *
+ * Takes `retry` as a callback (rather than calling `refreshGuestSession`
+ * directly) so this helper doesn't forward-reference the function it's
+ * defined above.
+ */
+const handleRefreshTokenError = async (
+  error: ApiError,
+  retryAttempt: number,
+  retry: () => Promise<ApiResult<{ accessToken: string }>>
+): Promise<ApiResult<{ accessToken: string }>> => {
+  if (error.httpStatus === 403 && retryAttempt === 0) {
+    return retry();
+  }
+  if (error.isAuthError) {
+    await clearGuestSessionCookie();
+  }
+  return [error, null];
 };
 
 /** Rotates the guest access token using the stored refresh token. */
@@ -144,7 +215,7 @@ export const refreshGuestSession = async (
   retryAttempt = 0
 ): Promise<ApiResult<{ accessToken: string }>> => {
   const current = await getGuestSessionCookie();
-  if (!current?.refreshToken) {
+  if (!hasRefreshToken(current)) {
     await clearGuestSessionCookie();
     return [noSessionToRefreshError(), null];
   }
@@ -162,25 +233,10 @@ export const refreshGuestSession = async (
   });
 
   if (error) {
-    if (error.httpStatus === 403 && retryAttempt === 0) {
-      return refreshGuestSession(1);
-    }
-    // Only a genuine auth failure (invalid/expired/revoked refresh token)
-    // means the stored refresh token is actually dead — clearing the cookie
-    // on a transient error (5xx, network failure) would throw away a still-good
-    // refresh token that a later retry could have used, same gate
-    // `TokenManager.performRefresh()` applies client-side.
-    if (error.isAuthError) {
-      await clearGuestSessionCookie();
-    }
-    return [error, null];
+    return handleRefreshTokenError(error, retryAttempt, () =>
+      refreshGuestSession(1)
+    );
   }
 
-  const updated: GuestSession = {
-    ...current,
-    accessToken: result.accessToken,
-    ...(result.refreshToken ? { refreshToken: result.refreshToken } : {}),
-  };
-  await setGuestSessionCookie(updated);
-  return [null, { accessToken: updated.accessToken }];
+  return applyRefreshedGuestSession(current, result);
 };

@@ -12,7 +12,6 @@ import { ShadcnLayoutFeedback } from "./layout-feedback";
 import { ShadcnNavigation } from "./navigation";
 import { ShadcnOverlays } from "./overlays";
 
-export { ShadcnOverlays } from "./overlays";
 export const ShadcnUIGallery = () => {
   const [dir, setDir] = React.useState<"ltr" | "rtl">("ltr");
 

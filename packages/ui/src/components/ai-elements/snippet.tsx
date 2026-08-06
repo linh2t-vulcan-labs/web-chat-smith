@@ -2,7 +2,7 @@
 
 import { CheckIcon, CopyIcon } from "lucide-react";
 import type { ComponentProps } from "react";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext } from "react";
 
 import {
   InputGroup,
@@ -11,6 +11,7 @@ import {
   InputGroupInput,
   InputGroupText,
 } from "#components/shadcn/input-group";
+import { useCopyToClipboard } from "#hooks/use-copy-to-clipboard";
 import { cn } from "#lib/utils";
 
 interface SnippetContextType {
@@ -90,37 +91,12 @@ export const SnippetCopyButton = ({
   className,
   ...props
 }: SnippetCopyButtonProps) => {
-  const [isCopied, setIsCopied] = useState(false);
-  const timeoutRef = useRef<number>(0);
   const { code } = useContext(SnippetContext);
-
-  const copyToClipboard = async () => {
-    if (typeof window === "undefined" || !navigator?.clipboard?.writeText) {
-      onError?.(new Error("Clipboard API not available"));
-      return;
-    }
-
-    try {
-      if (!isCopied) {
-        await navigator.clipboard.writeText(code);
-        setIsCopied(true);
-        onCopy?.();
-        timeoutRef.current = window.setTimeout(
-          () => setIsCopied(false),
-          timeout
-        );
-      }
-    } catch (error) {
-      onError?.(error as Error);
-    }
-  };
-
-  useEffect(
-    () => () => {
-      window.clearTimeout(timeoutRef.current);
-    },
-    []
-  );
+  const { isCopied, copyToClipboard } = useCopyToClipboard({
+    onCopy,
+    onError,
+    timeout,
+  });
 
   const Icon = isCopied ? CheckIcon : CopyIcon;
 
@@ -128,7 +104,7 @@ export const SnippetCopyButton = ({
     <InputGroupButton
       aria-label="Copy"
       className={className}
-      onClick={copyToClipboard}
+      onClick={() => copyToClipboard(code)}
       size="icon-sm"
       title="Copy"
       {...props}

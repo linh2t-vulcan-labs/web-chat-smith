@@ -174,6 +174,87 @@ const SidebarProvider = ({
   );
 };
 
+type SidebarSide = "left" | "right";
+type SidebarVariant = "sidebar" | "floating" | "inset";
+type SidebarCollapsible = "offcanvas" | "icon" | "none";
+
+type SidebarProps = React.ComponentProps<"div"> & {
+  side?: SidebarSide;
+  variant?: SidebarVariant;
+  collapsible?: SidebarCollapsible;
+};
+
+type SidebarDesktopViewProps = React.ComponentProps<"div"> & {
+  collapsible: SidebarCollapsible;
+  side: SidebarSide;
+  state: "expanded" | "collapsed";
+  variant: SidebarVariant;
+};
+
+/** The desktop sidebar's `data-collapsible` value — only meaningful once the sidebar has actually collapsed. */
+const resolveSidebarDataCollapsible = (
+  state: SidebarDesktopViewProps["state"],
+  collapsible: SidebarCollapsible
+): SidebarCollapsible | "" => (state === "collapsed" ? collapsible : "");
+
+/** The desktop (non-mobile, non-`collapsible="none"`) sidebar layout: a spacer that reserves the gap, plus the actual fixed-position sidebar container. */
+const SidebarDesktopView = ({
+  children,
+  className,
+  collapsible,
+  side,
+  state,
+  variant,
+  ...props
+}: SidebarDesktopViewProps) => {
+  const isFloatingOrInset = variant === "floating" || variant === "inset";
+
+  return (
+    <div
+      className="group peer hidden text-sidebar-foreground md:block"
+      data-state={state}
+      data-collapsible={resolveSidebarDataCollapsible(state, collapsible)}
+      data-variant={variant}
+      data-side={side}
+      data-slot="sidebar"
+    >
+      {/* This is what handles the sidebar gap on desktop */}
+      <div
+        data-slot="sidebar-gap"
+        className={cn(
+          "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
+          "group-data-[collapsible=offcanvas]:w-0",
+          "group-data-[side=right]:rotate-180",
+          isFloatingOrInset
+            ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
+            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
+        )}
+      />
+      <div
+        data-slot="sidebar-container"
+        data-side={side}
+        className={cn(
+          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear data-[side=left]:left-0 data-[side=left]:group-data-[collapsible=offcanvas]:-left-(--sidebar-width) data-[side=right]:right-0 data-[side=right]:group-data-[collapsible=offcanvas]:-right-(--sidebar-width) md:flex",
+          // Adjust the padding for floating and inset variants.
+          isFloatingOrInset
+            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
+            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-e group-data-[side=right]:border-s",
+          className
+        )}
+        {...props}
+      >
+        <div
+          data-sidebar="sidebar"
+          data-slot="sidebar-inner"
+          className="flex size-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:shadow-sm group-data-[variant=floating]:ring-1 group-data-[variant=floating]:ring-sidebar-border"
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Sidebar = ({
   side = "left",
   variant = "sidebar",
@@ -182,11 +263,7 @@ const Sidebar = ({
   children,
   dir,
   ...props
-}: React.ComponentProps<"div"> & {
-  side?: "left" | "right";
-  variant?: "sidebar" | "floating" | "inset";
-  collapsible?: "offcanvas" | "icon" | "none";
-}) => {
+}: SidebarProps) => {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 
   if (collapsible === "none") {
@@ -231,48 +308,16 @@ const Sidebar = ({
   }
 
   return (
-    <div
-      className="group peer hidden text-sidebar-foreground md:block"
-      data-state={state}
-      data-collapsible={state === "collapsed" ? collapsible : ""}
-      data-variant={variant}
-      data-side={side}
-      data-slot="sidebar"
+    <SidebarDesktopView
+      className={className}
+      collapsible={collapsible}
+      side={side}
+      state={state}
+      variant={variant}
+      {...props}
     >
-      {/* This is what handles the sidebar gap on desktop */}
-      <div
-        data-slot="sidebar-gap"
-        className={cn(
-          "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
-          "group-data-[collapsible=offcanvas]:w-0",
-          "group-data-[side=right]:rotate-180",
-          variant === "floating" || variant === "inset"
-            ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
-        )}
-      />
-      <div
-        data-slot="sidebar-container"
-        data-side={side}
-        className={cn(
-          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear data-[side=left]:left-0 data-[side=left]:group-data-[collapsible=offcanvas]:-left-(--sidebar-width) data-[side=right]:right-0 data-[side=right]:group-data-[collapsible=offcanvas]:-right-(--sidebar-width) md:flex",
-          // Adjust the padding for floating and inset variants.
-          variant === "floating" || variant === "inset"
-            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-e group-data-[side=right]:border-s",
-          className
-        )}
-        {...props}
-      >
-        <div
-          data-sidebar="sidebar"
-          data-slot="sidebar-inner"
-          className="flex size-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:shadow-sm group-data-[variant=floating]:ring-1 group-data-[variant=floating]:ring-sidebar-border"
-        >
-          {children}
-        </div>
-      </div>
-    </div>
+      {children}
+    </SidebarDesktopView>
   );
 };
 
@@ -527,6 +572,26 @@ const sidebarMenuButtonVariants = cva(
   }
 );
 
+type SidebarMenuButtonTooltip =
+  | string
+  | React.ComponentProps<typeof TooltipContent>;
+
+/** `tooltip` normalized to `<TooltipContent>` props — a plain string becomes its `children`. */
+const normalizeSidebarTooltip = (
+  tooltip: SidebarMenuButtonTooltip | undefined
+): React.ComponentProps<typeof TooltipContent> | undefined => {
+  if (typeof tooltip === "string") {
+    return { children: tooltip };
+  }
+  return tooltip;
+};
+
+/** The menu button's tooltip is only shown once the sidebar has collapsed to icon-only, and never on mobile. */
+const isSidebarTooltipHidden = (
+  state: "expanded" | "collapsed",
+  isMobile: boolean
+): boolean => state !== "collapsed" || isMobile;
+
 const SidebarMenuButton = ({
   render,
   isActive = false,
@@ -538,9 +603,8 @@ const SidebarMenuButton = ({
 }: useRender.ComponentProps<"button"> &
   React.ComponentProps<"button"> & {
     isActive?: boolean;
-    tooltip?: string | React.ComponentProps<typeof TooltipContent>;
+    tooltip?: SidebarMenuButtonTooltip;
   } & VariantProps<typeof sidebarMenuButtonVariants>) => {
-  let internalTooltip = tooltip;
   const { isMobile, state } = useSidebar();
   const comp = useRender({
     defaultTagName: "button",
@@ -550,7 +614,7 @@ const SidebarMenuButton = ({
       },
       props
     ),
-    render: internalTooltip ? <TooltipTrigger render={render} /> : render,
+    render: tooltip ? <TooltipTrigger render={render} /> : render,
     state: {
       active: isActive,
       sidebar: "menu-button",
@@ -559,14 +623,10 @@ const SidebarMenuButton = ({
     },
   });
 
-  if (!internalTooltip) {
-    return comp;
-  }
+  const tooltipContent = normalizeSidebarTooltip(tooltip);
 
-  if (typeof internalTooltip === "string") {
-    internalTooltip = {
-      children: internalTooltip,
-    };
+  if (!tooltipContent) {
+    return comp;
   }
 
   return (
@@ -575,8 +635,8 @@ const SidebarMenuButton = ({
       <TooltipContent
         side="right"
         align="center"
-        hidden={state !== "collapsed" || isMobile}
-        {...internalTooltip}
+        hidden={isSidebarTooltipHidden(state, isMobile)}
+        {...tooltipContent}
       />
     </Tooltip>
   );

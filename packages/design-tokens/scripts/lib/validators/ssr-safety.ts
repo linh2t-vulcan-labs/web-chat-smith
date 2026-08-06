@@ -1,17 +1,17 @@
-import type { TokenMap } from "../resolver";
-import { isObjectRecord, isTokenValue } from "../utils/token-tree";
+import type { TokenMap, TokenValue } from "../resolver";
+import { walkTokenTree } from "../utils/token-tree";
 
 const SSR_UNSAFE_PATTERN =
   /(?<unsafeUsage>window\.|document\.|matchMedia\(|innerWidth|innerHeight)/iu;
 
-export interface SSRSafetyValidationError {
+interface SSRSafetyValidationError {
   code: "ssr_unsafe_value";
   message: string;
   tokenPath: string;
   unsafeSnippet: string;
 }
 
-export interface SSRSafetyValidationResult {
+interface SSRSafetyValidationResult {
   errors: SSRSafetyValidationError[];
   isValid: boolean;
 }
@@ -24,41 +24,32 @@ const serializeValue = (value: unknown): string => {
   return JSON.stringify(value);
 };
 
-const walkSSR = (
-  current: TokenMap,
-  errors: SSRSafetyValidationError[],
-  parentPath = ""
+const checkTokenSSRSafety = (
+  token: TokenValue,
+  tokenPath: string,
+  errors: SSRSafetyValidationError[]
 ): void => {
-  for (const [key, value] of Object.entries(current)) {
-    const tokenPath = parentPath ? `${parentPath}.${key}` : key;
-
-    if (isTokenValue(value)) {
-      const serialized = serializeValue(value.$value);
-      const matched = serialized.match(SSR_UNSAFE_PATTERN);
-
-      if (matched) {
-        errors.push({
-          code: "ssr_unsafe_value",
-          message: `Token ${tokenPath} contains SSR-unsafe runtime usage`,
-          tokenPath,
-          unsafeSnippet: matched[0],
-        });
-      }
-
-      continue;
-    }
-
-    if (isObjectRecord(value)) {
-      walkSSR(value as TokenMap, errors, tokenPath);
-    }
+  const serialized = serializeValue(token.$value);
+  const matched = serialized.match(SSR_UNSAFE_PATTERN);
+  if (!matched) {
+    return;
   }
+
+  errors.push({
+    code: "ssr_unsafe_value",
+    message: `Token ${tokenPath} contains SSR-unsafe runtime usage`,
+    tokenPath,
+    unsafeSnippet: matched[0],
+  });
 };
 
 export const validateSSRSafety = (
   tokens: TokenMap
 ): SSRSafetyValidationResult => {
   const errors: SSRSafetyValidationError[] = [];
-  walkSSR(tokens, errors);
+  walkTokenTree(tokens, (token, tokenPath) =>
+    checkTokenSSRSafety(token, tokenPath, errors)
+  );
 
   return {
     errors,

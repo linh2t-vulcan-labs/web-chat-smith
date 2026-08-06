@@ -55,6 +55,21 @@ const serializeQueryValue = (value: JsonValue): string => {
   return String(value);
 };
 
+const hasQueryValue = (value: JsonValue | undefined): value is JsonValue =>
+  value !== undefined && value !== null;
+
+const appendQueryParams = (
+  search: URLSearchParams,
+  snakeParams: Record<string, JsonValue | undefined>
+): void => {
+  for (const [key, value] of Object.entries(snakeParams)) {
+    if (!hasQueryValue(value)) {
+      continue;
+    }
+    search.set(key, serializeQueryValue(value));
+  }
+};
+
 const buildSearchString = (params: QueryParams | undefined): string => {
   if (!params) {
     return "";
@@ -62,12 +77,7 @@ const buildSearchString = (params: QueryParams | undefined): string => {
   const snakeParams =
     toSnakeCase<Record<string, JsonValue | undefined>>(params);
   const search = new URLSearchParams();
-  for (const [key, value] of Object.entries(snakeParams)) {
-    if (value === undefined || value === null) {
-      continue;
-    }
-    search.set(key, serializeQueryValue(value));
-  }
+  appendQueryParams(search, snakeParams);
   const query = search.toString();
   return query ? `?${query}` : "";
 };

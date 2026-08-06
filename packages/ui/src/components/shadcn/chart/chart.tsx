@@ -40,6 +40,33 @@ const useChart = () => {
   return context;
 };
 
+/** The nested `payload.payload` object recharts attaches to each tooltip/legend item, when present and itself an object. */
+const getNestedPayload = (payload: object): object | undefined =>
+  "payload" in payload &&
+  typeof payload.payload === "object" &&
+  payload.payload !== null
+    ? payload.payload
+    : undefined;
+
+/** A string value at `key` on `source`, used to resolve which config entry a payload item's label maps to. */
+const getStringField = (source: object, key: string): string | undefined =>
+  key in source && typeof source[key as keyof typeof source] === "string"
+    ? (source[key as keyof typeof source] as string)
+    : undefined;
+
+/** The config key a payload item's label should use — its own `key` field, falling back to the nested payload's, falling back to `key` itself. */
+const resolveConfigLabelKey = (payload: object, key: string): string => {
+  const ownKey = getStringField(payload, key);
+  if (ownKey) {
+    return ownKey;
+  }
+
+  const nestedPayload = getNestedPayload(payload);
+  const nestedKey = nestedPayload && getStringField(nestedPayload, key);
+
+  return nestedKey ?? key;
+};
+
 const getPayloadConfigFromPayload = (
   config: ChartConfig,
   payload: unknown,
@@ -49,31 +76,21 @@ const getPayloadConfigFromPayload = (
     return;
   }
 
-  const payloadPayload =
-    "payload" in payload &&
-    typeof payload.payload === "object" &&
-    payload.payload !== null
-      ? payload.payload
-      : undefined;
-
-  let configLabelKey: string = key;
-
-  if (
-    key in payload &&
-    typeof payload[key as keyof typeof payload] === "string"
-  ) {
-    configLabelKey = payload[key as keyof typeof payload] as string;
-  } else if (
-    payloadPayload &&
-    key in payloadPayload &&
-    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
-  ) {
-    configLabelKey = payloadPayload[
-      key as keyof typeof payloadPayload
-    ] as string;
-  }
+  const configLabelKey = resolveConfigLabelKey(payload, key);
 
   return configLabelKey in config ? config[configLabelKey] : config[key];
+};
+
+const DEFAULT_PAYLOAD_KEY = "value";
+
+/** The first defined candidate, stringified — used across the tooltip/legend to resolve a payload item's config key (explicit key, then item name/dataKey, then a shared fallback). */
+const resolvePayloadKey = (...candidates: unknown[]): string => {
+  for (const candidate of candidates) {
+    if (candidate !== undefined) {
+      return `${candidate}`;
+    }
+  }
+  return DEFAULT_PAYLOAD_KEY;
 };
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
@@ -148,17 +165,23 @@ const ChartContainer = ({
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
+type IndicatorType = "line" | "dot" | "dashed";
+
+/** The tooltip/legend row's indicator styling — grouped since callers always pass these together. */
+interface ChartTooltipIndicatorSettings {
+  hideIndicator: boolean;
+  indicator: IndicatorType;
+  indicatorColor: string | undefined;
+}
+
 const ChartTooltipIndicator = ({
   hideIndicator,
   icon: Icon,
   indicator,
   indicatorColor,
   nestLabel,
-}: {
-  hideIndicator: boolean;
+}: ChartTooltipIndicatorSettings & {
   icon?: React.ComponentType;
-  indicator: "line" | "dot" | "dashed";
-  indicatorColor: string | undefined;
   nestLabel: boolean;
 }) => {
   if (Icon) {
@@ -208,41 +231,74 @@ type ChartTooltipContentProps = React.ComponentProps<
     "accessibilityLayer"
   >;
 
-type ChartTooltipLabelProps = Pick<
+/** How the tooltip's label value is resolved — against which `config` and (optionally) which explicit `labelKey`. */
+type ChartTooltipLabelSource = Pick<
   ChartTooltipContentProps,
-  | "hideLabel"
-  | "label"
-  | "labelClassName"
-  | "labelFormatter"
-  | "labelKey"
-  | "payload"
+  "labelKey" | "payload"
 > & { config: ChartConfig };
 
+/** How the tooltip's label value is displayed once resolved. */
+type ChartTooltipLabelDisplay = Pick<
+  ChartTooltipContentProps,
+  "label" | "labelClassName" | "labelFormatter"
+>;
+
+interface ChartTooltipLabelProps {
+  display: ChartTooltipLabelDisplay;
+  hideLabel?: boolean;
+  source: ChartTooltipLabelSource;
+}
+
+type ChartTooltipPayloadItem = NonNullable<
+  ChartTooltipContentProps["payload"]
+>[number];
+
+/** The config key a tooltip label should resolve against — `labelKey` if given, else the first payload item's `dataKey`/`name`. */
+const resolveTooltipLabelKey = (
+  labelKey: string | undefined,
+  item: ChartTooltipPayloadItem | undefined
+): string => resolvePayloadKey(labelKey, item?.dataKey, item?.name);
+
+/** `config`'s label for a plain string `label`, falling back to `label` itself when it has no config entry. */
+const resolveConfigLabelText = (
+  config: ChartConfig,
+  label: string
+): React.ReactNode => config[label]?.label ?? label;
+
+/** The tooltip's label content — the plain `label` prop (resolved against `config` by name) unless a `labelKey` opts into resolving it against the first payload item's config entry instead. */
+const resolveTooltipLabelValue = (
+  source: ChartTooltipLabelSource,
+  payload: NonNullable<ChartTooltipLabelSource["payload"]>,
+  label: ChartTooltipLabelDisplay["label"]
+): React.ReactNode => {
+  const [item] = payload;
+
+  if (!source.labelKey && typeof label === "string") {
+    return resolveConfigLabelText(source.config, label);
+  }
+
+  const key = resolveTooltipLabelKey(source.labelKey, item);
+  const itemConfig = getPayloadConfigFromPayload(source.config, item, key);
+  return itemConfig?.label;
+};
+
 const ChartTooltipLabel = ({
-  config,
+  display,
   hideLabel,
-  label,
-  labelClassName,
-  labelFormatter,
-  labelKey,
-  payload,
+  source,
 }: ChartTooltipLabelProps) => {
+  const { payload } = source;
+
   if (hideLabel || !payload?.length) {
     return null;
   }
 
-  const [item] = payload;
-  const key = `${labelKey ?? item?.dataKey ?? item?.name ?? "value"}`;
-  const itemConfig = getPayloadConfigFromPayload(config, item, key);
-  const value =
-    !labelKey && typeof label === "string"
-      ? (config[label]?.label ?? label)
-      : itemConfig?.label;
+  const value = resolveTooltipLabelValue(source, payload, display.label);
 
-  if (labelFormatter) {
+  if (display.labelFormatter) {
     return (
-      <div className={cn("font-medium", labelClassName)}>
-        {labelFormatter(value, payload)}
+      <div className={cn("font-medium", display.labelClassName)}>
+        {display.labelFormatter(value, payload)}
       </div>
     );
   }
@@ -251,103 +307,146 @@ const ChartTooltipLabel = ({
     return null;
   }
 
-  return <div className={cn("font-medium", labelClassName)}>{value}</div>;
+  return (
+    <div className={cn("font-medium", display.labelClassName)}>{value}</div>
+  );
 };
 
-type ChartTooltipPayloadItem = NonNullable<
-  ChartTooltipContentProps["payload"]
->[number];
-
-type ChartTooltipItemProps = Pick<
-  ChartTooltipContentProps,
-  "color" | "formatter" | "hideIndicator" | "indicator"
-> & {
-  config: ChartConfig;
-  index: number;
-  item: ChartTooltipPayloadItem;
-  itemKey: string;
+/** The tooltip row content that passes through every `<ChartTooltipItem>`/`<ChartTooltipItemDefault>` unchanged. */
+type ChartTooltipItemContent = Pick<ChartTooltipContentProps, "formatter"> & {
   nestLabel: boolean;
   tooltipLabel: React.ReactNode;
 };
 
-const ChartTooltipItem = ({
-  color,
-  config,
-  formatter,
-  hideIndicator = false,
-  index,
-  indicator = "dot",
+interface ChartTooltipItemProps {
+  index: number;
+  indicatorSettings: ChartTooltipIndicatorSettings;
+  item: ChartTooltipPayloadItem;
+  itemConfig: ReturnType<typeof getPayloadConfigFromPayload>;
+  itemContent: ChartTooltipItemContent;
+}
+
+/** `item.value` formatted for display — grouped digits for numbers, as-is otherwise. Returns `null` when there's no value to show. */
+const formatTooltipItemValue = (
+  value: ChartTooltipPayloadItem["value"]
+): React.ReactNode => {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  return typeof value === "number" ? value.toLocaleString() : String(value);
+};
+
+type ChartTooltipItemDefaultProps = Pick<
+  ChartTooltipItemProps,
+  "indicatorSettings" | "item" | "itemConfig" | "itemContent"
+>;
+
+/** The tooltip row's display label — the resolved config label, falling back to the item's raw `name`. */
+const resolveTooltipItemLabel = (
+  itemConfig: ChartTooltipItemDefaultProps["itemConfig"],
+  item: ChartTooltipItemDefaultProps["item"]
+): React.ReactNode => itemConfig?.label ?? item.name;
+
+/** The tooltip row's built-in rendering (indicator + label + formatted value), used whenever the caller doesn't supply a custom `formatter`. */
+const ChartTooltipItemDefault = ({
+  indicatorSettings,
   item,
-  itemKey,
-  nestLabel,
-  tooltipLabel,
-}: ChartTooltipItemProps) => {
-  const itemConfig = getPayloadConfigFromPayload(config, item, itemKey);
-  const indicatorColor = color ?? item.payload?.fill ?? item.color;
+  itemConfig,
+  itemContent,
+}: ChartTooltipItemDefaultProps) => {
+  const { nestLabel, tooltipLabel } = itemContent;
+  const formattedValue = formatTooltipItemValue(item.value);
+  const hasFormattedValue = formattedValue !== null;
 
   return (
-    <div
-      className={cn(
-        "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
-        indicator === "dot" && "items-center"
-      )}
-    >
-      {formatter && item?.value !== undefined && item.name ? (
-        formatter(item.value, item.name, item, index, item.payload)
-      ) : (
-        <>
-          <ChartTooltipIndicator
-            hideIndicator={hideIndicator}
-            icon={itemConfig?.icon}
-            indicator={indicator}
-            indicatorColor={indicatorColor}
-            nestLabel={nestLabel}
-          />
-          <div
-            className={cn(
-              "flex flex-1 justify-between leading-none",
-              nestLabel ? "items-end" : "items-center"
-            )}
-          >
-            <div className="grid gap-1.5">
-              {nestLabel ? tooltipLabel : null}
-              <span className="text-muted-foreground">
-                {itemConfig?.label ?? item.name}
-              </span>
-            </div>
-            {item.value !== null && item.value !== undefined && (
-              <span className="font-mono font-medium text-foreground tabular-nums">
-                {typeof item.value === "number"
-                  ? item.value.toLocaleString()
-                  : String(item.value)}
-              </span>
-            )}
-          </div>
-        </>
-      )}
+    <>
+      <ChartTooltipIndicator
+        {...indicatorSettings}
+        icon={itemConfig?.icon}
+        nestLabel={nestLabel}
+      />
+      <div
+        className={cn(
+          "flex flex-1 justify-between leading-none",
+          nestLabel ? "items-end" : "items-center"
+        )}
+      >
+        <div className="grid gap-1.5">
+          {nestLabel ? tooltipLabel : null}
+          <span className="text-muted-foreground">
+            {resolveTooltipItemLabel(itemConfig, item)}
+          </span>
+        </div>
+        {hasFormattedValue && (
+          <span className="font-mono font-medium text-foreground tabular-nums">
+            {formattedValue}
+          </span>
+        )}
+      </div>
+    </>
+  );
+};
+
+const ChartTooltipItem = ({
+  index,
+  indicatorSettings,
+  item,
+  itemConfig,
+  itemContent,
+}: ChartTooltipItemProps) => {
+  const { formatter } = itemContent;
+  const className = cn(
+    "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
+    indicatorSettings.indicator === "dot" && "items-center"
+  );
+
+  if (formatter && item.value !== undefined && item.name) {
+    return (
+      <div className={className}>
+        {formatter(item.value, item.name, item, index, item.payload)}
+      </div>
+    );
+  }
+
+  return (
+    <div className={className}>
+      <ChartTooltipItemDefault
+        indicatorSettings={indicatorSettings}
+        item={item}
+        itemConfig={itemConfig}
+        itemContent={itemContent}
+      />
     </div>
   );
 };
 
-type ChartTooltipItemsProps = Pick<
-  ChartTooltipContentProps,
-  "color" | "formatter" | "hideIndicator" | "indicator" | "nameKey" | "payload"
-> & {
-  config: ChartConfig;
-  nestLabel: boolean;
-  tooltipLabel: React.ReactNode;
+/** The tooltip-wide indicator styling, shared by every row (the per-row color is resolved from `color` and the item itself). */
+type ChartTooltipIndicatorConfig = Pick<ChartTooltipContentProps, "color"> & {
+  hideIndicator: boolean;
+  indicator: IndicatorType;
 };
 
+type ChartTooltipItemsProps = Pick<
+  ChartTooltipContentProps,
+  "nameKey" | "payload"
+> & {
+  config: ChartConfig;
+  indicatorConfig: ChartTooltipIndicatorConfig;
+  itemContent: ChartTooltipItemContent;
+};
+
+/** The indicator color for a tooltip row — the chart-level override if given, else the item's own fill/color. */
+const resolveIndicatorColor = (
+  color: ChartTooltipIndicatorConfig["color"],
+  item: ChartTooltipPayloadItem
+): string | undefined => color ?? item.payload?.fill ?? item.color;
+
 const ChartTooltipItems = ({
-  color,
   config,
-  formatter,
-  hideIndicator,
-  indicator,
+  indicatorConfig,
+  itemContent,
   nameKey,
-  nestLabel,
   payload,
-  tooltipLabel,
 }: ChartTooltipItemsProps) => {
   const items: React.ReactNode[] = [];
   let visibleIndex = 0;
@@ -360,21 +459,22 @@ const ChartTooltipItems = ({
     const index = visibleIndex;
     visibleIndex += 1;
 
-    const itemKey = `${nameKey ?? item.name ?? item.dataKey ?? "value"}`;
+    const itemKey = resolvePayloadKey(nameKey, item.name, item.dataKey);
+    const itemConfig = getPayloadConfigFromPayload(config, item, itemKey);
+    const indicatorSettings: ChartTooltipIndicatorSettings = {
+      hideIndicator: indicatorConfig.hideIndicator,
+      indicator: indicatorConfig.indicator,
+      indicatorColor: resolveIndicatorColor(indicatorConfig.color, item),
+    };
 
     items.push(
       <ChartTooltipItem
-        color={color}
-        config={config}
-        formatter={formatter}
-        hideIndicator={hideIndicator}
         index={index}
-        indicator={indicator}
+        indicatorSettings={indicatorSettings}
         item={item}
-        itemKey={itemKey}
+        itemConfig={itemConfig}
+        itemContent={itemContent}
         key={itemKey}
-        nestLabel={nestLabel}
-        tooltipLabel={tooltipLabel}
       />
     );
   }
@@ -406,13 +506,9 @@ const ChartTooltipContent = ({
   const nestLabel = payload.length === 1 && indicator !== "dot";
   const tooltipLabel = (
     <ChartTooltipLabel
-      config={config}
+      display={{ label, labelClassName, labelFormatter }}
       hideLabel={hideLabel}
-      label={label}
-      labelClassName={labelClassName}
-      labelFormatter={labelFormatter}
-      labelKey={labelKey}
-      payload={payload}
+      source={{ config, labelKey, payload }}
     />
   );
 
@@ -426,15 +522,11 @@ const ChartTooltipContent = ({
       {nestLabel ? null : tooltipLabel}
       <div className="grid gap-1.5">
         <ChartTooltipItems
-          color={color}
           config={config}
-          formatter={formatter}
-          hideIndicator={hideIndicator}
-          indicator={indicator}
+          indicatorConfig={{ color, hideIndicator, indicator }}
+          itemContent={{ formatter, nestLabel, tooltipLabel }}
           nameKey={nameKey}
-          nestLabel={nestLabel}
           payload={payload}
-          tooltipLabel={tooltipLabel}
         />
       </div>
     </div>
@@ -442,6 +534,72 @@ const ChartTooltipContent = ({
 };
 
 const ChartLegend = RechartsPrimitive.Legend;
+
+type ChartLegendPayloadItem = NonNullable<
+  RechartsPrimitive.DefaultLegendContentProps["payload"]
+>[number];
+
+interface ChartLegendItemProps {
+  hideIcon: boolean;
+  item: ChartLegendPayloadItem;
+  itemConfig: ReturnType<typeof getPayloadConfigFromPayload>;
+}
+
+const ChartLegendItem = ({
+  hideIcon,
+  item,
+  itemConfig,
+}: ChartLegendItemProps) => (
+  <div className="flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground">
+    {itemConfig?.icon && !hideIcon ? (
+      <itemConfig.icon />
+    ) : (
+      <div
+        className="h-2 w-2 shrink-0 rounded-xs"
+        style={{
+          backgroundColor: item.color,
+        }}
+      />
+    )}
+    {itemConfig?.label}
+  </div>
+);
+
+interface ChartLegendItemsProps {
+  config: ChartConfig;
+  hideIcon: boolean;
+  nameKey?: string;
+  payload: RechartsPrimitive.DefaultLegendContentProps["payload"];
+}
+
+const ChartLegendItems = ({
+  config,
+  hideIcon,
+  nameKey,
+  payload,
+}: ChartLegendItemsProps) => {
+  const items: React.ReactNode[] = [];
+
+  for (const item of payload ?? []) {
+    if (item.type === "none") {
+      continue;
+    }
+
+    const itemKey = resolvePayloadKey(nameKey, item.dataKey);
+    const itemConfig = getPayloadConfigFromPayload(config, item, itemKey);
+
+    items.push(
+      <ChartLegendItem
+        hideIcon={hideIcon}
+        item={item}
+        itemConfig={itemConfig}
+        key={itemKey}
+      />
+    );
+  }
+
+  return items;
+};
 
 const ChartLegendContent = ({
   className,
@@ -459,38 +617,6 @@ const ChartLegendContent = ({
     return null;
   }
 
-  const items: React.ReactNode[] = [];
-
-  for (const item of payload) {
-    if (item.type === "none") {
-      continue;
-    }
-
-    const key = `${nameKey ?? item.dataKey ?? "value"}`;
-    const itemConfig = getPayloadConfigFromPayload(config, item, key);
-
-    items.push(
-      <div
-        key={key}
-        className={cn(
-          "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
-        )}
-      >
-        {itemConfig?.icon && !hideIcon ? (
-          <itemConfig.icon />
-        ) : (
-          <div
-            className="h-2 w-2 shrink-0 rounded-xs"
-            style={{
-              backgroundColor: item.color,
-            }}
-          />
-        )}
-        {itemConfig?.label}
-      </div>
-    );
-  }
-
   return (
     <div
       className={cn(
@@ -499,7 +625,12 @@ const ChartLegendContent = ({
         className
       )}
     >
-      {items}
+      <ChartLegendItems
+        config={config}
+        hideIcon={hideIcon}
+        nameKey={nameKey}
+        payload={payload}
+      />
     </div>
   );
 };

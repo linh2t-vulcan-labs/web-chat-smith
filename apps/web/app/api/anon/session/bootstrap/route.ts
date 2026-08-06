@@ -1,10 +1,8 @@
-import {
-  isLikelyBot,
-  validateGuestRequest,
-} from "@cs/api-client/server/guest/security";
 import { bootstrapGuestSession } from "@cs/api-client/server/guest/session";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+
+import { guestApiErrorResponse, guestRequestGuard } from "../_shared";
 
 /**
  * GET /api/anon/bootstrap equivalent — issues a CSRF token + nonce bound to
@@ -15,29 +13,14 @@ import type { NextRequest } from "next/server";
  * call before `POST`-ing a captcha token to session creation.
  */
 export const GET = async (request: NextRequest) => {
-  const validation = validateGuestRequest(request);
-  if (!validation.isValid) {
-    return NextResponse.json({ message: validation.error }, { status: 403 });
-  }
-  if (isLikelyBot(request)) {
-    return NextResponse.json(
-      { message: "Automated requests not allowed" },
-      { status: 403 }
-    );
+  const blocked = guestRequestGuard(request);
+  if (blocked) {
+    return blocked;
   }
 
   const [error, bootstrap] = await bootstrapGuestSession();
   if (error) {
-    return NextResponse.json(
-      {
-        code: error.code,
-        details: error.details,
-        message: error.message,
-        reason: error.reason,
-        status: error.status,
-      },
-      { status: error.httpStatus || 502 }
-    );
+    return guestApiErrorResponse(error, 502);
   }
 
   return NextResponse.json(bootstrap);

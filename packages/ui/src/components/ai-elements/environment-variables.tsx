@@ -2,11 +2,12 @@
 
 import { CheckIcon, CopyIcon, EyeIcon, EyeOffIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 import { Badge } from "#components/shadcn/badge";
 import { Button } from "#components/shadcn/button";
 import { Switch } from "#components/shadcn/switch";
+import { useCopyToClipboard } from "#hooks/use-copy-to-clipboard";
 import { cn } from "#lib/utils";
 
 interface EnvironmentVariablesContextType {
@@ -248,9 +249,12 @@ export const EnvironmentVariableCopyButton = ({
   className,
   ...props
 }: EnvironmentVariableCopyButtonProps) => {
-  const [isCopied, setIsCopied] = useState(false);
-  const timeoutRef = useRef<number>(0);
   const { name, value } = useContext(EnvironmentVariableContext);
+  const { isCopied, copyToClipboard } = useCopyToClipboard({
+    onCopy,
+    onError,
+    timeout,
+  });
 
   const getTextToCopy = (): string => {
     const formatMap = {
@@ -261,35 +265,12 @@ export const EnvironmentVariableCopyButton = ({
     return formatMap[copyFormat]();
   };
 
-  const copyToClipboard = async () => {
-    if (typeof window === "undefined" || !navigator?.clipboard?.writeText) {
-      onError?.(new Error("Clipboard API not available"));
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(getTextToCopy());
-      setIsCopied(true);
-      onCopy?.();
-      timeoutRef.current = window.setTimeout(() => setIsCopied(false), timeout);
-    } catch (error) {
-      onError?.(error as Error);
-    }
-  };
-
-  useEffect(
-    () => () => {
-      window.clearTimeout(timeoutRef.current);
-    },
-    []
-  );
-
   const Icon = isCopied ? CheckIcon : CopyIcon;
 
   return (
     <Button
       className={cn("size-6 shrink-0", className)}
-      onClick={copyToClipboard}
+      onClick={() => copyToClipboard(getTextToCopy())}
       size="icon"
       variant="ghost"
       {...props}

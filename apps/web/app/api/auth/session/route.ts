@@ -4,12 +4,51 @@ import { userManagement } from "@cs/api-client/services/user-management";
 import { decodeJwtExpiryMs } from "@cs/core/jwt";
 import { NextResponse } from "next/server";
 
+import { apiErrorResponse } from "../../_shared";
+
 interface ExchangeRequestBody {
   idToken?: string;
   provider?: string;
   projectId?: string;
   countryCode?: string;
 }
+
+interface ValidExchangeRequestBody extends Omit<
+  ExchangeRequestBody,
+  "idToken" | "projectId"
+> {
+  idToken: string;
+  projectId: string;
+}
+
+/**
+ * Exchanges a validated Firebase ID token for a Vulcan session and persists
+ * it via `setSessionCookies` — the side-effecting half of the route, kept
+ * separate from request-body validation below.
+ */
+const exchangeAndPersistSession = async (body: ValidExchangeRequestBody) => {
+  const [error, result] = await userManagement.verifyOAuthToken({
+    countryCode: body.countryCode,
+    idToken: body.idToken,
+    projectId: body.projectId,
+    provider: body.provider ?? "google",
+  });
+
+  if (error) {
+    return { error } as const;
+  }
+
+  const accessTokenExpiresAt = decodeJwtExpiryMs(result.accessToken);
+  await setSessionCookies({
+    accessToken: result.accessToken,
+    accessTokenExpiresAt,
+    refreshToken: result.refreshToken,
+  });
+
+  return {
+    session: { accessToken: result.accessToken, accessTokenExpiresAt },
+  } as const;
+};
 
 /**
  * Firebase ID token -> Vulcan access/refresh token exchange (same-origin,
@@ -36,37 +75,17 @@ export const POST = async (request: Request) => {
     );
   }
 
-  const [error, result] = await userManagement.verifyOAuthToken({
-    countryCode: body.countryCode,
+  const { error, session } = await exchangeAndPersistSession({
+    ...body,
     idToken: body.idToken,
     projectId: body.projectId,
-    provider: body.provider ?? "google",
   });
 
   if (error) {
-    return NextResponse.json(
-      {
-        code: error.code,
-        details: error.details,
-        message: error.message,
-        reason: error.reason,
-        status: error.status,
-      },
-      { status: error.httpStatus || 401 }
-    );
+    return apiErrorResponse(error, 401);
   }
 
-  const accessTokenExpiresAt = decodeJwtExpiryMs(result.accessToken);
-  await setSessionCookies({
-    accessToken: result.accessToken,
-    accessTokenExpiresAt,
-    refreshToken: result.refreshToken,
-  });
-
-  return NextResponse.json({
-    accessToken: result.accessToken,
-    accessTokenExpiresAt,
-  });
+  return NextResponse.json(session);
 };
 
 /**
@@ -100,16 +119,7 @@ export const GET = async () => {
     if (error.isAuthError) {
       return NextResponse.json({ accessToken: null });
     }
-    return NextResponse.json(
-      {
-        code: error.code,
-        details: error.details,
-        message: error.message,
-        reason: error.reason,
-        status: error.status,
-      },
-      { status: error.httpStatus || 401 }
-    );
+    return apiErrorResponse(error, 401);
   }
 
   return NextResponse.json({ accessToken });

@@ -1,10 +1,8 @@
 import { resolveTokens } from "../lib/resolver";
 import { styleText } from "../lib/utils/console-colors";
 import {
-  validateContrast,
-  validateRefs,
-  validateSchema,
-  validateSSRSafety,
+  countValidationErrors,
+  validateLightDarkTokens,
 } from "../lib/validators";
 import {
   FIGMA_TOKENS_DIR,
@@ -45,42 +43,60 @@ const validateVersion = async (version: string): Promise<number> => {
   console.log(`Total tokens: ${resolvedDark.metadata.totalTokenCount}`);
   console.log(`Unresolved refs: ${resolvedDark.metadata.unresolvedCount}`);
 
-  const schema = validateSchema(resolved.tokens);
-  const refs = validateRefs(resolved.tokens);
-  const contrast = validateContrast(resolved.tokens);
-  const ssrSafety = validateSSRSafety(resolved.tokens);
-  const darkSchema = validateSchema(resolvedDark.tokens);
-  const darkRefs = validateRefs(resolvedDark.tokens);
-  const darkContrast = validateContrast(resolvedDark.tokens);
-  const darkSsrSafety = validateSSRSafety(resolvedDark.tokens);
-
-  printSection("Validators (light)");
-  printSummary("Schema", schema.isValid, schema.errors.length);
-  printSummary("References", refs.isValid, refs.errors.length);
-  printSummary("Contrast", contrast.isValid, contrast.errors.length);
-  printSummary("SSR safety", ssrSafety.isValid, ssrSafety.errors.length);
-
-  printSection("Validators (dark)");
-  printSummary("Schema", darkSchema.isValid, darkSchema.errors.length);
-  printSummary("References", darkRefs.isValid, darkRefs.errors.length);
-  printSummary("Contrast", darkContrast.isValid, darkContrast.errors.length);
-  printSummary(
-    "SSR safety",
-    darkSsrSafety.isValid,
-    darkSsrSafety.errors.length
+  const validation = validateLightDarkTokens(
+    resolved.tokens,
+    resolvedDark.tokens
   );
 
-  const totalErrors =
-    resolved.errors.length +
-    resolvedDark.errors.length +
-    schema.errors.length +
-    refs.errors.length +
-    contrast.errors.length +
-    ssrSafety.errors.length +
-    darkSchema.errors.length +
-    darkRefs.errors.length +
-    darkContrast.errors.length +
-    darkSsrSafety.errors.length;
+  printSection("Validators (light)");
+  printSummary(
+    "Schema",
+    validation.schema.isValid,
+    validation.schema.errors.length
+  );
+  printSummary(
+    "References",
+    validation.refs.isValid,
+    validation.refs.errors.length
+  );
+  printSummary(
+    "Contrast",
+    validation.contrast.isValid,
+    validation.contrast.errors.length
+  );
+  printSummary(
+    "SSR safety",
+    validation.ssrSafety.isValid,
+    validation.ssrSafety.errors.length
+  );
+
+  printSection("Validators (dark)");
+  printSummary(
+    "Schema",
+    validation.darkSchema.isValid,
+    validation.darkSchema.errors.length
+  );
+  printSummary(
+    "References",
+    validation.darkRefs.isValid,
+    validation.darkRefs.errors.length
+  );
+  printSummary(
+    "Contrast",
+    validation.darkContrast.isValid,
+    validation.darkContrast.errors.length
+  );
+  printSummary(
+    "SSR safety",
+    validation.darkSsrSafety.isValid,
+    validation.darkSsrSafety.errors.length
+  );
+
+  const totalErrors = countValidationErrors(
+    validation,
+    resolved.errors.length,
+    resolvedDark.errors.length
+  );
 
   printSection("Result");
   console.log(

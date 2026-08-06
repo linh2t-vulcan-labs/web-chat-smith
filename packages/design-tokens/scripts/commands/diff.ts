@@ -43,40 +43,86 @@ interface DiffReport {
   removed: string[];
 }
 
-const parseCliOptions = (args: string[]): DiffCliOptions => {
-  const versions: string[] = [];
+type CliArgToken =
+  | { type: "json" }
+  | { type: "out"; consumed: number; value: string }
+  | { type: "version"; value: string };
 
-  let json = false;
-  let outFile: string | undefined;
+const parseOutFlagValue = (
+  args: string[],
+  index: number
+): { consumed: number; value: string } => {
+  const value = args[index + 1]?.trim();
+  if (!value) {
+    throw new Error("--out requires a file path");
+  }
+
+  return { consumed: 1, value };
+};
+
+const classifyCliArg = (
+  arg: string,
+  args: string[],
+  index: number
+): CliArgToken => {
+  if (arg === "--json") {
+    return { type: "json" };
+  }
+
+  if (arg === "--out") {
+    return { type: "out", ...parseOutFlagValue(args, index) };
+  }
+
+  if (arg.startsWith("--")) {
+    throw new Error(`Unknown flag: ${arg}`);
+  }
+
+  return { type: "version", value: arg.trim() };
+};
+
+interface CliParseState {
+  json: boolean;
+  outFile: string | undefined;
+  versions: string[];
+}
+
+/** Applies a classified arg token to the parse state, returning the next loop index. */
+const applyCliToken = (
+  token: CliArgToken,
+  index: number,
+  state: CliParseState
+): number => {
+  if (token.type === "json") {
+    state.json = true;
+    return index;
+  }
+
+  if (token.type === "out") {
+    state.outFile = token.value;
+    return index + token.consumed;
+  }
+
+  state.versions.push(token.value);
+  return index;
+};
+
+const parseCliOptions = (args: string[]): DiffCliOptions => {
+  const state: CliParseState = {
+    json: false,
+    outFile: undefined,
+    versions: [],
+  };
 
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
-
     if (!arg) {
       continue;
     }
 
-    if (arg === "--json") {
-      json = true;
-      continue;
-    }
-
-    if (arg === "--out") {
-      const value = args[index + 1]?.trim();
-      if (!value) {
-        throw new Error("--out requires a file path");
-      }
-      outFile = value;
-      index += 1;
-      continue;
-    }
-
-    if (arg.startsWith("--")) {
-      throw new Error(`Unknown flag: ${arg}`);
-    }
-
-    versions.push(arg.trim());
+    index = applyCliToken(classifyCliArg(arg, args, index), index, state);
   }
+
+  const { json, outFile, versions } = state;
 
   return {
     json,
@@ -94,28 +140,18 @@ const getVersionOrThrow = (versions: string[], index: number): string => {
   return value;
 };
 
-const resolveVersionPair = async (
-  args: string[]
-): Promise<{
+const resolveVersionPairFromHistory = async (): Promise<{
   next: string;
   prev: string;
 }> => {
-  const { versions: cliVersions } = parseCliOptions(args);
-
-  if (cliVersions.length >= 2) {
-    return {
-      next: getVersionOrThrow(cliVersions, 1),
-      prev: getVersionOrThrow(cliVersions, 0),
-    };
-  }
-
   const current = await readCurrentVersion();
   const versions = listVersions();
-  const index = versions.indexOf(current);
 
   if (versions.length < 2) {
     throw new Error("Need at least 2 token versions to run diff");
   }
+
+  const index = versions.indexOf(current);
 
   if (index > 0) {
     return {
@@ -137,11 +173,51 @@ const resolveVersionPair = async (
   };
 };
 
+const resolveVersionPair = (
+  args: string[]
+): Promise<{
+  next: string;
+  prev: string;
+}> => {
+  const { versions: cliVersions } = parseCliOptions(args);
+
+  if (cliVersions.length >= 2) {
+    return Promise.resolve({
+      next: getVersionOrThrow(cliVersions, 1),
+      prev: getVersionOrThrow(cliVersions, 0),
+    });
+  }
+
+  return resolveVersionPairFromHistory();
+};
+
 const createTokenMap = (tokens: FlatToken[]): Map<string, FlatToken> =>
   new Map(tokens.map((entry) => [entry.path, entry]));
 
 const toComparable = (token: FlatToken["token"]): string =>
   JSON.stringify(token);
+
+type NextEntryOutcome =
+  | { type: "added"; token: FlatToken }
+  | { type: "changed"; next: FlatToken; prev: FlatToken }
+  | { type: "unchanged" };
+
+const classifyNextEntry = (
+  tokenPath: string,
+  next: FlatToken,
+  prevMap: Map<string, FlatToken>
+): NextEntryOutcome => {
+  const prev = prevMap.get(tokenPath);
+  if (!prev) {
+    return { token: next, type: "added" };
+  }
+
+  if (toComparable(prev.token) === toComparable(next.token)) {
+    return { type: "unchanged" };
+  }
+
+  return { next, prev, type: "changed" };
+};
 
 const diffTokens = (
   prevTokens: FlatToken[],
@@ -152,25 +228,20 @@ const diffTokens = (
 
   const added: FlatToken[] = [];
   const changed: { next: FlatToken; prev: FlatToken }[] = [];
-  const removed: FlatToken[] = [];
 
   for (const [tokenPath, next] of nextMap) {
-    const prev = prevMap.get(tokenPath);
-    if (!prev) {
-      added.push(next);
-      continue;
-    }
+    const outcome = classifyNextEntry(tokenPath, next, prevMap);
 
-    if (toComparable(prev.token) !== toComparable(next.token)) {
-      changed.push({ next, prev });
+    if (outcome.type === "added") {
+      added.push(outcome.token);
+    } else if (outcome.type === "changed") {
+      changed.push({ next: outcome.next, prev: outcome.prev });
     }
   }
 
-  for (const [tokenPath, prev] of prevMap) {
-    if (!nextMap.has(tokenPath)) {
-      removed.push(prev);
-    }
-  }
+  const removed = [...prevMap.entries()]
+    .filter(([tokenPath]) => !nextMap.has(tokenPath))
+    .map(([, prev]) => prev);
 
   return {
     added: added.toSorted((a, b) => a.path.localeCompare(b.path)),

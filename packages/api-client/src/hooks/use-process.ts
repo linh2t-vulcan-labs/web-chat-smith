@@ -51,6 +51,121 @@ export interface UseProcessResult<T> {
 // oxlint-disable-next-line no-empty-function -- placeholder cancel before a real poll/SSE subscription exists
 const noopCancel = () => {};
 
+/** State setters + persistence hook shared by both transports' callbacks — kept as one bag so `setupPollSubscription`/`setupSseSubscription` take a single param instead of 4+ positional ones. */
+interface ProcessStateHandlers<T> {
+  setStatus: (status: ProcessStatus) => void;
+  setError: (error: ApiError | null) => void;
+  setData: (data: T | undefined) => void;
+  /** The backend job keeps running regardless of the client (§10) — only clear the persisted entry once we know it actually reached a terminal state, never on unmount/resubscribe. */
+  clearPersisted: () => void;
+}
+
+const setupPollSubscription = <T>(
+  processId: string,
+  options: UseProcessOptions<T>,
+  handlers: ProcessStateHandlers<T>
+): (() => void) => {
+  const { fetchStatus } = options;
+  if (!fetchStatus) {
+    throw new Error(
+      'useProcess: `fetchStatus` is required when transport is "poll"'
+    );
+  }
+  const { setStatus, setError, setData, clearPersisted } = handlers;
+  return pollProcess(
+    {
+      fetchStatus: (signal) => fetchStatus(processId, signal),
+      intervalMs: options.pollIntervalMs,
+    },
+    {
+      onError: (apiError) => {
+        setError(apiError);
+        setStatus("error");
+        clearPersisted();
+      },
+      onUpdate: (snapshot) => {
+        setStatus(snapshot.status);
+        if (snapshot.data !== undefined) {
+          setData(snapshot.data);
+        }
+        if (snapshot.status !== "pending") {
+          clearPersisted();
+        }
+      },
+    }
+  );
+};
+
+const setupSseSubscription = <T>(
+  processId: string,
+  options: UseProcessOptions<T>,
+  handlers: ProcessStateHandlers<T>
+): (() => void) => {
+  const { sseUrl, sseEventNames } = options;
+  if (!(sseUrl && sseEventNames)) {
+    throw new Error(
+      'useProcess: `sseUrl` and `sseEventNames` are required when transport is "sse"'
+    );
+  }
+  const { setStatus, setError, setData, clearPersisted } = handlers;
+  const subscription = subscribeSse(sseUrl(processId), {
+    eventNames: sseEventNames,
+    headers: options.sseHeaders,
+    identity: options.identity,
+    onDone: () => {
+      setStatus("done");
+      clearPersisted();
+    },
+    onError: (apiError) => {
+      setError(apiError);
+      setStatus("error");
+      clearPersisted();
+    },
+    onEvent: (event) => {
+      try {
+        setData(JSON.parse(event.data) as T);
+      } catch {
+        // Non-JSON payload for this frame — ignore rather than tear down the subscription.
+      }
+    },
+    terminalEventNames: options.sseTerminalEventNames,
+  });
+  return () => subscription.cancel();
+};
+
+/** State setters passed in from `useProcess`'s own hooks — bundled with the persistence logic below into the single `ProcessStateHandlers` bag `setupPollSubscription`/`setupSseSubscription` expect. */
+interface ProcessStateSetters<T> {
+  setStatus: (status: ProcessStatus) => void;
+  setError: (error: ApiError | null) => void;
+  setData: (data: T | undefined) => void;
+}
+
+/** Persists `processId` (if `persistKey` is set), then dispatches to the poll/SSE setup for the configured transport — pulled out of the effect body purely to keep it a flat "reset, subscribe, return cleanup" shape. */
+const startProcessSubscription = <T>(
+  processId: string,
+  options: UseProcessOptions<T>,
+  setters: ProcessStateSetters<T>
+): (() => void) => {
+  const { persistKey } = options;
+  if (persistKey) {
+    savePendingProcess(persistKey, {
+      processId,
+      startedAt: Date.now(),
+      transport: options.transport,
+    });
+  }
+  const clearPersisted = () => {
+    if (persistKey) {
+      clearPendingProcess(persistKey);
+    }
+  };
+  const handlers: ProcessStateHandlers<T> = { ...setters, clearPersisted };
+
+  return options.transport === "poll"
+    ? setupPollSubscription(processId, options, handlers)
+    : setupSseSubscription(processId, options, handlers);
+};
+
 /**
  * One interface for every long-running operation (chat, image gen, deep
  * research) regardless of whether the backend exposes it as poll or SSE —
@@ -79,85 +194,11 @@ export const useProcess = <T>(
     setError(null);
     setData(undefined);
 
-    const { persistKey } = options;
-    if (persistKey) {
-      savePendingProcess(persistKey, {
-        processId,
-        startedAt: Date.now(),
-        transport: options.transport,
-      });
-    }
-    // The backend job keeps running regardless of the client (§10) — only
-    // clear the persisted entry once we know it actually reached a terminal
-    // state, never on unmount/resubscribe (see the effect cleanup below),
-    // otherwise a page navigated away from mid-job would lose the ability
-    // to resume watching it after coming back.
-    const clearPersisted = () => {
-      if (persistKey) {
-        clearPendingProcess(persistKey);
-      }
-    };
-
-    if (options.transport === "poll") {
-      const { fetchStatus } = options;
-      if (!fetchStatus) {
-        throw new Error(
-          'useProcess: `fetchStatus` is required when transport is "poll"'
-        );
-      }
-      cancelRef.current = pollProcess(
-        {
-          fetchStatus: (signal) => fetchStatus(processId, signal),
-          intervalMs: options.pollIntervalMs,
-        },
-        {
-          onError: (apiError) => {
-            setError(apiError);
-            setStatus("error");
-            clearPersisted();
-          },
-          onUpdate: (snapshot) => {
-            setStatus(snapshot.status);
-            if (snapshot.data !== undefined) {
-              setData(snapshot.data);
-            }
-            if (snapshot.status !== "pending") {
-              clearPersisted();
-            }
-          },
-        }
-      );
-    } else {
-      const { sseUrl, sseEventNames } = options;
-      if (!(sseUrl && sseEventNames)) {
-        throw new Error(
-          'useProcess: `sseUrl` and `sseEventNames` are required when transport is "sse"'
-        );
-      }
-      const subscription = subscribeSse(sseUrl(processId), {
-        eventNames: sseEventNames,
-        headers: options.sseHeaders,
-        identity: options.identity,
-        onDone: () => {
-          setStatus("done");
-          clearPersisted();
-        },
-        onError: (apiError) => {
-          setError(apiError);
-          setStatus("error");
-          clearPersisted();
-        },
-        onEvent: (event) => {
-          try {
-            setData(JSON.parse(event.data) as T);
-          } catch {
-            // Non-JSON payload for this frame — ignore rather than tear down the subscription.
-          }
-        },
-        terminalEventNames: options.sseTerminalEventNames,
-      });
-      cancelRef.current = () => subscription.cancel();
-    }
+    cancelRef.current = startProcessSubscription(processId, options, {
+      setData,
+      setError,
+      setStatus,
+    });
 
     return () => cancelRef.current();
     // oxlint-disable-next-line react-hooks/exhaustive-deps

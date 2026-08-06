@@ -26,25 +26,25 @@
         "description": "Please sign in again to continue.",
         "title": "Your session has expired"
       },
-      "transient": {
-        "description": "This usually resolves itself — try again in a moment.",
-        "title": "Something went wrong"
+      "billing": {
+        "description": "This action requires a plan upgrade.",
+        "title": "Upgrade required"
+      },
+      "platform": {
+        "description": "This feature isn't available on your current plan or platform.",
+        "title": "Not available"
       },
       "rateLimit": {
         "description": "You've made too many requests. Please wait and try again.",
         "title": "Too many requests"
       },
-      "billing": {
-        "description": "This action requires a plan upgrade.",
-        "title": "Upgrade required"
+      "transient": {
+        "description": "This usually resolves itself — try again in a moment.",
+        "title": "Something went wrong"
       },
       "validation": {
         "description": "Please check your input and try again.",
         "title": "Invalid request"
-      },
-      "platform": {
-        "description": "This feature isn't available on your current plan or platform.",
-        "title": "Not available"
       },
       "unknown": {
         "description": "An unexpected error occurred.",

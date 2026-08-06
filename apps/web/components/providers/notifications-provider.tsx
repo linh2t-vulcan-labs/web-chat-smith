@@ -17,7 +17,10 @@ import { firebaseApp } from "@/lib/firebase";
  * Falls back to `null` (treated as "no dedup needed") if the token doesn't
  * carry a `sub`, rather than throwing.
  */
-const decodeUserId = (accessToken: string): string | null => {
+const decodeUserId = (accessToken: string | null): string | null => {
+  if (!accessToken) {
+    return null;
+  }
   try {
     return jwtDecode<JwtPayload>(accessToken).sub ?? null;
   } catch {
@@ -39,7 +42,7 @@ export const NotificationsProvider = ({
   children: React.ReactNode;
 }) => {
   const { accessToken, isAuthenticated, isInitializing } = useApiAuth();
-  const userId = accessToken ? decodeUserId(accessToken) : null;
+  const userId = decodeUserId(accessToken);
   const vapidKey = getRuntimeEnv().CS_PUBLIC_FIREBASE_VAPID_KEY;
 
   // `ApiAuthProvider` starts every fresh mount with `accessToken: null`
@@ -54,18 +57,21 @@ export const NotificationsProvider = ({
   // Waiting for `isInitializing` to settle means `userId` is already correct
   // on this component's first real render, so the dedup check sees
   // "unchanged" and skips both calls.
-  if (!vapidKey || isInitializing) {
+  const isNotSetUpYet = !vapidKey || isInitializing;
+  if (isNotSetUpYet) {
     return children;
   }
+
+  // Registering with the backend requires an authenticated session — a
+  // signed-out visitor who already granted browser notification permission
+  // would otherwise trigger a token-refresh attempt (and a 401, since
+  // there's no refresh_token cookie yet) on every load.
+  const onToken = isAuthenticated ? registerFcmTokenWithApiClient : undefined;
 
   return (
     <NotificationsProviderImpl
       app={firebaseApp()}
-      // Registering with the backend requires an authenticated session — a
-      // signed-out visitor who already granted browser notification
-      // permission would otherwise trigger a token-refresh attempt (and a
-      // 401, since there's no refresh_token cookie yet) on every load.
-      onToken={isAuthenticated ? registerFcmTokenWithApiClient : undefined}
+      onToken={onToken}
       userId={userId}
       vapidKey={vapidKey}
     >

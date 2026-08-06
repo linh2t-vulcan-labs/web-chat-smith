@@ -79,6 +79,40 @@ export const TestResultsDuration = ({
   );
 };
 
+const TestResultsSummaryBadges = ({
+  summary,
+}: {
+  summary: TestResultsSummary;
+}) => (
+  <>
+    <Badge
+      className="gap-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+      variant="secondary"
+    >
+      <CheckCircle2Icon className="size-3" />
+      {summary.passed} passed
+    </Badge>
+    {summary.failed > 0 && (
+      <Badge
+        className="gap-1 bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+        variant="secondary"
+      >
+        <XCircleIcon className="size-3" />
+        {summary.failed} failed
+      </Badge>
+    )}
+    {summary.skipped > 0 && (
+      <Badge
+        className="gap-1 bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"
+        variant="secondary"
+      >
+        <CircleIcon className="size-3" />
+        {summary.skipped} skipped
+      </Badge>
+    )}
+  </>
+);
+
 export type TestResultsSummaryProps = HTMLAttributes<HTMLDivElement>;
 
 export const TestResultsSummary = ({
@@ -94,35 +128,7 @@ export const TestResultsSummary = ({
 
   return (
     <div className={cn("flex items-center gap-3", className)} {...props}>
-      {children ?? (
-        <>
-          <Badge
-            className="gap-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-            variant="secondary"
-          >
-            <CheckCircle2Icon className="size-3" />
-            {summary.passed} passed
-          </Badge>
-          {summary.failed > 0 && (
-            <Badge
-              className="gap-1 bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
-              variant="secondary"
-            >
-              <XCircleIcon className="size-3" />
-              {summary.failed} failed
-            </Badge>
-          )}
-          {summary.skipped > 0 && (
-            <Badge
-              className="gap-1 bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"
-              variant="secondary"
-            >
-              <CircleIcon className="size-3" />
-              {summary.skipped} skipped
-            </Badge>
-          )}
-        </>
-      )}
+      {children ?? <TestResultsSummaryBadges summary={summary} />}
     </div>
   );
 };
@@ -296,6 +302,32 @@ export type TestSuiteStatsProps = HTMLAttributes<HTMLDivElement> & {
   skipped?: number;
 };
 
+type TestSuiteStatsCountsProps = Required<
+  Pick<TestSuiteStatsProps, "passed" | "failed" | "skipped">
+>;
+
+const TestSuiteStatsCounts = ({
+  passed,
+  failed,
+  skipped,
+}: TestSuiteStatsCountsProps) => (
+  <>
+    {passed > 0 && (
+      <span className="text-green-600 dark:text-green-400">
+        {passed} passed
+      </span>
+    )}
+    {failed > 0 && (
+      <span className="text-red-600 dark:text-red-400">{failed} failed</span>
+    )}
+    {skipped > 0 && (
+      <span className="text-yellow-600 dark:text-yellow-400">
+        {skipped} skipped
+      </span>
+    )}
+  </>
+);
+
 export const TestSuiteStats = ({
   passed = 0,
   failed = 0,
@@ -309,23 +341,7 @@ export const TestSuiteStats = ({
     {...props}
   >
     {children ?? (
-      <>
-        {passed > 0 && (
-          <span className="text-green-600 dark:text-green-400">
-            {passed} passed
-          </span>
-        )}
-        {failed > 0 && (
-          <span className="text-red-600 dark:text-red-400">
-            {failed} failed
-          </span>
-        )}
-        {skipped > 0 && (
-          <span className="text-yellow-600 dark:text-yellow-400">
-            {skipped} skipped
-          </span>
-        )}
-      </>
+      <TestSuiteStatsCounts failed={failed} passed={passed} skipped={skipped} />
     )}
   </div>
 );

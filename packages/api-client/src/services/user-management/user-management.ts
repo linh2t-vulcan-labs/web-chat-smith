@@ -109,15 +109,13 @@ export type VerifyOAuthTokenResult = z.infer<
   typeof VerifyOAuthTokenResponseSchema
 >;
 export type UserInfoResult = z.infer<typeof UserProfileSchema>;
-export type BootstrapGuestSessionResult = z.infer<
+type BootstrapGuestSessionResult = z.infer<
   typeof BootstrapGuestSessionResponseSchema
 >;
-export type CreateGuestSessionResult = z.infer<
+type CreateGuestSessionResult = z.infer<
   typeof CreateGuestSessionResponseSchema
 >;
-export type RefreshGuestTokenResult = z.infer<
-  typeof RefreshGuestTokenResponseSchema
->;
+type RefreshGuestTokenResult = z.infer<typeof RefreshGuestTokenResponseSchema>;
 
 interface VerifyOAuthTokenInput {
   provider: string;

@@ -68,6 +68,36 @@ export interface ParsedSvg {
   children: string;
 }
 
+/** Renders every self-closing `<path|circle .../>` child element found in `inner` to JSX-ready markup. */
+const extractElements = (inner: string, fileLabel: string): string[] => {
+  const elements: string[] = [];
+  for (const match of inner.matchAll(SELF_CLOSING_ELEMENT)) {
+    elements.push(
+      renderElement(
+        requireGroup(match, "tag", fileLabel),
+        requireGroup(match, "attrs", fileLabel),
+        fileLabel
+      )
+    );
+  }
+  return elements;
+};
+
+/** Throws unless `inner` was made up entirely of the self-closing elements already extracted into `elements` — i.e. nothing this generator doesn't understand was silently dropped. */
+const assertFullyParsed = (
+  inner: string,
+  elements: string[],
+  fileLabel: string
+): void => {
+  const whitespaceOnlyRemainder =
+    inner.replace(SELF_CLOSING_ELEMENT, "").trim().length === 0;
+  if (elements.length === 0 || !whitespaceOnlyRemainder) {
+    throw new Error(
+      `${fileLabel}: contains markup this generator doesn't understand (expected only self-closing <path>/<circle> children) — extend scripts/lib/svg.ts`
+    );
+  }
+};
+
 /** Parses the uniform `<svg><path|circle .../></svg>` shape used by every source icon and rewrites it to JSX-ready, theme-aware markup. Throws on anything it doesn't recognize instead of silently dropping markup. */
 export const parseSvg = (source: string, fileLabel: string): ParsedSvg => {
   const rootMatch = SVG_ROOT.exec(source);
@@ -84,24 +114,8 @@ export const parseSvg = (source: string, fileLabel: string): ParsedSvg => {
   }
 
   const trimmedInner = inner.trim();
-  const elements: string[] = [];
-  for (const match of trimmedInner.matchAll(SELF_CLOSING_ELEMENT)) {
-    elements.push(
-      renderElement(
-        requireGroup(match, "tag", fileLabel),
-        requireGroup(match, "attrs", fileLabel),
-        fileLabel
-      )
-    );
-  }
-
-  const whitespaceOnlyRemainder =
-    trimmedInner.replace(SELF_CLOSING_ELEMENT, "").trim().length === 0;
-  if (elements.length === 0 || !whitespaceOnlyRemainder) {
-    throw new Error(
-      `${fileLabel}: contains markup this generator doesn't understand (expected only self-closing <path>/<circle> children) — extend scripts/lib/svg.ts`
-    );
-  }
+  const elements = extractElements(trimmedInner, fileLabel);
+  assertFullyParsed(trimmedInner, elements, fileLabel);
 
   return { children: elements.join("\n    "), viewBox };
 };

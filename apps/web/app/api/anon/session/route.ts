@@ -1,12 +1,10 @@
 import { getGuestSessionCookie } from "@cs/api-client/server/guest/cookies";
-import {
-  isLikelyBot,
-  validateGuestRequest,
-} from "@cs/api-client/server/guest/security";
 import { createGuestSession } from "@cs/api-client/server/guest/session";
 import { decodeJwtExpiryMs } from "@cs/core/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+
+import { guestApiErrorResponse, guestRequestGuard } from "./_shared";
 
 /**
  * `getGuestTokenManager()`'s `restoreEndpoint` — called once per tab by
@@ -28,15 +26,9 @@ import type { NextRequest } from "next/server";
  * "no session" — see that method.
  */
 export const GET = async (request: NextRequest) => {
-  const validation = validateGuestRequest(request);
-  if (!validation.isValid) {
-    return NextResponse.json({ message: validation.error }, { status: 403 });
-  }
-  if (isLikelyBot(request)) {
-    return NextResponse.json(
-      { message: "Automated requests not allowed" },
-      { status: 403 }
-    );
+  const blocked = guestRequestGuard(request);
+  if (blocked) {
+    return blocked;
   }
 
   const session = await getGuestSessionCookie();
@@ -54,45 +46,37 @@ interface CreateGuestSessionBody {
   captchaToken?: string;
 }
 
+const parseCaptchaToken = async (
+  request: NextRequest
+): Promise<string | null> => {
+  const body = (await request
+    .json()
+    .catch(() => null)) as CreateGuestSessionBody | null;
+  return body?.captchaToken ?? null;
+};
+
 /**
  * Creates a guest session from a Turnstile token obtained client-side (see
  * `components/providers/guest-session-provider.tsx`). Short-circuits to the
  * existing `guest_session` cookie first (no captcha needed on that path).
  */
 export const POST = async (request: NextRequest) => {
-  const validation = validateGuestRequest(request);
-  if (!validation.isValid) {
-    return NextResponse.json({ message: validation.error }, { status: 403 });
-  }
-  if (isLikelyBot(request)) {
-    return NextResponse.json(
-      { message: "Automated requests not allowed" },
-      { status: 403 }
-    );
+  const blocked = guestRequestGuard(request);
+  if (blocked) {
+    return blocked;
   }
 
-  const body = (await request
-    .json()
-    .catch(() => null)) as CreateGuestSessionBody | null;
-  if (!body?.captchaToken) {
+  const captchaToken = await parseCaptchaToken(request);
+  if (!captchaToken) {
     return NextResponse.json(
       { message: "captchaToken is required" },
       { status: 400 }
     );
   }
 
-  const [error, session] = await createGuestSession(body.captchaToken);
+  const [error, session] = await createGuestSession(captchaToken);
   if (error) {
-    return NextResponse.json(
-      {
-        code: error.code,
-        details: error.details,
-        message: error.message,
-        reason: error.reason,
-        status: error.status,
-      },
-      { status: error.httpStatus || 502 }
-    );
+    return guestApiErrorResponse(error, 502);
   }
 
   return NextResponse.json({

@@ -33,6 +33,26 @@ export type ApiErrorKind =
   | "aborted"
   | "handler";
 
+const resolveIsRetryable = (
+  kind: ApiErrorKind,
+  definitionRetryable: boolean
+): boolean =>
+  kind === "backend"
+    ? definitionRetryable
+    : kind === "timeout" || kind === "network";
+
+/**
+ * Also treats any 401 as an auth error even when `reason` doesn't map to a
+ * known auth reason — a malformed/empty error body on a 401 must still
+ * trigger refresh-and-retry-once, not silently skip it (see core/interceptors.ts).
+ */
+const resolveIsAuthError = (
+  kind: ApiErrorKind,
+  reason: string,
+  httpStatus: number
+): boolean =>
+  kind === "backend" && (isAuthReason(reason) || httpStatus === 401);
+
 interface ApiErrorInit {
   kind: ApiErrorKind;
   reason: string;
@@ -76,16 +96,12 @@ export class ApiError extends Error {
     this.retryAfterMs = init.retryAfterMs;
 
     const definition = getReasonDefinition(init.reason);
-    this.isRetryable =
-      init.kind === "backend"
-        ? definition.retryable
-        : init.kind === "timeout" || init.kind === "network";
-    // Also treat any 401 as an auth error even when `reason` doesn't map to
-    // a known auth reason — a malformed/empty error body on a 401 must still
-    // trigger refresh-and-retry-once, not silently skip it (see core/interceptors.ts).
-    this.isAuthError =
-      init.kind === "backend" &&
-      (isAuthReason(init.reason) || init.httpStatus === 401);
+    this.isRetryable = resolveIsRetryable(init.kind, definition.retryable);
+    this.isAuthError = resolveIsAuthError(
+      init.kind,
+      init.reason,
+      init.httpStatus
+    );
     this.i18nKey = definition.i18nKey;
   }
 

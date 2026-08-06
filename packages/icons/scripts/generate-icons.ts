@@ -84,6 +84,17 @@ const removeStaleIconFiles = async (
   return staleFiles.length;
 };
 
+const pluralize = (count: number, word: string): string =>
+  `${count} ${word}${count === 1 ? "" : "s"}`;
+
+const buildSummary = (generatedCount: number, removedCount: number): string => {
+  const summary = [`Generated ${pluralize(generatedCount, "icon")}`];
+  if (removedCount > 0) {
+    summary.push(`removed ${pluralize(removedCount, "stale file")}`);
+  }
+  return `${summary.join(", ")}.`;
+};
+
 const main = async () => {
   const svgFiles = await listFiles(SVGS_DIR, "*.svg");
   if (svgFiles.length === 0) {
@@ -95,13 +106,7 @@ const main = async () => {
   await Promise.all([...slugs].map(([slug, file]) => generateIcon(slug, file)));
   const removed = await removeStaleIconFiles(new Set(slugs.keys()));
 
-  const summary = [
-    `Generated ${slugs.size} icon${slugs.size === 1 ? "" : "s"}`,
-  ];
-  if (removed > 0) {
-    summary.push(`removed ${removed} stale file${removed === 1 ? "" : "s"}`);
-  }
-  console.log(`${summary.join(", ")}.`);
+  console.log(buildSummary(slugs.size, removed));
 };
 
 await main();

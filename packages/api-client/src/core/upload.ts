@@ -1,6 +1,7 @@
 import { ApiError } from "../errors/api-error";
 import type { ApiResult } from "../errors/api-error";
 import { fileService } from "../services/file";
+import type { UploadPolicy } from "../services/file";
 
 export interface UploadFileInput {
   file: File;
@@ -73,6 +74,16 @@ const postFormDataWithProgress = (
     xhr.send(formData);
   });
 
+/** GCS expects the presigned policy's fields as form fields ahead of the file itself — order matters to GCS, so `file` is always appended last. */
+const buildUploadFormData = (policy: UploadPolicy, file: File): FormData => {
+  const formData = new FormData();
+  for (const [key, value] of Object.entries(policy.uploadPolicy)) {
+    formData.append(key, value);
+  }
+  formData.append("file", file);
+  return formData;
+};
+
 /**
  * Presigned-URL upload — the one pattern the legacy code already got right
  * (see docs/runbook/api-client.md §2/§9): ask Vulcan for a signed POST
@@ -98,11 +109,7 @@ export const uploadFile = async (
     return [policyError, null];
   }
 
-  const formData = new FormData();
-  for (const [key, value] of Object.entries(policy.uploadPolicy)) {
-    formData.append(key, value);
-  }
-  formData.append("file", input.file);
+  const formData = buildUploadFormData(policy, input.file);
 
   const [uploadError] = await postFormDataWithProgress(
     policy.uploadUrl,

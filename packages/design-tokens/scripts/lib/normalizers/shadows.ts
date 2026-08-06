@@ -1,6 +1,10 @@
-import type { TokenMap, TokenValue } from "../resolver";
-import { isHexColor, normalizeHexColor } from "../utils/color-math";
-import { isObjectRecord, isTokenValue } from "../utils/token-tree";
+import type { TokenMap } from "../resolver";
+import { normalizeColorIfHex } from "../utils/color-math";
+import {
+  isObjectRecord,
+  mapTokensOfType,
+  toPxValue,
+} from "../utils/token-tree";
 
 interface ShadowLayer {
   blur?: unknown;
@@ -10,24 +14,13 @@ interface ShadowLayer {
   spread?: unknown;
 }
 
-const normalizeNumberLike = (value: unknown): unknown => {
-  if (typeof value === "number") {
-    return `${value}px`;
-  }
-
-  return value;
-};
-
 const normalizeLayer = (layer: ShadowLayer): ShadowLayer => ({
   ...layer,
-  blur: normalizeNumberLike(layer.blur),
-  color:
-    typeof layer.color === "string" && isHexColor(layer.color)
-      ? normalizeHexColor(layer.color)
-      : layer.color,
-  offsetX: normalizeNumberLike(layer.offsetX),
-  offsetY: normalizeNumberLike(layer.offsetY),
-  spread: normalizeNumberLike(layer.spread),
+  blur: toPxValue(layer.blur),
+  color: normalizeColorIfHex(layer.color),
+  offsetX: toPxValue(layer.offsetX),
+  offsetY: toPxValue(layer.offsetY),
+  spread: toPxValue(layer.spread),
 });
 
 const normalizeShadowValue = (value: unknown): unknown => {
@@ -44,31 +37,5 @@ const normalizeShadowValue = (value: unknown): unknown => {
   return value;
 };
 
-const walkShadows = (current: TokenMap): TokenMap => {
-  const normalized: TokenMap = {};
-
-  for (const [key, value] of Object.entries(current)) {
-    if (isTokenValue(value)) {
-      normalized[key] =
-        value.$type === "shadow"
-          ? ({
-              ...value,
-              $value: normalizeShadowValue(value.$value),
-            } as TokenValue)
-          : value;
-      continue;
-    }
-
-    if (isObjectRecord(value)) {
-      normalized[key] = walkShadows(value as TokenMap);
-      continue;
-    }
-
-    normalized[key] = value as TokenValue;
-  }
-
-  return normalized;
-};
-
 export const normalizeShadows = (tokens: TokenMap): TokenMap =>
-  walkShadows(tokens);
+  mapTokensOfType(tokens, "shadow", normalizeShadowValue);

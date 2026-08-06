@@ -2,21 +2,13 @@
 
 import { CheckIcon, CopyIcon } from "lucide-react";
 import type { ComponentProps, CSSProperties, HTMLAttributes } from "react";
-import {
-  createContext,
-  memo,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, memo, useContext, useEffect, useState } from "react";
 import type {
   BundledLanguage,
   BundledTheme,
   HighlighterGeneric,
   ThemedToken,
 } from "shiki";
-import { createHighlighter } from "shiki";
 
 import { Button } from "#components/shadcn/button";
 import {
@@ -26,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "#components/shadcn/select";
+import { useCopyToClipboard } from "#hooks/use-copy-to-clipboard";
 import { cn } from "#lib/utils";
 
 // Shiki uses bitflags for font styles: 1=italic, 2=bold, 4=underline
@@ -128,11 +121,14 @@ const CodeBlockContext = createContext<CodeBlockContextType>({
   code: "",
 });
 
-// Highlighter cache (singleton per language)
-const highlighterCache = new Map<
-  string,
-  Promise<HighlighterGeneric<BundledLanguage, BundledTheme>>
->();
+// Single shared highlighter for the whole app (not one per language): the
+// two themes only ever get parsed once, and each language is loaded into
+// this same instance on demand instead of spinning up a whole new
+// highlighter (with its own copy of both themes) per language.
+let sharedHighlighterPromise: Promise<
+  HighlighterGeneric<BundledLanguage, BundledTheme>
+> | null = null;
+const loadedLanguages = new Set<string>();
 
 // Token cache
 const tokensCache = new Map<string, TokenizedCode>();
@@ -146,21 +142,55 @@ const getTokensCacheKey = (code: string, language: BundledLanguage) => {
   return `${language}:${code.length}:${start}:${end}`;
 };
 
-const getHighlighter = (
+const createSharedHighlighter = async () => {
+  // Dynamic imports (rather than static top-level ones) keep shiki's own
+  // dynamic-import-based wasm/language loading out of the SSR module graph
+  // — Turbopack can't trace it there and throws "Cannot find package
+  // shiki-<hash>" if shiki is statically imported into a server-rendered
+  // module, even when the code path that calls it is client-only.
+  //
+  // The JS regex engine (rather than the default oniguruma/wasm one) skips
+  // fetching and instantiating a wasm binary entirely — smaller, faster to
+  // start, and one less moving part for the bundler to trace.
+  const [
+    { createHighlighterCore },
+    { createJavaScriptRegexEngine },
+    { bundledThemes },
+  ] = await Promise.all([
+    import("shiki/core"),
+    import("shiki/engine/javascript"),
+    import("shiki/themes"),
+  ]);
+
+  return createHighlighterCore({
+    engine: createJavaScriptRegexEngine(),
+    langs: [],
+    themes: [bundledThemes["github-light"](), bundledThemes["github-dark"]()],
+  }) as Promise<HighlighterGeneric<BundledLanguage, BundledTheme>>;
+};
+
+const getHighlighter = async (
   language: BundledLanguage
 ): Promise<HighlighterGeneric<BundledLanguage, BundledTheme>> => {
-  const cached = highlighterCache.get(language);
-  if (cached) {
-    return cached;
+  sharedHighlighterPromise ??= createSharedHighlighter();
+  const highlighter = await sharedHighlighterPromise;
+
+  if (!loadedLanguages.has(language)) {
+    try {
+      const { bundledLanguages } = await import("shiki/langs");
+      const loadLanguage = bundledLanguages[language];
+      if (loadLanguage) {
+        await highlighter.loadLanguage(loadLanguage());
+      }
+    } finally {
+      // Mark as attempted either way — an unsupported language falls back
+      // to "text" in resolveLoadedLanguage below rather than retrying
+      // forever.
+      loadedLanguages.add(language);
+    }
   }
 
-  const highlighterPromise = createHighlighter({
-    langs: [language],
-    themes: ["github-light", "github-dark"],
-  });
-
-  highlighterCache.set(language, highlighterPromise);
-  return highlighterPromise;
+  return highlighter;
 };
 
 // Create raw tokens for immediate display while highlighting loads
@@ -178,6 +208,68 @@ const createRawTokens = (code: string): TokenizedCode => ({
         ]
   ),
 });
+
+const notifyTokenSubscribers = (
+  tokensCacheKey: string,
+  tokenized: TokenizedCode
+) => {
+  const subs = subscribers.get(tokensCacheKey);
+  if (!subs) {
+    return;
+  }
+
+  for (const sub of subs) {
+    sub(tokenized);
+  }
+  subscribers.delete(tokensCacheKey);
+};
+
+const resolveLoadedLanguage = (
+  highlighter: HighlighterGeneric<BundledLanguage, BundledTheme>,
+  language: BundledLanguage
+): BundledLanguage | "text" => {
+  const availableLangs = highlighter.getLoadedLanguages();
+  return availableLangs.includes(language) ? language : "text";
+};
+
+const toTokenizedCode = (result: {
+  bg?: string;
+  fg?: string;
+  tokens: ThemedToken[][];
+}): TokenizedCode => ({
+  bg: result.bg ?? "transparent",
+  fg: result.fg ?? "inherit",
+  tokens: result.tokens,
+});
+
+// Fire-and-forget background highlighting: caches the result and notifies
+// any subscribers waiting on this cache key.
+const runHighlighting = async (
+  code: string,
+  language: BundledLanguage,
+  tokensCacheKey: string
+) => {
+  try {
+    const highlighter = await getHighlighter(language);
+    const langToUse = resolveLoadedLanguage(highlighter, language);
+
+    const result = highlighter.codeToTokens(code, {
+      lang: langToUse,
+      themes: {
+        dark: "github-dark",
+        light: "github-light",
+      },
+    });
+
+    const tokenized = toTokenizedCode(result);
+
+    tokensCache.set(tokensCacheKey, tokenized);
+    notifyTokenSubscribers(tokensCacheKey, tokenized);
+  } catch (error) {
+    console.error("Failed to highlight code:", error);
+    subscribers.delete(tokensCacheKey);
+  }
+};
 
 // Synchronous highlight with callback for async results
 export const highlightCode = (
@@ -202,43 +294,17 @@ export const highlightCode = (
     subscribers.get(tokensCacheKey)?.add(callback);
   }
 
+  // Shiki's highlighter loads languages/themes via dynamic import, which
+  // Turbopack can't resolve during SSR/prerendering. Skip kicking it off on
+  // the server — the raw-token fallback renders instead, and the client
+  // picks up real highlighting via the effect in useAsyncHighlightedTokens
+  // once mounted in the browser.
+  if (typeof window === "undefined") {
+    return null;
+  }
+
   // Start highlighting in background - fire-and-forget async pattern
-  (async () => {
-    try {
-      const highlighter = await getHighlighter(language);
-      const availableLangs = highlighter.getLoadedLanguages();
-      const langToUse = availableLangs.includes(language) ? language : "text";
-
-      const result = highlighter.codeToTokens(code, {
-        lang: langToUse,
-        themes: {
-          dark: "github-dark",
-          light: "github-light",
-        },
-      });
-
-      const tokenized: TokenizedCode = {
-        bg: result.bg ?? "transparent",
-        fg: result.fg ?? "inherit",
-        tokens: result.tokens,
-      };
-
-      // Cache the result
-      tokensCache.set(tokensCacheKey, tokenized);
-
-      // Notify all subscribers
-      const subs = subscribers.get(tokensCacheKey);
-      if (subs) {
-        for (const sub of subs) {
-          sub(tokenized);
-        }
-        subscribers.delete(tokensCacheKey);
-      }
-    } catch (error) {
-      console.error("Failed to highlight code:", error);
-      subscribers.delete(tokensCacheKey);
-    }
-  })();
+  runHighlighting(code, language, tokensCacheKey);
 
   return null;
 };
@@ -363,26 +429,18 @@ export const CodeBlockActions = ({
   </div>
 );
 
-export const CodeBlockContent = ({
-  code,
-  language,
-  showLineNumbers = false,
-}: {
-  code: string;
-  language: BundledLanguage;
-  showLineNumbers?: boolean;
-}) => {
-  // Raw tokens for immediate display
-  const rawTokens = createRawTokens(code);
-
-  // Synchronous cache lookup — avoids setState in effect for cached results
-  const syncTokens = highlightCode(code, language) ?? rawTokens;
-
-  // Async highlighting result (populated after shiki loads)
+// Tracks the async (fully shiki-highlighted) tokens for the current
+// code/language pair, falling back to `fallback` until they arrive.
+// Invalidates stale results synchronously during render when code or
+// language changes (derived state pattern), instead of via an effect.
+const useAsyncHighlightedTokens = (
+  code: string,
+  language: BundledLanguage,
+  fallback: TokenizedCode
+) => {
   const [asyncTokens, setAsyncTokens] = useState<TokenizedCode | null>(null);
   const [prevAsyncKey, setPrevAsyncKey] = useState({ code, language });
 
-  // Invalidate stale async tokens synchronously during render (derived state pattern)
   if (prevAsyncKey.code !== code || prevAsyncKey.language !== language) {
     setPrevAsyncKey({ code, language });
     setAsyncTokens(null);
@@ -402,7 +460,21 @@ export const CodeBlockContent = ({
     };
   }, [code, language]);
 
-  const tokenized = asyncTokens ?? syncTokens;
+  return asyncTokens ?? fallback;
+};
+
+export const CodeBlockContent = ({
+  code,
+  language,
+  showLineNumbers = false,
+}: {
+  code: string;
+  language: BundledLanguage;
+  showLineNumbers?: boolean;
+}) => {
+  // Synchronous cache lookup — avoids setState in effect for cached results
+  const syncTokens = highlightCode(code, language) ?? createRawTokens(code);
+  const tokenized = useAsyncHighlightedTokens(code, language, syncTokens);
 
   return (
     <div className="relative overflow-auto">
@@ -450,44 +522,19 @@ export const CodeBlockCopyButton = ({
   className,
   ...props
 }: CodeBlockCopyButtonProps) => {
-  const [isCopied, setIsCopied] = useState(false);
-  const timeoutRef = useRef<number>(0);
   const { code } = useContext(CodeBlockContext);
-
-  const copyToClipboard = async () => {
-    if (typeof window === "undefined" || !navigator?.clipboard?.writeText) {
-      onError?.(new Error("Clipboard API not available"));
-      return;
-    }
-
-    try {
-      if (!isCopied) {
-        await navigator.clipboard.writeText(code);
-        setIsCopied(true);
-        onCopy?.();
-        timeoutRef.current = window.setTimeout(
-          () => setIsCopied(false),
-          timeout
-        );
-      }
-    } catch (error) {
-      onError?.(error as Error);
-    }
-  };
-
-  useEffect(
-    () => () => {
-      window.clearTimeout(timeoutRef.current);
-    },
-    []
-  );
+  const { isCopied, copyToClipboard } = useCopyToClipboard({
+    onCopy,
+    onError,
+    timeout,
+  });
 
   const Icon = isCopied ? CheckIcon : CopyIcon;
 
   return (
     <Button
       className={cn("shrink-0", className)}
-      onClick={copyToClipboard}
+      onClick={() => copyToClipboard(code)}
       size="icon"
       variant="ghost"
       {...props}

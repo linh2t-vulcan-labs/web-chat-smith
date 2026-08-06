@@ -160,42 +160,49 @@ const FieldSeparator = ({
   </div>
 );
 
+type FieldErrorEntry = { message?: string } | undefined;
+
+/** The deduplicated error messages, rendered as a list when there's more than one. */
+const renderFieldErrorList = (errors: FieldErrorEntry[]): React.ReactNode => {
+  const uniqueErrors = [
+    ...new Map(errors.map((error) => [error?.message, error])).values(),
+  ];
+
+  if (uniqueErrors.length === 1) {
+    return uniqueErrors[0]?.message;
+  }
+
+  return (
+    <ul className="ms-4 flex list-disc flex-col gap-1">
+      {uniqueErrors.map(
+        (error) =>
+          error?.message && <li key={error.message}>{error.message}</li>
+      )}
+    </ul>
+  );
+};
+
+/** The `<FieldError>` body — explicit `children` win, otherwise the (deduplicated) `errors` list. */
+const resolveFieldErrorContent = (
+  children: React.ReactNode,
+  errors: FieldErrorEntry[] | undefined
+): React.ReactNode => {
+  if (children) {
+    return children;
+  }
+
+  return errors?.length ? renderFieldErrorList(errors) : null;
+};
+
 const FieldError = ({
   className,
   children,
   errors,
   ...props
 }: React.ComponentProps<"div"> & {
-  errors?: ({ message?: string } | undefined)[];
+  errors?: FieldErrorEntry[];
 }) => {
-  const getContent = () => {
-    if (children) {
-      return children;
-    }
-
-    if (!errors?.length) {
-      return null;
-    }
-
-    const uniqueErrors = [
-      ...new Map(errors.map((error) => [error?.message, error])).values(),
-    ];
-
-    if (uniqueErrors.length === 1) {
-      return uniqueErrors[0]?.message;
-    }
-
-    return (
-      <ul className="ms-4 flex list-disc flex-col gap-1">
-        {uniqueErrors.map(
-          (error) =>
-            error?.message && <li key={error.message}>{error.message}</li>
-        )}
-      </ul>
-    );
-  };
-
-  const content = getContent();
+  const content = resolveFieldErrorContent(children, errors);
 
   if (!content) {
     return null;

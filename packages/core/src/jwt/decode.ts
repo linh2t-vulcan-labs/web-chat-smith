@@ -38,6 +38,36 @@ const base64UrlDecode = (str: string) => {
   }
 };
 
+const getTokenPart = (token: string, pos: number): string => {
+  const part = token.split(".")[pos];
+  if (typeof part !== "string") {
+    throw new InvalidTokenError(
+      `Invalid token specified: missing part #${pos + 1}`
+    );
+  }
+  return part;
+};
+
+const decodeTokenPart = (part: string, pos: number): string => {
+  try {
+    return base64UrlDecode(part);
+  } catch (error) {
+    throw new InvalidTokenError(
+      `Invalid token specified: invalid base64 for part #${pos + 1} (${(error as Error).message})`
+    );
+  }
+};
+
+const parseTokenPart = <T>(decoded: string, pos: number): T => {
+  try {
+    return JSON.parse(decoded) as T;
+  } catch (error) {
+    throw new InvalidTokenError(
+      `Invalid token specified: invalid json for part #${pos + 1} (${(error as Error).message})`
+    );
+  }
+};
+
 /**
  * Dependency-free JWT decode (header or payload — no signature verification,
  * this is a client-side read of an already-trusted token). Kept as this
@@ -60,33 +90,10 @@ export function jwtDecode<T = JwtHeader | JwtPayload>(
     throw new InvalidTokenError("Invalid token specified: must be a string");
   }
 
-  const opts = options ?? {};
-
-  const pos = opts.header === true ? 0 : 1;
-  const part = token.split(".")[pos];
-
-  if (typeof part !== "string") {
-    throw new InvalidTokenError(
-      `Invalid token specified: missing part #${pos + 1}`
-    );
-  }
-
-  let decoded: string;
-  try {
-    decoded = base64UrlDecode(part);
-  } catch (error) {
-    throw new InvalidTokenError(
-      `Invalid token specified: invalid base64 for part #${pos + 1} (${(error as Error).message})`
-    );
-  }
-
-  try {
-    return JSON.parse(decoded) as T;
-  } catch (error) {
-    throw new InvalidTokenError(
-      `Invalid token specified: invalid json for part #${pos + 1} (${(error as Error).message})`
-    );
-  }
+  const pos = options?.header === true ? 0 : 1;
+  const part = getTokenPart(token, pos);
+  const decoded = decodeTokenPart(part, pos);
+  return parseTokenPart<T>(decoded, pos);
 }
 
 /** Only used if a token somehow fails to decode — should not happen in practice. */

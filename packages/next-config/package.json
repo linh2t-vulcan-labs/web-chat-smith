@@ -16,6 +16,9 @@
     "clean": "rm -rf dist node_modules .turbo .cache",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@cs/core": "workspace:*"
+  },
   "devDependencies": {
     "@cs/ts-config": "workspace:*",
     "@types/bun": "catalog:tools",

@@ -6,10 +6,8 @@ import { $ } from "bun";
 import { resolveTokens } from "../lib/resolver";
 import { styleText } from "../lib/utils/console-colors";
 import {
-  validateContrast,
-  validateRefs,
-  validateSchema,
-  validateSSRSafety,
+  countValidationErrors,
+  validateLightDarkTokens,
 } from "../lib/validators";
 import {
   CURRENT_VERSION_FILE,
@@ -64,26 +62,15 @@ const validateVersionData = async (version: string): Promise<void> => {
     resolveTokens(FIGMA_TOKENS_DIR, version, "dark"),
   ]);
 
-  const schema = validateSchema(resolved.tokens);
-  const refs = validateRefs(resolved.tokens);
-  const contrast = validateContrast(resolved.tokens);
-  const ssrSafety = validateSSRSafety(resolved.tokens);
-  const darkSchema = validateSchema(resolvedDark.tokens);
-  const darkRefs = validateRefs(resolvedDark.tokens);
-  const darkContrast = validateContrast(resolvedDark.tokens);
-  const darkSsrSafety = validateSSRSafety(resolvedDark.tokens);
-
-  const totalErrors =
-    resolved.errors.length +
-    resolvedDark.errors.length +
-    schema.errors.length +
-    refs.errors.length +
-    contrast.errors.length +
-    ssrSafety.errors.length +
-    darkSchema.errors.length +
-    darkRefs.errors.length +
-    darkContrast.errors.length +
-    darkSsrSafety.errors.length;
+  const validation = validateLightDarkTokens(
+    resolved.tokens,
+    resolvedDark.tokens
+  );
+  const totalErrors = countValidationErrors(
+    validation,
+    resolved.errors.length,
+    resolvedDark.errors.length
+  );
 
   if (totalErrors > 0) {
     throw new Error(

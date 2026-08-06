@@ -87,6 +87,34 @@ export type TranscriptionSegmentProps = ComponentProps<"button"> & {
   index: number;
 };
 
+type SegmentTimeState = "active" | "past" | "future";
+
+const getSegmentTimeState = (
+  isActive: boolean,
+  isPast: boolean
+): SegmentTimeState => {
+  if (isActive) {
+    return "active";
+  }
+  return isPast ? "past" : "future";
+};
+
+const segmentTimeStateClasses: Record<SegmentTimeState, string> = {
+  active: "text-primary",
+  future: "text-muted-foreground/60",
+  past: "text-muted-foreground",
+};
+
+const getSegmentClassName = (
+  timeState: SegmentTimeState,
+  isSeekable: boolean
+) =>
+  cn(
+    "inline text-left",
+    segmentTimeStateClasses[timeState],
+    isSeekable ? "cursor-pointer hover:text-foreground" : "cursor-default"
+  );
+
 export const TranscriptionSegment = ({
   segment,
   index,
@@ -110,12 +138,10 @@ export const TranscriptionSegment = ({
   return (
     <button
       className={cn(
-        "inline text-left",
-        isActive && "text-primary",
-        isPast && "text-muted-foreground",
-        !(isActive || isPast) && "text-muted-foreground/60",
-        onSeek && "cursor-pointer hover:text-foreground",
-        !onSeek && "cursor-default",
+        getSegmentClassName(
+          getSegmentTimeState(isActive, isPast),
+          Boolean(onSeek)
+        ),
         className
       )}
       data-active={isActive}

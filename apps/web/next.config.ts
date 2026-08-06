@@ -16,5 +16,9 @@ export default withNextIntl(
       isProd: process.env.NODE_ENV === "production",
       webUrl: "http://localhost:3000",
     },
+    // shiki loads its languages/themes/wasm via dynamic import; Turbopack
+    // can't trace those for the server bundle, so it must stay external
+    // rather than bundled for SSR.
+    serverExternalPackages: ["sharp", "shiki"],
   })
 );

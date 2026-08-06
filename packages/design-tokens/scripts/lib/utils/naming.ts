@@ -13,14 +13,14 @@ const sanitizeNamePart = (value: string): string =>
     .replaceAll(MULTI_DASH_REGEX, "-")
     .replaceAll(/^-|-$/gu, "");
 
-export const tokenPathToSegments = (path: string): string[] =>
+const tokenPathToSegments = (path: string): string[] =>
   path
     .replaceAll(DOT_SEPARATOR_REGEX, "-")
     .split("-")
     .map((segment) => sanitizeNamePart(segment))
     .filter((segment) => segment.length > 0);
 
-export const tokenPathToSafeName = (path: string): string => {
+const tokenPathToSafeName = (path: string): string => {
   const segments = tokenPathToSegments(path);
   return segments.length > 0 ? segments.join("-") : "token";
 };

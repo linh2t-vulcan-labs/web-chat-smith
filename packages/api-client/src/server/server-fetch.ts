@@ -8,6 +8,7 @@ import type { EndpointCallInput, EndpointCaller } from "../endpoints/types";
 import { ApiError } from "../errors/api-error";
 import type { ApiResult } from "../errors/api-error";
 import { userManagement } from "../services/user-management";
+import type { HttpMethod } from "../types";
 import { parseWithSchema } from "../utils/parse-response";
 import { resolveBaseUrl } from "../utils/runtime-env";
 import {
@@ -78,6 +79,58 @@ export const ensureServerAccessToken = async (): Promise<ApiResult<string>> => {
   return refreshServerSession();
 };
 
+interface ServerFetchRequest {
+  url: string;
+  method: HttpMethod;
+  body: unknown;
+  baseHeaders: Record<string, string> | undefined;
+  authRequired: boolean;
+}
+
+const buildAuthHeaders = (
+  baseHeaders: Record<string, string> | undefined,
+  accessToken: string | undefined
+): Record<string, string> | undefined =>
+  accessToken
+    ? { ...baseHeaders, Authorization: `Bearer ${accessToken}` }
+    : baseHeaders;
+
+const shouldRetryServerAuth = (
+  error: ApiError | null,
+  authRequired: boolean,
+  hasRetriedAuth: boolean
+): boolean => Boolean(error?.isAuthError) && authRequired && !hasRetriedAuth;
+
+/** Only refresh-and-retries once on a 401 for `auth: "required"` endpoints — same contract as core/interceptors.ts and proxy/route-handler.ts. */
+const attemptServerFetch = async (
+  request: ServerFetchRequest,
+  accessToken: string | undefined,
+  hasRetriedAuth: boolean
+): Promise<ApiResult<unknown>> => {
+  const headers = buildAuthHeaders(request.baseHeaders, accessToken);
+  const result = await httpRequest<unknown>(request.url, {
+    body: request.body,
+    headers,
+    method: request.method,
+  });
+  const [error] = result;
+
+  if (!shouldRetryServerAuth(error, request.authRequired, hasRetriedAuth)) {
+    return result;
+  }
+
+  const [refreshError, newAccessToken] = await refreshServerSession();
+  if (refreshError) {
+    return [refreshError, null];
+  }
+  return attemptServerFetch(request, newAccessToken, true);
+};
+
+const resolveInitialAccessToken = (
+  authRequired: boolean
+): Promise<ApiResult<string | undefined>> =>
+  authRequired ? ensureServerAccessToken() : Promise.resolve([null, undefined]);
+
 /**
  * Direct-to-backend call for Server Components/Actions (see §12) — takes the
  * SAME endpoint object `services/*` exports (its `.config`, attached by
@@ -104,38 +157,19 @@ export const serverFetch = async <TInput extends EndpointCallInput, TResponse>(
     baseUrl: serviceOptions.baseUrl ?? resolveBaseUrl(),
     forceDirect: true,
   });
+  const authRequired = config.auth === "required";
 
-  const attempt = async (
-    accessToken: string | undefined,
-    hasRetriedAuth: boolean
-  ): Promise<ApiResult<unknown>> => {
-    const headers = accessToken
-      ? { ...baseHeaders, Authorization: `Bearer ${accessToken}` }
-      : baseHeaders;
-    const result = await httpRequest<unknown>(url, { body, headers, method });
-    const [error] = result;
-
-    if (error?.isAuthError && config.auth === "required" && !hasRetriedAuth) {
-      const [refreshError, newAccessToken] = await refreshServerSession();
-      if (refreshError) {
-        return [refreshError, null];
-      }
-      return attempt(newAccessToken, true);
-    }
-
-    return result;
-  };
-
-  let accessToken: string | undefined;
-  if (config.auth === "required") {
-    const [tokenError, token] = await ensureServerAccessToken();
-    if (tokenError) {
-      return [tokenError, null];
-    }
-    accessToken = token;
+  const [tokenError, accessToken] =
+    await resolveInitialAccessToken(authRequired);
+  if (tokenError) {
+    return [tokenError, null];
   }
 
-  const [error, data] = await attempt(accessToken, false);
+  const [error, data] = await attemptServerFetch(
+    { authRequired, baseHeaders, body, method, url },
+    accessToken,
+    false
+  );
   if (error) {
     return [error, null];
   }

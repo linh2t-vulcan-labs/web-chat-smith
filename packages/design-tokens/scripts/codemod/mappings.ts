@@ -41,49 +41,94 @@ const COLOR_MAPPING: Record<
 > = tokenMap.paletteMap ?? {};
 const SPACING_MAPPING: Record<string, string> = tokenMap.spacingMap ?? {};
 
-export const codemodMappings: Record<string, string> =
-  tokenMap.legacyClassMap ?? {};
+const codemodMappings: Record<string, string> = tokenMap.legacyClassMap ?? {};
+
+interface PaletteClassGroups {
+  family: string;
+  shade: string;
+  utility: string;
+}
+
+interface SpacingClassGroups {
+  negative?: string;
+  size: string;
+  utility: string;
+}
+
+const lookupPaletteMapping = (groups: PaletteClassGroups): string | null =>
+  COLOR_MAPPING[groups.family]?.[groups.shade] ?? null;
 
 const migratePaletteToken = (token: string): string | null => {
-  const match = token.match(LEGACY_PALETTE_CLASS);
-  if (!match) {
+  const groups = LEGACY_PALETTE_CLASS.exec(token)?.groups as
+    | PaletteClassGroups
+    | undefined;
+  if (!groups) {
     return null;
   }
 
-  const [, utility, family, shade] = match;
-  if (!utility || !family || !shade) {
-    return null;
-  }
-
-  const mapped = COLOR_MAPPING[family]?.[shade];
-  if (!mapped) {
-    return null;
-  }
-
-  return `${utility}-${mapped}`;
+  const mapped = lookupPaletteMapping(groups);
+  return mapped ? `${groups.utility}-${mapped}` : null;
 };
 
+const hasUsableSpacingMatch = (
+  groups: SpacingClassGroups | undefined
+): groups is SpacingClassGroups => {
+  if (!groups) {
+    return false;
+  }
+
+  return !groups.negative;
+};
+
+const lookupSpacingMapping = (groups: SpacingClassGroups): string | null =>
+  SPACING_MAPPING[groups.size] ?? null;
+
 const migrateSpacingToken = (token: string): string | null => {
-  const match = token.match(LEGACY_NUMERIC_SPACING);
-  if (!match) {
+  const groups = LEGACY_NUMERIC_SPACING.exec(token)?.groups as
+    | SpacingClassGroups
+    | undefined;
+  if (!hasUsableSpacingMatch(groups)) {
     return null;
   }
 
-  const [, negative, utility, size] = match;
-  if (!utility || !size) {
-    return null;
+  const mapped = lookupSpacingMapping(groups);
+  return mapped ? `${groups.utility}-${mapped}` : null;
+};
+
+const splitImportantPrefix = (
+  token: string
+): { clean: string; important: string } => {
+  const important = token.startsWith("!") ? "!" : "";
+  return { clean: important ? token.slice(1) : token, important };
+};
+
+const splitVariantPrefix = (
+  token: string
+): { base: string | undefined; variantPrefix: string } => {
+  const parts = token.split(":");
+  return {
+    base: parts.at(-1),
+    variantPrefix: parts.slice(0, -1).join(":"),
+  };
+};
+
+const resolveMappedBase = (base: string): string | null =>
+  codemodMappings[base] ??
+  migratePaletteToken(base) ??
+  migrateSpacingToken(base);
+
+const applyVariantPrefix = (variantPrefix: string, base: string): string =>
+  variantPrefix ? `${variantPrefix}:${base}` : base;
+
+const isNewMapping = (
+  mappedBase: string | null,
+  base: string
+): mappedBase is string => {
+  if (!mappedBase) {
+    return false;
   }
 
-  if (negative) {
-    return null;
-  }
-
-  const mapped = SPACING_MAPPING[size];
-  if (!mapped) {
-    return null;
-  }
-
-  return `${utility}-${mapped}`;
+  return mappedBase !== base;
 };
 
 export const migrateLegacyClassToken = (token: string): string | null => {
@@ -91,27 +136,16 @@ export const migrateLegacyClassToken = (token: string): string | null => {
     return null;
   }
 
-  const important = token.startsWith("!") ? "!" : "";
-  const cleanToken = important ? token.slice(1) : token;
-
-  const parts = cleanToken.split(":");
-  const base = parts.at(-1);
+  const { clean, important } = splitImportantPrefix(token);
+  const { base, variantPrefix } = splitVariantPrefix(clean);
   if (!base) {
     return null;
   }
 
-  const variantPrefix = parts.slice(0, -1).join(":");
-  const directMapped = codemodMappings[base];
-  const dynamicMapped = migratePaletteToken(base) ?? migrateSpacingToken(base);
-  const mappedBase = directMapped ?? dynamicMapped;
-
-  if (!mappedBase || mappedBase === base) {
+  const mappedBase = resolveMappedBase(base);
+  if (!isNewMapping(mappedBase, base)) {
     return null;
   }
 
-  const withVariant = variantPrefix
-    ? `${variantPrefix}:${mappedBase}`
-    : mappedBase;
-
-  return `${important}${withVariant}`;
+  return `${important}${applyVariantPrefix(variantPrefix, mappedBase)}`;
 };

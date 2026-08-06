@@ -69,217 +69,10 @@ import {
   Suggestions,
 } from "@cs/ui/components/ai-elements/suggestion";
 import { toast } from "@cs/ui/components/shadcn/toast";
-import type { ToolUIPart } from "ai";
 import { CheckIcon, GlobeIcon } from "lucide-react";
-import { nanoid } from "nanoid";
 import { useState } from "react";
 
-interface MessageType {
-  key: string;
-  from: "user" | "assistant";
-  sources?: { href: string; title: string }[];
-  versions: {
-    id: string;
-    content: string;
-  }[];
-  reasoning?: {
-    content: string;
-    duration: number;
-  };
-  tools?: {
-    name: string;
-    description: string;
-    status: ToolUIPart["state"];
-    parameters: Record<string, unknown>;
-    result: string | undefined;
-    error: string | undefined;
-  }[];
-}
-
-const initialMessages: MessageType[] = [
-  {
-    from: "user",
-    key: nanoid(),
-    versions: [
-      {
-        content: "Can you explain how to use React hooks effectively?",
-        id: nanoid(),
-      },
-    ],
-  },
-  {
-    from: "assistant",
-    key: nanoid(),
-    sources: [
-      {
-        href: "https://react.dev/reference/react",
-        title: "React Documentation",
-      },
-      {
-        href: "https://react.dev/reference/react-dom",
-        title: "React DOM Documentation",
-      },
-    ],
-    tools: [
-      {
-        description: "Searching React documentation",
-        error: undefined,
-        name: "mcp",
-        parameters: {
-          query: "React hooks best practices",
-          source: "react.dev",
-        },
-        result: `{
-  "query": "React hooks best practices",
-  "results": [
-    {
-      "title": "Rules of Hooks",
-      "url": "https://react.dev/warnings/invalid-hook-call-warning",
-      "snippet": "Hooks must be called at the top level of your React function components or custom hooks. Don't call hooks inside loops, conditions, or nested functions."
-    },
-    {
-      "title": "useState Hook",
-      "url": "https://react.dev/reference/react/useState",
-      "snippet": "useState is a React Hook that lets you add state to your function components. It returns an array with two values: the current state and a function to update it."
-    },
-    {
-      "title": "useEffect Hook",
-      "url": "https://react.dev/reference/react/useEffect",
-      "snippet": "useEffect lets you synchronize a component with external systems. It runs after render and can be used to perform side effects like data fetching."
-    }
-  ]
-}`,
-        status: "input-available",
-      },
-    ],
-    versions: [
-      {
-        content: `# React Hooks Best Practices
-
-React hooks are a powerful feature that let you use state and other React features without writing classes. Here are some tips for using them effectively:
-
-## Rules of Hooks
-
-1. **Only call hooks at the top level** of your component or custom hooks
-2. **Don't call hooks inside loops, conditions, or nested functions**
-
-## Common Hooks
-
-- **useState**: For local component state
-- **useEffect**: For side effects like data fetching
-- **useContext**: For consuming context
-- **useReducer**: For complex state logic
-- **useCallback**: For memoizing functions
-- **useMemo**: For memoizing values
-
-## Example of useState and useEffect
-
-\`\`\`jsx
-function ProfilePage({ userId }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // This runs after render and when userId changes
-    fetchUser(userId).then(userData => {
-      setUser(userData);
-    });
-  }, [userId]);
-
-  return user ? <Profile user={user} /> : <Loading />;
-}
-\`\`\`
-
-Would you like me to explain any specific hook in more detail?`,
-        id: nanoid(),
-      },
-    ],
-  },
-  {
-    from: "user",
-    key: nanoid(),
-    versions: [
-      {
-        content:
-          "Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?",
-        id: nanoid(),
-      },
-      {
-        content:
-          "I'm particularly interested in understanding the performance implications of useCallback and useMemo. Could you break down when each is most appropriate?",
-        id: nanoid(),
-      },
-      {
-        content:
-          "Thanks for the overview! Could you dive deeper into the specific use cases where useCallback and useMemo make the biggest difference in React applications?",
-        id: nanoid(),
-      },
-    ],
-  },
-  {
-    from: "assistant",
-    key: nanoid(),
-    reasoning: {
-      content: `The user is asking for a detailed explanation of useCallback and useMemo. I should provide a clear and concise explanation of each hook's purpose and how they differ.
-
-The useCallback hook is used to memoize functions to prevent unnecessary re-renders of child components that receive functions as props.
-
-The useMemo hook is used to memoize values to avoid expensive recalculations on every render.
-
-Both hooks help with performance optimization, but they serve different purposes.`,
-      duration: 10,
-    },
-    versions: [
-      {
-        content: `## useCallback vs useMemo
-
-Both hooks help with performance optimization, but they serve different purposes:
-
-### useCallback
-
-\`useCallback\` memoizes **functions** to prevent unnecessary re-renders of child components that receive functions as props.
-
-\`\`\`jsx
-// Without useCallback - a new function is created on every render
-const handleClick = () => {
-  console.log(count);
-};
-
-// With useCallback - the function is only recreated when dependencies change
-const handleClick = useCallback(() => {
-  console.log(count);
-}, [count]);
-\`\`\`
-
-### useMemo
-
-\`useMemo\` memoizes **values** to avoid expensive recalculations on every render.
-
-\`\`\`jsx
-// Without useMemo - expensive calculation runs on every render
-const sortedList = expensiveSort(items);
-
-// With useMemo - calculation only runs when items change
-const sortedList = useMemo(() => expensiveSort(items), [items]);
-\`\`\`
-
-### When to use which?
-
-- Use **useCallback** when:
-  - Passing callbacks to optimized child components that rely on reference equality
-  - Working with event handlers that you pass to child components
-
-- Use **useMemo** when:
-  - You have computationally expensive calculations
-  - You want to avoid recreating objects that are used as dependencies for other hooks
-
-### Performance Note
-
-Don't overuse these hooks! They come with their own overhead. Only use them when you have identified a genuine performance issue.`,
-        id: nanoid(),
-      },
-    ],
-  },
-];
+import { useMockChatConversation } from "./use-mock-chat-conversation";
 
 const models = [
   {
@@ -330,21 +123,15 @@ const suggestions = [
   "Explain cloud computing basics",
 ];
 
-const mockResponses = [
-  "That's a great question! Let me help you understand this concept better. The key thing to remember is that proper implementation requires careful consideration of the underlying principles and best practices in the field.",
-  "I'd be happy to explain this topic in detail. From my understanding, there are several important factors to consider when approaching this problem. Let me break it down step by step for you.",
-  "This is an interesting topic that comes up frequently. The solution typically involves understanding the core concepts and applying them in the right context. Here's what I recommend...",
-  "Great choice of topic! This is something that many developers encounter. The approach I'd suggest is to start with the fundamentals and then build up to more complex scenarios.",
-  "That's definitely worth exploring. From what I can see, the best way to handle this is to consider both the theoretical aspects and practical implementation details.",
-];
-
-const delay = (ms: number): Promise<void> =>
-  // eslint-disable-next-line promise/avoid-new -- setTimeout requires a new Promise
-  new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-
 const chefs = ["OpenAI", "Anthropic", "Google"];
+
+const modelsByChef = new Map<string, (typeof models)[0][]>();
+for (const chefName of chefs) {
+  modelsByChef.set(chefName, []);
+}
+for (const m of models) {
+  modelsByChef.get(m.chef)?.push(m);
+}
 
 const AttachmentItem = ({
   attachment,
@@ -418,114 +205,149 @@ const ModelItem = ({
   </ModelSelectorItem>
 );
 
+/** The message-picker control in the prompt footer: trigger showing the selected model's logo/name, plus the searchable dropdown grouped by chef. */
+const ChatModelPicker = ({
+  model,
+  open,
+  onOpenChange,
+  onSelect,
+}: {
+  model: string;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSelect: (modelId: string) => void;
+}) => {
+  const selectedModelData = models.find((m) => m.id === model);
+
+  return (
+    <ModelSelector onOpenChange={onOpenChange} open={open}>
+      <ModelSelectorTrigger
+        render={
+          <PromptInputButton>
+            {selectedModelData?.chefSlug && (
+              <ModelSelectorLogo provider={selectedModelData.chefSlug} />
+            )}
+            {selectedModelData?.name && (
+              <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>
+            )}
+          </PromptInputButton>
+        }
+      />
+      <ModelSelectorContent>
+        <ModelSelectorInput placeholder="Search models..." />
+        <ModelSelectorList>
+          <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
+          {chefs.map((chef) => (
+            <ModelSelectorGroup heading={chef} key={chef}>
+              {modelsByChef.get(chef)?.map((m) => (
+                <ModelItem
+                  isSelected={model === m.id}
+                  key={m.id}
+                  m={m}
+                  onSelect={onSelect}
+                />
+              ))}
+            </ModelSelectorGroup>
+          ))}
+        </ModelSelectorList>
+      </ModelSelectorContent>
+    </ModelSelector>
+  );
+};
+
+const hasSubmittableContent = (message: PromptInputMessage): boolean =>
+  Boolean(message.text) || Boolean(message.files?.length);
+
+const notifyAttachmentsAttached = (count: number) => {
+  toast.add({
+    title: "Files attached",
+    description: `${count} file(s) attached to message`,
+  });
+};
+
+type ChatStatus = ReturnType<typeof useMockChatConversation>["status"];
+
+/** Nothing to send yet, or a reply is still streaming in. */
+const isChatSubmitDisabled = (text: string, status: ChatStatus): boolean => {
+  if (status === "streaming") {
+    return true;
+  }
+  return !(text.trim() || status);
+};
+
+type ChatMessage = ReturnType<typeof useMockChatConversation>["messages"][0];
+
+/** One conversation turn: source list, reasoning, and versioned content, wrapped in a branch selector when the turn has multiple versions. */
+const ChatMessageBranch = ({
+  message: { versions, ...message },
+}: {
+  message: ChatMessage;
+}) => (
+  <MessageBranch defaultBranch={0}>
+    <MessageBranchContent>
+      {versions.map((version) => (
+        <Message from={message.from} key={`${message.key}-${version.id}`}>
+          <div>
+            {message.sources?.length && (
+              <Sources>
+                <SourcesTrigger count={message.sources.length} />
+                <SourcesContent>
+                  {message.sources.map((source) => (
+                    <Source
+                      href={source.href}
+                      key={source.href}
+                      title={source.title}
+                    />
+                  ))}
+                </SourcesContent>
+              </Sources>
+            )}
+            {message.reasoning && (
+              <Reasoning duration={message.reasoning.duration}>
+                <ReasoningTrigger />
+                <ReasoningContent>{message.reasoning.content}</ReasoningContent>
+              </Reasoning>
+            )}
+            <MessageContent>
+              <MessageResponse>{version.content}</MessageResponse>
+            </MessageContent>
+          </div>
+        </Message>
+      ))}
+    </MessageBranchContent>
+    {versions.length > 1 && (
+      <MessageBranchSelector>
+        <MessageBranchPrevious />
+        <MessageBranchPage />
+        <MessageBranchNext />
+      </MessageBranchSelector>
+    )}
+  </MessageBranch>
+);
+
 export const Chatbot = () => {
   const [model, setModel] = useState<string>(models[0]?.id || "");
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
   const [text, setText] = useState<string>("");
   const [useWebSearch, setUseWebSearch] = useState<boolean>(false);
-  const [status, setStatus] = useState<
-    "submitted" | "streaming" | "ready" | "error"
-  >("ready");
-  const [messages, setMessages] = useState<MessageType[]>(initialMessages);
-  const [, setStreamingMessageId] = useState<string | null>(null);
-
-  const selectedModelData = models.find((m) => m.id === model);
-
-  const updateMessageContent = (messageId: string, newContent: string) => {
-    setMessages((prev) =>
-      prev.map((msg) => {
-        if (msg.versions.some((v) => v.id === messageId)) {
-          return {
-            ...msg,
-            versions: msg.versions.map((v) =>
-              v.id === messageId ? { ...v, content: newContent } : v
-            ),
-          };
-        }
-        return msg;
-      })
-    );
-  };
-
-  const streamResponse = async (messageId: string, content: string) => {
-    setStatus("streaming");
-    setStreamingMessageId(messageId);
-
-    const words = content.split(" ");
-    let currentContent = "";
-
-    await Promise.all(
-      words.map((word, i) =>
-        delay(Math.random() * 100 + 50).then(() => {
-          currentContent += (i > 0 ? " " : "") + word;
-          updateMessageContent(messageId, currentContent);
-        })
-      )
-    );
-
-    setStatus("ready");
-    setStreamingMessageId(null);
-  };
-
-  const addUserMessage = (content: string) => {
-    const userMessage: MessageType = {
-      from: "user",
-      key: `user-${Date.now()}`,
-      versions: [
-        {
-          content,
-          id: `user-${Date.now()}`,
-        },
-      ],
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-
-    setTimeout(() => {
-      const assistantMessageId = `assistant-${Date.now()}`;
-      const randomResponse =
-        mockResponses[Math.floor(Math.random() * mockResponses.length)];
-
-      const assistantMessage: MessageType = {
-        from: "assistant",
-        key: `assistant-${Date.now()}`,
-        versions: [
-          {
-            content: "",
-            id: assistantMessageId,
-          },
-        ],
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-      streamResponse(assistantMessageId, randomResponse as string);
-    }, 500);
-  };
+  const { messages, sendMessage, status } = useMockChatConversation();
 
   const handleSubmit = (message: PromptInputMessage) => {
-    const hasText = Boolean(message.text);
-    const hasAttachments = Boolean(message.files?.length);
-
-    if (!(hasText || hasAttachments)) {
+    if (!hasSubmittableContent(message)) {
       return;
     }
 
-    setStatus("submitted");
-
-    if (message.files?.length) {
-      toast.add({
-        title: "Files attached",
-        description: `${message.files.length} file(s) attached to message`,
-      });
+    const attachmentCount = message.files?.length ?? 0;
+    if (attachmentCount > 0) {
+      notifyAttachmentsAttached(attachmentCount);
     }
 
-    addUserMessage(message.text || "Sent with attachments");
+    sendMessage(message.text || "Sent with attachments");
     setText("");
   };
 
   const handleSuggestionClick = (suggestion: string) => {
-    setStatus("submitted");
-    addUserMessage(suggestion);
+    sendMessage(suggestion);
   };
 
   const handleTranscriptionChange = (transcript: string) => {
@@ -545,58 +367,14 @@ export const Chatbot = () => {
     setModelSelectorOpen(false);
   };
 
-  const isSubmitDisabled = !(text.trim() || status) || status === "streaming";
+  const isSubmitDisabled = isChatSubmitDisabled(text, status);
 
   return (
     <div className="relative flex size-full flex-col divide-y overflow-hidden">
       <Conversation>
         <ConversationContent>
-          {messages.map(({ versions, ...message }) => (
-            <MessageBranch defaultBranch={0} key={message.key}>
-              <MessageBranchContent>
-                {versions.map((version) => (
-                  <Message
-                    from={message.from}
-                    key={`${message.key}-${version.id}`}
-                  >
-                    <div>
-                      {message.sources?.length && (
-                        <Sources>
-                          <SourcesTrigger count={message.sources.length} />
-                          <SourcesContent>
-                            {message.sources.map((source) => (
-                              <Source
-                                href={source.href}
-                                key={source.href}
-                                title={source.title}
-                              />
-                            ))}
-                          </SourcesContent>
-                        </Sources>
-                      )}
-                      {message.reasoning && (
-                        <Reasoning duration={message.reasoning.duration}>
-                          <ReasoningTrigger />
-                          <ReasoningContent>
-                            {message.reasoning.content}
-                          </ReasoningContent>
-                        </Reasoning>
-                      )}
-                      <MessageContent>
-                        <MessageResponse>{version.content}</MessageResponse>
-                      </MessageContent>
-                    </div>
-                  </Message>
-                ))}
-              </MessageBranchContent>
-              {versions.length > 1 && (
-                <MessageBranchSelector>
-                  <MessageBranchPrevious />
-                  <MessageBranchPage />
-                  <MessageBranchNext />
-                </MessageBranchSelector>
-              )}
-            </MessageBranch>
+          {messages.map((message) => (
+            <ChatMessageBranch key={message.key} message={message} />
           ))}
         </ConversationContent>
         <ConversationScrollButton />
@@ -640,47 +418,12 @@ export const Chatbot = () => {
                   <GlobeIcon size={16} />
                   <span>Search</span>
                 </PromptInputButton>
-                <ModelSelector
+                <ChatModelPicker
+                  model={model}
                   onOpenChange={setModelSelectorOpen}
+                  onSelect={handleModelSelect}
                   open={modelSelectorOpen}
-                >
-                  <ModelSelectorTrigger
-                    render={
-                      <PromptInputButton>
-                        {selectedModelData?.chefSlug && (
-                          <ModelSelectorLogo
-                            provider={selectedModelData.chefSlug}
-                          />
-                        )}
-                        {selectedModelData?.name && (
-                          <ModelSelectorName>
-                            {selectedModelData.name}
-                          </ModelSelectorName>
-                        )}
-                      </PromptInputButton>
-                    }
-                  />
-                  <ModelSelectorContent>
-                    <ModelSelectorInput placeholder="Search models..." />
-                    <ModelSelectorList>
-                      <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
-                      {chefs.map((chef) => (
-                        <ModelSelectorGroup heading={chef} key={chef}>
-                          {models
-                            .filter((m) => m.chef === chef)
-                            .map((m) => (
-                              <ModelItem
-                                isSelected={model === m.id}
-                                key={m.id}
-                                m={m}
-                                onSelect={handleModelSelect}
-                              />
-                            ))}
-                        </ModelSelectorGroup>
-                      ))}
-                    </ModelSelectorList>
-                  </ModelSelectorContent>
-                </ModelSelector>
+                />
               </PromptInputTools>
               <PromptInputSubmit disabled={isSubmitDisabled} status={status} />
             </PromptInputFooter>

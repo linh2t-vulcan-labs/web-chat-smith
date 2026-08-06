@@ -50,6 +50,27 @@ interface Session {
   expiresAt: number;
 }
 
+const DEFAULT_REFRESH_ENDPOINT = "/api/auth/refresh";
+const DEFAULT_RESTORE_ENDPOINT = "/api/auth/session";
+const DEFAULT_LOGOUT_ENDPOINT = "/api/auth/logout";
+
+const resolveIdentity = (identity: IdentityMode | undefined): IdentityMode =>
+  identity ?? "authenticated";
+
+interface ResolvedTokenManagerEndpoints {
+  refreshEndpoint: string;
+  restoreEndpoint: string;
+  logoutEndpoint: string;
+}
+
+const resolveEndpoints = (
+  options: TokenManagerOptions
+): ResolvedTokenManagerEndpoints => ({
+  logoutEndpoint: options.logoutEndpoint ?? DEFAULT_LOGOUT_ENDPOINT,
+  refreshEndpoint: options.refreshEndpoint ?? DEFAULT_REFRESH_ENDPOINT,
+  restoreEndpoint: options.restoreEndpoint ?? DEFAULT_RESTORE_ENDPOINT,
+});
+
 export interface TokenManagerOptions {
   identity?: IdentityMode;
   /** Same-origin Route Handler — always forces a real refresh-token rotation. Used by the proactive timer and reactive 401 handling, never by `restoreSessionOnce()` (see §4.1/§4.3). */
@@ -89,10 +110,11 @@ export class TokenManager {
   private readonly unsubscribeChannel: () => void;
 
   constructor(options: TokenManagerOptions = {}) {
-    this.identity = options.identity ?? "authenticated";
-    this.refreshEndpoint = options.refreshEndpoint ?? "/api/auth/refresh";
-    this.restoreEndpoint = options.restoreEndpoint ?? "/api/auth/session";
-    this.logoutEndpoint = options.logoutEndpoint ?? "/api/auth/logout";
+    this.identity = resolveIdentity(options.identity);
+    const endpoints = resolveEndpoints(options);
+    this.refreshEndpoint = endpoints.refreshEndpoint;
+    this.restoreEndpoint = endpoints.restoreEndpoint;
+    this.logoutEndpoint = endpoints.logoutEndpoint;
 
     // Scoped by identity — a guest and an authenticated TokenManager can be
     // live in the same tab at once (see `getGuestTokenManager()`), and must
@@ -275,48 +297,93 @@ export class TokenManager {
     return this.performRefresh(cacheFirst);
   }
 
-  private async performRefresh(
-    cacheFirst: boolean
-  ): Promise<ApiResult<string>> {
-    // Lock acquired: a sibling tab may have already refreshed and broadcast
-    // a fresh token while we were waiting — reuse it instead of refreshing again.
-    if (this.session && !this.isExpired()) {
-      return [null, this.session.accessToken];
+  /**
+   * A sibling tab may have already refreshed and broadcast a fresh token
+   * while we were waiting on the lock — returns it (rather than refreshing
+   * again) when it's still valid, `null` otherwise.
+   */
+  private validSessionAccessToken(): string | null {
+    if (!this.session) {
+      return null;
     }
+    return this.isExpired() ? null : this.session.accessToken;
+  }
 
-    if (cacheFirst) {
-      return this.performCacheFirstRestore();
+  /** Shared by `performRefresh`/`performCacheFirstRestore`: any genuine auth failure means the stored token is dead, any other error (5xx, network) leaves the session as-is so a later retry can still use it. */
+  private handleAuthClearingError(error: ApiError): ApiResult<string> {
+    if (error.isAuthError) {
+      this.clearSession();
     }
+    return [error, null];
+  }
 
-    const first = await this.callRefreshEndpoint();
-
-    // A short jittered wait, then ONE fresh call to `refreshEndpoint` — not
-    // a retry with the same in-memory refresh_token, but a brand new HTTP
-    // request that re-reads whatever refresh_token cookie the browser has
-    // *right now*. If this was the race loser, a concurrent winner's
-    // rotation has likely landed by then and this succeeds; if the token is
-    // genuinely expired, it fails again harmlessly.
-    const [error, result] =
-      first[0]?.reason === REFRESH_RACE_REASON
-        ? await sleep(
-            REFRESH_RACE_RETRY_BASE_MS +
-              Math.random() * REFRESH_RACE_RETRY_JITTER_MS
-          ).then(() => this.callRefreshEndpoint())
-        : first;
-
-    if (error) {
-      if (error.isAuthError) {
-        this.clearSession();
-      }
-      return [error, null];
-    }
-
+  private applyRefreshResponse(result: RefreshResponse): ApiResult<string> {
     this.applySession({
       accessToken: result.accessToken,
       expiresAt:
         result.accessTokenExpiresAt ?? decodeJwtExpiryMs(result.accessToken),
     });
     return [null, result.accessToken];
+  }
+
+  private async performRefresh(
+    cacheFirst: boolean
+  ): Promise<ApiResult<string>> {
+    const validAccessToken = this.validSessionAccessToken();
+    if (validAccessToken) {
+      return [null, validAccessToken];
+    }
+
+    if (cacheFirst) {
+      return this.performCacheFirstRestore();
+    }
+
+    const [error, result] = await this.rotateWithRaceRetry();
+    if (error) {
+      return this.handleAuthClearingError(error);
+    }
+
+    return this.applyRefreshResponse(result);
+  }
+
+  /**
+   * One real rotation call, plus — ONLY if the backend reports the specific
+   * "already rotated by a concurrent refresh" race reason (see
+   * `REFRESH_RACE_REASON` above) — a short jittered wait and ONE fresh call.
+   * Not a retry with the same in-memory refresh_token: a brand new HTTP
+   * request that re-reads whatever refresh_token cookie the browser has
+   * *right now*. If this was the race loser, a concurrent winner's rotation
+   * has likely landed by then and this succeeds; if the token is genuinely
+   * expired, it fails again harmlessly.
+   */
+  private async rotateWithRaceRetry(): Promise<ApiResult<RefreshResponse>> {
+    const first = await this.callRefreshEndpoint();
+    if (first[0]?.reason !== REFRESH_RACE_REASON) {
+      return first;
+    }
+    await sleep(
+      REFRESH_RACE_RETRY_BASE_MS + Math.random() * REFRESH_RACE_RETRY_JITTER_MS
+    );
+    return this.callRefreshEndpoint();
+  }
+
+  /**
+   * "No session" reported as a `200` (see route.ts's doc comment), not a
+   * `401` — reconstructs the same outcome `restoreSessionOnce()`'s only
+   * caller already handles (`isAuthError` → `clearSession()`) so nothing
+   * downstream needs to know this didn't arrive as a real HTTP error this time.
+   */
+  private noSessionToRestoreResult(): ApiResult<string> {
+    this.clearSession();
+    return [
+      new ApiError({
+        httpStatus: 401,
+        kind: "backend",
+        message: "No session to restore",
+        reason: "ERROR_INVALID_AUTHORIZATION",
+      }),
+      null,
+    ];
   }
 
   /**
@@ -331,36 +398,17 @@ export class TokenManager {
   private async performCacheFirstRestore(): Promise<ApiResult<string>> {
     const [error, result] = await this.callRestoreEndpoint();
     if (error) {
-      if (error.isAuthError) {
-        this.clearSession();
-      }
-      return [error, null];
+      return this.handleAuthClearingError(error);
     }
 
     if (result.accessToken === null) {
-      // "No session" reported as a `200` (see route.ts's doc comment), not
-      // a `401` — reconstruct the same outcome `restoreSessionOnce()`'s
-      // only caller already handles (`isAuthError` → `clearSession()`) so
-      // nothing downstream needs to know this didn't arrive as a real HTTP
-      // error this time.
-      this.clearSession();
-      return [
-        new ApiError({
-          httpStatus: 401,
-          kind: "backend",
-          message: "No session to restore",
-          reason: "ERROR_INVALID_AUTHORIZATION",
-        }),
-        null,
-      ];
+      return this.noSessionToRestoreResult();
     }
 
-    this.applySession({
+    return this.applyRefreshResponse({
       accessToken: result.accessToken,
-      expiresAt:
-        result.accessTokenExpiresAt ?? decodeJwtExpiryMs(result.accessToken),
+      accessTokenExpiresAt: result.accessTokenExpiresAt,
     });
-    return [null, result.accessToken];
   }
 
   private callRefreshEndpoint(): Promise<ApiResult<RefreshResponse>> {
@@ -470,3 +518,13 @@ export const getGuestTokenManager = (
   }
   return browserGuestTokenManager;
 };
+
+/**
+ * Picks the identity-scoped singleton (see `getGuestTokenManager()`'s doc
+ * comment for why guest/authenticated are always distinct instances) —
+ * shared by every call site that needs to attach/refresh a bearer token
+ * (core/interceptors.ts, core/sse.ts) so the same `identity === "guest"`
+ * branch can't drift between them.
+ */
+export const resolveTokenManager = (identity?: IdentityMode): TokenManager =>
+  identity === "guest" ? getGuestTokenManager() : getTokenManager();

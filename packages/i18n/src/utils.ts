@@ -90,6 +90,13 @@ const isObjectRecord = (value: unknown): value is Record<string, unknown> =>
 const isEmptyTranslation = (value: unknown): boolean =>
   typeof value === "string" && value.trim().length === 0;
 
+/** Sentinel returned by `resolveLeafValue` when the override key should be skipped entirely (base value kept as-is). */
+const SKIP_MERGE = Symbol("skip-merge");
+
+/** Resolves a non-object override value: skip empty translation strings (fall back to base), otherwise take the override as-is. */
+const resolveLeafValue = (overrideValue: unknown): unknown =>
+  isEmptyTranslation(overrideValue) ? SKIP_MERGE : overrideValue;
+
 /**
  * Deep-merges override messages onto base messages. Empty translation strings
  * in the override are skipped so the base locale's text remains as a fallback.
@@ -100,16 +107,15 @@ export const mergeMessages = (base: Messages, override: Messages): Messages => {
   for (const [key, overrideValue] of Object.entries(override)) {
     const baseValue = result[key];
 
-    if (isEmptyTranslation(overrideValue)) {
-      continue;
-    }
-
     if (isObjectRecord(baseValue) && isObjectRecord(overrideValue)) {
       result[key] = mergeMessages(baseValue, overrideValue);
       continue;
     }
 
-    result[key] = overrideValue;
+    const merged = resolveLeafValue(overrideValue);
+    if (merged !== SKIP_MERGE) {
+      result[key] = merged;
+    }
   }
 
   return result;

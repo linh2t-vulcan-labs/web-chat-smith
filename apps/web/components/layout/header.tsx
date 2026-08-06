@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { href: "/", label: "Chat" },
   { href: "/design-studio", label: "Design Studio" },
   { href: "/blog", label: "Blog" },
+  { href: "/chatbot", label: "Chatbot" },
 ] as const;
 
 /**

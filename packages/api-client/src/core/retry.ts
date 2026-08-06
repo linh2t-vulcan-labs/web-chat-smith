@@ -22,6 +22,47 @@ export interface WithRetryOptions {
   signal?: AbortSignal;
 }
 
+const resolveMaxAttempts = (maxAttempts: number | undefined): number =>
+  Math.max(1, maxAttempts ?? DEFAULT_MAX_ATTEMPTS);
+
+const isRetryBudgetExhausted = (
+  attempt: number,
+  maxAttempts: number,
+  signal: AbortSignal | undefined
+): boolean => attempt >= maxAttempts - 1 || Boolean(signal?.aborted);
+
+const isNonRetryableOrExhausted = (
+  error: NonNullable<ApiResult<unknown>[0]>,
+  attempt: number,
+  maxAttempts: number,
+  signal: AbortSignal | undefined
+): boolean =>
+  !error.isRetryable || isRetryBudgetExhausted(attempt, maxAttempts, signal);
+
+type RetryDecision =
+  | { shouldStop: true }
+  | { shouldStop: false; delayMs: number };
+
+/** One `execute()` result -> stop-and-return-it, or sleep-then-retry-with-this-delay. Bundles the null/retryable/budget checks and the type-narrowing they enable (`error.retryAfterMs` below needs `error` proven non-null) into a single decision, so `withRetry`'s loop body stays a flat if/await. */
+const decideRetry = (
+  result: ApiResult<unknown>,
+  attempt: number,
+  maxAttempts: number,
+  signal: AbortSignal | undefined
+): RetryDecision => {
+  const [error] = result;
+  if (!error) {
+    return { shouldStop: true };
+  }
+  if (isNonRetryableOrExhausted(error, attempt, maxAttempts, signal)) {
+    return { shouldStop: true };
+  }
+  return {
+    delayMs: error.retryAfterMs ?? backoffDelayMs(attempt),
+    shouldStop: false,
+  };
+};
+
 /**
  * Generic backoff wrapper for transient/rate-limited failures — retry
  * eligibility comes entirely from `ApiError.isRetryable`
@@ -36,7 +77,7 @@ export const withRetry = async <T>(
   execute: () => Promise<ApiResult<T>>,
   options: WithRetryOptions = {}
 ): Promise<ApiResult<T>> => {
-  const maxAttempts = Math.max(1, options.maxAttempts ?? DEFAULT_MAX_ATTEMPTS);
+  const maxAttempts = resolveMaxAttempts(options.maxAttempts);
 
   // No loop condition — every branch below either `return`s or `await`s
   // once more, so this can never fall through and never needs a dead
@@ -44,18 +85,13 @@ export const withRetry = async <T>(
   for (let attempt = 0; ; attempt += 1) {
     // oxlint-disable-next-line no-await-in-loop -- sequential by design: each retry depends on the previous attempt's result
     const result = await execute();
-    const [error] = result;
+    const decision = decideRetry(result, attempt, maxAttempts, options.signal);
 
-    if (
-      !error ||
-      !error.isRetryable ||
-      attempt >= maxAttempts - 1 ||
-      options.signal?.aborted
-    ) {
+    if (decision.shouldStop) {
       return result;
     }
 
     // oxlint-disable-next-line no-await-in-loop -- must wait before the next sequential attempt
-    await sleep(error.retryAfterMs ?? backoffDelayMs(attempt));
+    await sleep(decision.delayMs);
   }
 };

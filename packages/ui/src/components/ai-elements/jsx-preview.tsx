@@ -33,36 +33,58 @@ export const useJSXPreview = () => {
   return context;
 };
 
-const matchJsxTag = (code: string) => {
-  if (code.trim() === "") {
-    return null;
-  }
+type JsxTagType = "self-closing" | "closing" | "opening";
 
+const getJsxTagType = (
+  fullMatch: string,
+  selfClosing: string | undefined
+): JsxTagType => {
+  if (selfClosing) {
+    return "self-closing";
+  }
+  return fullMatch.startsWith("</") ? "closing" : "opening";
+};
+
+interface JsxTagPatternMatch {
+  fullMatch: string;
+  index: number;
+  groups: { tagName?: string; attributes?: string; selfClosing?: string };
+}
+
+const matchTagPattern = (code: string): JsxTagPatternMatch | null => {
   const match = code.match(TAG_REGEX);
 
   if (!match || match.index === undefined) {
     return null;
   }
 
-  const [fullMatch] = match;
-  const { tagName = "", attributes = "", selfClosing } = match.groups ?? {};
+  return {
+    fullMatch: match[0],
+    groups: match.groups ?? {},
+    index: match.index,
+  };
+};
 
-  let type: "self-closing" | "closing" | "opening";
-  if (selfClosing) {
-    type = "self-closing";
-  } else if (fullMatch.startsWith("</")) {
-    type = "closing";
-  } else {
-    type = "opening";
+const matchJsxTag = (code: string) => {
+  if (code.trim() === "") {
+    return null;
   }
+
+  const matched = matchTagPattern(code);
+  if (!matched) {
+    return null;
+  }
+
+  const { fullMatch, index, groups } = matched;
+  const { tagName = "", attributes = "", selfClosing } = groups;
 
   return {
     attributes: attributes.trim(),
-    endIndex: match.index + fullMatch.length,
-    startIndex: match.index,
+    endIndex: index + fullMatch.length,
+    startIndex: index,
     tag: fullMatch,
     tagName,
-    type,
+    type: getJsxTagType(fullMatch, selfClosing),
   };
 };
 
@@ -82,6 +104,14 @@ const stripIncompleteTag = (text: string) => {
   return text;
 };
 
+const updateTagStack = (stack: string[], tagName: string, type: JsxTagType) => {
+  if (type === "opening") {
+    stack.push(tagName);
+  } else if (type === "closing") {
+    stack.pop();
+  }
+};
+
 const completeJsxTag = (code: string) => {
   const stack: string[] = [];
   let result = "";
@@ -98,12 +128,7 @@ const completeJsxTag = (code: string) => {
 
     // Include any text content before this tag
     result += code.slice(currentPosition, currentPosition + endIndex);
-
-    if (type === "opening") {
-      stack.push(tagName);
-    } else if (type === "closing") {
-      stack.pop();
-    }
+    updateTagStack(stack, tagName, type);
 
     currentPosition += endIndex;
   }

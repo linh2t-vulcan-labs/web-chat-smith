@@ -26,10 +26,8 @@ import { resolveTokens } from "../lib/resolver";
 import type { TokenMap } from "../lib/resolver";
 import { styleText } from "../lib/utils/console-colors";
 import {
-  validateContrast,
-  validateRefs,
-  validateSchema,
-  validateSSRSafety,
+  countValidationErrors,
+  validateLightDarkTokens,
 } from "../lib/validators";
 import {
   FIGMA_TOKENS_DIR,
@@ -80,26 +78,12 @@ const buildVersion = async (version: string): Promise<void> => {
   const normalized = normalizeAll(resolved.tokens);
   const normalizedDark = normalizeAll(resolvedDark.tokens);
 
-  const schema = validateSchema(normalized);
-  const refs = validateRefs(normalized);
-  const contrast = validateContrast(normalized);
-  const ssrSafety = validateSSRSafety(normalized);
-  const darkSchema = validateSchema(normalizedDark);
-  const darkRefs = validateRefs(normalizedDark);
-  const darkContrast = validateContrast(normalizedDark);
-  const darkSsrSafety = validateSSRSafety(normalizedDark);
-
-  const errorCount =
-    resolved.errors.length +
-    resolvedDark.errors.length +
-    schema.errors.length +
-    refs.errors.length +
-    contrast.errors.length +
-    ssrSafety.errors.length +
-    darkSchema.errors.length +
-    darkRefs.errors.length +
-    darkContrast.errors.length +
-    darkSsrSafety.errors.length;
+  const validation = validateLightDarkTokens(normalized, normalizedDark);
+  const errorCount = countValidationErrors(
+    validation,
+    resolved.errors.length,
+    resolvedDark.errors.length
+  );
 
   if (errorCount > 0) {
     throw new Error(

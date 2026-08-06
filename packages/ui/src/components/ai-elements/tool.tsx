@@ -128,9 +128,52 @@ export const ToolInput = ({ className, input, ...props }: ToolInputProps) => (
   </div>
 );
 
+const isPlainObjectOutput = (
+  output: ToolPart["output"]
+): output is Record<string, unknown> =>
+  typeof output === "object" && output !== null && !isValidElement(output);
+
+const resolveToolOutput = (output: ToolPart["output"]): ReactNode => {
+  if (isPlainObjectOutput(output)) {
+    return <CodeBlock code={JSON.stringify(output, null, 2)} language="json" />;
+  }
+
+  if (typeof output === "string") {
+    return <CodeBlock code={output} language="json" />;
+  }
+
+  return <div>{output as ReactNode}</div>;
+};
+
+const getToolOutputContentClassName = (hasError: boolean) =>
+  cn(
+    "overflow-x-auto rounded-md text-xs [&_table]:w-full",
+    hasError
+      ? "bg-destructive/10 text-destructive"
+      : "bg-muted/50 text-foreground"
+  );
+
 export type ToolOutputProps = ComponentProps<"div"> & {
   output: ToolPart["output"];
   errorText: ToolPart["errorText"];
+};
+
+type ToolOutputBodyProps = Pick<ToolOutputProps, "output" | "errorText">;
+
+const ToolOutputBody = ({ output, errorText }: ToolOutputBodyProps) => {
+  const hasError = Boolean(errorText);
+
+  return (
+    <>
+      <h4 className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
+        {hasError ? "Error" : "Result"}
+      </h4>
+      <div className={getToolOutputContentClassName(hasError)}>
+        {errorText && <div>{errorText}</div>}
+        {resolveToolOutput(output)}
+      </div>
+    </>
+  );
 };
 
 export const ToolOutput = ({
@@ -143,32 +186,9 @@ export const ToolOutput = ({
     return null;
   }
 
-  let Output = <div>{output as ReactNode}</div>;
-
-  if (typeof output === "object" && !isValidElement(output)) {
-    Output = (
-      <CodeBlock code={JSON.stringify(output, null, 2)} language="json" />
-    );
-  } else if (typeof output === "string") {
-    Output = <CodeBlock code={output} language="json" />;
-  }
-
   return (
     <div className={cn("space-y-2", className)} {...props}>
-      <h4 className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
-        {errorText ? "Error" : "Result"}
-      </h4>
-      <div
-        className={cn(
-          "overflow-x-auto rounded-md text-xs [&_table]:w-full",
-          errorText
-            ? "bg-destructive/10 text-destructive"
-            : "bg-muted/50 text-foreground"
-        )}
-      >
-        {errorText && <div>{errorText}</div>}
-        {Output}
-      </div>
+      <ToolOutputBody errorText={errorText} output={output} />
     </div>
   );
 };

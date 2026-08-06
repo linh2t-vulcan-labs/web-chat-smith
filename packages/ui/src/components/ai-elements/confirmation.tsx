@@ -104,6 +104,22 @@ export const ConfirmationRequest = ({ children }: ConfirmationRequestProps) => {
   return children;
 };
 
+const outcomeResponseStates = new Set<ToolUIPart["state"]>([
+  "approval-responded",
+  "output-denied",
+  "output-available",
+]);
+
+// Shared visibility check for the accepted/rejected outcome components:
+// they only render once a response state is reached, and only for the
+// outcome predicate they each care about.
+const useConfirmationOutcomeVisible = (
+  isMatchingOutcome: (approval: ToolUIPartApproval) => boolean
+) => {
+  const { approval, state } = useConfirmation();
+  return isMatchingOutcome(approval) && outcomeResponseStates.has(state);
+};
+
 export interface ConfirmationAcceptedProps {
   children?: ReactNode;
 }
@@ -111,19 +127,11 @@ export interface ConfirmationAcceptedProps {
 export const ConfirmationAccepted = ({
   children,
 }: ConfirmationAcceptedProps) => {
-  const { approval, state } = useConfirmation();
+  const isVisible = useConfirmationOutcomeVisible((approval) =>
+    Boolean(approval?.approved)
+  );
 
-  // Only show when approved and in response states
-  if (
-    !approval?.approved ||
-    (state !== "approval-responded" &&
-      state !== "output-denied" &&
-      state !== "output-available")
-  ) {
-    return null;
-  }
-
-  return children;
+  return isVisible ? children : null;
 };
 
 export interface ConfirmationRejectedProps {
@@ -133,19 +141,11 @@ export interface ConfirmationRejectedProps {
 export const ConfirmationRejected = ({
   children,
 }: ConfirmationRejectedProps) => {
-  const { approval, state } = useConfirmation();
+  const isVisible = useConfirmationOutcomeVisible(
+    (approval) => approval?.approved === false
+  );
 
-  // Only show when rejected and in response states
-  if (
-    approval?.approved !== false ||
-    (state !== "approval-responded" &&
-      state !== "output-denied" &&
-      state !== "output-available")
-  ) {
-    return null;
-  }
-
-  return children;
+  return isVisible ? children : null;
 };
 
 export type ConfirmationActionsProps = ComponentProps<"div">;

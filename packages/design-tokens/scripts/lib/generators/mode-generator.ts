@@ -17,9 +17,7 @@ interface TypographyDeclaration {
   value: string;
 }
 
-export const tokenPathToCssVar = (path: string): string => toSafeCssVar(path);
-
-export interface ModeOverrideSources {
+interface ModeOverrideSources {
   densityCompact?: TokenMap;
   densityDefault?: TokenMap;
   densitySpacious?: TokenMap;
@@ -134,6 +132,35 @@ const toTypographyDeclarations = (
   return declarations;
 };
 
+const FONT_SIZE_PATH_PREFIX = "font_size.";
+
+const isFontSizeToken = (entry: FlatToken, cssValue: string): boolean =>
+  entry.path.startsWith(FONT_SIZE_PATH_PREFIX) &&
+  FONT_SIZE_HINTS.some((hint) => entry.path.includes(hint)) &&
+  isLengthValue(cssValue);
+
+type AliasClassifier = (entry: FlatToken, cssValue: string) => boolean;
+
+const ALIAS_CLASSIFIERS: [prefix: string, matches: AliasClassifier][] = [
+  ["color", isColorToken],
+  ["spacing", isSpacingToken],
+  ["radius", isRadiusToken],
+  ["shadow", (entry) => isShadowToken(entry)],
+  ["text", isFontSizeToken],
+];
+
+/** Classifies a token into the `@theme inline` alias prefix it should emit, if any. */
+const classifyAliasPrefix = (
+  entry: FlatToken,
+  cssValue: string
+): string | null => {
+  const classifier = ALIAS_CLASSIFIERS.find(([, matches]) =>
+    matches(entry, cssValue)
+  );
+
+  return classifier ? classifier[0] : null;
+};
+
 const createThemeAliases = (flatTokens: FlatToken[]): ThemeAlias[] => {
   const aliases = new Map<string, string>();
 
@@ -143,36 +170,14 @@ const createThemeAliases = (flatTokens: FlatToken[]): ThemeAlias[] => {
       continue;
     }
 
+    const prefix = classifyAliasPrefix(entry, cssValue);
+    if (!prefix) {
+      continue;
+    }
+
     const cssVar = toSafeCssVar(entry.path);
     const normalizedPath = normalizePathForThemeName(entry.path);
-
-    if (isColorToken(entry, cssValue)) {
-      aliases.set(`--color-cs-${normalizedPath}`, cssVar);
-      continue;
-    }
-
-    if (isSpacingToken(entry, cssValue)) {
-      aliases.set(`--spacing-cs-${normalizedPath}`, cssVar);
-      continue;
-    }
-
-    if (isRadiusToken(entry, cssValue)) {
-      aliases.set(`--radius-cs-${normalizedPath}`, cssVar);
-      continue;
-    }
-
-    if (isShadowToken(entry)) {
-      aliases.set(`--shadow-cs-${normalizedPath}`, cssVar);
-      continue;
-    }
-
-    if (
-      entry.path.startsWith("font_size.") &&
-      FONT_SIZE_HINTS.some((hint) => entry.path.includes(hint)) &&
-      isLengthValue(cssValue)
-    ) {
-      aliases.set(`--text-cs-${normalizedPath}`, cssVar);
-    }
+    aliases.set(`--${prefix}-cs-${normalizedPath}`, cssVar);
   }
 
   return [...aliases.entries()]
@@ -195,36 +200,43 @@ const renderThemeInlineBlock = (aliases: ThemeAlias[]): string => {
   return `${lines.join("\n")}`;
 };
 
-const renderTypographyUtilities = (flatTokens: FlatToken[]): string => {
-  const blocks: string[] = [];
-
-  for (const entry of flatTokens) {
-    if (!isTypographyToken(entry)) {
-      continue;
-    }
-
-    const declarations = toTypographyDeclarations(entry.token.$value);
-    if (declarations.length === 0) {
-      continue;
-    }
-
-    const className = toTypographyClassName(entry.path);
-    blocks.push(`@utility ${className} {`);
-    for (const declaration of declarations) {
-      blocks.push(`  ${declaration.property}: ${declaration.value};`);
-    }
-    blocks.push("}", "");
+const renderTypographyBlock = (entry: FlatToken): string | null => {
+  if (!isTypographyToken(entry)) {
+    return null;
   }
+
+  const declarations = toTypographyDeclarations(entry.token.$value);
+  if (declarations.length === 0) {
+    return null;
+  }
+
+  const className = toTypographyClassName(entry.path);
+  const lines = [`@utility ${className} {`];
+  for (const declaration of declarations) {
+    lines.push(`  ${declaration.property}: ${declaration.value};`);
+  }
+  lines.push("}", "");
+
+  return lines.join("\n");
+};
+
+const renderTypographyUtilities = (flatTokens: FlatToken[]): string => {
+  const blocks = flatTokens
+    .map((entry) => renderTypographyBlock(entry))
+    .filter((block): block is string => block !== null);
 
   return blocks.join("\n");
 };
 
+const cssFieldValue = (value: unknown, fallback: string): string =>
+  asCssValue(value) ?? fallback;
+
 const shadowLayerToCss = (value: Record<string, unknown>): string => {
-  const offsetX = asCssValue(value.offsetX) ?? "0px";
-  const offsetY = asCssValue(value.offsetY) ?? "0px";
-  const blur = asCssValue(value.blur) ?? "0px";
-  const spread = asCssValue(value.spread) ?? "0px";
-  const color = asCssValue(value.color) ?? "#000000";
+  const offsetX = cssFieldValue(value.offsetX, "0px");
+  const offsetY = cssFieldValue(value.offsetY, "0px");
+  const blur = cssFieldValue(value.blur, "0px");
+  const spread = cssFieldValue(value.spread, "0px");
+  const color = cssFieldValue(value.color, "#000000");
 
   return `${offsetX} ${offsetY} ${blur} ${spread} ${color}`;
 };
@@ -258,7 +270,7 @@ const toCssVarAssignments = (
       continue;
     }
 
-    lines.push(`  ${tokenPathToCssVar(path)}: ${value};`);
+    lines.push(`  ${toSafeCssVar(path)}: ${value};`);
   }
 
   return lines;
@@ -303,7 +315,7 @@ export const generateTokensCss = (flatTokens: FlatToken[]): string => {
     }
 
     variables.push({
-      name: tokenPathToCssVar(entry.path),
+      name: toSafeCssVar(entry.path),
       value: cssValue,
     });
   }
@@ -314,51 +326,89 @@ export const generateTokensCss = (flatTokens: FlatToken[]): string => {
   return `${rootVars}${themeInline}`;
 };
 
+interface ModeOverrideVariant {
+  source: TokenMap;
+  wrap: (lines: string[]) => string;
+}
+
+const buildModeOverrideChunks = (
+  baseline: TokenMap,
+  variants: ModeOverrideVariant[]
+): string[] => {
+  const baselineFlat = flattenScalarTokens(baseline);
+  const chunks: string[] = [];
+
+  for (const variant of variants) {
+    const variantFlat = flattenScalarTokens(variant.source);
+    const lines = toCssVarAssignments(baselineFlat, variantFlat);
+    const block = variant.wrap(lines);
+    if (block) {
+      chunks.push(block);
+    }
+  }
+
+  return chunks;
+};
+
+const pickDensitySources = (
+  sources: ModeOverrideSources
+): [defaultTokens: TokenMap, compact: TokenMap, spacious: TokenMap] | null => {
+  const { densityDefault, densityCompact, densitySpacious } = sources;
+  if (!(densityDefault && densityCompact && densitySpacious)) {
+    return null;
+  }
+
+  return [densityDefault, densityCompact, densitySpacious];
+};
+
+const pickDeviceSources = (
+  sources: ModeOverrideSources
+): [desktop: TokenMap, tablet: TokenMap, mobile: TokenMap] | null => {
+  const { deviceDesktop, deviceTablet, deviceMobile } = sources;
+  if (!(deviceDesktop && deviceTablet && deviceMobile)) {
+    return null;
+  }
+
+  return [deviceDesktop, deviceTablet, deviceMobile];
+};
+
 export const generateModeOverridesCss = (
   sources: ModeOverrideSources
 ): string => {
   const chunks: string[] = [];
 
-  if (
-    sources.densityDefault &&
-    sources.densityCompact &&
-    sources.densitySpacious
-  ) {
-    const defaultFlat = flattenScalarTokens(sources.densityDefault);
-    const compactFlat = flattenScalarTokens(sources.densityCompact);
-    const spaciousFlat = flattenScalarTokens(sources.densitySpacious);
-
-    const compactLines = toCssVarAssignments(defaultFlat, compactFlat);
-    const spaciousLines = toCssVarAssignments(defaultFlat, spaciousFlat);
-
-    const compactBlock = wrapRule('[data-density="compact"]', compactLines);
-    if (compactBlock) {
-      chunks.push(compactBlock);
-    }
-
-    const spaciousBlock = wrapRule('[data-density="spacious"]', spaciousLines);
-    if (spaciousBlock) {
-      chunks.push(spaciousBlock);
-    }
+  const density = pickDensitySources(sources);
+  if (density) {
+    const [defaultTokens, compact, spacious] = density;
+    chunks.push(
+      ...buildModeOverrideChunks(defaultTokens, [
+        {
+          source: compact,
+          wrap: (lines) => wrapRule('[data-density="compact"]', lines),
+        },
+        {
+          source: spacious,
+          wrap: (lines) => wrapRule('[data-density="spacious"]', lines),
+        },
+      ])
+    );
   }
 
-  if (sources.deviceDesktop && sources.deviceTablet && sources.deviceMobile) {
-    const desktopFlat = flattenScalarTokens(sources.deviceDesktop);
-    const tabletFlat = flattenScalarTokens(sources.deviceTablet);
-    const mobileFlat = flattenScalarTokens(sources.deviceMobile);
-
-    const tabletLines = toCssVarAssignments(desktopFlat, tabletFlat);
-    const mobileLines = toCssVarAssignments(desktopFlat, mobileFlat);
-
-    const tabletBlock = wrapMediaRule("(max-width: 1024px)", tabletLines);
-    if (tabletBlock) {
-      chunks.push(tabletBlock);
-    }
-
-    const mobileBlock = wrapMediaRule("(max-width: 768px)", mobileLines);
-    if (mobileBlock) {
-      chunks.push(mobileBlock);
-    }
+  const device = pickDeviceSources(sources);
+  if (device) {
+    const [desktop, tablet, mobile] = device;
+    chunks.push(
+      ...buildModeOverrideChunks(desktop, [
+        {
+          source: tablet,
+          wrap: (lines) => wrapMediaRule("(max-width: 1024px)", lines),
+        },
+        {
+          source: mobile,
+          wrap: (lines) => wrapMediaRule("(max-width: 768px)", lines),
+        },
+      ])
+    );
   }
 
   return chunks.join("\n");
@@ -382,29 +432,31 @@ export const generateDarkModeCss = (
   return wrapRule(".dark", lines);
 };
 
-export const generateTypographyCss = (flatTokens: FlatToken[]): string => {
-  const variables: CssVariable[] = [];
+const typographyEntryToVariables = (entry: FlatToken): CssVariable[] => {
+  if (!isTypographyToken(entry)) {
+    return [];
+  }
 
-  for (const entry of flatTokens) {
-    if (
-      entry.token.$type !== "typography" ||
-      !isObjectRecord(entry.token.$value)
-    ) {
+  const variables: CssVariable[] = [];
+  for (const [property, value] of Object.entries(entry.token.$value)) {
+    const cssValue = asCssValue(value);
+    if (cssValue === null) {
       continue;
     }
 
-    for (const [property, value] of Object.entries(entry.token.$value)) {
-      const cssValue = asCssValue(value);
-      if (cssValue === null) {
-        continue;
-      }
-
-      variables.push({
-        name: tokenPathToCssVar(`${entry.path}.${property}`),
-        value: cssValue,
-      });
-    }
+    variables.push({
+      name: toSafeCssVar(`${entry.path}.${property}`),
+      value: cssValue,
+    });
   }
+
+  return variables;
+};
+
+export const generateTypographyCss = (flatTokens: FlatToken[]): string => {
+  const variables = flatTokens.flatMap((entry) =>
+    typographyEntryToVariables(entry)
+  );
 
   const rootVars = toRootCssBlock(variables);
   const utilities = renderTypographyUtilities(flatTokens);
@@ -415,6 +467,30 @@ export const generateTypographyCss = (flatTokens: FlatToken[]): string => {
   return `${rootVars}\n${utilities}`;
 };
 
+const shadowLayersToCss = (value: unknown[]): string | null => {
+  const layers = value
+    .filter((layer): layer is Record<string, unknown> => isObjectRecord(layer))
+    .map((layer) => shadowLayerToCss(layer));
+
+  return layers.length > 0 ? layers.join(", ") : null;
+};
+
+const toShadowCssValue = (value: TokenValue["$value"]): string | null => {
+  if (typeof value === "string") {
+    return value.trim();
+  }
+
+  if (Array.isArray(value)) {
+    return shadowLayersToCss(value);
+  }
+
+  if (isObjectRecord(value)) {
+    return shadowLayerToCss(value);
+  }
+
+  return null;
+};
+
 export const generateShadowsCss = (flatTokens: FlatToken[]): string => {
   const variables: CssVariable[] = [];
 
@@ -423,29 +499,13 @@ export const generateShadowsCss = (flatTokens: FlatToken[]): string => {
       continue;
     }
 
-    const value = entry.token.$value;
-    let shadowValue: string | null = null;
-
-    if (typeof value === "string") {
-      shadowValue = value.trim();
-    } else if (Array.isArray(value)) {
-      const layers = value
-        .filter((layer): layer is Record<string, unknown> =>
-          isObjectRecord(layer)
-        )
-        .map((layer) => shadowLayerToCss(layer));
-
-      shadowValue = layers.length > 0 ? layers.join(", ") : null;
-    } else if (isObjectRecord(value)) {
-      shadowValue = shadowLayerToCss(value);
-    }
-
+    const shadowValue = toShadowCssValue(entry.token.$value);
     if (!shadowValue) {
       continue;
     }
 
     variables.push({
-      name: tokenPathToCssVar(entry.path),
+      name: toSafeCssVar(entry.path),
       value: shadowValue,
     });
   }

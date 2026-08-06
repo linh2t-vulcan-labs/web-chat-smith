@@ -3,7 +3,7 @@ export interface CssVariable {
   value: string;
 }
 
-export const toCssDeclaration = ({ name, value }: CssVariable): string =>
+const toCssDeclaration = ({ name, value }: CssVariable): string =>
   `  ${name}: ${value};`;
 
 export const toRootCssBlock = (variables: CssVariable[]): string => {

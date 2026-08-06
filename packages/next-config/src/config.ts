@@ -1,3 +1,4 @@
+import { isNonEmptyString, toDomainWildcard } from "@cs/core/domain";
 import type { NextConfig } from "next";
 
 import {
@@ -10,7 +11,6 @@ import {
   STATIC_ASSETS_ROUTE,
 } from "./constants";
 import { buildSecurityHeaders } from "./security-headers";
-import { isNonEmptyString, toDomainWildcard } from "./utils";
 
 export interface PublicRuntimeConfig {
   isProd: boolean;
@@ -45,6 +45,106 @@ const resolvePublicConfig = (
   };
 };
 
+/** Local-dev-only `allowedDevOrigins` (the app's own host, plus any override) — `undefined` in prod, where Next's default same-origin check is sufficient. */
+const resolveDevOrigins = (
+  isProd: boolean,
+  webUrl: string,
+  overrideDevOrigins: string[] | undefined
+): string[] | undefined =>
+  isProd
+    ? (overrideDevOrigins ?? undefined)
+    : [new URL(webUrl).hostname, ...(overrideDevOrigins ?? [])];
+
+/** Base image-optimization config, merged with an app's own `images` override (its `remotePatterns` are appended to, not replaced by, the shared base list). */
+const buildImagesConfig = (
+  overrideImages: NextConfig["images"]
+): NextConfig["images"] => {
+  const { remotePatterns: overrideRemotePatterns, ...restImages } =
+    overrideImages ?? {};
+  return {
+    dangerouslyAllowSVG: false,
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 2_592_000, // 30 days
+    ...restImages,
+    remotePatterns: [
+      ...BASE_REMOTE_PATTERNS,
+      ...(overrideRemotePatterns ?? []),
+    ],
+  };
+};
+
+/** Shared experimental flags, merged with an app's own `experimental` override (`optimizePackageImports`/`serverActions` are appended to/merged with, not replaced by, the shared defaults). */
+const buildExperimentalConfig = (
+  overrideExperimental: NextConfig["experimental"],
+  allowedOrigins: string[]
+): NextConfig["experimental"] => ({
+  ...overrideExperimental,
+  inlineCss: true,
+  optimizePackageImports: [
+    ...BASE_OPTIMIZE_PACKAGES,
+    ...(overrideExperimental?.optimizePackageImports ?? []),
+  ],
+  serverActions: {
+    allowedOrigins,
+    bodySizeLimit: "1mb",
+    ...overrideExperimental?.serverActions,
+  },
+  sri: { algorithm: "sha256" },
+  taint: true,
+  turbopackRustReactCompiler: true,
+  typedEnv: true,
+  useOffline: true,
+  useTypeScriptCli: true,
+  webVitalsAttribution: ["FCP", "LCP", "CLS", "FID", "TTFB", "INP"],
+  instantInsights: {
+    validationLevel: "warning",
+  },
+});
+
+/** `allowedDevOrigins` override entry, only present when there's actually something to add. */
+const buildDevOriginsOverride = (
+  devOrigins: string[] | undefined
+): Pick<NextConfig, "allowedDevOrigins"> =>
+  devOrigins?.length ? { allowedDevOrigins: devOrigins } : {};
+
+/** The deployment id override, falling back to the `APP_RELEASE` env var, or `undefined` if neither is set. */
+const resolveDeploymentId = (
+  overrideDeploymentId: NextConfig["deploymentId"]
+): NextConfig["deploymentId"] =>
+  overrideDeploymentId || process.env.APP_RELEASE || undefined;
+
+/** `Cache-Control` header entry shared by both static-asset route groups — long-lived immutable caching in prod, disabled in dev so local rebuilds are always reflected. */
+const buildCacheControlHeader = (isProd: boolean) => [
+  {
+    key: "Cache-Control",
+    value: isProd ? IMMUTABLE_CACHE_CONTROL : "no-store",
+  },
+];
+
+/** The app's security/asset-caching header routes, plus any app-specific routes appended via `overrideHeaders`. */
+const buildHeadersFn =
+  (
+    isProd: boolean,
+    overrideHeaders: NextConfig["headers"]
+  ): NextConfig["headers"] =>
+  async () => {
+    const routes = [
+      {
+        headers: buildSecurityHeaders(isProd),
+        source: PAGE_ROUTE,
+      },
+      {
+        headers: buildCacheControlHeader(isProd),
+        source: ASSETS_ROUTE,
+      },
+      {
+        headers: buildCacheControlHeader(isProd),
+        source: STATIC_ASSETS_ROUTE,
+      },
+    ];
+    return overrideHeaders ? [...routes, ...(await overrideHeaders())] : routes;
+  };
+
 export const createNextConfig = (
   overrides: CreateNextConfigOptions
 ): NextConfig => {
@@ -65,12 +165,7 @@ export const createNextConfig = (
     ...restOverrides
   } = nextOverrides;
 
-  const { remotePatterns: overrideRemotePatterns, ...restImages } =
-    overrideImages ?? {};
-
-  const devOrigins = isProd
-    ? (overrideDevOrigins ?? undefined)
-    : [new URL(webUrl).hostname, ...(overrideDevOrigins ?? [])];
+  const devOrigins = resolveDevOrigins(isProd, webUrl, overrideDevOrigins);
 
   const config: NextConfig = {
     compress: true,
@@ -85,77 +180,17 @@ export const createNextConfig = (
     cacheComponents: true,
     partialPrefetching: true,
     serverExternalPackages: ["sharp"],
-    images: {
-      dangerouslyAllowSVG: false,
-      formats: ["image/avif", "image/webp"],
-      minimumCacheTTL: 2_592_000, // 30 days
-      ...restImages,
-      remotePatterns: [
-        ...BASE_REMOTE_PATTERNS,
-        ...(overrideRemotePatterns ?? []),
-      ],
-    },
+    images: buildImagesConfig(overrideImages),
     ...restOverrides,
-    ...(devOrigins?.length ? { allowedDevOrigins: devOrigins } : {}),
+    ...buildDevOriginsOverride(devOrigins),
     basePath: basePath ?? "",
-    deploymentId:
-      restOverrides.deploymentId || process.env.APP_RELEASE || undefined,
+    deploymentId: resolveDeploymentId(restOverrides.deploymentId),
     env: {
       ...restOverrides.env,
       NEXT_PUBLIC_APP_BASE_PATH: basePath ?? "",
     },
-    experimental: {
-      ...overrideExperimental,
-      inlineCss: true,
-      optimizePackageImports: [
-        ...BASE_OPTIMIZE_PACKAGES,
-        ...(overrideExperimental?.optimizePackageImports ?? []),
-      ],
-      serverActions: {
-        allowedOrigins,
-        bodySizeLimit: "1mb",
-        ...overrideExperimental?.serverActions,
-      },
-      sri: { algorithm: "sha256" },
-      taint: true,
-      turbopackRustReactCompiler: true,
-      typedEnv: true,
-      useOffline: true,
-      useTypeScriptCli: true,
-      webVitalsAttribution: ["FCP", "LCP", "CLS", "FID", "TTFB", "INP"],
-      instantInsights: {
-        validationLevel: "warning",
-      },
-    },
-    headers: async () => {
-      const routes = [
-        {
-          headers: buildSecurityHeaders(isProd),
-          source: PAGE_ROUTE,
-        },
-        {
-          headers: [
-            {
-              key: "Cache-Control",
-              value: isProd ? IMMUTABLE_CACHE_CONTROL : "no-store",
-            },
-          ],
-          source: ASSETS_ROUTE,
-        },
-        {
-          headers: [
-            {
-              key: "Cache-Control",
-              value: isProd ? IMMUTABLE_CACHE_CONTROL : "no-store",
-            },
-          ],
-          source: STATIC_ASSETS_ROUTE,
-        },
-      ];
-      return overrideHeaders
-        ? [...routes, ...(await overrideHeaders())]
-        : routes;
-    },
+    experimental: buildExperimentalConfig(overrideExperimental, allowedOrigins),
+    headers: buildHeadersFn(isProd, overrideHeaders),
     transpilePackages: [
       ...new Set([
         ...BASE_TRANSPILE_PACKAGES,

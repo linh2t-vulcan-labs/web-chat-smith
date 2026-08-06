@@ -9,20 +9,30 @@ import type { FlagSchema } from "../../schema";
  * object/array defaults are serialized to JSON strings — the schema's typed
  * getters still use the original (unserialized) default as their fallback.
  */
+const toFirebaseDefaultValue = (
+  defaultValue: FlagSchema[string]["defaultValue"]
+): string | number | boolean | undefined => {
+  if (typeof defaultValue === "object" && defaultValue !== null) {
+    return JSON.stringify(defaultValue);
+  }
+  if (
+    typeof defaultValue === "string" ||
+    typeof defaultValue === "number" ||
+    typeof defaultValue === "boolean"
+  ) {
+    return defaultValue;
+  }
+  return undefined;
+};
+
 const toFirebaseDefaultConfig = (
   schema: FlagSchema
 ): Record<string, string | number | boolean> => {
   const out: Record<string, string | number | boolean> = {};
   for (const [key, entry] of Object.entries(schema)) {
-    const { defaultValue } = entry;
-    if (typeof defaultValue === "object" && defaultValue !== null) {
-      out[key] = JSON.stringify(defaultValue);
-    } else if (
-      typeof defaultValue === "string" ||
-      typeof defaultValue === "number" ||
-      typeof defaultValue === "boolean"
-    ) {
-      out[key] = defaultValue;
+    const value = toFirebaseDefaultValue(entry.defaultValue);
+    if (value !== undefined) {
+      out[key] = value;
     }
   }
   return out;

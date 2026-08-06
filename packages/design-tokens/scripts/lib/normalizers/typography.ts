@@ -1,5 +1,5 @@
-import type { TokenMap, TokenValue } from "../resolver";
-import { isObjectRecord, isTokenValue } from "../utils/token-tree";
+import type { TokenMap } from "../resolver";
+import { isObjectRecord, mapTokensOfType } from "../utils/token-tree";
 
 const FONT_WEIGHT_MAP: Record<string, number> = {
   black: 900,
@@ -33,46 +33,31 @@ const normalizeLetterSpacing = (value: unknown): unknown => {
   return value;
 };
 
-const normalizeTypographyToken = (token: TokenValue): TokenValue => {
-  if (token.$type !== "typography" || !isObjectRecord(token.$value)) {
-    return token;
-  }
-
-  const normalized: NormalizedTypographyValue = { ...token.$value };
-
-  if ("fontWeight" in normalized) {
-    normalized.fontWeight = normalizeFontWeight(normalized.fontWeight);
-  }
-
-  if ("letterSpacing" in normalized) {
-    normalized.letterSpacing = normalizeLetterSpacing(normalized.letterSpacing);
-  }
-
-  return {
-    ...token,
-    $value: normalized,
-  };
+const TYPOGRAPHY_FIELD_NORMALIZERS: Record<
+  string,
+  (value: unknown) => unknown
+> = {
+  fontWeight: normalizeFontWeight,
+  letterSpacing: normalizeLetterSpacing,
 };
 
-const walkTypography = (current: TokenMap): TokenMap => {
-  const normalized: TokenMap = {};
+const normalizeTypographyValue = (value: unknown): unknown => {
+  if (!isObjectRecord(value)) {
+    return value;
+  }
 
-  for (const [key, value] of Object.entries(current)) {
-    if (isTokenValue(value)) {
-      normalized[key] = normalizeTypographyToken(value);
-      continue;
+  const normalized: NormalizedTypographyValue = { ...value };
+
+  for (const [field, normalize] of Object.entries(
+    TYPOGRAPHY_FIELD_NORMALIZERS
+  )) {
+    if (field in normalized) {
+      normalized[field] = normalize(normalized[field]);
     }
-
-    if (isObjectRecord(value)) {
-      normalized[key] = walkTypography(value as TokenMap);
-      continue;
-    }
-
-    normalized[key] = value as TokenValue;
   }
 
   return normalized;
 };
 
 export const normalizeTypography = (tokens: TokenMap): TokenMap =>
-  walkTypography(tokens);
+  mapTokensOfType(tokens, "typography", normalizeTypographyValue);

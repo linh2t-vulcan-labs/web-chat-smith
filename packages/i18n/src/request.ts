@@ -89,6 +89,33 @@ const createMessagesLoader = (loadMessages: MessageLoader) => {
   };
 };
 
+/** `requestLocale` rejects (rather than resolving `undefined`) in some edge cases next-intl documents as possible; either outcome means "no locale segment matched", handled identically below. */
+const resolveRequestedLocale = async (
+  requestLocale: Promise<string | undefined>
+): Promise<string | undefined> => {
+  try {
+    return await requestLocale;
+  } catch {
+    return undefined;
+  }
+};
+
+/**
+ * Build candidates from lowest → highest priority so later entries overwrite
+ * earlier ones. Order: default locale → custom fallbacks → resolved locale.
+ * Only valid configured locales can have a message file, so invalid entries
+ * are dropped.
+ */
+const buildLocaleCandidates = (
+  resolvedLocale: string,
+  fallbackLocales: readonly string[] = []
+): string[] =>
+  toUniqueLocales(
+    [routing.defaultLocale, ...fallbackLocales, resolvedLocale].filter(
+      isValidLocale
+    )
+  );
+
 /**
  * Creates a next-intl request config with a caller-provided message loader.
  * The loader must be defined in the app so that the bundler can resolve
@@ -108,27 +135,14 @@ export const createRequestConfig = (
   const loadMergedMessages = createMessagesLoader(loadMessages);
 
   return getRequestConfig(async ({ requestLocale }) => {
-    let requested: string | undefined;
-    try {
-      requested = await requestLocale;
-    } catch {
-      requested = undefined;
-    }
-
+    const requested = await resolveRequestedLocale(requestLocale);
     const resolvedLocale =
       resolveConfiguredLocale(requested) ?? routing.defaultLocale;
 
-    // Build candidates from lowest → highest priority so later entries overwrite earlier ones.
-    // Order: default locale → custom fallbacks → resolved locale. Only valid
-    // configured locales can have a message file, so invalid entries are dropped.
-    const localeCandidates = toUniqueLocales(
-      [
-        routing.defaultLocale,
-        ...(options?.fallbackLocales ?? []),
-        resolvedLocale,
-      ].filter(isValidLocale)
+    const localeCandidates = buildLocaleCandidates(
+      resolvedLocale,
+      options?.fallbackLocales
     );
-
     const messages = await loadMergedMessages(localeCandidates);
 
     return {

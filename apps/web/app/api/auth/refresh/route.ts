@@ -1,6 +1,8 @@
 import { refreshServerSession } from "@cs/api-client/server/server-fetch";
 import { NextResponse } from "next/server";
 
+import { apiErrorResponse } from "../../_shared";
+
 /**
  * Called by the browser TokenManager (core/token-manager.ts) — reads the
  * httpOnly refresh_token cookie server-side and mirrors the new access
@@ -11,16 +13,7 @@ export const POST = async () => {
   const [error, accessToken] = await refreshServerSession();
 
   if (error) {
-    return NextResponse.json(
-      {
-        code: error.code,
-        details: error.details,
-        message: error.message,
-        reason: error.reason,
-        status: error.status,
-      },
-      { status: error.httpStatus || 401 }
-    );
+    return apiErrorResponse(error, 401);
   }
 
   return NextResponse.json({ accessToken });

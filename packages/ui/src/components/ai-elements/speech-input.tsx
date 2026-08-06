@@ -72,58 +72,93 @@ export type SpeechInputProps = ComponentProps<typeof Button> & {
   lang?: string;
 };
 
+// Lookup table instead of chained ifs: each entry's `matches` decides
+// whether that mode is supported in the current environment.
+const speechInputModeChecks: {
+  mode: Exclude<SpeechInputMode, "none">;
+  matches: () => boolean;
+}[] = [
+  {
+    matches: () =>
+      "SpeechRecognition" in window || "webkitSpeechRecognition" in window,
+    mode: "speech-recognition",
+  },
+  {
+    matches: () => "MediaRecorder" in window && "mediaDevices" in navigator,
+    mode: "media-recorder",
+  },
+];
+
+const transcriptOf = (result: SpeechRecognitionResult): string =>
+  result[0]?.transcript ?? "";
+
+// Reads the transcript of a single result once it has been finalized,
+// split out of extractFinalTranscript to keep the loop body a plain call.
+const finalSegmentOf = (
+  result: SpeechRecognitionResult | undefined
+): string => {
+  if (!result?.isFinal) {
+    return "";
+  }
+  return transcriptOf(result);
+};
+
+// Concatenates every finalized alternative in a speech result event.
+// Extracted so the "result" listener itself is a one-line dispatch.
+const extractFinalTranscript = (
+  speechEvent: SpeechRecognitionEvent
+): string => {
+  let finalTranscript = "";
+
+  for (
+    let i = speechEvent.resultIndex;
+    i < speechEvent.results.length;
+    i += 1
+  ) {
+    finalTranscript += finalSegmentOf(speechEvent.results[i]);
+  }
+
+  return finalTranscript;
+};
+
 const detectSpeechInputMode = (): SpeechInputMode => {
   if (typeof window === "undefined") {
     return "none";
   }
 
-  if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-    return "speech-recognition";
-  }
-
-  if ("MediaRecorder" in window && "mediaDevices" in navigator) {
-    return "media-recorder";
-  }
-
-  return "none";
+  const supported = speechInputModeChecks.find((check) => check.matches());
+  return supported?.mode ?? "none";
 };
 
-export const SpeechInput = ({
-  className,
-  onTranscriptionChange,
-  onAudioRecorded,
-  lang = "en-US",
-  ...props
-}: SpeechInputProps) => {
+/**
+ * Wires up the Web Speech API (`SpeechRecognition`/`webkitSpeechRecognition`)
+ * for `mode === "speech-recognition"` and exposes the minimal
+ * listening/ready state plus start/stop controls `SpeechInput` needs. Kept
+ * as its own hook so the effect's event-listener setup/teardown doesn't
+ * inflate the component's own complexity.
+ */
+const useSpeechRecognitionMode = (
+  mode: SpeechInputMode,
+  lang: string,
+  onTranscriptionChange?: (text: string) => void
+) => {
   const [isListening, setIsListening] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [mode] = useState<SpeechInputMode>(detectSpeechInputMode);
-  const [isRecognitionReady, setIsRecognitionReady] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
-  const onTranscriptionChangeRef = useRef<
-    SpeechInputProps["onTranscriptionChange"]
-  >(onTranscriptionChange);
-  const onAudioRecordedRef =
-    useRef<SpeechInputProps["onAudioRecorded"]>(onAudioRecorded);
+  const onTranscriptionChangeRef = useRef(onTranscriptionChange);
 
-  // Keep refs in sync
   useEffect(() => {
     onTranscriptionChangeRef.current = onTranscriptionChange;
-    onAudioRecordedRef.current = onAudioRecorded;
   });
 
-  // Initialize Speech Recognition when mode is speech-recognition
   useEffect(() => {
     if (mode !== "speech-recognition") {
       return;
     }
 
-    const SpeechRecognition =
+    const SpeechRecognitionCtor =
       window.SpeechRecognition || window.webkitSpeechRecognition;
-    const speechRecognition = new SpeechRecognition();
+    const speechRecognition = new SpeechRecognitionCtor();
 
     speechRecognition.continuous = true;
     speechRecognition.interimResults = true;
@@ -138,20 +173,9 @@ export const SpeechInput = ({
     };
 
     const handleResult = (event: Event) => {
-      const speechEvent = event as SpeechRecognitionEvent;
-      let finalTranscript = "";
-
-      for (
-        let i = speechEvent.resultIndex;
-        i < speechEvent.results.length;
-        i += 1
-      ) {
-        const result = speechEvent.results[i];
-        if (result?.isFinal) {
-          finalTranscript += result[0]?.transcript ?? "";
-        }
-      }
-
+      const finalTranscript = extractFinalTranscript(
+        event as SpeechRecognitionEvent
+      );
       if (finalTranscript) {
         onTranscriptionChangeRef.current?.(finalTranscript);
       }
@@ -168,7 +192,7 @@ export const SpeechInput = ({
 
     recognitionRef.current = speechRecognition;
     // oxlint-disable-next-line react/react-compiler -- setState in an effect body is intentional here: it signals that the just-constructed SpeechRecognition instance (an external system) finished initializing, not a derivable render value
-    setIsRecognitionReady(true);
+    setIsReady(true);
 
     return () => {
       speechRecognition.removeEventListener("start", handleStart);
@@ -177,9 +201,73 @@ export const SpeechInput = ({
       speechRecognition.removeEventListener("error", handleError);
       speechRecognition.stop();
       recognitionRef.current = null;
-      setIsRecognitionReady(false);
+      setIsReady(false);
     };
   }, [mode, lang]);
+
+  return {
+    isListening,
+    isReady,
+    start: () => recognitionRef.current?.start(),
+    stop: () => recognitionRef.current?.stop(),
+  };
+};
+
+// Shared by the unmount cleanup, "error", and "stop" handlers below, which
+// all need to release the microphone the same way.
+const stopMediaStreamTracks = (stream: MediaStream | null) => {
+  if (!stream) {
+    return;
+  }
+  for (const track of stream.getTracks()) {
+    track.stop();
+  }
+};
+
+// Hands the recorded blob to onAudioRecorded and forwards the transcript.
+// Extracted so the "stop" event handler stays a short sequence of steps.
+const transcribeRecordedAudio = async (
+  audioBlob: Blob,
+  onAudioRecorded: (audioBlob: Blob) => Promise<string>,
+  onTranscriptionChange: ((text: string) => void) | undefined,
+  setIsProcessing: (processing: boolean) => void
+) => {
+  setIsProcessing(true);
+  try {
+    const transcript = await onAudioRecorded(audioBlob);
+    if (transcript) {
+      onTranscriptionChange?.(transcript);
+    }
+  } catch {
+    // Error handling delegated to the onAudioRecorded caller
+  } finally {
+    setIsProcessing(false);
+  }
+};
+
+/**
+ * Records audio via `MediaRecorder` for browsers without the Web Speech API
+ * (Firefox, Safari), then hands the recorded blob to `onAudioRecorded` for
+ * transcription. Kept as its own hook for the same reason as
+ * `useSpeechRecognitionMode` — isolates the recorder/stream lifecycle from
+ * `SpeechInput`'s render logic.
+ */
+const useMediaRecorderMode = (
+  onTranscriptionChange?: (text: string) => void,
+  onAudioRecorded?: (audioBlob: Blob) => Promise<string>
+) => {
+  const [isListening, setIsListening] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const onTranscriptionChangeRef = useRef(onTranscriptionChange);
+  const onAudioRecordedRef = useRef(onAudioRecorded);
+
+  useEffect(() => {
+    onTranscriptionChangeRef.current = onTranscriptionChange;
+    onAudioRecordedRef.current = onAudioRecorded;
+  });
 
   // Cleanup MediaRecorder and stream on unmount
   useEffect(
@@ -187,17 +275,12 @@ export const SpeechInput = ({
       if (mediaRecorderRef.current?.state === "recording") {
         mediaRecorderRef.current.stop();
       }
-      if (streamRef.current) {
-        for (const track of streamRef.current.getTracks()) {
-          track.stop();
-        }
-      }
+      stopMediaStreamTracks(streamRef.current);
     },
     []
   );
 
-  // Start MediaRecorder recording
-  const startMediaRecorder = async () => {
+  const start = async () => {
     if (!onAudioRecordedRef.current) {
       return;
     }
@@ -233,18 +316,14 @@ export const SpeechInput = ({
         removeMediaRecorderListeners();
 
         setIsListening(false);
-        for (const track of stream.getTracks()) {
-          track.stop();
-        }
+        stopMediaStreamTracks(stream);
         streamRef.current = null;
       };
 
       handlers.stop = async () => {
         removeMediaRecorderListeners();
 
-        for (const track of stream.getTracks()) {
-          track.stop();
-        }
+        stopMediaStreamTracks(stream);
         streamRef.current = null;
 
         const audioBlob = new Blob(audioChunksRef.current, {
@@ -252,17 +331,12 @@ export const SpeechInput = ({
         });
 
         if (audioBlob.size > 0 && onAudioRecordedRef.current) {
-          setIsProcessing(true);
-          try {
-            const transcript = await onAudioRecordedRef.current(audioBlob);
-            if (transcript) {
-              onTranscriptionChangeRef.current?.(transcript);
-            }
-          } catch {
-            // Error handling delegated to the onAudioRecorded caller
-          } finally {
-            setIsProcessing(false);
-          }
+          await transcribeRecordedAudio(
+            audioBlob,
+            onAudioRecordedRef.current,
+            onTranscriptionChangeRef.current,
+            setIsProcessing
+          );
         }
       };
 
@@ -278,51 +352,146 @@ export const SpeechInput = ({
     }
   };
 
-  // Stop MediaRecorder recording
-  const stopMediaRecorder = () => {
+  const stop = () => {
     if (mediaRecorderRef.current?.state === "recording") {
       mediaRecorderRef.current.stop();
     }
     setIsListening(false);
   };
 
+  return { isListening, isProcessing, start, stop };
+};
+
+interface SpeechModeController {
+  isListening: boolean;
+  start: () => void;
+  stop: () => void;
+}
+
+type SpeechModeControllers = Record<
+  Exclude<SpeechInputMode, "none">,
+  SpeechModeController
+>;
+
+// Split out of useActiveSpeechMode so the mode->controller lookup (a plain
+// ternary) doesn't stack with the rest of the hook's derived state.
+const pickActiveController = (
+  mode: SpeechInputMode,
+  controllersByMode: SpeechModeControllers
+): SpeechModeController | null =>
+  mode === "none" ? null : controllersByMode[mode];
+
+// Split out for the same reason: keeps the "none"/readiness/processing
+// checks in one small, independently-readable place.
+const computeIsDisabled = (
+  mode: SpeechInputMode,
+  isReadyByMode: Record<Exclude<SpeechInputMode, "none">, boolean>,
+  isProcessing: boolean
+): boolean => {
+  if (mode === "none") {
+    return true;
+  }
+  return !isReadyByMode[mode] || isProcessing;
+};
+
+// Combines the two mode-specific hooks into the single set of derived state
+// SpeechInput's render actually needs (isListening/isDisabled/toggle),
+// keeping mode branching out of the component itself.
+const useActiveSpeechMode = (
+  mode: SpeechInputMode,
+  speechRecognition: ReturnType<typeof useSpeechRecognitionMode>,
+  mediaRecorder: ReturnType<typeof useMediaRecorderMode>,
+  hasAudioRecorder: boolean
+) => {
+  const controllersByMode: SpeechModeControllers = {
+    "media-recorder": mediaRecorder,
+    "speech-recognition": speechRecognition,
+  };
+  const isReadyByMode: Record<Exclude<SpeechInputMode, "none">, boolean> = {
+    "media-recorder": hasAudioRecorder,
+    "speech-recognition": speechRecognition.isReady,
+  };
+
+  const active = pickActiveController(mode, controllersByMode);
+  const isListening = active?.isListening ?? false;
+  const { isProcessing } = mediaRecorder;
+  const isDisabled = computeIsDisabled(mode, isReadyByMode, isProcessing);
+
   const toggleListening = () => {
-    if (mode === "speech-recognition" && recognitionRef.current) {
-      if (isListening) {
-        recognitionRef.current.stop();
-      } else {
-        recognitionRef.current.start();
-      }
-    } else if (mode === "media-recorder") {
-      if (isListening) {
-        stopMediaRecorder();
-      } else {
-        startMediaRecorder();
-      }
+    if (!active) {
+      return;
+    }
+    if (isListening) {
+      active.stop();
+    } else {
+      active.start();
     }
   };
 
-  // Determine if button should be disabled
-  const isDisabled =
-    mode === "none" ||
-    (mode === "speech-recognition" && !isRecognitionReady) ||
-    (mode === "media-recorder" && !onAudioRecorded) ||
-    isProcessing;
+  return { isDisabled, isListening, isProcessing, toggleListening };
+};
+
+const SpeechInputPulseRings = () => (
+  <>
+    {[0, 1, 2].map((index) => (
+      <div
+        className="absolute inset-0 animate-ping rounded-full border-2 border-red-400/30"
+        key={index}
+        style={{
+          animationDelay: `${index * 0.3}s`,
+          animationDuration: "2s",
+        }}
+      />
+    ))}
+  </>
+);
+
+const SpeechInputIcon = ({
+  isProcessing,
+  isListening,
+}: {
+  isProcessing: boolean;
+  isListening: boolean;
+}) => {
+  if (isProcessing) {
+    return <Spinner />;
+  }
+  if (isListening) {
+    return <SquareIcon className="size-4" />;
+  }
+  return <MicIcon className="size-4" />;
+};
+
+export const SpeechInput = ({
+  className,
+  onTranscriptionChange,
+  onAudioRecorded,
+  lang = "en-US",
+  ...props
+}: SpeechInputProps) => {
+  const [mode] = useState<SpeechInputMode>(detectSpeechInputMode);
+
+  const speechRecognition = useSpeechRecognitionMode(
+    mode,
+    lang,
+    onTranscriptionChange
+  );
+  const mediaRecorder = useMediaRecorderMode(
+    onTranscriptionChange,
+    onAudioRecorded
+  );
+  const { isDisabled, isListening, isProcessing, toggleListening } =
+    useActiveSpeechMode(
+      mode,
+      speechRecognition,
+      mediaRecorder,
+      !!onAudioRecorded
+    );
 
   return (
     <div className="relative inline-flex items-center justify-center">
       {/* Animated pulse rings */}
-      {isListening &&
-        [0, 1, 2].map((index) => (
-          <div
-            className="absolute inset-0 animate-ping rounded-full border-2 border-red-400/30"
-            key={index}
-            style={{
-              animationDelay: `${index * 0.3}s`,
-              animationDuration: "2s",
-            }}
-          />
-        ))}
+      {isListening && <SpeechInputPulseRings />}
 
       {/* Main record button */}
       <Button
@@ -337,9 +506,10 @@ export const SpeechInput = ({
         onClick={toggleListening}
         {...props}
       >
-        {isProcessing && <Spinner />}
-        {!isProcessing && isListening && <SquareIcon className="size-4" />}
-        {!(isProcessing || isListening) && <MicIcon className="size-4" />}
+        <SpeechInputIcon
+          isListening={isListening}
+          isProcessing={isProcessing}
+        />
       </Button>
     </div>
   );

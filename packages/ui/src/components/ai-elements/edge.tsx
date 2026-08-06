@@ -37,6 +37,42 @@ const Temporary = ({
   );
 };
 
+interface HandleSize {
+  width: number;
+  height: number;
+}
+
+// This is a tiny detail to make the markerEnd of an edge visible. The handle
+// position that gets calculated has the origin top-left, so depending on
+// which side we are using, we add a little offset — e.g. for Position.Right
+// we need to add an offset as big as the handle itself to get the correct
+// position.
+const handlePositionOffsets: Record<
+  Position,
+  (handle: HandleSize) => { offsetX: number; offsetY: number }
+> = {
+  [Position.Left]: (handle) => ({ offsetX: 0, offsetY: handle.height / 2 }),
+  [Position.Right]: (handle) => ({
+    offsetX: handle.width,
+    offsetY: handle.height / 2,
+  }),
+  [Position.Top]: (handle) => ({ offsetX: handle.width / 2, offsetY: 0 }),
+  [Position.Bottom]: (handle) => ({
+    offsetX: handle.width / 2,
+    offsetY: handle.height,
+  }),
+};
+
+const getHandleOffset = (handlePosition: Position, handle: HandleSize) => {
+  const resolveOffset = handlePositionOffsets[handlePosition];
+
+  if (!resolveOffset) {
+    throw new Error(`Invalid handle position: ${handlePosition}`);
+  }
+
+  return resolveOffset(handle);
+};
+
 const getHandleCoordsByPosition = (
   node: InternalNode<Node>,
   handlePosition: Position
@@ -52,33 +88,7 @@ const getHandleCoordsByPosition = (
     return [0, 0] as const;
   }
 
-  let offsetX = handle.width / 2;
-  let offsetY = handle.height / 2;
-
-  // this is a tiny detail to make the markerEnd of an edge visible.
-  // The handle position that gets calculated has the origin top-left, so depending which side we are using, we add a little offset
-  // when the handlePosition is Position.Right for example, we need to add an offset as big as the handle itself in order to get the correct position
-  switch (handlePosition) {
-    case Position.Left: {
-      offsetX = 0;
-      break;
-    }
-    case Position.Right: {
-      offsetX = handle.width;
-      break;
-    }
-    case Position.Top: {
-      offsetY = 0;
-      break;
-    }
-    case Position.Bottom: {
-      offsetY = handle.height;
-      break;
-    }
-    default: {
-      throw new Error(`Invalid handle position: ${handlePosition}`);
-    }
-  }
+  const { offsetX, offsetY } = getHandleOffset(handlePosition, handle);
 
   const x = node.internals.positionAbsolute.x + handle.x + offsetX;
   const y = node.internals.positionAbsolute.y + handle.y + offsetY;

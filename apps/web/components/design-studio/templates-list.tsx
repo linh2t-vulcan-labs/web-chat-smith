@@ -8,6 +8,7 @@ import { useExtracted } from "next-intl";
 
 import { TEMPLATES_QUERY_KEY } from "@/components/design-studio/templates-query-key";
 import { useApiErrorCopy } from "@/hooks/use-api-error-copy";
+import type { ApiErrorCopy } from "@/hooks/use-api-error-copy";
 
 /**
  * `<Suspense fallback>` for the Server Component boundary in
@@ -25,6 +26,46 @@ export const TemplatesListSkeleton = () => (
       </li>
     ))}
   </ul>
+);
+
+interface TemplateListItem {
+  id: string;
+  name: string;
+  category: string;
+}
+
+const TemplatesListItems = ({
+  templates,
+}: {
+  templates: TemplateListItem[];
+}) => (
+  <ul className="flex flex-col gap-2">
+    {templates.map((template) => (
+      <li className="flex flex-col" key={template.id}>
+        <span>{template.name}</span>
+        <span className="text-muted-foreground text-xs">
+          {template.category}
+        </span>
+      </li>
+    ))}
+  </ul>
+);
+
+const TemplatesListError = ({
+  copy,
+  onRetry,
+  retryLabel,
+}: {
+  copy: ApiErrorCopy;
+  onRetry: () => void;
+  retryLabel: string;
+}) => (
+  <InlineError
+    description={copy.description}
+    onRetry={copy.retryable ? onRetry : undefined}
+    retryLabel={retryLabel}
+    title={copy.title}
+  />
 );
 
 /**
@@ -53,13 +94,11 @@ export const TemplatesList = () => {
   }
 
   if (error) {
-    const copy = getErrorCopy(error);
     return (
-      <InlineError
-        description={copy.description}
-        onRetry={copy.retryable ? () => refetch() : undefined}
+      <TemplatesListError
+        copy={getErrorCopy(error)}
+        onRetry={() => refetch()}
         retryLabel={t({ id: "Common.actions.retry", message: "Try again" })}
-        title={copy.title}
       />
     );
   }
@@ -68,16 +107,5 @@ export const TemplatesList = () => {
     return <p className="text-muted-foreground">No templates yet.</p>;
   }
 
-  return (
-    <ul className="flex flex-col gap-2">
-      {data.templates.map((template) => (
-        <li className="flex flex-col" key={template.id}>
-          <span>{template.name}</span>
-          <span className="text-muted-foreground text-xs">
-            {template.category}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
+  return <TemplatesListItems templates={data.templates} />;
 };

@@ -13,6 +13,24 @@ export interface SyncFcmTokenOptions {
   onToken?: (token: string) => Promise<void> | void;
 }
 
+const fetchFcmToken = async (
+  options: Pick<
+    SyncFcmTokenOptions,
+    "messaging" | "vapidKey" | "serviceWorkerRegistration"
+  >
+): Promise<string | null> => {
+  const { getToken } = await import("firebase/messaging");
+  try {
+    const token = await getToken(options.messaging, {
+      serviceWorkerRegistration: options.serviceWorkerRegistration,
+      vapidKey: options.vapidKey,
+    });
+    return token || null;
+  } catch {
+    return null;
+  }
+};
+
 /**
  * Fetches the current FCM token and, only if it (or the bound user) changed
  * since the last sync, calls `onToken` and persists it. Returns `null` if
@@ -21,25 +39,9 @@ export interface SyncFcmTokenOptions {
 export const syncFcmToken = async (
   options: SyncFcmTokenOptions
 ): Promise<string | null> => {
-  const {
-    messaging,
-    vapidKey,
-    serviceWorkerRegistration,
-    userId,
-    store,
-    onToken,
-  } = options;
+  const { userId, store, onToken } = options;
 
-  const { getToken } = await import("firebase/messaging");
-  let currentToken: string;
-  try {
-    currentToken = await getToken(messaging, {
-      serviceWorkerRegistration,
-      vapidKey,
-    });
-  } catch {
-    return null;
-  }
+  const currentToken = await fetchFcmToken(options);
   if (!currentToken) {
     return null;
   }

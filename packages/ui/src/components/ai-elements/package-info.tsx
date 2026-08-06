@@ -98,6 +98,29 @@ export const PackageInfoChangeType = ({
   );
 };
 
+type PackageInfoVersionChangeProps = Pick<
+  PackageInfoContextType,
+  "currentVersion" | "newVersion"
+>;
+
+const shouldShowVersionArrow = (currentVersion?: string, newVersion?: string) =>
+  Boolean(currentVersion && newVersion);
+
+const PackageInfoVersionChange = ({
+  currentVersion,
+  newVersion,
+}: PackageInfoVersionChangeProps) => (
+  <>
+    {currentVersion && <span>{currentVersion}</span>}
+    {shouldShowVersionArrow(currentVersion, newVersion) && (
+      <ArrowRightIcon className="size-3" />
+    )}
+    {newVersion && (
+      <span className="font-medium text-foreground">{newVersion}</span>
+    )}
+  </>
+);
+
 export type PackageInfoVersionProps = HTMLAttributes<HTMLDivElement>;
 
 export const PackageInfoVersion = ({
@@ -120,15 +143,10 @@ export const PackageInfoVersion = ({
       {...props}
     >
       {children ?? (
-        <>
-          {currentVersion && <span>{currentVersion}</span>}
-          {currentVersion && newVersion && (
-            <ArrowRightIcon className="size-3" />
-          )}
-          {newVersion && (
-            <span className="font-medium text-foreground">{newVersion}</span>
-          )}
-        </>
+        <PackageInfoVersionChange
+          currentVersion={currentVersion}
+          newVersion={newVersion}
+        />
       )}
     </div>
   );
@@ -163,9 +181,9 @@ export const PackageInfo = ({
           <>
             <PackageInfoHeader>
               <PackageInfoName />
-              {changeType && <PackageInfoChangeType />}
+              <PackageInfoChangeType />
             </PackageInfoHeader>
-            {(currentVersion || newVersion) && <PackageInfoVersion />}
+            <PackageInfoVersion />
           </>
         )}
       </div>

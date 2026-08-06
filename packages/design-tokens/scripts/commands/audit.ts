@@ -12,19 +12,52 @@ interface VersionFiles {
   versionDir: string;
 }
 
+const printCurrentVersionStatus = (current: string | null): void => {
+  if (current) {
+    console.log(styleText("green", `✓ Current version: ${current}`));
+    return;
+  }
+
+  console.warn(styleText("yellow", "⚠️  .current file is empty or missing"));
+};
+
+const printVersionFileStatus = (file: string, content: string): void => {
+  try {
+    const data = JSON.parse(content) as Record<string, unknown>;
+    console.log(`  ✓ ${file}: ${Object.keys(data).length} tokens`);
+  } catch {
+    console.log(styleText("red", `  ✗ ${file}: parse error`));
+  }
+};
+
+const printVersionAudit = (
+  versionFiles: VersionFiles,
+  contents: string[]
+): void => {
+  console.log(styleText("bold", `${versionFiles.version}/`));
+
+  for (const [index, file] of versionFiles.files.entries()) {
+    printVersionFileStatus(file, contents[index] ?? "");
+  }
+
+  console.log("");
+};
+
+const readCurrentVersionOrNull = async (): Promise<string | null> => {
+  const currentFile = Bun.file(CURRENT_VERSION_FILE);
+  if (!(await currentFile.exists())) {
+    return null;
+  }
+
+  const text = await currentFile.text();
+  const content = text.trim();
+  return content || null;
+};
+
 export const run = async (): Promise<void> => {
   console.log(styleText("cyan", "🔍 Auditing Figma token files...\n"));
 
-  const currentFile = Bun.file(CURRENT_VERSION_FILE);
-  const currentExists = await currentFile.exists();
-  const currentContent = currentExists ? await currentFile.text() : "";
-  const current = currentExists ? currentContent.trim() : null;
-
-  if (current) {
-    console.log(styleText("green", `✓ Current version: ${current}`));
-  } else {
-    console.warn(styleText("yellow", "⚠️  .current file is empty or missing"));
-  }
+  printCurrentVersionStatus(await readCurrentVersionOrNull());
 
   const versions = readdirSync(FIGMA_TOKENS_DIR)
     .filter((name) => name.startsWith("tokens_v"))
@@ -49,23 +82,8 @@ export const run = async (): Promise<void> => {
     )
   );
 
-  for (const [versionIndex, { files, version }] of versionFiles.entries()) {
-    console.log(styleText("bold", `${version}/`));
-
-    const contents = contentsByVersion[versionIndex] ?? [];
-
-    for (const [index, file] of files.entries()) {
-      try {
-        const data = JSON.parse(contents[index] ?? "") as Record<
-          string,
-          unknown
-        >;
-        console.log(`  ✓ ${file}: ${Object.keys(data).length} tokens`);
-      } catch {
-        console.log(styleText("red", `  ✗ ${file}: parse error`));
-      }
-    }
-    console.log("");
+  for (const [versionIndex, entry] of versionFiles.entries()) {
+    printVersionAudit(entry, contentsByVersion[versionIndex] ?? []);
   }
 
   console.log(

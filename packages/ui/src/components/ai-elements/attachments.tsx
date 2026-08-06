@@ -52,6 +52,26 @@ const mediaCategoryIcons: Record<AttachmentMediaCategory, typeof ImageIcon> = {
 // Utility Functions
 // ============================================================================
 
+const mediaTypePrefixCategories: [
+  prefix: string,
+  category: AttachmentMediaCategory,
+][] = [
+  ["image/", "image"],
+  ["video/", "video"],
+  ["audio/", "audio"],
+  ["application/", "document"],
+  ["text/", "document"],
+];
+
+const resolveCategoryFromMediaType = (
+  mediaType: string
+): AttachmentMediaCategory => {
+  const match = mediaTypePrefixCategories.find(([prefix]) =>
+    mediaType.startsWith(prefix)
+  );
+  return match?.[1] ?? "unknown";
+};
+
 export const getMediaCategory = (
   data: AttachmentData
 ): AttachmentMediaCategory => {
@@ -59,31 +79,23 @@ export const getMediaCategory = (
     return "source";
   }
 
-  const mediaType = data.mediaType ?? "";
-
-  if (mediaType.startsWith("image/")) {
-    return "image";
-  }
-  if (mediaType.startsWith("video/")) {
-    return "video";
-  }
-  if (mediaType.startsWith("audio/")) {
-    return "audio";
-  }
-  if (mediaType.startsWith("application/") || mediaType.startsWith("text/")) {
-    return "document";
-  }
-
-  return "unknown";
+  return resolveCategoryFromMediaType(data.mediaType ?? "");
 };
+
+const getSourceDocumentLabel = (
+  data: Extract<AttachmentData, { type: "source-document" }>
+) => data.title || data.filename || "Source";
 
 export const getAttachmentLabel = (data: AttachmentData): string => {
   if (data.type === "source-document") {
-    return data.title || data.filename || "Source";
+    return getSourceDocumentLabel(data);
   }
 
-  const category = getMediaCategory(data);
-  return data.filename || (category === "image" ? "Image" : "Attachment");
+  if (data.filename) {
+    return data.filename;
+  }
+
+  return getMediaCategory(data) === "image" ? "Image" : "Attachment";
 };
 
 const renderAttachmentImage = (
@@ -240,6 +252,86 @@ export type AttachmentPreviewProps = HTMLAttributes<HTMLDivElement> & {
   fallbackIcon?: ReactNode;
 };
 
+type FileAttachmentData = Extract<AttachmentData, { type: "file" }>;
+
+const asFileAttachment = (data: AttachmentData): FileAttachmentData | null =>
+  data.type === "file" ? data : null;
+
+interface AttachmentPreviewFallbackProps {
+  mediaCategory: AttachmentMediaCategory;
+  variant: AttachmentVariant;
+  fallbackIcon?: ReactNode;
+}
+
+const AttachmentPreviewFallback = ({
+  mediaCategory,
+  variant,
+  fallbackIcon,
+}: AttachmentPreviewFallbackProps) => {
+  const Icon = mediaCategoryIcons[mediaCategory];
+  const iconSize = variant === "inline" ? "size-3" : "size-4";
+
+  return (
+    fallbackIcon ?? <Icon className={cn(iconSize, "text-muted-foreground")} />
+  );
+};
+
+interface AttachmentPreviewContentProps {
+  data: AttachmentData;
+  mediaCategory: AttachmentMediaCategory;
+  variant: AttachmentVariant;
+  fallbackIcon?: ReactNode;
+}
+
+const isDisplayableMediaCategory = (
+  mediaCategory: AttachmentMediaCategory
+): mediaCategory is "image" | "video" =>
+  mediaCategory === "image" || mediaCategory === "video";
+
+const mediaContentRenderers: Record<
+  "image" | "video",
+  (
+    url: string,
+    filename: string | undefined,
+    variant: AttachmentVariant
+  ) => ReactNode
+> = {
+  image: (url, filename, variant) =>
+    renderAttachmentImage(url, filename, variant === "grid"),
+  video: (url) => <video className="size-full object-cover" muted src={url} />,
+};
+
+const AttachmentPreviewContent = ({
+  data,
+  mediaCategory,
+  variant,
+  fallbackIcon,
+}: AttachmentPreviewContentProps) => {
+  const fileData = asFileAttachment(data);
+
+  if (fileData?.url && isDisplayableMediaCategory(mediaCategory)) {
+    return mediaContentRenderers[mediaCategory](
+      fileData.url,
+      fileData.filename,
+      variant
+    );
+  }
+
+  return (
+    <AttachmentPreviewFallback
+      fallbackIcon={fallbackIcon}
+      mediaCategory={mediaCategory}
+      variant={variant}
+    />
+  );
+};
+
+const previewVariantClasses: Record<AttachmentVariant, string> = {
+  grid: "size-full bg-muted",
+  inline: "size-5 rounded bg-background",
+  list: "size-12 rounded bg-muted",
+};
+
 export const AttachmentPreview = ({
   fallbackIcon,
   className,
@@ -247,37 +339,21 @@ export const AttachmentPreview = ({
 }: AttachmentPreviewProps) => {
   const { data, mediaCategory, variant } = useAttachmentContext();
 
-  const iconSize = variant === "inline" ? "size-3" : "size-4";
-
-  const renderIcon = (Icon: typeof ImageIcon) => (
-    <Icon className={cn(iconSize, "text-muted-foreground")} />
-  );
-
-  const renderContent = () => {
-    if (mediaCategory === "image" && data.type === "file" && data.url) {
-      return renderAttachmentImage(data.url, data.filename, variant === "grid");
-    }
-
-    if (mediaCategory === "video" && data.type === "file" && data.url) {
-      return <video className="size-full object-cover" muted src={data.url} />;
-    }
-
-    const Icon = mediaCategoryIcons[mediaCategory];
-    return fallbackIcon ?? renderIcon(Icon);
-  };
-
   return (
     <div
       className={cn(
         "flex shrink-0 items-center justify-center overflow-hidden",
-        variant === "grid" && "size-full bg-muted",
-        variant === "inline" && "size-5 rounded bg-background",
-        variant === "list" && "size-12 rounded bg-muted",
+        previewVariantClasses[variant],
         className
       )}
       {...props}
     >
-      {renderContent()}
+      <AttachmentPreviewContent
+        data={data}
+        fallbackIcon={fallbackIcon}
+        mediaCategory={mediaCategory}
+        variant={variant}
+      />
     </div>
   );
 };
@@ -322,6 +398,22 @@ export type AttachmentRemoveProps = ComponentProps<typeof Button> & {
   label?: string;
 };
 
+const removeButtonVariantClasses: Record<AttachmentVariant, string> = {
+  grid: cn(
+    "absolute top-2 right-2 size-6 rounded-full p-0",
+    "bg-background/80 backdrop-blur-sm",
+    "opacity-0 transition-opacity group-hover:opacity-100",
+    "hover:bg-background",
+    "[&>svg]:size-3"
+  ),
+  inline: cn(
+    "size-5 rounded p-0",
+    "opacity-0 transition-opacity group-hover:opacity-100",
+    "[&>svg]:size-2.5"
+  ),
+  list: cn("size-8 shrink-0 rounded p-0", "[&>svg]:size-4"),
+};
+
 export const AttachmentRemove = ({
   label = "Remove",
   className,
@@ -330,34 +422,19 @@ export const AttachmentRemove = ({
 }: AttachmentRemoveProps) => {
   const { onRemove, variant } = useAttachmentContext();
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onRemove?.();
-  };
-
   if (!onRemove) {
     return null;
   }
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onRemove();
+  };
+
   return (
     <Button
       aria-label={label}
-      className={cn(
-        variant === "grid" && [
-          "absolute top-2 right-2 size-6 rounded-full p-0",
-          "bg-background/80 backdrop-blur-sm",
-          "opacity-0 transition-opacity group-hover:opacity-100",
-          "hover:bg-background",
-          "[&>svg]:size-3",
-        ],
-        variant === "inline" && [
-          "size-5 rounded p-0",
-          "opacity-0 transition-opacity group-hover:opacity-100",
-          "[&>svg]:size-2.5",
-        ],
-        variant === "list" && ["size-8 shrink-0 rounded p-0", "[&>svg]:size-4"],
-        className
-      )}
+      className={cn(removeButtonVariantClasses[variant], className)}
       onClick={handleClick}
       type="button"
       variant="ghost"

@@ -113,6 +113,73 @@ const parseSuccessBody = async <T>(response: Response): Promise<T> => {
   return toCamelCase<T>(json);
 };
 
+const buildRequestInit = (
+  options: HttpRequestOptions,
+  signal: AbortSignal | undefined
+): RequestInit => ({
+  body: serializeBody(options.body, options.raw),
+  headers: {
+    ...(isPassthroughBody(options.body, options.raw)
+      ? {}
+      : { "Content-Type": "application/json" }),
+    ...options.headers,
+  },
+  method: options.method,
+  signal,
+});
+
+const resolveErrorMessage = (
+  errorBody: ApiErrorShape | undefined,
+  response: Response
+): string => errorBody?.message ?? response.statusText ?? "Request failed";
+
+const buildErrorResult = async (
+  response: Response
+): Promise<ApiResult<never>> => {
+  const errorBody = await parseErrorBody(response);
+  const retryAfterMs = parseRetryAfterMs(response.headers.get("retry-after"));
+  if (errorBody?.reason) {
+    return [
+      ApiError.fromBackendPayload(errorBody, response.status, retryAfterMs),
+      null,
+    ];
+  }
+  return [
+    new ApiError({
+      httpStatus: response.status,
+      kind: "backend",
+      message: resolveErrorMessage(errorBody, response),
+      reason: "ERROR_UNKNOWN",
+      retryAfterMs,
+    }),
+    null,
+  ];
+};
+
+const isAbortDomException = (error: unknown): error is DOMException =>
+  error instanceof DOMException && error.name === "AbortError";
+
+/** Distinguishes a genuine abort (the caller's own signal fired) from a timeout (the internal `DEFAULT_TIMEOUT_MS` controller fired instead). */
+const mapAbortError = (callerSignal: AbortSignal | undefined): ApiError =>
+  callerSignal?.aborted ? ApiError.aborted() : ApiError.timeout();
+
+/** Maps a caught `fetch`/parse failure to the right `ApiError` variant — abort vs. timeout, a re-thrown `ApiError`, a JSON parse failure, or a generic network error. */
+const mapCaughtError = (
+  error: unknown,
+  callerSignal: AbortSignal | undefined
+): ApiError => {
+  if (isAbortDomException(error)) {
+    return mapAbortError(callerSignal);
+  }
+  if (error instanceof ApiError) {
+    return error;
+  }
+  if (error instanceof SyntaxError) {
+    return ApiError.parseFailure(error);
+  }
+  return ApiError.network(error);
+};
+
 /**
  * Native-fetch wrapper: timeout via AbortController, error-body normalization
  * into ApiError, camelCase<->snake_case body transforms. No auth/retry here —
@@ -128,58 +195,16 @@ export const httpRequest = async <T>(
   const signal = mergeSignals(options.signal, timeoutController.signal);
 
   try {
-    const response = await fetch(url, {
-      body: serializeBody(options.body, options.raw),
-      headers: {
-        ...(isPassthroughBody(options.body, options.raw)
-          ? {}
-          : { "Content-Type": "application/json" }),
-        ...options.headers,
-      },
-      method: options.method,
-      signal,
-    });
+    const response = await fetch(url, buildRequestInit(options, signal));
 
     if (!response.ok) {
-      const errorBody = await parseErrorBody(response);
-      const retryAfterMs = parseRetryAfterMs(
-        response.headers.get("retry-after")
-      );
-      if (errorBody?.reason) {
-        return [
-          ApiError.fromBackendPayload(errorBody, response.status, retryAfterMs),
-          null,
-        ];
-      }
-      return [
-        new ApiError({
-          httpStatus: response.status,
-          kind: "backend",
-          message:
-            errorBody?.message ?? response.statusText ?? "Request failed",
-          reason: "ERROR_UNKNOWN",
-          retryAfterMs,
-        }),
-        null,
-      ];
+      return await buildErrorResult(response);
     }
 
     const data = await parseSuccessBody<T>(response);
     return [null, data];
   } catch (error) {
-    if (error instanceof DOMException && error.name === "AbortError") {
-      return [
-        options.signal?.aborted ? ApiError.aborted() : ApiError.timeout(),
-        null,
-      ];
-    }
-    if (error instanceof ApiError) {
-      return [error, null];
-    }
-    if (error instanceof SyntaxError) {
-      return [ApiError.parseFailure(error), null];
-    }
-    return [ApiError.network(error), null];
+    return [mapCaughtError(error, options.signal), null];
   } finally {
     clearTimeout(timer);
   }

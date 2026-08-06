@@ -1,4 +1,4 @@
-export interface BuildManifest {
+interface BuildManifest {
   generatedAt: string;
   tokenCount: number;
   version: string;

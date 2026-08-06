@@ -6,19 +6,20 @@ export interface NextIntlConfig {
   requestConfig?: string;
 }
 
+const buildMessagesConfig = (messagesPath?: string) =>
+  ({
+    format: "json",
+    locales: "infer",
+    path: messagesPath ?? "./messages",
+    precompile: true,
+    sourceLocale: DEFAULT_LOCALE,
+  }) as const;
+
 export const createNextIntlConfig = (config?: NextIntlConfig) =>
   ({
     experimental: {
       extract: true,
-      messages: {
-        format: "json",
-        locales: "infer",
-        path: config?.messagesPath ?? "./messages",
-
-        // Optional
-        precompile: true,
-        sourceLocale: DEFAULT_LOCALE,
-      },
+      messages: buildMessagesConfig(config?.messagesPath),
       srcPath: config?.srcPath ?? "./src",
     },
     requestConfig: config?.requestConfig,

@@ -1,14 +1,10 @@
 "use client";
 
-import { cjk } from "@streamdown/cjk";
-import { code } from "@streamdown/code";
-import { math } from "@streamdown/math";
-import { mermaid } from "@streamdown/mermaid";
 import { BrainIcon, ChevronDownIcon } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { Streamdown } from "streamdown";
 
+import { MarkdownBlocks } from "#components/ai-elements/markdown-plugins";
 import {
   Collapsible,
   CollapsibleContent,
@@ -46,6 +42,13 @@ export type ReasoningProps = ComponentProps<typeof Collapsible> & {
 
 const AUTO_CLOSE_DELAY = 1000;
 const MS_IN_S = 1000;
+
+const shouldAutoCloseReasoning = (
+  hasEverStreamed: boolean,
+  isStreaming: boolean,
+  isOpen: boolean,
+  hasAutoClosed: boolean
+) => hasEverStreamed && !isStreaming && isOpen && !hasAutoClosed;
 
 export const Reasoning = ({
   className,
@@ -98,18 +101,22 @@ export const Reasoning = ({
   // Auto-close when streaming ends (once only, and only if it ever streamed)
   useEffect(() => {
     if (
-      hasEverStreamedRef.current &&
-      !isStreaming &&
-      isOpen &&
-      !hasAutoClosed
+      !shouldAutoCloseReasoning(
+        hasEverStreamedRef.current,
+        isStreaming,
+        isOpen,
+        hasAutoClosed
+      )
     ) {
-      const timer = setTimeout(() => {
-        setIsOpen(false);
-        setHasAutoClosed(true);
-      }, AUTO_CLOSE_DELAY);
-
-      return () => clearTimeout(timer);
+      return;
     }
+
+    const timer = setTimeout(() => {
+      setIsOpen(false);
+      setHasAutoClosed(true);
+    }, AUTO_CLOSE_DELAY);
+
+    return () => clearTimeout(timer);
   }, [isStreaming, isOpen, setIsOpen, hasAutoClosed]);
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -187,8 +194,6 @@ export type ReasoningContentProps = ComponentProps<
   children: string;
 };
 
-const streamdownPlugins = { cjk, code, math, mermaid };
-
 export const ReasoningContent = ({
   className,
   children,
@@ -196,12 +201,12 @@ export const ReasoningContent = ({
 }: ReasoningContentProps) => (
   <CollapsibleContent
     className={cn(
-      "mt-4 text-sm",
+      "markdown-renderer prose prose-sm mt-4 max-w-none text-sm",
       "data-closed:fade-out-0 data-closed:slide-out-to-top-2 data-open:slide-in-from-top-2 text-muted-foreground outline-none data-closed:animate-out data-open:animate-in",
       className
     )}
     {...props}
   >
-    <Streamdown plugins={streamdownPlugins}>{children}</Streamdown>
+    <MarkdownBlocks content={children} />
   </CollapsibleContent>
 );

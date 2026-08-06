@@ -1,6 +1,7 @@
 import path from "node:path";
 
 import { transformTokenSource } from "../codemod/transformer";
+import type { TransformResult } from "../codemod/transformer";
 import { styleText } from "../lib/utils/console-colors";
 
 const { resolve } = path;
@@ -40,59 +41,82 @@ const collectFiles = async (targetPath: string): Promise<string[]> => {
   return files.toSorted((a, b) => a.localeCompare(b));
 };
 
-export const run = async (args: string[]): Promise<void> => {
-  const { findRemoved, fix, targetPath } = parseArgs(args);
-  const files = await collectFiles(targetPath);
+interface CodemodSummary {
+  pendingWrites: { code: string; file: string }[];
+  touchedFiles: number;
+  totalTransforms: number;
+}
 
-  if (files.length === 0) {
-    console.log(styleText("yellow", `No code files found in ${targetPath}`));
-    return;
+const logFileTransforms = (file: string, result: TransformResult): number => {
+  const changeCount = result.transforms.reduce(
+    (sum, item) => sum + item.count,
+    0
+  );
+
+  console.log(
+    styleText("yellow", `  ${file} (${changeCount} class migration(s))`)
+  );
+  for (const change of result.transforms) {
+    console.log(
+      styleText("gray", `    ${change.from} -> ${change.to} (${change.count}x)`)
+    );
   }
 
+  return changeCount;
+};
+
+interface FileTransformOutcome {
+  pendingWrite: { code: string; file: string } | null;
+  transformCount: number;
+}
+
+const processFileTransform = (
+  file: string,
+  source: string | undefined,
+  fix: boolean
+): FileTransformOutcome | null => {
+  const result = transformTokenSource(source ?? "");
+  if (result.transforms.length === 0) {
+    return null;
+  }
+
+  const transformCount = logFileTransforms(file, result);
+  const pendingWrite = fix ? { code: result.code, file } : null;
+
+  return { pendingWrite, transformCount };
+};
+
+const collectTransformSummary = async (
+  files: string[],
+  fix: boolean
+): Promise<CodemodSummary> => {
+  const sources = await Promise.all(files.map((file) => Bun.file(file).text()));
+  const pendingWrites: { code: string; file: string }[] = [];
   let touchedFiles = 0;
   let totalTransforms = 0;
 
-  const sources = await Promise.all(files.map((file) => Bun.file(file).text()));
-  const pendingWrites: { code: string; file: string }[] = [];
-
   for (const [index, file] of files.entries()) {
-    const result = transformTokenSource(sources[index] ?? "");
-    if (result.transforms.length === 0) {
+    const outcome = processFileTransform(file, sources[index], fix);
+    if (!outcome) {
       continue;
     }
 
     touchedFiles += 1;
-    const changeCount = result.transforms.reduce(
-      (sum, item) => sum + item.count,
-      0
-    );
-    totalTransforms += changeCount;
-
-    console.log(
-      styleText("yellow", `  ${file} (${changeCount} class migration(s))`)
-    );
-
-    for (const change of result.transforms) {
-      console.log(
-        styleText(
-          "gray",
-          `    ${change.from} -> ${change.to} (${change.count}x)`
-        )
-      );
-    }
-
-    if (fix) {
-      pendingWrites.push({ code: result.code, file });
+    totalTransforms += outcome.transformCount;
+    if (outcome.pendingWrite) {
+      pendingWrites.push(outcome.pendingWrite);
     }
   }
 
-  if (pendingWrites.length > 0) {
-    await Promise.all(
-      pendingWrites.map(({ file, code }) => Bun.write(file, code))
-    );
-  }
+  return { pendingWrites, touchedFiles, totalTransforms };
+};
 
-  if (totalTransforms === 0) {
+const reportOutcome = (
+  summary: CodemodSummary,
+  fix: boolean,
+  findRemoved: boolean
+): void => {
+  if (summary.totalTransforms === 0) {
     console.log(styleText("green", "  ✓ No legacy class tokens found"));
     return;
   }
@@ -103,15 +127,40 @@ export const run = async (args: string[]): Promise<void> => {
       : "Run with --fix to apply codemod updates.";
 
     console.log(
-      styleText("yellow", `\n  ${touchedFiles} file(s) need migration.`)
+      styleText("yellow", `\n  ${summary.touchedFiles} file(s) need migration.`)
     );
     console.log(styleText("yellow", `  ${hint}`));
     process.exitCode = 1;
     return;
   }
 
-  console.log(styleText("green", `\n  ✓ Updated ${touchedFiles} file(s)`));
   console.log(
-    styleText("green", `  ✓ Converted ${totalTransforms} class token(s)`)
+    styleText("green", `\n  ✓ Updated ${summary.touchedFiles} file(s)`)
   );
+  console.log(
+    styleText(
+      "green",
+      `  ✓ Converted ${summary.totalTransforms} class token(s)`
+    )
+  );
+};
+
+export const run = async (args: string[]): Promise<void> => {
+  const { findRemoved, fix, targetPath } = parseArgs(args);
+  const files = await collectFiles(targetPath);
+
+  if (files.length === 0) {
+    console.log(styleText("yellow", `No code files found in ${targetPath}`));
+    return;
+  }
+
+  const summary = await collectTransformSummary(files, fix);
+
+  if (summary.pendingWrites.length > 0) {
+    await Promise.all(
+      summary.pendingWrites.map(({ file, code }) => Bun.write(file, code))
+    );
+  }
+
+  reportOutcome(summary, fix, findRemoved);
 };

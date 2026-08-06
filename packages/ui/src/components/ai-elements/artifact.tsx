@@ -4,13 +4,8 @@ import type { LucideIcon } from "lucide-react";
 import { XIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
 
+import { TooltipActionButton } from "#components/ai-elements/tooltip-action-button";
 import { Button } from "#components/shadcn/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "#components/shadcn/tooltip";
 import { cn } from "#lib/utils";
 
 export type ArtifactProps = HTMLAttributes<HTMLDivElement>;
@@ -123,20 +118,7 @@ export const ArtifactAction = ({
     </Button>
   );
 
-  if (tooltip) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger render={button} />
-          <TooltipContent>
-            <p>{tooltip}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  }
-
-  return button;
+  return <TooltipActionButton button={button} tooltip={tooltip} />;
 };
 
 export type ArtifactContentProps = HTMLAttributes<HTMLDivElement>;

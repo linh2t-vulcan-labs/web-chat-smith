@@ -1,7 +1,7 @@
+import { toDomainWildcard } from "@cs/core/domain";
 import { publicEnv } from "@cs/env/server";
 
 import { buildCspDirectives, serializeCsp } from "./csp";
-import { toDomainWildcard } from "./utils";
 
 /**
  * Builds the Content-Security-Policy header value from runtime env — used

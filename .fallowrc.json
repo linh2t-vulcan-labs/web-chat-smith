@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+  "ignorePatterns": [
+    "oxfmt.config.ts",
+    "tools/docker/vault-entrypoint.ts",
+    "apps/web/hooks/use-ensure-access-token.ts",
+    "apps/web/hooks/use-notification-permission.ts"
+  ],
+  "ignoreExports": [
+    {
+      "file": "apps/web/app/**/*.tsx",
+      "exports": ["instant"]
+    },
+    {
+      "file": "apps/web/components/providers/flags-provider.tsx",
+      "exports": ["*"]
+    },
+    {
+      "file": "apps/web/lib/flags-react.tsx",
+      "exports": ["*"]
+    },
+    {
+      "file": "packages/design-tokens/scripts/commands/*.ts",
+      "exports": ["run"]
+    }
+  ],
+  "ignoreDependencies": [
+    "shiki",
+    "@cs/firebase",
+    "react",
+    "react-dom",
+    "postcss-load-config"
+  ],
+  "ignoreDependencyOverrides": [
+    {
+      "package": "@swc/helpers",
+      "source": "package.json"
+    }
+  ],
+  "health": {
+    "maxCrap": 45
+  },
+  "duplicates": {
+    "ignore": [
+      "packages/design-tokens/generated-token/**",
+      "packages/icons/src/**"
+    ]
+  }
+}
