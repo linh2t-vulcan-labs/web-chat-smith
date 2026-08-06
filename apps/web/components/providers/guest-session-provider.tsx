@@ -129,7 +129,7 @@ export const GuestSessionProvider = ({
   const [isMounted, setIsMounted] = useState(false);
   // oxlint-disable-next-line react-doctor/rendering-hydration-no-flicker -- deliberate two-pass "mounted" flag, not a bug: `document.body` (the portal target below) doesn't exist during SSR, and checking `typeof document` directly in render would mismatch between the SSR pass and the first client render — this pattern intentionally trades one post-mount render for a valid SSR pass
   useEffect(() => {
-    // oxlint-disable-next-line react/react-compiler -- deliberate SSR-safe "mounted" flag, see comment above
+    // oxlint-disable-next-line react/react-compiler react-doctor/no-initialize-state -- deliberate SSR-safe "mounted" flag, see comment above: `document`/`document.body` doesn't exist server-side, so `createPortal` below would throw during SSR without this two-pass gate — can't be lazy-initialized because the client's first (hydration) render must still match the server's `null` output
     setIsMounted(true);
   }, []);
   // oxlint-disable-next-line unicorn/no-useless-undefined -- this repo's @types/react has no zero-arg useRef overload, so an explicit initial value is required

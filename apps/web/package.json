@@ -41,7 +41,6 @@
   },
   "devDependencies": {
     "@cs/ts-config": "workspace:*",
-    "@tailwindcss/postcss": "catalog:ui",
     "@testing-library/jest-dom": "catalog:tools",
     "@testing-library/react": "catalog:tools",
     "@types/bun": "catalog:tools",

@@ -23,8 +23,7 @@
   "devDependencies": {
     "@cs/ts-config": "workspace:*",
     "@types/bun": "catalog:tools",
-    "@types/node": "catalog:tools",
-    "next": "catalog:framework"
+    "@types/node": "catalog:tools"
   },
   "peerDependencies": {
     "next": "catalog:framework"

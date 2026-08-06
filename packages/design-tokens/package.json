@@ -18,7 +18,6 @@
   "devDependencies": {
     "@cs/ts-config": "workspace:*",
     "@types/bun": "catalog:tools",
-    "tailwindcss": "catalog:ui",
     "typescript": "catalog:tools"
   }
 }

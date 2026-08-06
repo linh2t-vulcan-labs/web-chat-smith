@@ -43,7 +43,7 @@ export interface ResolverResult {
   errors: ResolverError[];
 }
 
-export interface ResolverError {
+interface ResolverError {
   type:
     | "missing_file"
     | "parse_error"

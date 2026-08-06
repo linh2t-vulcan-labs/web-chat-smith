@@ -152,7 +152,7 @@ export const ThemeProvider = ({
   // server-rendered markup, only flipping once hydration is confirmed done.
   // oxlint-disable-next-line react-doctor/rendering-hydration-no-flicker -- the flash this rule warns about is exactly what `mounted` is for: consumers render their non-mounted fallback until this fires, by design
   useEffect(() => {
-    // oxlint-disable-next-line react/react-compiler -- setState in an effect body is intentional here, not a subscription callback: this is the one-time "confirm hydration is done" signal, not synchronizing with an external system
+    // oxlint-disable-next-line react/react-compiler react-doctor/no-initialize-state -- setState in an effect body is intentional here, not a subscription callback: this is the one-time "confirm hydration is done" signal, not synchronizing with an external system. Can't be lazy-initialized: `mounted` must start `false` on both server and client so the client's first (hydration) render matches the server-rendered markup, only flipping once hydration is confirmed done
     setMounted(true);
   }, []);
 

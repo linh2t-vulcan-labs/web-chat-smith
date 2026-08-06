@@ -24,11 +24,8 @@
     "@cs/ts-config": "workspace:*",
     "@types/bun": "catalog:tools",
     "@types/react": "catalog:framework",
-    "@types/react-dom": "catalog:framework",
     "firebase": "catalog:integrations",
-    "react": "catalog:framework",
-    "react-dom": "catalog:framework",
-    "vitest": "catalog:tools"
+    "react": "catalog:framework"
   },
   "peerDependencies": {
     "firebase": "catalog:integrations",

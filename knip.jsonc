@@ -1,0 +1,49 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
+  // Knip's catalog scanner resolves overrides from pnpm's nested `pnpm.overrides`, not the
+  // plain top-level `overrides` field this bun workspace uses — so its one real reference
+  // (pinning @swc/helpers for a next/next-intl conflict) never registers as a usage.
+  //
+  // shiki: referenced only as a string in apps/web/next.config.ts's `serverExternalPackages`
+  // (so Turbopack doesn't bundle it), not via import — a real, intentional use knip can't see.
+  // @cs/firebase: unused in packages/notifications today; tracked as a known gap in
+  // .fallowrc.json rather than removed, so mirroring that decision here instead of deleting it.
+  // react/react-dom/@types/react(-dom): this repo's convention for every package that
+  // peer-depends on react/react-dom/firebase is to duplicate the same entry into
+  // devDependencies too, so `tsc`/`vitest` work when run standalone inside that package's own
+  // directory — see packages/flags, packages/notifications, packages/icons, packages/env.
+  // Knip only credits one manifest field per package, so the devDependencies copy reports as
+  // unused; also already tolerated in .fallowrc.json.
+  "ignoreDependencies": [
+    "shiki",
+    "@cs/firebase",
+    "react",
+    "react-dom",
+    "@types/react",
+    "@types/react-dom",
+  ],
+  "ignoreFiles": [
+    // Prepared entry points for features not wired up yet (see their doc comments) —
+    // already tracked as intentional in .fallowrc.json, not dead code.
+    "apps/web/hooks/use-ensure-access-token.ts",
+    "apps/web/hooks/use-notification-permission.ts",
+  ],
+  "ignoreIssues": {
+    "package.json": ["catalog"],
+    // FlagsProvider/Feature/useFlag are a prepared API surface (see file's doc comment);
+    // useFlag has no caller yet. Already tracked as intentional in .fallowrc.json.
+    "apps/web/lib/flags-react.tsx": ["exports"],
+  },
+  "workspaces": {
+    ".": {
+      // Invoked directly by `tools/docker/docker-compose.yml`'s `entrypoint:`, not from any
+      // package.json script — knip's script parser can't see that reference.
+      "entry": ["tools/docker/vault-entrypoint.ts"],
+    },
+    "packages/ts-config": {
+      // nextjs.json's `compilerOptions.plugins: [{ name: "next" }]` is a tsconfig plugin
+      // reference, not an import — knip's tsconfig parser treats it as an unresolved import.
+      "ignoreUnresolved": ["next"],
+    },
+  },
+}

@@ -7,7 +7,7 @@ This project uses **Ultracite**, a zero-config preset that enforces strict code 
 - **Format code**: `bun x ultracite fix`
 - **Check for issues**: `bun x ultracite check`
 - **Diagnose setup**: `bun x ultracite doctor`
-- **Find unused files/exports/dependencies**: `npx knip --workspace <path>` (config-free on this bun workspace) — run scoped to whatever package(s) you just touched whenever a change removes the last caller of something (a mechanism, a helper, a prop, a whole file), and delete what it flags that traces back to your change. See `.claude/skills/implement/SKILL.md` / `refactor/SKILL.md` / `code-review/SKILL.md`.
+- **Find unused files/exports/dependencies**: `bun run knip` (repo-wide) or `bunx knip --workspace <path>` (scoped) — config lives in `knip.jsonc` at the repo root. Run scoped to whatever package(s) you just touched whenever a change removes the last caller of something (a mechanism, a helper, a prop, a whole file), and delete what it flags that traces back to your change. See `.claude/skills/implement/SKILL.md` / `refactor/SKILL.md` / `code-review/SKILL.md`.
 
 Oxlint + Oxfmt (the underlying engine) provides robust linting and formatting. Most issues are automatically fixable.
 

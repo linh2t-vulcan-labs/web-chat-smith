@@ -1,6 +1,6 @@
 import { migrateLegacyClassToken } from "./mappings";
 
-export interface TransformDetail {
+interface TransformDetail {
   count: number;
   from: string;
   to: string;
