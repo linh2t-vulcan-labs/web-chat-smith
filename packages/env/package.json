@@ -30,6 +30,7 @@
     "react": "catalog:framework"
   },
   "peerDependencies": {
+    "next": "catalog:framework",
     "react": "catalog:framework"
   }
 }

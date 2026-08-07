@@ -11,7 +11,6 @@ export const MERMAID_COMPONENT_TAG = "tanstack-mermaid-diagram";
 export const CODE_BLOCK_COMPONENT_TAG = "tanstack-code-block";
 export const MATH_BLOCK_COMPONENT_TAG = "tanstack-math-block";
 export const MATH_INLINE_HREF_PREFIX = "tanstack-math-inline:";
-export const REVEAL_HREF_PREFIX = "tanstack-reveal:";
 
 /** Recurses `transform` into every container that can hold block children. */
 const mapBlocksDeep = (
@@ -244,53 +243,4 @@ export const mathExtension = (): MarkdownExtension => ({
   name: "math",
   parseBlock: parseMathBlock,
   transformInline: transformInlineMath,
-});
-
-const wordOrSpacePattern = /\S+|\s+/gu;
-const isWhitespaceOnly = /^\s+$/u;
-
-/**
- * Wraps every word in a fade-in span, keyed by its position within its own
- * paragraph/heading/etc. (each `transformInline` call — one per inline run —
- * restarts the count at 0 from a local variable, not a closure the extension
- * carries between calls). That statelessness matters: React Compiler may
- * memoize and reuse this exact extension *object* across multiple parses
- * (e.g. Strict Mode's double-render), so anything it does must be safe to
- * run more than once for the same input — a shared mutable counter across
- * calls would keep incrementing across those reuses instead of resetting.
- *
- * A word's index — and therefore its computed animation delay — stays
- * stable across re-parses as a message streams in, since earlier text only
- * ever grows a tail rather than shifting; @tanstack/markdown's react
- * renderer keys inline children positionally, so React reuses the same DOM
- * node for an unchanged word instead of remounting it, which is what keeps
- * its animation from replaying on every subsequent token. Mirrors
- * Streamdown's per-word streaming reveal without needing to track a
- * "revealed so far" watermark across renders.
- */
-export const createRevealExtension = (): MarkdownExtension => ({
-  name: "reveal",
-  transformInline(nodes) {
-    let wordIndex = 0;
-
-    return nodes.flatMap((node): InlineNode | InlineNode[] => {
-      if (node.type !== "text") {
-        return node;
-      }
-
-      const parts = node.value.match(wordOrSpacePattern) ?? [node.value];
-      return parts.map((part): InlineNode => {
-        if (isWhitespaceOnly.test(part)) {
-          return { type: "text", value: part };
-        }
-        const index = wordIndex;
-        wordIndex += 1;
-        return {
-          children: [{ type: "text", value: part }],
-          href: `${REVEAL_HREF_PREFIX}${index}`,
-          type: "link",
-        };
-      });
-    });
-  },
 });

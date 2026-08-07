@@ -1,10 +1,66 @@
 import type { ToolUIPart } from "ai";
 import { nanoid } from "nanoid";
 
+interface MessageAttachment {
+  id: string;
+  filename: string;
+  mediaType: string;
+  url: string;
+}
+
+interface MessageChainOfThoughtStep {
+  label: string;
+  description?: string;
+  status: "complete" | "active" | "pending";
+}
+
+interface MessageTask {
+  title: string;
+  items: string[];
+}
+
+interface MessagePlan {
+  title: string;
+  description: string;
+  steps: string[];
+}
+
+interface MessageQueueItem {
+  id: string;
+  title: string;
+  description?: string;
+  status?: "pending" | "completed";
+}
+
+interface MessageQueue {
+  label: string;
+  items: MessageQueueItem[];
+}
+
+interface MessageConfirmation {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface MessageArtifact {
+  title: string;
+  description: string;
+  filename: string;
+  language: string;
+  content: string;
+}
+
+interface MessageCitation {
+  text: string;
+  sources: { title: string; url: string; description?: string }[];
+}
+
 export interface MessageType {
   key: string;
   from: "user" | "assistant";
   sources?: { href: string; title: string }[];
+  attachments?: MessageAttachment[];
   versions: {
     id: string;
     content: string;
@@ -13,6 +69,7 @@ export interface MessageType {
     content: string;
     duration: number;
   };
+  chainOfThought?: MessageChainOfThoughtStep[];
   tools?: {
     name: string;
     description: string;
@@ -21,6 +78,13 @@ export interface MessageType {
     result: string | undefined;
     error: string | undefined;
   }[];
+  task?: MessageTask;
+  plan?: MessagePlan;
+  queue?: MessageQueue;
+  citation?: MessageCitation;
+  confirmation?: MessageConfirmation;
+  checkpoint?: string;
+  artifact?: MessageArtifact;
 }
 
 export const initialMessages: MessageType[] = [
@@ -304,6 +368,258 @@ def fibonacci(n: int) -> int:
 \`\`\`
 
 Let me know if you'd like to see anything else!`,
+        id: nanoid(),
+      },
+    ],
+  },
+  {
+    from: "user",
+    key: nanoid(),
+    versions: [
+      {
+        content:
+          "Can you show me some code block examples in less common languages too, to make sure syntax highlighting works well for those?",
+        id: nanoid(),
+      },
+    ],
+  },
+  {
+    from: "assistant",
+    key: nanoid(),
+    versions: [
+      {
+        content: `# Less Common Languages
+
+Here's a spread of syntax highlighting across languages you don't see every day.
+
+## Rust
+
+\`\`\`rust
+fn fibonacci(n: u32) -> u64 {
+    let (mut a, mut b) = (0u64, 1u64);
+    for _ in 0..n {
+        let next = a + b;
+        a = b;
+        b = next;
+    }
+    a
+}
+\`\`\`
+
+## Zig
+
+\`\`\`zig
+const std = @import("std");
+
+pub fn fibonacci(n: u32) u64 {
+    var a: u64 = 0;
+    var b: u64 = 1;
+    var i: u32 = 0;
+    while (i < n) : (i += 1) {
+        const next = a + b;
+        a = b;
+        b = next;
+    }
+    return a;
+}
+\`\`\`
+
+## Elixir
+
+\`\`\`elixir
+defmodule Fibonacci do
+  def of(n), do: do_fib(n, 0, 1)
+
+  defp do_fib(0, a, _b), do: a
+  defp do_fib(n, a, b), do: do_fib(n - 1, b, a + b)
+end
+\`\`\`
+
+## Haskell
+
+\`\`\`haskell
+fibonacci :: Int -> Integer
+fibonacci n = go n 0 1
+  where
+    go 0 a _ = a
+    go k a b = go (k - 1) b (a + b)
+\`\`\`
+
+## SQL
+
+\`\`\`sql
+SELECT id, name, created_at
+FROM users
+WHERE created_at >= NOW() - INTERVAL '7 days'
+ORDER BY created_at DESC
+LIMIT 10;
+\`\`\`
+
+## Dockerfile
+
+\`\`\`dockerfile
+FROM node:24-alpine
+WORKDIR /app
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+COPY . .
+CMD ["bun", "run", "start"]
+\`\`\`
+
+## Diff
+
+\`\`\`diff
+- const value = compute(a, b);
++ const value = useMemo(() => compute(a, b), [a, b]);
+\`\`\`
+
+## An unrecognized language tag
+
+If the language tag isn't one we support, the code still renders — just without syntax colors:
+
+\`\`\`some-made-up-lang
+this block uses a language id that doesn't exist,
+so it should gracefully fall back to plain text.
+\`\`\`
+
+Let me know if you'd like another language added!`,
+        id: nanoid(),
+      },
+    ],
+  },
+  {
+    attachments: [
+      {
+        filename: "production-error.svg",
+        id: nanoid(),
+        mediaType: "image/svg+xml",
+        url: "/mock-diagram-placeholder.svg",
+      },
+    ],
+    from: "user",
+    key: nanoid(),
+    versions: [
+      {
+        content:
+          "We're seeing this error in production (screenshot attached). Can you find where it's thrown in our codebase and propose a fix plan before touching anything?",
+        id: nanoid(),
+      },
+    ],
+  },
+  {
+    chainOfThought: [
+      {
+        label: "Parsed the report",
+        status: "complete",
+      },
+      {
+        description: "Found 3 matches across the rate-limiting middleware",
+        label: "Searched the codebase for the thrown error",
+        status: "complete",
+      },
+      {
+        description: "The Redis client isn't awaited before first use",
+        label: "Identified the root cause",
+        status: "complete",
+      },
+    ],
+    checkpoint: "Checkpoint saved before applying any changes",
+    citation: {
+      sources: [
+        {
+          description:
+            "The rate limiter must be initialized before the first request it guards.",
+          title: "Rate Limiting Middleware — Internal Docs",
+          url: "https://docs.internal.chatsmith.io/middleware/rate-limiting",
+        },
+      ],
+      text: "the Redis-backed rate limiter must finish connecting before it can accept its first request",
+    },
+    confirmation: {
+      description:
+        "This rewrites the middleware initialization order in 3 files. No other changes will be made.",
+      id: nanoid(),
+      title: "Apply the fix to 3 files?",
+    },
+    from: "assistant",
+    key: nanoid(),
+    plan: {
+      description: "3 steps",
+      steps: [
+        "Await the Redis client connection before the middleware chain starts",
+        "Add a startup health check that fails fast if Redis is unreachable",
+        "Add a regression test that boots the app without a warm Redis connection",
+      ],
+      title: "Fix plan: rate limiter startup race",
+    },
+    queue: {
+      items: [
+        {
+          id: nanoid(),
+          status: "completed",
+          title: "Reproduce the crash locally",
+        },
+        {
+          description: "Blocked on your approval below",
+          id: nanoid(),
+          status: "pending",
+          title: "Apply the middleware fix",
+        },
+        {
+          id: nanoid(),
+          status: "pending",
+          title: "Open a PR with the regression test",
+        },
+      ],
+      label: "remaining tasks",
+    },
+    task: {
+      items: [
+        "middleware/rate-limit.ts:42",
+        "middleware/rate-limit.test.ts:18",
+        "lib/redis-client.ts:9",
+      ],
+      title: "Searched codebase for RateLimitError",
+    },
+    tools: [
+      {
+        description: "Searching the codebase",
+        error: undefined,
+        name: "grep_codebase",
+        parameters: {
+          path: "apps/api",
+          query: "RateLimitError",
+        },
+        result: `{
+  "matches": [
+    { "file": "middleware/rate-limit.ts", "line": 42 },
+    { "file": "middleware/rate-limit.test.ts", "line": 18 },
+    { "file": "lib/redis-client.ts", "line": 9 }
+  ]
+}`,
+        status: "output-available",
+      },
+    ],
+    artifact: {
+      content: `import { createRedisClient } from "./redis-client";
+
+const redis = createRedisClient();
+
+// Await the connection before exporting the middleware so the first
+// request can never race an unfinished Redis handshake.
+await redis.connect();
+
+export const rateLimitMiddleware = createMiddleware(redis);`,
+      description:
+        "Awaits the Redis connection before the middleware chain starts",
+      filename: "middleware/rate-limit.ts",
+      language: "typescript",
+      title: "rate-limit.ts (proposed fix)",
+    },
+    versions: [
+      {
+        content:
+          "I found it — the rate limiter's Redis client isn't awaited before the middleware starts accepting requests, so the very first request after a cold start can crash. Here's what I found and a plan before I change anything.",
         id: nanoid(),
       },
     ],

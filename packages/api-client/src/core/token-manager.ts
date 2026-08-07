@@ -98,6 +98,7 @@ export class TokenManager {
   private session: Session | null = null;
   private pending = false;
   private restorePromise: Promise<void> | null = null;
+  private restored = false;
   private readonly identity: IdentityMode;
   private readonly refreshEndpoint: string;
   private readonly restoreEndpoint: string;
@@ -141,6 +142,18 @@ export class TokenManager {
 
   getPending(): boolean {
     return this.pending;
+  }
+
+  /**
+   * True once this tab's cold-load `restoreSessionOnce()` has settled at
+   * least once (success or not — see that method's doc comment). Lets a
+   * consumer that remounts mid-tab-lifetime (e.g. `ApiAuthProvider` under
+   * `app/[locale]/layout.tsx` on a locale switch) seed its own
+   * `isInitializing` as already-settled instead of re-showing a loading
+   * skeleton for an answer this singleton already has.
+   */
+  hasRestored(): boolean {
+    return this.restored;
   }
 
   /**
@@ -238,6 +251,7 @@ export class TokenManager {
       // `ApiAuthProvider`'s doc comment) — hence `Promise<void>`.
       this.restorePromise = (async () => {
         await this.refresh({ cacheFirst: true });
+        this.restored = true;
       })();
     }
     await this.restorePromise;

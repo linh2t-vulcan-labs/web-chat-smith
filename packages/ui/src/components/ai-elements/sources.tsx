@@ -46,16 +46,19 @@ export type SourcesContentProps = ComponentProps<typeof CollapsibleContent>;
 
 export const SourcesContent = ({
   className,
+  children,
   ...props
 }: SourcesContentProps) => (
-  <CollapsibleContent
-    className={cn(
-      "mt-3 flex w-fit flex-col gap-2",
-      "data-closed:fade-out-0 data-closed:slide-out-to-top-2 data-open:slide-in-from-top-2 outline-none data-closed:animate-out data-open:animate-in",
-      className
-    )}
-    {...props}
-  />
+  <CollapsibleContent className={cn("mt-3 outline-none", className)} {...props}>
+    {/* `w-fit` (shrink-to-fit) lives on this inner wrapper, not the panel
+        Base UI is animating `height` on — sizing that box by its content's
+        intrinsic width is a materially more expensive layout computation
+        than the plain full-width block `ToolContent`/`ReasoningContent`
+        use, and re-deriving it every frame of the height transition is what
+        made this specific panel visibly janky while the other two stayed
+        smooth. */}
+    <div className="flex w-fit flex-col gap-2">{children}</div>
+  </CollapsibleContent>
 );
 
 export type SourceProps = ComponentProps<"a">;

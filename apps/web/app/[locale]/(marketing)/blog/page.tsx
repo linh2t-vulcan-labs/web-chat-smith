@@ -7,7 +7,7 @@ export const metadata = {
 /**
  * Placeholder page — proves the `(marketing)` route group (no
  * `GuestSessionProvider`, shared `<Header>` from
- * `app/(marketing)/[locale]/layout.tsx`) works on a real route, not a full
+ * `app/[locale]/(marketing)/layout.tsx`) works on a real route, not a full
  * feature build.
  */
 const BlogPage = () => (

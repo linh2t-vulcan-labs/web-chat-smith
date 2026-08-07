@@ -118,14 +118,36 @@ export const GuestSessionProvider = ({
   initialState?: GuestSessionInitialState;
 }) => {
   const { isAuthenticated, isInitializing: isAuthInitializing } = useApiAuth();
-  const [state, setState] = useState<GuestSessionState>(INITIAL_STATE);
-  // This provider now mounts in `app/(workspace)/layout.tsx`, ABOVE the
-  // `[locale]` segment that renders `<body>` — so the Turnstile widget's own
-  // `<div>` output can no longer render inline here (it would land between
-  // `<html>` and `<body>`, which is invalid HTML). Portal it into
-  // `document.body` instead, once mounted client-side; `document` doesn't
-  // exist during SSR, so this renders nothing server-side, which is correct
-  // (the widget only ever runs client-side anyway).
+  const [state, setState] = useState<GuestSessionState>(() => {
+    // `locale` is a root param, so this provider mounts inside
+    // `app/[locale]/(workspace)/layout.tsx` and fully remounts on a locale
+    // switch (see that file's comment). `getGuestTokenManager()` is a
+    // module-level singleton unaffected by the remount — seed from its
+    // already-live token instead of always cold-starting, so a locale
+    // switch doesn't visibly re-show "provisioning session…" for a guest
+    // who already has one. Guarded to client-only: this initializer also
+    // runs during SSR (a "use client" component still renders server-side),
+    // and `getGuestTokenManager()` throws outside the browser.
+    const existingToken =
+      typeof window === "undefined"
+        ? null
+        : getGuestTokenManager().getAccessToken();
+    return existingToken
+      ? {
+          ...INITIAL_STATE,
+          guestAccessToken: existingToken,
+          isGuest: true,
+          isInitializing: false,
+        }
+      : INITIAL_STATE;
+  });
+  // The Turnstile widget's own `<div>` output can't render inline here — this
+  // provider mounts above `<body>`'s content but under the same `<body>`
+  // element (fine either way) — kept as a portal regardless so it always
+  // attaches directly to `document.body`. Portal happens once mounted
+  // client-side; `document` doesn't exist during SSR, so this renders
+  // nothing server-side, which is correct (the widget only ever runs
+  // client-side anyway).
   const [isMounted, setIsMounted] = useState(false);
   // oxlint-disable-next-line react-doctor/rendering-hydration-no-flicker -- deliberate two-pass "mounted" flag, not a bug: `document.body` (the portal target below) doesn't exist during SSR, and checking `typeof document` directly in render would mismatch between the SSR pass and the first client render — this pattern intentionally trades one post-mount render for a valid SSR pass
   useEffect(() => {

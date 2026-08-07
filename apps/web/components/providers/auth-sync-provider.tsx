@@ -26,15 +26,16 @@ import type { ReactNode } from "react";
  * overrides `push`/`replace`/`prefetch` for locale-aware paths), so wrapping
  * it would add nothing. It does, however, internally call `useLocale()`,
  * which requires `NextIntlClientProvider` context — using the plain router
- * keeps this provider free of that dependency, which is what lets it (and
- * `ApiAuthProvider`) mount in the LOCALE-INDEPENDENT root `app/layout.tsx`
- * instead of inside `[locale]/layout.tsx`. That distinction matters because
- * anything inside `[locale]/layout.tsx` fully remounts on the client on
- * every locale switch (see that file's own comment on why `ThemeProvider`
- * lives in the root layout for the same reason) — mounting the auth session
- * provider there was resetting `isInitializing` to `true` (briefly
- * re-showing a loading skeleton) on every language change, even though the
- * underlying `TokenManager` singleton never actually re-fetched anything.
+ * keeps this provider free of that dependency.
+ *
+ * `locale` is a root param (see `app/[locale]/layout.tsx`), so this
+ * provider — mounted via `components/layout/root-providers.tsx` — fully
+ * remounts on the client on every locale switch (there's no layer left
+ * above `[locale]` to hide it behind). `ApiAuthProvider` seeds its own
+ * `isInitializing` from `TokenManager.hasRestored()` on mount (see that
+ * provider's doc comment), so this remount does NOT re-show a loading
+ * skeleton once the tab has already restored once — the underlying
+ * `TokenManager` singleton never re-fetches anything either way.
  */
 export const AuthSyncProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();

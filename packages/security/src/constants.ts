@@ -27,4 +27,5 @@ export const CSP_IMAGE_HOSTS = [
   "*.vulcanlabs.co",
   "lh3.googleusercontent.com",
   "cdn.sanity.io",
+  "models.dev",
 ] as const;

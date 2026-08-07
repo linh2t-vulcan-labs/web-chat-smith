@@ -1,16 +1,12 @@
 import { Button } from "@cs/ui/components/shadcn/button";
 import { Skeleton } from "@cs/ui/components/shadcn/skeleton";
-import { getExtracted, setRequestLocale } from "next-intl/server";
+import { getExtracted } from "next-intl/server";
 
-interface Props {
-  params: Promise<{ locale: string }>;
-}
-
-export const ProjectWelcome = async ({ params }: Props) => {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
-  // ✅ Asynchronous extraction in a Server Component.
+export const ProjectWelcome = async () => {
+  // ✅ Asynchronous extraction in a Server Component. Locale comes from the
+  // request config (`@cs/i18n/request`, backed by `next/root-params`), not
+  // a `params` prop — `locale` is a root param now, so it isn't part of this
+  // page's own `params`.
   const t = await getExtracted();
   return (
     <>

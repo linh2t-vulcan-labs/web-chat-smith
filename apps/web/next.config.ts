@@ -20,5 +20,10 @@ export default withNextIntl(
     // can't trace those for the server bundle, so it must stay external
     // rather than bundled for SSR.
     serverExternalPackages: ["sharp", "shiki"],
+    // `locale` is a root param (`app/[locale]/layout.tsx` is the only root
+    // layout), so there's no single layout.tsx + not-found.tsx pair that can
+    // compose a 404 for both an invalid locale segment and a genuinely
+    // unmatched route — see `app/global-not-found.tsx`.
+    experimental: { globalNotFound: true },
   })
 );

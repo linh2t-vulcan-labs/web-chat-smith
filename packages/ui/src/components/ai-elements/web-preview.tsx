@@ -240,12 +240,7 @@ export const WebPreviewConsole = ({
           )}
         />
       </CollapsibleTrigger>
-      <CollapsibleContent
-        className={cn(
-          "px-4 pb-4",
-          "data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 outline-none data-closed:animate-out data-open:animate-in"
-        )}
-      >
+      <CollapsibleContent className={cn("px-4 pb-4", "outline-none")}>
         <div className="max-h-48 space-y-1 overflow-y-auto">
           {logs.length === 0 ? (
             <p className="text-muted-foreground">No console output</p>

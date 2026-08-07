@@ -8,7 +8,7 @@ import type { flagSchema } from "@/lib/flags";
  * Split out of `lib/flags.ts` because `createFlagsReact()` calls
  * `createContext` at module scope — that's only valid in a module Next.js
  * knows is client-only. `lib/flags.ts` itself has to stay import-safe from
- * Server Components (e.g. `(workspace)/[locale]/layout.tsx` reads
+ * Server Components (e.g. `[locale]/(workspace)/layout.tsx` reads
  * `flagSchema`/needs `Feature`), so the "use client" boundary — and the
  * `createFlagsReact()` call it gates — lives here instead. Importing
  * `Feature`/`FlagsProvider` from *this* file into a Server Component is fine

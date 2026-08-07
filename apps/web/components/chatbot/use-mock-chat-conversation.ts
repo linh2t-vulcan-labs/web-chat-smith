@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import type { MessageType } from "./mock-conversation-data";
 import {
@@ -21,7 +21,10 @@ type ChatStatus = "submitted" | "streaming" | "ready" | "error";
 export const useMockChatConversation = () => {
   const [status, setStatus] = useState<ChatStatus>("ready");
   const [messages, setMessages] = useState<MessageType[]>(initialMessages);
-  const [, setStreamingMessageId] = useState<string | null>(null);
+  const stopRequestedRef = useRef(false);
+  const pendingReplyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
 
   const updateMessageContent = (messageId: string, newContent: string) => {
     setMessages((prev) =>
@@ -41,22 +44,28 @@ export const useMockChatConversation = () => {
 
   const streamResponse = async (messageId: string, content: string) => {
     setStatus("streaming");
-    setStreamingMessageId(messageId);
 
     const words = content.split(" ");
     let currentContent = "";
 
-    await Promise.all(
-      words.map((word, i) =>
-        delay(Math.random() * 100 + 50).then(() => {
-          currentContent += (i > 0 ? " " : "") + word;
-          updateMessageContent(messageId, currentContent);
-        })
-      )
-    );
+    // Sequential, not `Promise.all` — each word's delay is independently
+    // randomized, so racing them let later words resolve (and append)
+    // before earlier ones, scrambling the reveal order.
+    for (const [i, word] of words.entries()) {
+      if (stopRequestedRef.current) {
+        break;
+      }
+      // eslint-disable-next-line no-await-in-loop -- each word must reveal after the previous one, not concurrently
+      await delay(Math.random() * 100 + 50);
+      if (stopRequestedRef.current) {
+        break;
+      }
+      currentContent += (i > 0 ? " " : "") + word;
+      updateMessageContent(messageId, currentContent);
+    }
 
+    stopRequestedRef.current = false;
     setStatus("ready");
-    setStreamingMessageId(null);
   };
 
   const addUserMessage = (content: string) => {
@@ -73,7 +82,15 @@ export const useMockChatConversation = () => {
 
     setMessages((prev) => [...prev, userMessage]);
 
-    setTimeout(() => {
+    pendingReplyTimeoutRef.current = setTimeout(() => {
+      pendingReplyTimeoutRef.current = null;
+
+      if (stopRequestedRef.current) {
+        stopRequestedRef.current = false;
+        setStatus("ready");
+        return;
+      }
+
       const assistantMessageId = `assistant-${Date.now()}`;
       const randomResponse =
         mockResponses[Math.floor(Math.random() * mockResponses.length)];
@@ -96,9 +113,21 @@ export const useMockChatConversation = () => {
 
   /** Marks the conversation as "submitted" and appends the user's message. */
   const sendMessage = (content: string) => {
+    stopRequestedRef.current = false;
     setStatus("submitted");
     addUserMessage(content);
   };
 
-  return { messages, sendMessage, status };
+  /** Cancels the pending or in-flight assistant reply and returns to "ready" immediately. */
+  const stopMessage = () => {
+    if (pendingReplyTimeoutRef.current) {
+      clearTimeout(pendingReplyTimeoutRef.current);
+      pendingReplyTimeoutRef.current = null;
+      setStatus("ready");
+      return;
+    }
+    stopRequestedRef.current = true;
+  };
+
+  return { messages, sendMessage, status, stopMessage };
 };

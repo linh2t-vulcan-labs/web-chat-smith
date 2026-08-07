@@ -2,12 +2,12 @@ import { Link } from "@cs/i18n/navigation";
 import { getExtracted } from "next-intl/server";
 
 /**
- * Shared body for every `(marketing|workspace)/[locale]/not-found.tsx` — used
- * when a page calls `notFound()` *after* `LocaleLayoutShell` has already
- * rendered (`<body>`/`NextIntlClientProvider` both exist), unlike the root
- * `app/not-found.tsx` which has to handle the invalid-locale case where they
- * don't. Safe to localize here since the request locale is already set by
- * the ancestor layout.
+ * Shared body for every `[locale]/(marketing|workspace)/not-found.tsx` — used
+ * when a page calls `notFound()` *after* the root layout has already
+ * rendered (`<body>`/`NextIntlClientProvider` both exist), unlike
+ * `app/global-not-found.tsx` which has to handle the invalid-locale case
+ * where they don't. Safe to localize here since the request locale is
+ * already resolved by `@cs/i18n/request`.
  */
 export const NotFoundFallback = async () => {
   const t = await getExtracted();

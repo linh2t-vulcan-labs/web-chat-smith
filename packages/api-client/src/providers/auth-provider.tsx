@@ -48,9 +48,16 @@ const INITIAL_STATE: AuthState = {
  * to the component tree — mount once near the app root, above anything
  * that calls an `auth: "required"` endpoint (see §4/§7).
  *
- * `getTokenManager()` is only ever called from inside the effect (never
- * during render) — it throws outside the browser, and this "use client"
- * component still renders once on the server for the initial HTML.
+ * `getTokenManager()` is called from the `useState` initializer, guarded by
+ * `typeof window` — it throws outside the browser, and this "use client"
+ * component still renders once on the server for the initial HTML. Mirrors
+ * `GuestSessionProvider`'s seed-from-singleton pattern (apps/web): the
+ * `TokenManager` singleton outlives any one `ApiAuthProvider` instance, so a
+ * remount mid-tab-lifetime (e.g. `[locale]/layout.tsx` remounting on a
+ * locale switch) can seed `isInitializing` from `tokenManager.hasRestored()`
+ * instead of unconditionally re-showing a loading skeleton for an answer the
+ * singleton already has — that used to be a known, accepted flash; this
+ * closes it.
  */
 export const ApiAuthProvider = ({
   children,
@@ -58,7 +65,18 @@ export const ApiAuthProvider = ({
   onAccessTokenChange,
   onPendingChange,
 }: ApiAuthProviderProps) => {
-  const [state, setState] = useState<AuthState>(INITIAL_STATE);
+  const [state, setState] = useState<AuthState>(() => {
+    if (typeof window === "undefined") {
+      return INITIAL_STATE;
+    }
+    const tokenManager = getTokenManager(options);
+    return {
+      accessToken: tokenManager.getAccessToken(),
+      isInitializing: !tokenManager.hasRestored(),
+      isPending: tokenManager.getPending(),
+      tokenManager,
+    };
+  });
 
   // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- false positive: this rule only recognizes the Node EventEmitter addListener/removeListener(event, handler) shape, not TokenManager.addListener()'s React-idiomatic "returns its own disposer" contract — cleanup IS registered via the `return () => unsubscribe()` below.
   useEffect(() => {
@@ -72,16 +90,6 @@ export const ApiAuthProvider = ({
         setState((previous) => ({ ...previous, isPending }));
         onPendingChange?.(isPending);
       },
-    });
-    // Initializing local state from a freshly-constructed external
-    // singleton on mount — the sanctioned "subscribe to an external system"
-    // effect shape, just without an extra render cycle in between.
-    // oxlint-disable-next-line react/react-compiler -- initial sync from the TokenManager singleton, not a derivable render value
-    setState({
-      accessToken: tokenManager.getAccessToken(),
-      isInitializing: true,
-      isPending: tokenManager.getPending(),
-      tokenManager,
     });
 
     // On a cold load, the TokenManager instance above is fresh (in-memory
@@ -100,6 +108,10 @@ export const ApiAuthProvider = ({
     // near-instantly with zero backend rotations. A settled error (e.g. no
     // cookie) is just as legitimate an outcome as success, not a failure to
     // surface — success is reported separately via `onAccessTokenChange`.
+    // Already-settled restores resolve `restoreSessionOnce()` immediately
+    // (it awaits the same cached `restorePromise`), so this is a no-op
+    // `setState` to an already-`false` `isInitializing` on a remount, not a
+    // real flip.
     const restoreSession = async () => {
       await tokenManager.restoreSessionOnce();
       setState((previous) => ({ ...previous, isInitializing: false }));

@@ -40,11 +40,13 @@ export const CommitHeader = ({
 }: CommitHeaderProps) => (
   <CollapsibleTrigger
     render={
-      <div
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- generic passthrough render-prop; accessible text comes from `children` below, merged into this button by CollapsibleTrigger's render prop
+      <button
         className={cn(
           "group flex cursor-pointer items-center justify-between gap-4 p-3 text-left transition-colors hover:opacity-80",
           className
         )}
+        type="button"
       />
     }
     {...props}

@@ -21,9 +21,7 @@ import {
   MATH_BLOCK_COMPONENT_TAG,
   MATH_INLINE_HREF_PREFIX,
   MERMAID_COMPONENT_TAG,
-  REVEAL_HREF_PREFIX,
   codeBlockExtension,
-  createRevealExtension,
   mathExtension,
   mermaidExtension,
 } from "#lib/markdown/extensions";
@@ -165,9 +163,6 @@ export const MarkdownCodeBlock = ({
 
 type MarkdownAnchorProps = ComponentPropsWithoutRef<"a">;
 
-const revealStaggerStepMs = 25;
-const revealStaggerMaxSteps = 6;
-
 export const MarkdownAnchor = ({
   href = "",
   children,
@@ -191,20 +186,6 @@ export const MarkdownAnchor = ({
     );
   }
 
-  if (href.startsWith(REVEAL_HREF_PREFIX)) {
-    const wordIndex = Number(href.slice(REVEAL_HREF_PREFIX.length));
-    const step = Math.min(wordIndex, revealStaggerMaxSteps);
-
-    return (
-      <span
-        className="tm-reveal"
-        style={{ animationDelay: `${step * revealStaggerStepMs}ms` }}
-      >
-        {children}
-      </span>
-    );
-  }
-
   return (
     <a href={href} {...props}>
       {children}
@@ -218,7 +199,6 @@ export const markdownExtensions = [
   codeBlockExtension(),
   mathExtension(),
   streamingMarkdownExtension(),
-  createRevealExtension(),
 ];
 
 export const markdownComponents = {

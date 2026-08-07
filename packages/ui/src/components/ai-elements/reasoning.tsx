@@ -202,7 +202,7 @@ export const ReasoningContent = ({
   <CollapsibleContent
     className={cn(
       "markdown-renderer prose prose-sm mt-4 max-w-none text-sm",
-      "data-closed:fade-out-0 data-closed:slide-out-to-top-2 data-open:slide-in-from-top-2 text-muted-foreground outline-none data-closed:animate-out data-open:animate-in",
+      "text-muted-foreground outline-none",
       className
     )}
     {...props}

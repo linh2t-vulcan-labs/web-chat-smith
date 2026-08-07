@@ -14,7 +14,16 @@ export const Conversation = ({ className, ...props }: ConversationProps) => (
   <StickToBottom
     className={cn("relative flex-1 overflow-y-hidden", className)}
     initial="smooth"
-    resize="smooth"
+    // "instant" here, not "smooth" — `resize` fires on every ResizeObserver
+    // entry in this scroll region, including a collapsible (Sources,
+    // Reasoning, Tool, ...) opening/closing anywhere in the message list.
+    // "smooth" runs its own requestAnimationFrame-driven scroll spring for
+    // that resize, competing with the collapsible's own CSS height
+    // transition on the main thread for the same ~150ms window — that's
+    // what read as jank on open/close, not the height transition itself.
+    // `initial` (the one-time scroll-to-bottom on mount/new stream) stays
+    // smooth since nothing else is animating then.
+    resize="instant"
     role="log"
     {...props}
   />

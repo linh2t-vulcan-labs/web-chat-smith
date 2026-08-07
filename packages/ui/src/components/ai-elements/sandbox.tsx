@@ -66,13 +66,7 @@ export const SandboxContent = ({
   className,
   ...props
 }: SandboxContentProps) => (
-  <CollapsibleContent
-    className={cn(
-      "data-closed:fade-out-0 data-closed:slide-out-to-top-2 data-open:slide-in-from-top-2 outline-none data-closed:animate-out data-open:animate-in",
-      className
-    )}
-    {...props}
-  />
+  <CollapsibleContent className={cn("outline-none", className)} {...props} />
 );
 
 export type SandboxTabsProps = ComponentProps<typeof Tabs>;

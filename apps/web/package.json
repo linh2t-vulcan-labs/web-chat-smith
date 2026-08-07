@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun -bun next dev",
-    "build": "bun -bun next build",
+    "dev": "next dev",
+    "build": "next build",
     "prestart": "cp -r .next/static .next/standalone/apps/web/.next/",
     "start": "bun run .next/standalone/apps/web/server.js",
     "typecheck": "tsc --noEmit",

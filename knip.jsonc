@@ -4,24 +4,14 @@
   // plain top-level `overrides` field this bun workspace uses — so its one real reference
   // (pinning @swc/helpers for a next/next-intl conflict) never registers as a usage.
   //
-  // shiki: referenced only as a string in apps/web/next.config.ts's `serverExternalPackages`
-  // (so Turbopack doesn't bundle it), not via import — a real, intentional use knip can't see.
   // @cs/firebase: unused in packages/notifications today; tracked as a known gap in
   // .fallowrc.json rather than removed, so mirroring that decision here instead of deleting it.
-  // react/react-dom/@types/react(-dom): this repo's convention for every package that
-  // peer-depends on react/react-dom/firebase is to duplicate the same entry into
-  // devDependencies too, so `tsc`/`vitest` work when run standalone inside that package's own
-  // directory — see packages/flags, packages/notifications, packages/icons, packages/env.
+  // react-dom/@types/react-dom: this repo's convention for every package that peer-depends on
+  // react-dom to duplicate the same entry into devDependencies too, so `tsc`/`vitest` work when
+  // run standalone inside that package's own directory — see packages/notifications, packages/icons.
   // Knip only credits one manifest field per package, so the devDependencies copy reports as
   // unused; also already tolerated in .fallowrc.json.
-  "ignoreDependencies": [
-    "shiki",
-    "@cs/firebase",
-    "react",
-    "react-dom",
-    "@types/react",
-    "@types/react-dom",
-  ],
+  "ignoreDependencies": ["@cs/firebase", "react-dom", "@types/react-dom"],
   "ignoreFiles": [
     // Prepared entry points for features not wired up yet (see their doc comments) —
     // already tracked as intentional in .fallowrc.json, not dead code.

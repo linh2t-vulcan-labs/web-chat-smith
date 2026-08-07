@@ -72,6 +72,34 @@ const performTokenSync = async (
 const defaultTokenStore = createLocalStorageTokenStore();
 
 /**
+ * Module-scope, keyed by `(app, vapidKey, userId)` — mirrors the dedup
+ * pattern `FlagsProvider` (apps/web) uses for Remote Config: once one mount
+ * has kicked off a sync for a given key, a remount of this provider for the
+ * SAME key (e.g. this whole subtree remounting on a locale switch — see
+ * `app/[locale]/(workspace)/layout.tsx`'s comment) reuses the in-flight/
+ * resolved promise instead of calling the underlying `firebase/messaging`
+ * `getToken()` SDK again, which always re-hits Firebase's Installations/FCM
+ * Registrations endpoints even when the resulting token doesn't change.
+ * `syncFcmToken`'s own dedup (comparing against `tokenStore`) only gates the
+ * `onToken` backend-registration callback, not this SDK call itself.
+ */
+let cachedTokenSync: { key: string; promise: Promise<string | null> } | null =
+  null;
+
+const tokenSyncKey = (params: TokenSyncParams): string =>
+  `${params.app.name}:${params.vapidKey}:${params.userId ?? ""}`;
+
+const getOrSyncFcmToken = (params: TokenSyncParams): Promise<string | null> => {
+  const key = tokenSyncKey(params);
+  if (cachedTokenSync?.key === key) {
+    return cachedTokenSync.promise;
+  }
+  const promise = performTokenSync(params);
+  cachedTokenSync = { key, promise };
+  return promise;
+};
+
+/**
  * Owns FCM token lifecycle and notification permission state only — no
  * toast/dialog UI state, no cache writes, no permission-reminder timing
  * rules. Those are app-level policy layered on top via `useNotifications()`.
@@ -108,7 +136,7 @@ export const NotificationsProvider = ({
     }
     let cancelled = false;
     void (async () => {
-      const nextToken = await performTokenSync({
+      const nextToken = await getOrSyncFcmToken({
         app,
         onToken: onTokenRef.current,
         serviceWorkerRegistration,
@@ -147,7 +175,7 @@ export const NotificationsProvider = ({
     const result = await requestPermission();
     setPermissionState(result);
     if (result === "granted") {
-      const nextToken = await performTokenSync({
+      const nextToken = await getOrSyncFcmToken({
         app,
         onToken,
         serviceWorkerRegistration,

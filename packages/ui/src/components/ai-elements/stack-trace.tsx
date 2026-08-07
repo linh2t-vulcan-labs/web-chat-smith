@@ -256,11 +256,13 @@ export const StackTraceHeader = ({
     <Collapsible onOpenChange={setIsOpen} open={isOpen}>
       <CollapsibleTrigger
         render={
-          <div
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- generic passthrough render-prop; accessible text comes from `children` below, merged into this button by CollapsibleTrigger's render prop
+          <button
             className={cn(
               "flex w-full cursor-pointer items-center gap-3 p-3 text-left transition-colors hover:bg-muted/50",
               className
             )}
+            type="button"
           />
         }
         {...props}
@@ -424,15 +426,12 @@ export const StackTraceContent = ({
   return (
     <Collapsible open={isOpen}>
       <CollapsibleContent
-        className={cn(
-          "overflow-auto border-t bg-muted/30",
-          "data-closed:fade-out-0 data-open:fade-in-0 data-closed:animate-out data-open:animate-in",
-          className
-        )}
-        style={{ maxHeight }}
+        className={cn("border-t bg-muted/30", className)}
         {...props}
       >
-        {children}
+        <div className="overflow-auto" style={{ maxHeight }}>
+          {children}
+        </div>
       </CollapsibleContent>
     </Collapsible>
   );

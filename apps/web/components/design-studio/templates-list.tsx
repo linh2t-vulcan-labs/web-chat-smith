@@ -12,7 +12,7 @@ import type { ApiErrorCopy } from "@/hooks/use-api-error-copy";
 
 /**
  * `<Suspense fallback>` for the Server Component boundary in
- * `app/(marketing)/[locale]/design-studio-templates/page.tsx` — sized to
+ * `app/[locale]/(marketing)/design-studio-templates/page.tsx` — sized to
  * roughly match
  * a few rows of the real list so the swap doesn't reflow (see
  * `skeleton_loading_convention` — one skeleton, sized for the real content).

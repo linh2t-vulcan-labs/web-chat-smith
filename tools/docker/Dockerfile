@@ -9,14 +9,27 @@
 # docs/runbook/deployment.md) and the same image is promoted staging → prod,
 # never rebuilt per environment.
 #
-# Runtime is `bun` end-to-end, matching this repo's package manager — no
-# Node anywhere in this image. (An earlier revision of this file used a
-# `node:22-alpine` runtime stage over a since-corrected belief that Bun's
-# `setTimeout()` broke Next's Cache Components cache-expiration timers —
-# re-verified directly against this exact build/bun version with multiple
-# PPR/dynamic routes and a wait period: no warning, no AbortError. If that
-# ever resurfaces, it's a regression to investigate, not a reason to
-# silently reintroduce Node.)
+# Build AND runtime run on `node:24-alpine`, not Bun — Bun 1.3.x has a
+# confirmed, still-open upstream bug where its own JS engine segfaults
+# tearing down worker threads that loaded a native (napi) module, hitting
+# `next build`'s "Finalizing page optimization" phase every single time in
+# this repo's Docker build (reproduced identically on musl and glibc — same
+# crash offset/signature either way). Confirmed as a known Bun issue, not
+# app code: https://github.com/oven-sh/bun/issues/25864 and
+# https://github.com/oven-sh/bun/issues/23944. `bun` is still copied into
+# the `base` stage below — it's still needed for `bun install`/`turbo prune`
+# (this workspace's `bun.lock` + catalogs), just never used to execute
+# `next build`/the server. Don't move build/runtime back to Bun without
+# first checking whether those upstream issues are closed in a specific
+# released version, and re-testing that the exact failure (crash right
+# after the route table prints, at "Finalizing page optimization") is
+# actually gone.
+#
+# (An even earlier revision used a `node:22-alpine` runtime stage over a
+# separate, since-corrected belief that Bun's `setTimeout()` broke Next's
+# Cache Components cache-expiration timers — re-verified directly: no
+# warning, no AbortError. That timer concern stays debunked; this is an
+# unrelated, real bug that resurfaced the same node-vs-bun question.)
 #
 # All `CS_PUBLIC_*` config is read at runtime only (Vault-injected into the
 # container's env) — nothing is baked in at build time. This required fixing
@@ -25,7 +38,19 @@
 # `serverNoopAdapter` and apps/web/app/firebase-messaging-sw.js/route.ts's
 # `connection()` call.
 
-FROM oven/bun:1.3.14-alpine AS base
+FROM node:24-alpine AS base
+COPY --from=oven/bun:1.3.14-alpine /usr/local/bin/bun /usr/local/bin/bun
+# `bun add --global` installs into `$BUN_INSTALL/bin` (`~/.bun/bin` by
+# default) — the official Bun image puts that on `PATH` itself; a plain
+# `node:24-alpine` base doesn't, so `turbo` (installed globally via Bun
+# below) wouldn't otherwise be found.
+ENV PATH="/root/.bun/bin:${PATH}"
+# Silences Turborepo's anonymous telemetry banner/upload for both `turbo
+# prune` (pruner stage) and `bun run build` (which shells out to turbo).
+ENV TURBO_TELEMETRY_DISABLED=1
+# Silences Next.js's own anonymous telemetry banner during `next build`
+# (installer stage).
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # ---- Prune the monorepo down to what apps/web actually needs ----
 FROM base AS pruner
@@ -67,7 +92,7 @@ COPY --from=pruner /repo/out/full/ .
 # examples referenced above), not to add a build arg.
 RUN bun run build --filter=web
 
-# ---- Runtime: standalone Next.js server, executed with Bun ----
+# ---- Runtime: standalone Next.js server, executed with Node ----
 FROM base AS runner
 WORKDIR /repo
 ENV NODE_ENV=production
@@ -79,13 +104,11 @@ RUN addgroup --system --gid 1001 nodejs \
 # the installer stage's full node_modules at all.
 COPY --from=installer --chown=nextjs:nodejs /repo/apps/web/.next/standalone/ ./
 COPY --from=installer --chown=nextjs:nodejs /repo/apps/web/.next/static ./apps/web/.next/static
-# apps/web/public doesn't exist yet at the time of writing — add it back here
-# the day a `public/` directory is introduced:
-# COPY --from=installer --chown=nextjs:nodejs /repo/apps/web/public ./apps/web/public
+COPY --from=installer --chown=nextjs:nodejs /repo/apps/web/public ./apps/web/public
 
 USER nextjs
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-CMD ["bun", "run", "apps/web/server.js"]
+CMD ["node", "apps/web/server.js"]

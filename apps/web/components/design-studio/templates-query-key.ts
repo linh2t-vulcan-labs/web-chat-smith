@@ -1,6 +1,6 @@
 /**
  * Shared between the server prefetch
- * (`app/(marketing)/[locale]/design-studio-templates/page.tsx`) and the
+ * (`app/[locale]/(marketing)/design-studio-templates/page.tsx`) and the
  * client `useApiQuery` (`templates-list.tsx`) — must be the exact
  * same key for `HydrationBoundary` to land the server-fetched result on the
  * client query's cache entry.

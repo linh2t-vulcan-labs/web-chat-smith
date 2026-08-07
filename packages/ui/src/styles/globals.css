@@ -91,11 +91,18 @@
     --media-tooltip-border-radius: var(--radius-md);
   }
 
-  /* Base UI's Collapsible.Panel only fades/slides its content by default;
-   * it never shrinks the panel's own box, so on close it snaps from full
-   * height to 0 the instant the fade-out finishes (see useAnimationsFinished
-   * -> flushSync unmount). Animating height from the CSS var Base UI already
-   * exposes turns that hard pop into a smooth collapse. */
+  /* Base UI's Collapsible.Panel only exposes the measured size via CSS vars
+   * (`--collapsible-panel-height`/`-width`) — it doesn't shrink its own box
+   * on its own, so without this, closing it snaps the panel from full
+   * height to 0 the instant it unmounts, and everything below it jumps up
+   * abruptly. Animating height from that var is what makes the panel's box
+   * — and therefore the layout of whatever sits below it — shrink smoothly
+   * instead. This does mean Base UI enters its measured/animated code path
+   * (interpolating that value across several `transitionStatus` phases,
+   * which is real, non-zero re-render cost per toggle) — that cost is
+   * inherent to smoothly animating a JS-measured value at all, not a
+   * one-off implementation bug; it isn't reduced by pairing height with
+   * (or without) any other animated property. */
   [data-slot="collapsible-content"] {
     height: var(--collapsible-panel-height);
     overflow: hidden;
@@ -104,15 +111,5 @@
   [data-slot="collapsible-content"][data-starting-style],
   [data-slot="collapsible-content"][data-ending-style] {
     height: 0;
-  }
-
-  /* tw-animate-css's animate-in/animate-out default to
-   * animation-fill-mode: none, so the fade/slide keyframe snaps the content
-   * back to fully opaque/untranslated the instant it finishes — a one-frame
-   * flash right before Base UI removes the (by-then invisible-again) panel
-   * from the DOM. Holding the exit keyframe's end state until unmount
-   * removes that flash. */
-  [data-slot="collapsible-content"][data-ending-style] {
-    animation-fill-mode: forwards;
   }
 }

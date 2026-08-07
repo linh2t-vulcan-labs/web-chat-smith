@@ -1,13 +1,11 @@
+import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { locale as rootLocale } from "next/root-params";
 
 import { routing } from "./routing";
 import type { Messages } from "./utils";
-import {
-  isValidLocale,
-  mergeMessages,
-  resolveConfiguredLocale,
-  toUniqueLocales,
-} from "./utils";
+import { isValidLocale, mergeMessages, toUniqueLocales } from "./utils";
 
 type MessageLoader = (locale: string) => Promise<Record<string, unknown>>;
 interface RequestConfigOptions {
@@ -89,17 +87,6 @@ const createMessagesLoader = (loadMessages: MessageLoader) => {
   };
 };
 
-/** `requestLocale` rejects (rather than resolving `undefined`) in some edge cases next-intl documents as possible; either outcome means "no locale segment matched", handled identically below. */
-const resolveRequestedLocale = async (
-  requestLocale: Promise<string | undefined>
-): Promise<string | undefined> => {
-  try {
-    return await requestLocale;
-  } catch {
-    return undefined;
-  }
-};
-
 /**
  * Build candidates from lowest → highest priority so later entries overwrite
  * earlier ones. Order: default locale → custom fallbacks → resolved locale.
@@ -121,6 +108,14 @@ const buildLocaleCandidates = (
  * The loader must be defined in the app so that the bundler can resolve
  * the relative path to the messages folder at build time.
  *
+ * Resolves the locale from `next/root-params` instead of next-intl's own
+ * `requestLocale` — this is next-intl's root-params-based setup (Next.js
+ * 16.3+): `app/[locale]/layout.tsx` must be an actual root layout (no
+ * `layout.tsx` above it) for `locale` to be readable this way. Locale
+ * validation is centralized here — `notFound()` fires once, for any invalid
+ * segment, instead of every `[locale]`-scoped layout re-validating `params`
+ * itself.
+ *
  * @example
  * // apps/web/src/i18n/request.ts
  * import { createRequestConfig } from "@cs/i18n/request";
@@ -134,20 +129,21 @@ export const createRequestConfig = (
 ) => {
   const loadMergedMessages = createMessagesLoader(loadMessages);
 
-  return getRequestConfig(async ({ requestLocale }) => {
-    const requested = await resolveRequestedLocale(requestLocale);
-    const resolvedLocale =
-      resolveConfiguredLocale(requested) ?? routing.defaultLocale;
+  return getRequestConfig(async () => {
+    const requested = await rootLocale();
+    if (!hasLocale(routing.locales, requested)) {
+      notFound();
+    }
 
     const localeCandidates = buildLocaleCandidates(
-      resolvedLocale,
+      requested,
       options?.fallbackLocales
     );
     const messages = await loadMergedMessages(localeCandidates);
 
     return {
       getMessageFallback: options?.getMessageFallback ?? defaultMessageFallback,
-      locale: resolvedLocale,
+      locale: requested,
       messages,
     };
   });

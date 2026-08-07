@@ -72,8 +72,8 @@ export const requireServerVar = <T>(
   if (value === undefined || value === null || value === ("" as unknown as T)) {
     throw new Error(
       `[@cs/env] Required server var "${key}" is missing — check Vault injection.\n` +
-        `  Inspect: bun run prod vault inspect\n` +
-        `  Logs:    bun run prod logs web`
+        `  Inspect: bun run docker vault kv get secret/chatsmith-web\n` +
+        `  Logs:    bun run docker logs web`
     );
   }
   return value as NonNullable<T>;

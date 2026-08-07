@@ -81,7 +81,7 @@ const TemplatesHydrator = async () => {
 };
 
 /**
- * Second demo page (alongside `(workspace)/[locale]/page.tsx`'s client-only
+ * Second demo page (alongside `[locale]/(workspace)/page.tsx`'s client-only
  * `AuthStatus`)
  * — this one exercises the OTHER branch of the fetch decision guide
  * (`packages/api-client/README.md` §3): server-fetched public data, still

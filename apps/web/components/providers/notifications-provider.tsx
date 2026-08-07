@@ -47,16 +47,17 @@ export const NotificationsProvider = ({
 
   // `ApiAuthProvider` starts every fresh mount with `accessToken: null`
   // before its restore effect resolves the real value a moment later — on a
-  // genuine cold load (page reload), this component (mounted once in the
-  // locale-independent root `app/layout.tsx`, see that file's comment) would
-  // otherwise see a momentarily wrong `userId: null` first, which
-  // `syncFcmToken`'s dedup check (comparing against the last-synced value in
-  // `tokenStore`) reads as "changed" — once for the spurious `null`, again
-  // when `userId` flips back to the real value a moment later —
-  // re-registering the SAME token with the backend twice for no reason.
-  // Waiting for `isInitializing` to settle means `userId` is already correct
-  // on this component's first real render, so the dedup check sees
-  // "unchanged" and skips both calls.
+  // genuine cold load (page reload), or on a remount (this component is
+  // mounted per-request inside `app/[locale]/(workspace)/layout.tsx`, which
+  // fully remounts on a locale switch since `locale` is a root param — see
+  // that file's comment), this component would otherwise see a momentarily
+  // wrong `userId: null` first, which `syncFcmToken`'s dedup check (comparing
+  // against the last-synced value in `tokenStore`) reads as "changed" — once
+  // for the spurious `null`, again when `userId` flips back to the real
+  // value a moment later — re-registering the SAME token with the backend
+  // twice for no reason. Waiting for `isInitializing` to settle means
+  // `userId` is already correct on this component's first real render, so
+  // the dedup check sees "unchanged" and skips both calls.
   const isNotSetUpYet = !vapidKey || isInitializing;
   if (isNotSetUpYet) {
     return children;
