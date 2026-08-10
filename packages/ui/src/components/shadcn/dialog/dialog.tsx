@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
-import { XIcon } from "lucide-react";
+import { IconX } from "@cs/icons/x";
 import * as React from "react";
 
 import { Button } from "#components/shadcn/button";
@@ -70,7 +70,7 @@ const DialogContent = ({
             />
           }
         >
-          {closeIcon ?? <XIcon />}
+          {closeIcon ?? <IconX />}
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
       )}

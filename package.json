@@ -99,6 +99,7 @@
     "fix": "ultracite fix",
     "knip": "knip",
     "docker": "bun tools/scripts/docker.ts",
+    "gen": "bun tools/scripts/gen.ts",
     "prepare": "lefthook install"
   },
   "devDependencies": {

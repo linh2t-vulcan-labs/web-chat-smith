@@ -1,16 +1,17 @@
 "use client";
 
+import { IconEarth } from "@cs/icons/earth";
+import { IconImage } from "@cs/icons/image";
+import { IconVideo } from "@cs/icons/video";
+import { IconX } from "@cs/icons/x";
 import type { FileUIPart, SourceDocumentUIPart } from "ai";
-import {
-  FileTextIcon,
-  GlobeIcon,
-  ImageIcon,
-  Music2Icon,
-  PaperclipIcon,
-  VideoIcon,
-  XIcon,
-} from "lucide-react";
-import type { ComponentProps, HTMLAttributes, ReactNode } from "react";
+import { FileTextIcon, Music2Icon, PaperclipIcon } from "lucide-react";
+import type {
+  ComponentProps,
+  ComponentType,
+  HTMLAttributes,
+  ReactNode,
+} from "react";
 import { createContext, useContext } from "react";
 
 import { Button } from "#components/shadcn/button";
@@ -39,13 +40,16 @@ export type AttachmentMediaCategory =
 
 export type AttachmentVariant = "grid" | "inline" | "list";
 
-const mediaCategoryIcons: Record<AttachmentMediaCategory, typeof ImageIcon> = {
+const mediaCategoryIcons: Record<
+  AttachmentMediaCategory,
+  ComponentType<{ className?: string }>
+> = {
   audio: Music2Icon,
   document: FileTextIcon,
-  image: ImageIcon,
-  source: GlobeIcon,
+  image: IconImage,
+  source: IconEarth,
   unknown: PaperclipIcon,
-  video: VideoIcon,
+  video: IconVideo,
 };
 
 // ============================================================================
@@ -440,7 +444,7 @@ export const AttachmentRemove = ({
       variant="ghost"
       {...props}
     >
-      {children ?? <XIcon />}
+      {children ?? <IconX />}
       <span className="sr-only">{label}</span>
     </Button>
   );

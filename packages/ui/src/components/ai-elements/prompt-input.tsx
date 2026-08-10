@@ -1,14 +1,11 @@
 "use client";
 
+import { IconImage } from "@cs/icons/image";
+import { IconPlus } from "@cs/icons/plus";
+import { IconSquare } from "@cs/icons/square";
+import { IconX } from "@cs/icons/x";
 import type { ChatStatus, FileUIPart, SourceDocumentUIPart } from "ai";
-import {
-  CornerDownLeftIcon,
-  ImageIcon,
-  Monitor,
-  PlusIcon,
-  SquareIcon,
-  XIcon,
-} from "lucide-react";
+import { CornerDownLeftIcon, Monitor } from "lucide-react";
 import { nanoid } from "nanoid";
 import type {
   ChangeEvent,
@@ -433,7 +430,7 @@ export const PromptInputActionAddAttachments = ({
 
   return (
     <DropdownMenuItem {...props} onSelect={handleSelect}>
-      <ImageIcon className="mr-2 size-4" /> {label}
+      <IconImage className="mr-2 size-4" /> {label}
     </DropdownMenuItem>
   );
 };
@@ -1448,7 +1445,7 @@ export const PromptInputActionMenuTrigger = ({
       />
     }
   >
-    {children ?? <PlusIcon className="size-4" />}
+    {children ?? <IconPlus className="size-4" />}
   </DropdownMenuTrigger>
 );
 
@@ -1486,10 +1483,10 @@ const getSubmitIcon = (status: ChatStatus | undefined) => {
       return <Spinner />;
     }
     case "streaming": {
-      return <SquareIcon className="size-4" />;
+      return <IconSquare className="size-4" />;
     }
     case "error": {
-      return <XIcon className="size-4" />;
+      return <IconX className="size-4" />;
     }
     default: {
       return <CornerDownLeftIcon className="size-4" />;

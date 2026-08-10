@@ -1,7 +1,8 @@
 "use client";
 
+import { IconDownload } from "@cs/icons/download";
 import type { UIMessage } from "ai";
-import { ArrowDownIcon, DownloadIcon } from "lucide-react";
+import { ArrowDownIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
 
@@ -177,7 +178,7 @@ export const ConversationDownload = ({
       variant="outline"
       {...props}
     >
-      {children ?? <DownloadIcon className="size-4" />}
+      {children ?? <IconDownload className="size-4" />}
     </Button>
   );
 };

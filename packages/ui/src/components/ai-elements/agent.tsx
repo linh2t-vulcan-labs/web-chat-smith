@@ -1,7 +1,7 @@
 "use client";
 
+import { IconAgent } from "@cs/icons/agent";
 import type { Tool } from "ai";
-import { BotIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 
 import {
@@ -43,7 +43,7 @@ export const AgentHeader = ({
     {...props}
   >
     <div className="flex items-center gap-2">
-      <BotIcon className="text-muted-foreground size-4" />
+      <IconAgent className="text-muted-foreground size-4" />
       <span className="text-sm font-medium">{name}</span>
       {model && (
         <Badge className="font-mono text-xs" variant="secondary">

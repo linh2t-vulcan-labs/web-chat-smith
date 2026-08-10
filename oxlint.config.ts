@@ -192,6 +192,15 @@ export default defineConfig({
       },
     },
     {
+      files: ["packages/icons/generated-icons/**"],
+      rules: {
+        // Generated one-shot components for complex illustrations (many
+        // gradient/mask/path children) — there's nothing to "split up",
+        // it's a single flattened SVG tree from the source file.
+        "react-doctor/no-giant-component": "off",
+      },
+    },
+    {
       files: ["apps/**/*.{ts,tsx}"],
       rules: {
         "nextjs/google-font-display": "error",

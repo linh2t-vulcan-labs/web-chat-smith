@@ -1,5 +1,8 @@
 "use client";
 
+import { IconCalendarBlank } from "@cs/icons/calendar-blank";
+import { IconMail } from "@cs/icons/mail";
+import { IconSearch } from "@cs/icons/search";
 import { Calendar } from "@cs/ui/components/shadcn/calendar";
 import { Checkbox } from "@cs/ui/components/shadcn/checkbox";
 import {
@@ -72,7 +75,7 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@cs/ui/components/shadcn/toggle";
-import { CalendarIcon, MailIcon, SearchIcon, TagIcon } from "lucide-react";
+import { TagIcon } from "lucide-react";
 import * as React from "react";
 
 import { frameworks } from "./shared/data";
@@ -142,7 +145,7 @@ export const ShadcnForms = () => {
           <div className="space-y-3">
             <InputGroup>
               <InputGroupAddon>
-                <SearchIcon />
+                <IconSearch />
               </InputGroupAddon>
               <InputGroupInput placeholder="Search templates" />
               <InputGroupAddon align="inline-end">
@@ -153,7 +156,7 @@ export const ShadcnForms = () => {
             </InputGroup>
             <InputGroup>
               <InputGroupAddon>
-                <MailIcon />
+                <IconMail />
               </InputGroupAddon>
               <InputGroupInput placeholder="Invite by email" />
               <InputGroupAddon align="inline-end">
@@ -247,7 +250,7 @@ export const ShadcnForms = () => {
         <ShadcnPanel title="Toggle controls">
           <div className="flex flex-wrap gap-2">
             <Toggle aria-label="Toggle calendar">
-              <CalendarIcon />
+              <IconCalendarBlank />
             </Toggle>
             <Toggle defaultPressed aria-label="Toggle tag">
               <TagIcon />

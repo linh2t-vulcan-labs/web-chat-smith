@@ -1,4 +1,4 @@
-import { TriangleAlertIcon } from "lucide-react";
+import { IconAlert } from "@cs/icons/alert";
 
 import { Button } from "#components/shadcn/button";
 import { cn } from "#lib/utils";
@@ -32,7 +32,7 @@ export const InlineError = ({
     role="alert"
   >
     <div className="text-destructive flex items-center gap-2 font-medium">
-      <TriangleAlertIcon aria-hidden="true" className="size-4 shrink-0" />
+      <IconAlert aria-hidden="true" className="size-4 shrink-0" />
       <span>{title}</span>
     </div>
     {description && <p className="text-muted-foreground">{description}</p>}

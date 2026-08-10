@@ -1,6 +1,9 @@
 "use client";
 
-import { ArrowRightIcon, MinusIcon, PackageIcon, PlusIcon } from "lucide-react";
+import { IconArrowRight } from "@cs/icons/arrow-right";
+import { IconMinus } from "@cs/icons/minus";
+import { IconPlus } from "@cs/icons/plus";
+import { PackageIcon } from "lucide-react";
 import type { HTMLAttributes } from "react";
 import { createContext, useContext } from "react";
 
@@ -62,11 +65,11 @@ const changeTypeStyles: Record<ChangeType, string> = {
 };
 
 const changeTypeIcons: Record<ChangeType, React.ReactNode> = {
-  added: <PlusIcon className="size-3" />,
-  major: <ArrowRightIcon className="size-3" />,
-  minor: <ArrowRightIcon className="size-3" />,
-  patch: <ArrowRightIcon className="size-3" />,
-  removed: <MinusIcon className="size-3" />,
+  added: <IconPlus className="size-3" />,
+  major: <IconArrowRight className="size-3" />,
+  minor: <IconArrowRight className="size-3" />,
+  patch: <IconArrowRight className="size-3" />,
+  removed: <IconMinus className="size-3" />,
 };
 
 export type PackageInfoChangeTypeProps = HTMLAttributes<HTMLDivElement>;
@@ -113,7 +116,7 @@ const PackageInfoVersionChange = ({
   <>
     {currentVersion && <span>{currentVersion}</span>}
     {shouldShowVersionArrow(currentVersion, newVersion) && (
-      <ArrowRightIcon className="size-3" />
+      <IconArrowRight className="size-3" />
     )}
     {newVersion && (
       <span className="text-foreground font-medium">{newVersion}</span>

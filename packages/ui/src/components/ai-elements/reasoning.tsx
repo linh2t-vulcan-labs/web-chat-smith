@@ -1,6 +1,7 @@
 "use client";
 
-import { BrainIcon, ChevronDownIcon } from "lucide-react";
+import { IconBrain } from "@cs/icons/brain";
+import { IconChevronDown } from "@cs/icons/chevron-down";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
@@ -174,9 +175,9 @@ export const ReasoningTrigger = ({
     >
       {children ?? (
         <>
-          <BrainIcon className="size-4" />
+          <IconBrain className="size-4" />
           {getThinkingMessage(isStreaming, duration)}
-          <ChevronDownIcon
+          <IconChevronDown
             className={cn(
               "size-4 transition-transform",
               isOpen ? "rotate-180" : "rotate-0"

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDownIcon } from "lucide-react";
+import { IconChervonUpDown } from "@cs/icons/chervon-up-down";
 import type { ComponentProps } from "react";
 import { createContext, useContext } from "react";
 
@@ -151,7 +151,7 @@ export const PlanTrigger = ({ className, ...props }: PlanTriggerProps) => (
     }
     {...props}
   >
-    <ChevronsUpDownIcon className="size-4" />
+    <IconChervonUpDown className="size-4" />
     <span className="sr-only">Toggle plan</span>
   </CollapsibleTrigger>
 );

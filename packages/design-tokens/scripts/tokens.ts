@@ -3,6 +3,7 @@ import { run as runBuild } from "./commands/build";
 import { run as runClean } from "./commands/clean";
 import { run as runCodemod } from "./commands/codemod";
 import { run as runDiff } from "./commands/diff";
+import { run as runPreview } from "./commands/preview";
 import { run as runValidate } from "./commands/validate";
 import { run as runVersion } from "./commands/version";
 import { styleText } from "./lib/utils/console-colors";
@@ -15,6 +16,7 @@ const COMMANDS: Record<string, Command> = {
   clean: runClean,
   codemod: runCodemod,
   diff: runDiff,
+  preview: runPreview,
   validate: runValidate,
   version: runVersion,
 };
@@ -23,6 +25,7 @@ const HELP = `Usage: bun run tokens <command> [...args]
 
 Commands:
   audit                           Inspect every figma-tokens/tokens_v* folder (read-only)
+  preview [version]                Write _preview.html for a version (color swatches + value tables)
   validate [version] [--all]      Validate the active version, an explicit version, or every version
   build [version] [--all]         Build CSS artifacts for the active version, an explicit version, or every version
   diff [prev] [next] [--json] [--out <file>]

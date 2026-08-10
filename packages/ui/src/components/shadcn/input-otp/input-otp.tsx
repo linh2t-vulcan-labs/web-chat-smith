@@ -1,7 +1,7 @@
 "use client";
 
+import { IconMinus } from "@cs/icons/minus";
 import { OTPInput, OTPInputContext } from "input-otp";
-import { MinusIcon } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "#lib/utils";
@@ -76,7 +76,7 @@ const InputOTPSeparator = ({ ...props }: React.ComponentProps<"div">) => (
     className="flex items-center [&_svg:not([class*='size-'])]:size-4"
     {...props}
   >
-    <MinusIcon />
+    <IconMinus />
   </div>
 );
 

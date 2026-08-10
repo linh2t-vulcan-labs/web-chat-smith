@@ -1,8 +1,9 @@
 "use client";
 
+import { IconChevronLeft } from "@cs/icons/chevron-left";
+import { IconChevronRight } from "@cs/icons/chevron-right";
 import useEmblaCarousel from "embla-carousel-react";
 import type { UseEmblaCarouselType } from "embla-carousel-react";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "#components/shadcn/button";
@@ -240,7 +241,7 @@ const CarouselPrevious = ({
       onClick={scrollPrev}
       {...props}
     >
-      <ChevronLeftIcon className="rtl:rotate-180" />
+      <IconChevronLeft />
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -270,7 +271,7 @@ const CarouselNext = ({
       onClick={scrollNext}
       {...props}
     >
-      <ChevronRightIcon className="rtl:rotate-180" />
+      <IconChevronRight />
       <span className="sr-only">Next slide</span>
     </Button>
   );

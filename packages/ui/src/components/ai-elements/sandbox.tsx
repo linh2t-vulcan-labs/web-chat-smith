@@ -1,7 +1,8 @@
 "use client";
 
+import { IconChevronDown } from "@cs/icons/chevron-down";
+import { IconCode } from "@cs/icons/code";
 import type { ToolUIPart } from "ai";
-import { ChevronDownIcon, Code } from "lucide-react";
 import type { ComponentProps } from "react";
 
 import {
@@ -52,11 +53,11 @@ export const SandboxHeader = ({
     {...props}
   >
     <div className="flex items-center gap-2">
-      <Code className="text-muted-foreground size-4" />
+      <IconCode className="text-muted-foreground size-4" />
       <span className="text-sm font-medium">{title}</span>
       {getStatusBadge(state)}
     </div>
-    <ChevronDownIcon className="text-muted-foreground size-4 transition-transform group-data-open:rotate-180" />
+    <IconChevronDown className="text-muted-foreground size-4 transition-transform group-data-open:rotate-180" />
   </CollapsibleTrigger>
 );
 

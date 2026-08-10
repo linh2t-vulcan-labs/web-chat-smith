@@ -1,6 +1,7 @@
 "use client";
 
-import { BookIcon, ChevronDownIcon } from "lucide-react";
+import { IconBook } from "@cs/icons/book";
+import { IconChevronDown } from "@cs/icons/chevron-down";
 import type { ComponentProps } from "react";
 
 import {
@@ -36,7 +37,7 @@ export const SourcesTrigger = ({
     {children ?? (
       <>
         <p className="font-medium">Used {count} sources</p>
-        <ChevronDownIcon className="h-4 w-4" />
+        <IconChevronDown className="h-4 w-4" />
       </>
     )}
   </CollapsibleTrigger>
@@ -73,7 +74,7 @@ export const Source = ({ href, title, children, ...props }: SourceProps) => (
   >
     {children ?? (
       <>
-        <BookIcon className="h-4 w-4" />
+        <IconBook className="h-4 w-4" />
         <span className="block font-medium">{title}</span>
       </>
     )}

@@ -1,11 +1,9 @@
 "use client";
 
-import {
-  ChevronRightIcon,
-  FileIcon,
-  FolderIcon,
-  FolderOpenIcon,
-} from "lucide-react";
+import { IconChevronRight } from "@cs/icons/chevron-right";
+import { IconFile } from "@cs/icons/file";
+import { IconFolder } from "@cs/icons/folder";
+import { FolderOpenIcon } from "lucide-react";
 import type { HTMLAttributes, ReactNode } from "react";
 import { createContext, useContext, useState } from "react";
 
@@ -142,7 +140,7 @@ const FolderRowIcon = ({ isExpanded }: { isExpanded: boolean }) =>
   isExpanded ? (
     <FolderOpenIcon className="size-4 text-blue-500" />
   ) : (
-    <FolderIcon className="size-4 text-blue-500" />
+    <IconFolder className="size-4 text-blue-500" />
   );
 
 const FileTreeFolderRow = ({
@@ -166,7 +164,7 @@ const FileTreeFolderRow = ({
         />
       }
     >
-      <ChevronRightIcon
+      <IconChevronRight
         className={cn(
           "text-muted-foreground size-4 shrink-0 transition-transform",
           isExpanded && "rotate-90"
@@ -296,7 +294,7 @@ export const FileTreeFile = ({
             {/* Spacer for alignment */}
             <span className="size-4 shrink-0" />
             <FileTreeIcon>
-              {icon ?? <FileIcon className="text-muted-foreground size-4" />}
+              {icon ?? <IconFile className="text-muted-foreground size-4" />}
             </FileTreeIcon>
             <FileTreeName>{name}</FileTreeName>
           </>

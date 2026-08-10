@@ -1,5 +1,8 @@
 "use client";
 
+import { IconBell } from "@cs/icons/bell";
+import { IconSettings } from "@cs/icons/settings";
+import { IconTrashbin } from "@cs/icons/trashbin";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -103,13 +106,10 @@ import {
   TooltipTrigger,
 } from "@cs/ui/components/shadcn/tooltip";
 import {
-  BellIcon,
   CreditCardIcon,
   FileTextIcon,
   HelpCircleIcon,
   MoreHorizontalIcon,
-  SettingsIcon,
-  TrashIcon,
 } from "lucide-react";
 
 import { ShadcnGrid, ShadcnPanel, ShadcnSection } from "./shared/section";
@@ -124,7 +124,7 @@ const MenuItems = () => (
         <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
       </DropdownMenuItem>
       <DropdownMenuItem>
-        <SettingsIcon />
+        <IconSettings />
         Settings
       </DropdownMenuItem>
     </DropdownMenuGroup>
@@ -143,7 +143,7 @@ const MenuItems = () => (
     </DropdownMenuRadioGroup>
     <DropdownMenuSeparator />
     <DropdownMenuItem variant="destructive">
-      <TrashIcon />
+      <IconTrashbin />
       Delete
     </DropdownMenuItem>
   </>
@@ -186,7 +186,7 @@ export const ShadcnOverlays = () => (
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogMedia>
-                    <TrashIcon />
+                    <IconTrashbin />
                   </AlertDialogMedia>
                   <AlertDialogTitle>Delete workspace?</AlertDialogTitle>
                   <AlertDialogDescription>
@@ -339,7 +339,7 @@ export const ShadcnOverlays = () => (
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup heading="Actions">
                 <CommandItem>
-                  <BellIcon />
+                  <IconBell />
                   Notifications
                   <CommandShortcut>⌘B</CommandShortcut>
                 </CommandItem>

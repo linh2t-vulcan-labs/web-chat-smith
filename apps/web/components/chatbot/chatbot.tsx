@@ -1,5 +1,7 @@
 "use client";
 
+import { IconCheck } from "@cs/icons/check";
+import { IconEarth } from "@cs/icons/earth";
 import {
   Artifact,
   ArtifactActions,
@@ -152,7 +154,6 @@ import {
   SheetTitle,
 } from "@cs/ui/components/shadcn/sheet";
 import { toast } from "@cs/ui/components/shadcn/toast";
-import { CheckIcon, GlobeIcon } from "lucide-react";
 import { useState } from "react";
 import type { BundledLanguage } from "shiki";
 
@@ -283,7 +284,7 @@ const ModelItem = ({
       ))}
     </ModelSelectorLogoGroup>
     {isSelected ? (
-      <CheckIcon className="ml-auto size-4" />
+      <IconCheck className="ml-auto size-4" />
     ) : (
       <div className="ml-auto size-4" />
     )}
@@ -755,7 +756,7 @@ export const Chatbot = () => {
                   onClick={toggleWebSearch}
                   variant={useWebSearch ? "default" : "ghost"}
                 >
-                  <GlobeIcon size={16} />
+                  <IconEarth size={16} />
                   <span>Search</span>
                 </PromptInputButton>
                 <ChatModelPicker

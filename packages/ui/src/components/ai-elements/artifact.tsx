@@ -1,7 +1,7 @@
 "use client";
 
+import { IconX } from "@cs/icons/x";
 import type { LucideIcon } from "lucide-react";
-import { XIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
 
 import { TooltipActionButton } from "#components/ai-elements/tooltip-action-button";
@@ -54,7 +54,7 @@ export const ArtifactClose = ({
     variant={variant}
     {...props}
   >
-    {children ?? <XIcon className="size-4" />}
+    {children ?? <IconX className="size-4" />}
     <span className="sr-only">Close</span>
   </Button>
 );

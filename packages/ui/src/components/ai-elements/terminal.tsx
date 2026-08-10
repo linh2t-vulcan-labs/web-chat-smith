@@ -1,7 +1,10 @@
 "use client";
 
+import { IconCheck } from "@cs/icons/check";
+import { IconCopy } from "@cs/icons/copy";
+import { IconTrashbin } from "@cs/icons/trashbin";
 import Ansi from "ansi-to-react";
-import { CheckIcon, CopyIcon, TerminalIcon, Trash2Icon } from "lucide-react";
+import { TerminalIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
 import { createContext, useContext, useEffect, useRef } from "react";
 
@@ -112,7 +115,7 @@ export const TerminalCopyButton = ({
     timeout,
   });
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
+  const Icon = isCopied ? IconCheck : IconCopy;
 
   return (
     <Button
@@ -156,7 +159,7 @@ export const TerminalClearButton = ({
       variant="ghost"
       {...props}
     >
-      {children ?? <Trash2Icon size={14} />}
+      {children ?? <IconTrashbin size={14} />}
     </Button>
   );
 };

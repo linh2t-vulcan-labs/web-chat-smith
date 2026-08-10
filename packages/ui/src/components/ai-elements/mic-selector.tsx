@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDownIcon } from "lucide-react";
+import { IconChervonUpDown } from "@cs/icons/chervon-up-down";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
@@ -236,10 +236,7 @@ export const MicSelectorTrigger = ({
   return (
     <PopoverTrigger render={<Button variant="outline" {...props} ref={ref} />}>
       {children}
-      <ChevronsUpDownIcon
-        className="text-muted-foreground shrink-0"
-        size={16}
-      />
+      <IconChervonUpDown className="text-muted-foreground shrink-0" size={16} />
     </PopoverTrigger>
   );
 };

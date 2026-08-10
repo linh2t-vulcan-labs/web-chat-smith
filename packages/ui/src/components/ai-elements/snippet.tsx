@@ -1,6 +1,7 @@
 "use client";
 
-import { CheckIcon, CopyIcon } from "lucide-react";
+import { IconCheck } from "@cs/icons/check";
+import { IconCopy } from "@cs/icons/copy";
 import type { ComponentProps } from "react";
 import { createContext, useContext } from "react";
 
@@ -98,7 +99,7 @@ export const SnippetCopyButton = ({
     timeout,
   });
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
+  const Icon = isCopied ? IconCheck : IconCopy;
 
   return (
     <InputGroupButton

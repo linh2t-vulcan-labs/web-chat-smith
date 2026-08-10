@@ -1,6 +1,7 @@
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
-import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
+import { IconChevronRight } from "@cs/icons/chevron-right";
+import { MoreHorizontalIcon } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "#lib/utils";
@@ -83,7 +84,7 @@ const BreadcrumbSeparator = ({
     className={cn("[&>svg]:size-3.5", className)}
     {...props}
   >
-    {children ?? <ChevronRightIcon className="rtl:rotate-180" />}
+    {children ?? <IconChevronRight />}
   </li>
 );
 

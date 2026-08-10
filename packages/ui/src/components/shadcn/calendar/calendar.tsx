@@ -1,10 +1,8 @@
 "use client";
 
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "lucide-react";
+import { IconChevronDown } from "@cs/icons/chevron-down";
+import { IconChevronLeft } from "@cs/icons/chevron-left";
+import { IconChevronRight } from "@cs/icons/chevron-right";
 import * as React from "react";
 import { DayPicker, getDefaultClassNames } from "react-day-picker";
 import type {
@@ -70,28 +68,18 @@ const CalendarChevron = ({
   className,
   orientation,
   ...props
-}: React.ComponentPropsWithoutRef<typeof ChevronLeftIcon> & {
+}: React.ComponentPropsWithoutRef<typeof IconChevronLeft> & {
   orientation?: "down" | "left" | "right" | "up";
 }) => {
   if (orientation === "left") {
-    return (
-      <ChevronLeftIcon
-        className={cn("size-4 rtl:rotate-180", className)}
-        {...props}
-      />
-    );
+    return <IconChevronLeft className={cn("size-4", className)} {...props} />;
   }
 
   if (orientation === "right") {
-    return (
-      <ChevronRightIcon
-        className={cn("size-4 rtl:rotate-180", className)}
-        {...props}
-      />
-    );
+    return <IconChevronRight className={cn("size-4", className)} {...props} />;
   }
 
-  return <ChevronDownIcon className={cn("size-4", className)} {...props} />;
+  return <IconChevronDown className={cn("size-4", className)} {...props} />;
 };
 
 const CalendarRoot = ({ className, rootRef, ...props }: RootProps) => (

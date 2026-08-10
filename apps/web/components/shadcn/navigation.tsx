@@ -1,5 +1,10 @@
 "use client";
 
+import { IconChevronRight } from "@cs/icons/chevron-right";
+import { IconHome } from "@cs/icons/home";
+import { IconSearch } from "@cs/icons/search";
+import { IconSettings } from "@cs/icons/settings";
+import { IconUser } from "@cs/icons/user";
 import {
   Accordion,
   AccordionContent,
@@ -81,16 +86,7 @@ import {
   TabsTrigger,
 } from "@cs/ui/components/shadcn/tabs";
 import { TooltipProvider } from "@cs/ui/components/shadcn/tooltip";
-import {
-  ChevronRightIcon,
-  FileTextIcon,
-  HomeIcon,
-  MoreHorizontalIcon,
-  PanelLeftIcon,
-  SearchIcon,
-  SettingsIcon,
-  UserIcon,
-} from "lucide-react";
+import { FileTextIcon, MoreHorizontalIcon, PanelLeftIcon } from "lucide-react";
 import * as React from "react";
 
 import { ShadcnGrid, ShadcnPanel, ShadcnSection } from "./shared/section";
@@ -175,7 +171,7 @@ const ShadcnSidebarShell = () => {
                     tooltip="QA"
                   >
                     <div className="bg-sidebar-primary text-sidebar-primary-foreground flex size-8 shrink-0 items-center justify-center rounded-md">
-                      <HomeIcon className="size-4" aria-hidden="true" />
+                      <IconHome className="size-4" aria-hidden="true" />
                     </div>
                     <div className="min-w-0 text-start">
                       <div className="truncate text-sm font-medium">
@@ -200,7 +196,7 @@ const ShadcnSidebarShell = () => {
                         className="h-8 gap-2 p-2"
                         tooltip="Home"
                       >
-                        <HomeIcon aria-hidden="true" />
+                        <IconHome aria-hidden="true" />
                         <span>Home</span>
                       </SidebarMenuButton>
                       <SidebarMenuBadge>3</SidebarMenuBadge>
@@ -210,7 +206,7 @@ const ShadcnSidebarShell = () => {
                         className="h-8 gap-2 p-2"
                         tooltip="Search"
                       >
-                        <SearchIcon aria-hidden="true" />
+                        <IconSearch aria-hidden="true" />
                         <span>Search</span>
                       </SidebarMenuButton>
                       <SidebarMenuAction
@@ -237,7 +233,7 @@ const ShadcnSidebarShell = () => {
                         className="h-8 gap-2 p-2"
                         tooltip="Settings"
                       >
-                        <SettingsIcon aria-hidden="true" />
+                        <IconSettings aria-hidden="true" />
                         <span>Settings</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -254,7 +250,7 @@ const ShadcnSidebarShell = () => {
                     className="h-8 gap-2 p-2"
                     tooltip="Profile"
                   >
-                    <UserIcon aria-hidden="true" />
+                    <IconUser aria-hidden="true" />
                     <span>An Khoa</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -359,7 +355,7 @@ export const ShadcnNavigation = () => (
         </Accordion>
         <Collapsible className="mt-4 rounded-lg border p-3">
           <CollapsibleTrigger render={<Button variant="ghost" />}>
-            <ChevronRightIcon className="rtl:rotate-180" />
+            <IconChevronRight />
             Toggle details
           </CollapsibleTrigger>
           <CollapsibleContent className="text-muted-foreground pt-2 text-sm">
@@ -407,14 +403,14 @@ export const ShadcnNavigation = () => (
                     href="#navigation-menu-example"
                     className="hover:bg-muted focus:bg-muted focus-visible:ring-ring/50 flex items-center gap-2 rounded-md p-2 text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
                   >
-                    <HomeIcon />
+                    <IconHome />
                     Dashboard
                   </a>
                   <a
                     href="#navigation-menu-example"
                     className="hover:bg-muted focus:bg-muted focus-visible:ring-ring/50 flex items-center gap-2 rounded-md p-2 text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
                   >
-                    <SettingsIcon />
+                    <IconSettings />
                     Settings
                   </a>
                 </div>

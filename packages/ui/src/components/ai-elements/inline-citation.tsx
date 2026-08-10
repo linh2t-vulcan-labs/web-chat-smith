@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import { IconArrowRight } from "@cs/icons/arrow-right";
+import { ArrowLeftIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -237,7 +238,7 @@ export const InlineCitationCarouselNext = ({
       type="button"
       {...props}
     >
-      <ArrowRightIcon className="text-muted-foreground size-4" />
+      <IconArrowRight className="text-muted-foreground size-4" />
     </button>
   );
 };

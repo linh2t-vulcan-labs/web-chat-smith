@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDownIcon } from "lucide-react";
+import { IconChevronDown } from "@cs/icons/chevron-down";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext, useState } from "react";
 
@@ -233,7 +233,7 @@ export const WebPreviewConsole = ({
         }
       >
         Console
-        <ChevronDownIcon
+        <IconChevronDown
           className={cn(
             "h-4 w-4 transition-transform duration-200",
             consoleOpen && "rotate-180"

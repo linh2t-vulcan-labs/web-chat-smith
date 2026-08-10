@@ -1,10 +1,8 @@
 "use client";
 
-import {
-  ChevronDownIcon,
-  ExternalLinkIcon,
-  MessageCircleIcon,
-} from "lucide-react";
+import { IconChevronDown } from "@cs/icons/chevron-down";
+import { IconMessageCircle } from "@cs/icons/message-circle";
+import { ExternalLinkIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { createContext, useContext } from "react";
 
@@ -165,7 +163,7 @@ const providers = {
       `https://t3.chat/new?${new URLSearchParams({
         q,
       })}`,
-    icon: <MessageCircleIcon />,
+    icon: <IconMessageCircle />,
     title: "Open in T3 Chat",
   },
   v0: {
@@ -248,7 +246,7 @@ export const OpenInTrigger = ({ children, ...props }: OpenInTriggerProps) =>
       {...props}
     >
       Open in chat
-      <ChevronDownIcon className="size-4" />
+      <IconChevronDown className="size-4" />
     </DropdownMenuTrigger>
   );
 

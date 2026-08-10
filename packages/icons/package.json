@@ -5,11 +5,23 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts",
-    "./*": "./src/*.tsx"
+    ".": "./generated-icons/index.ts",
+    "./*": [
+      "./generated-icons/icons_v1/graphics/*.tsx",
+      "./generated-icons/icons_v1/icons/*.tsx"
+    ],
+    "./latest/*": [
+      "./generated-icons/icons_v1/graphics/*.tsx",
+      "./generated-icons/icons_v1/icons/*.tsx"
+    ],
+    "./icons_v1/*": [
+      "./generated-icons/icons_v1/graphics/*.tsx",
+      "./generated-icons/icons_v1/icons/*.tsx"
+    ]
   },
   "scripts": {
-    "generate": "bun run scripts/generate-icons.ts",
+    "gen": "bun run scripts/generate-icons.ts",
+    "icons": "bun run scripts/icons.ts",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist node_modules"
   },

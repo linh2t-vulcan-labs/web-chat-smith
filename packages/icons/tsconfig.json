@@ -6,6 +6,6 @@
     "strictNullChecks": true,
     "types": ["node", "bun"]
   },
-  "include": ["src", "scripts"],
+  "include": ["generated-icons", "scripts"],
   "exclude": ["node_modules", "dist"]
 }

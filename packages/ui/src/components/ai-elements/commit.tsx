@@ -1,13 +1,11 @@
 "use client";
 
-import {
-  CheckIcon,
-  CopyIcon,
-  FileIcon,
-  GitCommitIcon,
-  MinusIcon,
-  PlusIcon,
-} from "lucide-react";
+import { IconCheck } from "@cs/icons/check";
+import { IconCopy } from "@cs/icons/copy";
+import { IconFile } from "@cs/icons/file";
+import { IconMinus } from "@cs/icons/minus";
+import { IconPlus } from "@cs/icons/plus";
+import { GitCommitIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
 
 import { Avatar, AvatarFallback } from "#components/shadcn/avatar";
@@ -227,7 +225,7 @@ export const CommitCopyButton = ({
     timeout,
   });
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
+  const Icon = isCopied ? IconCheck : IconCopy;
 
   return (
     <Button
@@ -333,13 +331,13 @@ export const CommitFileStatus = ({
   </span>
 );
 
-export type CommitFileIconProps = ComponentProps<typeof FileIcon>;
+export type CommitFileIconProps = ComponentProps<typeof IconFile>;
 
 export const CommitFileIcon = ({
   className,
   ...props
 }: CommitFileIconProps) => (
-  <FileIcon
+  <IconFile
     className={cn("text-muted-foreground size-3.5 shrink-0", className)}
     {...props}
   />
@@ -396,7 +394,7 @@ export const CommitFileAdditions = ({
     >
       {children ?? (
         <>
-          <PlusIcon className="inline-block size-3" />
+          <IconPlus className="inline-block size-3" />
           {count}
         </>
       )}
@@ -425,7 +423,7 @@ export const CommitFileDeletions = ({
     >
       {children ?? (
         <>
-          <MinusIcon className="inline-block size-3" />
+          <IconMinus className="inline-block size-3" />
           {count}
         </>
       )}

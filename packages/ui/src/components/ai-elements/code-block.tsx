@@ -1,6 +1,7 @@
 "use client";
 
-import { CheckIcon, CopyIcon } from "lucide-react";
+import { IconCheck } from "@cs/icons/check";
+import { IconCopy } from "@cs/icons/copy";
 import type { ComponentProps, CSSProperties, HTMLAttributes } from "react";
 import { createContext, memo, useContext, useEffect, useState } from "react";
 import type {
@@ -529,7 +530,7 @@ export const CodeBlockCopyButton = ({
     timeout,
   });
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
+  const Icon = isCopied ? IconCheck : IconCopy;
 
   return (
     <Button

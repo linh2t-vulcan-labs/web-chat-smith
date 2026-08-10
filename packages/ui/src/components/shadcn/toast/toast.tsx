@@ -1,14 +1,12 @@
 "use client";
 
 import { Toast as ToastPrimitive } from "@base-ui/react/toast";
-import {
-  CircleCheckIcon,
-  InfoIcon,
-  Loader2Icon,
-  OctagonXIcon,
-  TriangleAlertIcon,
-  XIcon,
-} from "lucide-react";
+import { IconAlert } from "@cs/icons/alert";
+import { IconCircleCheck } from "@cs/icons/circle-check";
+import { IconInfo } from "@cs/icons/info";
+import { IconLoader } from "@cs/icons/loader";
+import { IconX } from "@cs/icons/x";
+import { OctagonXIcon } from "lucide-react";
 import type * as React from "react";
 
 import { Button } from "#components/shadcn/button";
@@ -125,16 +123,16 @@ const ToastClose = ({
     )}
     {...props}
   >
-    {children ?? <XIcon aria-hidden="true" />}
+    {children ?? <IconX aria-hidden="true" />}
   </ToastPrimitive.Close>
 );
 
 const TOAST_ICONS_BY_TYPE: Record<string, React.ReactNode> = {
   error: <OctagonXIcon aria-hidden="true" className="text-destructive" />,
-  info: <InfoIcon aria-hidden="true" />,
-  loading: <Loader2Icon aria-hidden="true" className="animate-spin" />,
-  success: <CircleCheckIcon aria-hidden="true" />,
-  warning: <TriangleAlertIcon aria-hidden="true" />,
+  info: <IconInfo aria-hidden="true" />,
+  loading: <IconLoader aria-hidden="true" className="animate-spin" />,
+  success: <IconCircleCheck aria-hidden="true" />,
+  warning: <IconAlert aria-hidden="true" />,
 };
 
 const ToastIcon = ({ type }: { type: string | undefined }) => {

@@ -21,6 +21,7 @@
     "@cs/firebase": "workspace:*",
     "@cs/flags": "workspace:*",
     "@cs/i18n": "workspace:*",
+    "@cs/icons": "workspace:*",
     "@cs/next-config": "workspace:*",
     "@cs/notifications": "workspace:*",
     "@cs/security": "workspace:*",

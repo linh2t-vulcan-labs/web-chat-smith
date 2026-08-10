@@ -1,10 +1,10 @@
 "use client";
 
+import { IconAlert } from "@cs/icons/alert";
 import { ErrorBoundary } from "@cs/ui/components/cs/error-boundary";
 import { Button } from "@cs/ui/components/shadcn/button";
 import { DirectionProvider } from "@cs/ui/components/shadcn/direction";
 import { Toaster, toast } from "@cs/ui/components/shadcn/toast";
-import { TriangleAlertIcon } from "lucide-react";
 import * as React from "react";
 
 import { ShadcnGrid, ShadcnPanel, ShadcnSection } from "./shared/section";
@@ -30,7 +30,7 @@ const ShadcnErrorBoundaryFallback = ({
 }) => (
   <div className="border-destructive/30 bg-destructive/10 rounded-lg border p-4 text-sm">
     <div className="text-destructive flex items-center gap-2 font-medium">
-      <TriangleAlertIcon className="size-4" aria-hidden="true" />
+      <IconAlert className="size-4" aria-hidden="true" />
       Example Error Boundary State
     </div>
     <p className="text-muted-foreground mt-2">{error.message}</p>

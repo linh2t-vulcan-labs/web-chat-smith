@@ -21,6 +21,9 @@ export const readCurrentVersion = async (): Promise<string> => {
   return version;
 };
 
+export const versionDir = (version: string): string =>
+  resolve(FIGMA_TOKENS_DIR, version);
+
 export const listVersions = (): string[] => {
   const versions: string[] = [];
 

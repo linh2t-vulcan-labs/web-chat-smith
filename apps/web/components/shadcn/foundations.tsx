@@ -1,5 +1,13 @@
 "use client";
 
+import { IconBell } from "@cs/icons/bell";
+import { IconCheck } from "@cs/icons/check";
+import { IconDownload } from "@cs/icons/download";
+import { IconHome } from "@cs/icons/home";
+import { IconSearch } from "@cs/icons/search";
+import { IconSettings } from "@cs/icons/settings";
+import { IconSparkle } from "@cs/icons/sparkle";
+import { IconUser } from "@cs/icons/user";
 import {
   Alert,
   AlertAction,
@@ -54,16 +62,6 @@ import { Kbd, KbdGroup } from "@cs/ui/components/shadcn/kbd";
 import { Separator } from "@cs/ui/components/shadcn/separator";
 import { Skeleton } from "@cs/ui/components/shadcn/skeleton";
 import { Spinner } from "@cs/ui/components/shadcn/spinner";
-import {
-  BellIcon,
-  CheckIcon,
-  DownloadIcon,
-  HomeIcon,
-  SearchIcon,
-  SettingsIcon,
-  SparklesIcon,
-  UserIcon,
-} from "lucide-react";
 
 import { people } from "./shared/data";
 import { ShadcnGrid, ShadcnPanel, ShadcnSection } from "./shared/section";
@@ -83,7 +81,7 @@ export const ShadcnFoundations = () => (
           <Button variant="destructive">Destructive</Button>
           <Button variant="link">Link</Button>
           <Button size="icon" aria-label="Settings">
-            <SettingsIcon />
+            <IconSettings />
           </Button>
           <Button disabled>Disabled</Button>
         </div>
@@ -92,10 +90,10 @@ export const ShadcnFoundations = () => (
           <Button size="sm">Small</Button>
           <Button size="lg">Large</Button>
           <Button size="icon-xs" aria-label="Search">
-            <SearchIcon />
+            <IconSearch />
           </Button>
           <Button size="icon-lg" aria-label="Download">
-            <DownloadIcon />
+            <IconDownload />
           </Button>
         </div>
       </ShadcnPanel>
@@ -126,7 +124,7 @@ export const ShadcnFoundations = () => (
       <ShadcnPanel title="Alert states">
         <div className="space-y-3">
           <Alert>
-            <CheckIcon />
+            <IconCheck />
             <AlertTitle>Ready for review</AlertTitle>
             <AlertDescription>
               Layout, color, and icon alignment should stay stable.
@@ -138,7 +136,7 @@ export const ShadcnFoundations = () => (
             </AlertAction>
           </Alert>
           <Alert variant="destructive">
-            <BellIcon />
+            <IconBell />
             <AlertTitle>Attention required</AlertTitle>
             <AlertDescription>
               Destructive copy wraps without pushing the action outside.
@@ -188,7 +186,7 @@ export const ShadcnFoundations = () => (
             <Item key={person.name}>
               <ItemHeader>
                 <ItemMedia variant="icon">
-                  <UserIcon />
+                  <IconUser />
                 </ItemMedia>
                 <ItemContent>
                   <ItemTitle>{person.name}</ItemTitle>
@@ -211,7 +209,7 @@ export const ShadcnFoundations = () => (
         <Empty>
           <EmptyHeader>
             <EmptyMedia variant="icon">
-              <SparklesIcon />
+              <IconSparkle />
             </EmptyMedia>
             <EmptyTitle>No drafts yet</EmptyTitle>
             <EmptyDescription>
@@ -230,7 +228,7 @@ export const ShadcnFoundations = () => (
           className="bg-muted overflow-hidden rounded-lg"
         >
           <div className="text-muted-foreground flex size-full items-center justify-center gap-2">
-            <HomeIcon className="size-5" />
+            <IconHome className="size-5" />
             16:9 preview
           </div>
         </AspectRatio>

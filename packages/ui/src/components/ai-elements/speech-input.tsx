@@ -1,6 +1,7 @@
 "use client";
 
-import { MicIcon, SquareIcon } from "lucide-react";
+import { IconSquare } from "@cs/icons/square";
+import { MicIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { useEffect, useRef, useState } from "react";
 
@@ -457,7 +458,7 @@ const SpeechInputIcon = ({
     return <Spinner />;
   }
   if (isListening) {
-    return <SquareIcon className="size-4" />;
+    return <IconSquare className="size-4" />;
   }
   return <MicIcon className="size-4" />;
 };

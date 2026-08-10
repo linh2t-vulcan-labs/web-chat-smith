@@ -1,8 +1,6 @@
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MoreHorizontalIcon,
-} from "lucide-react";
+import { IconChevronLeft } from "@cs/icons/chevron-left";
+import { IconChevronRight } from "@cs/icons/chevron-right";
+import { MoreHorizontalIcon } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "#components/shadcn/button";
@@ -71,7 +69,7 @@ const PaginationPrevious = ({
     className={cn("ps-1.5!", className)}
     {...props}
   >
-    <ChevronLeftIcon data-icon="inline-start" className="rtl:rotate-180" />
+    <IconChevronLeft data-icon="inline-start" />
     <span className="hidden sm:block">{text}</span>
   </PaginationLink>
 );
@@ -88,7 +86,7 @@ const PaginationNext = ({
     {...props}
   >
     <span className="hidden sm:block">{text}</span>
-    <ChevronRightIcon data-icon="inline-end" className="rtl:rotate-180" />
+    <IconChevronRight data-icon="inline-end" />
   </PaginationLink>
 );
 

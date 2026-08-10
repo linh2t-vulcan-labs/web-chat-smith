@@ -1,7 +1,8 @@
 "use client";
 
 import { ContextMenu as ContextMenuPrimitive } from "@base-ui/react/context-menu";
-import { ChevronRightIcon, CheckIcon } from "lucide-react";
+import { IconCheck } from "@cs/icons/check";
+import { IconChevronRight } from "@cs/icons/chevron-right";
 import * as React from "react";
 
 import { cn } from "#lib/utils";
@@ -124,7 +125,7 @@ const ContextMenuSubTrigger = ({
     {...props}
   >
     {children}
-    <ChevronRightIcon className="ms-auto rtl:rotate-180" />
+    <IconChevronRight className="ms-auto" />
   </ContextMenuPrimitive.SubmenuTrigger>
 );
 
@@ -160,7 +161,7 @@ const ContextMenuCheckboxItem = ({
   >
     <span className="pointer-events-none absolute inset-e-2">
       <ContextMenuPrimitive.CheckboxItemIndicator>
-        <CheckIcon />
+        <IconCheck />
       </ContextMenuPrimitive.CheckboxItemIndicator>
     </span>
     {children}
@@ -195,7 +196,7 @@ const ContextMenuRadioItem = ({
   >
     <span className="pointer-events-none absolute inset-e-2">
       <ContextMenuPrimitive.RadioItemIndicator>
-        <CheckIcon />
+        <IconCheck />
       </ContextMenuPrimitive.RadioItemIndicator>
     </span>
     {children}

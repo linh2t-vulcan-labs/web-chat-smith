@@ -1,6 +1,9 @@
 "use client";
 
-import { CheckIcon, CopyIcon, EyeIcon, EyeOffIcon } from "lucide-react";
+import { IconCheck } from "@cs/icons/check";
+import { IconCopy } from "@cs/icons/copy";
+import { IconEye } from "@cs/icons/eye";
+import { EyeOffIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
 import { createContext, useContext, useState } from "react";
 
@@ -103,7 +106,7 @@ export const EnvironmentVariablesToggle = ({
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <span className="text-muted-foreground text-xs">
-        {showValues ? <EyeIcon size={14} /> : <EyeOffIcon size={14} />}
+        {showValues ? <IconEye size={14} /> : <EyeOffIcon size={14} />}
       </span>
       <Switch
         aria-label="Toggle value visibility"
@@ -265,7 +268,7 @@ export const EnvironmentVariableCopyButton = ({
     return formatMap[copyFormat]();
   };
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
+  const Icon = isCopied ? IconCheck : IconCopy;
 
   return (
     <Button

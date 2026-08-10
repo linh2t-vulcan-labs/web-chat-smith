@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronDownIcon, SearchIcon } from "lucide-react";
+import { IconChevronDown } from "@cs/icons/chevron-down";
+import { IconSearch } from "@cs/icons/search";
 import type { ComponentProps, ReactElement } from "react";
 
 import {
@@ -76,9 +77,9 @@ export const TaskTrigger = ({
       }
       {...props}
     >
-      <SearchIcon className="size-4" />
+      <IconSearch className="size-4" />
       <p className="text-sm">{title}</p>
-      <ChevronDownIcon className="size-4 transition-transform group-data-open:rotate-180" />
+      <IconChevronDown className="size-4 transition-transform group-data-open:rotate-180" />
     </CollapsibleTrigger>
   );
 

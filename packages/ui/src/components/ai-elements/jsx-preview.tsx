@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle } from "lucide-react";
+import { IconCirleAlert } from "@cs/icons/cirle-alert";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import type { TProps as JsxParserProps } from "react-jsx-parser";
@@ -302,7 +302,7 @@ export const JSXPreviewError = ({
         renderChildren(children, error)
       ) : (
         <>
-          <AlertCircle className="size-4 shrink-0" />
+          <IconCirleAlert className="size-4 shrink-0" />
           <span>{error.message}</span>
         </>
       )}

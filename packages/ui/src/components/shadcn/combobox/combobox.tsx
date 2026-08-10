@@ -1,7 +1,9 @@
 "use client";
 
 import { Combobox as ComboboxPrimitive } from "@base-ui/react";
-import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react";
+import { IconCheck } from "@cs/icons/check";
+import { IconChevronDown } from "@cs/icons/chevron-down";
+import { IconX } from "@cs/icons/x";
 import * as React from "react";
 
 import { Button } from "#components/shadcn/button";
@@ -30,7 +32,7 @@ const ComboboxTrigger = ({
     {...props}
   >
     {children}
-    <ChevronDownIcon className="text-muted-foreground pointer-events-none size-4" />
+    <IconChevronDown className="text-muted-foreground pointer-events-none size-4" />
   </ComboboxPrimitive.Trigger>
 );
 
@@ -44,7 +46,7 @@ const ComboboxClear = ({
     className={cn(className)}
     {...props}
   >
-    <XIcon className="pointer-events-none" />
+    <IconX className="pointer-events-none" />
   </ComboboxPrimitive.Clear>
 );
 
@@ -149,7 +151,7 @@ const ComboboxItem = ({
         <span className="pointer-events-none absolute inset-e-2 flex size-4 items-center justify-center" />
       }
     >
-      <CheckIcon className="pointer-events-none" />
+      <IconCheck className="pointer-events-none" />
     </ComboboxPrimitive.ItemIndicator>
   </ComboboxPrimitive.Item>
 );
@@ -245,7 +247,7 @@ const ComboboxChip = ({
         className="-ms-1 opacity-50 hover:opacity-100"
         data-slot="combobox-chip-remove"
       >
-        <XIcon className="pointer-events-none" />
+        <IconX className="pointer-events-none" />
       </ComboboxPrimitive.ChipRemove>
     )}
   </ComboboxPrimitive.Chip>

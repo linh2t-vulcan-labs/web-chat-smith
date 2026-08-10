@@ -1,7 +1,9 @@
 "use client";
 
+import { IconBrain } from "@cs/icons/brain";
+import { IconChevronDown } from "@cs/icons/chevron-down";
 import type { LucideIcon } from "lucide-react";
-import { BrainIcon, ChevronDownIcon, DotIcon } from "lucide-react";
+import { DotIcon } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext } from "react";
 
@@ -85,11 +87,11 @@ export const ChainOfThoughtHeader = ({
         )}
         {...props}
       >
-        <BrainIcon className="size-4" />
+        <IconBrain className="size-4" />
         <span className="flex-1 text-left">
           {children ?? "Chain of Thought"}
         </span>
-        <ChevronDownIcon
+        <IconChevronDown
           className={cn(
             "size-4 transition-transform",
             isOpen ? "rotate-180" : "rotate-0"

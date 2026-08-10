@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRightIcon } from "lucide-react";
+import { IconChevronRight } from "@cs/icons/chevron-right";
 import type { ComponentProps, HTMLAttributes } from "react";
 import { createContext, useContext } from "react";
 
@@ -205,7 +205,7 @@ export const SchemaDisplayParameters = ({
   return (
     <Collapsible className={cn(className)} defaultOpen {...props}>
       <CollapsibleTrigger className="group hover:bg-muted/50 flex w-full items-center gap-2 px-4 py-3 text-left transition-colors">
-        <ChevronRightIcon className="text-muted-foreground size-4 shrink-0 transition-transform group-data-open:rotate-90" />
+        <IconChevronRight className="text-muted-foreground size-4 shrink-0 transition-transform group-data-open:rotate-90" />
         <span className="text-sm font-medium">Parameters</span>
         <Badge className="ml-auto text-xs" variant="secondary">
           {parameters.length}
@@ -264,7 +264,7 @@ const SchemaDisplayPropertyGroup = ({
       )}
       style={{ paddingLeft }}
     >
-      <ChevronRightIcon className="text-muted-foreground size-4 shrink-0 transition-transform group-data-open:rotate-90" />
+      <IconChevronRight className="text-muted-foreground size-4 shrink-0 transition-transform group-data-open:rotate-90" />
       <span className="font-mono text-sm">{name}</span>
       <PropertyTypeBadge required={required} type={type} />
     </CollapsibleTrigger>
@@ -367,7 +367,7 @@ const SchemaDisplayBodySection = ({
   return (
     <Collapsible className={cn(className)} defaultOpen {...props}>
       <CollapsibleTrigger className="group hover:bg-muted/50 flex w-full items-center gap-2 px-4 py-3 text-left transition-colors">
-        <ChevronRightIcon className="text-muted-foreground size-4 shrink-0 transition-transform group-data-open:rotate-90" />
+        <IconChevronRight className="text-muted-foreground size-4 shrink-0 transition-transform group-data-open:rotate-90" />
         <span className="text-sm font-medium">{title}</span>
       </CollapsibleTrigger>
       <CollapsibleContent>

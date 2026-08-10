@@ -1,7 +1,8 @@
 "use client";
 
+import { IconChevronLeft } from "@cs/icons/chevron-left";
+import { IconChevronRight } from "@cs/icons/chevron-right";
 import type { UIMessage } from "ai";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes, ReactElement } from "react";
 import { createContext, memo, useContext, useEffect, useState } from "react";
 
@@ -236,7 +237,7 @@ export const MessageBranchPrevious = ({
       variant="ghost"
       {...props}
     >
-      {children ?? <ChevronLeftIcon size={14} />}
+      {children ?? <IconChevronLeft size={14} />}
     </Button>
   );
 };
@@ -259,7 +260,7 @@ export const MessageBranchNext = ({
       variant="ghost"
       {...props}
     >
-      {children ?? <ChevronRightIcon size={14} />}
+      {children ?? <IconChevronRight size={14} />}
     </Button>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronDownIcon, PaperclipIcon } from "lucide-react";
+import { IconChevronDown } from "@cs/icons/chevron-down";
+import { PaperclipIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 
 import { Button } from "#components/shadcn/button";
@@ -245,7 +246,7 @@ export const QueueSectionLabel = ({
   ...props
 }: QueueSectionLabelProps) => (
   <span className={cn("flex items-center gap-2", className)} {...props}>
-    <ChevronDownIcon className="size-4 transition-transform group-data-closed:-rotate-90" />
+    <IconChevronDown className="size-4 transition-transform group-data-closed:-rotate-90" />
     {icon}
     <span>
       {count} {label}

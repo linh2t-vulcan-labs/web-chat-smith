@@ -1,11 +1,9 @@
 "use client";
 
-import {
-  AlertTriangleIcon,
-  CheckIcon,
-  ChevronDownIcon,
-  CopyIcon,
-} from "lucide-react";
+import { IconAlert } from "@cs/icons/alert";
+import { IconCheck } from "@cs/icons/check";
+import { IconChevronDown } from "@cs/icons/chevron-down";
+import { IconCopy } from "@cs/icons/copy";
 import type { ComponentProps } from "react";
 import { createContext, useContext } from "react";
 
@@ -284,7 +282,7 @@ export const StackTraceError = ({
     className={cn("flex flex-1 items-center gap-2 overflow-hidden", className)}
     {...props}
   >
-    <AlertTriangleIcon className="text-destructive size-4 shrink-0" />
+    <IconAlert className="text-destructive size-4 shrink-0" />
     {children}
   </div>
 );
@@ -371,7 +369,7 @@ export const StackTraceCopyButton = ({
     timeout,
   });
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
+  const Icon = isCopied ? IconCheck : IconCopy;
 
   return (
     <Button
@@ -400,7 +398,7 @@ export const StackTraceExpandButton = ({
       className={cn("flex size-7 items-center justify-center", className)}
       {...props}
     >
-      <ChevronDownIcon
+      <IconChevronDown
         className={cn(
           "text-muted-foreground size-4 transition-transform",
           isOpen ? "rotate-180" : "rotate-0"

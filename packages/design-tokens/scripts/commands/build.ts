@@ -14,14 +14,7 @@ import {
   generateTokensCss,
   generateTypographyCss,
 } from "../lib/generators";
-import {
-  normalizeBorders,
-  normalizeColors,
-  normalizeRadius,
-  normalizeShadows,
-  normalizeSpacing,
-  normalizeTypography,
-} from "../lib/normalizers";
+import { normalizeAll } from "../lib/normalizers";
 import { resolveTokens } from "../lib/resolver";
 import type { TokenMap } from "../lib/resolver";
 import { styleText } from "../lib/utils/console-colors";
@@ -55,15 +48,6 @@ const parseTokenFile = async (
   }
 
   return parsed as TokenMap;
-};
-
-const normalizeAll = (tokens: TokenMap): TokenMap => {
-  const step1 = normalizeColors(tokens);
-  const step2 = normalizeSpacing(step1);
-  const step3 = normalizeRadius(step2);
-  const step4 = normalizeBorders(step3);
-  const step5 = normalizeShadows(step4);
-  return normalizeTypography(step5);
 };
 
 const buildVersion = async (version: string): Promise<void> => {
