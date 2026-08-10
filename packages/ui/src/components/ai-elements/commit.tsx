@@ -24,7 +24,7 @@ export type CommitProps = ComponentProps<typeof Collapsible>;
 
 export const Commit = ({ className, children, ...props }: CommitProps) => (
   <Collapsible
-    className={cn("rounded-lg border bg-background", className)}
+    className={cn("bg-background rounded-lg border", className)}
     {...props}
   >
     {children}
@@ -75,7 +75,7 @@ export const CommitMessage = ({
   children,
   ...props
 }: CommitMessageProps) => (
-  <span className={cn("font-medium text-sm", className)} {...props}>
+  <span className={cn("text-sm font-medium", className)} {...props}>
     {children}
   </span>
 );
@@ -89,7 +89,7 @@ export const CommitMetadata = ({
 }: CommitMetadataProps) => (
   <div
     className={cn(
-      "flex items-center gap-2 text-muted-foreground text-xs",
+      "text-muted-foreground flex items-center gap-2 text-xs",
       className
     )}
     {...props}
@@ -231,6 +231,7 @@ export const CommitCopyButton = ({
 
   return (
     <Button
+      aria-label={isCopied ? "Copied" : "Copy commit hash"}
       className={cn("size-7 shrink-0", className)}
       onClick={() => copyToClipboard(hash)}
       size="icon"
@@ -275,7 +276,7 @@ export const CommitFile = ({
 }: CommitFileProps) => (
   <div
     className={cn(
-      "flex items-center justify-between gap-2 rounded px-2 py-1 text-sm hover:bg-muted/50",
+      "hover:bg-muted/50 flex items-center justify-between gap-2 rounded px-2 py-1 text-sm",
       className
     )}
     {...props}
@@ -322,7 +323,7 @@ export const CommitFileStatus = ({
 }: CommitFileStatusProps) => (
   <span
     className={cn(
-      "font-medium font-mono text-xs",
+      "font-mono text-xs font-medium",
       fileStatusStyles[status],
       className
     )}
@@ -339,7 +340,7 @@ export const CommitFileIcon = ({
   ...props
 }: CommitFileIconProps) => (
   <FileIcon
-    className={cn("size-3.5 shrink-0 text-muted-foreground", className)}
+    className={cn("text-muted-foreground size-3.5 shrink-0", className)}
     {...props}
   />
 );

@@ -53,7 +53,7 @@ export const EnvironmentVariables = ({
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
     <EnvironmentVariablesContext.Provider value={contextValue}>
       <div
-        className={cn("rounded-lg border bg-background", className)}
+        className={cn("bg-background rounded-lg border", className)}
         {...props}
       >
         {children}
@@ -87,7 +87,7 @@ export const EnvironmentVariablesTitle = ({
   children,
   ...props
 }: EnvironmentVariablesTitleProps) => (
-  <h3 className={cn("font-medium text-sm", className)} {...props}>
+  <h3 className={cn("text-sm font-medium", className)} {...props}>
     {children ?? "Environment Variables"}
   </h3>
 );
@@ -183,7 +183,7 @@ export const EnvironmentVariableValue = ({
   return (
     <span
       className={cn(
-        "font-mono text-muted-foreground text-sm",
+        "text-muted-foreground font-mono text-sm",
         !showValues && "select-none",
         className
       )}
@@ -269,6 +269,7 @@ export const EnvironmentVariableCopyButton = ({
 
   return (
     <Button
+      aria-label={isCopied ? "Copied" : `Copy ${copyFormat}`}
       className={cn("size-6 shrink-0", className)}
       onClick={() => copyToClipboard(getTextToCopy())}
       size="icon"

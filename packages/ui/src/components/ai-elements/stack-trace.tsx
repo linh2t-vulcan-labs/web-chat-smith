@@ -232,7 +232,7 @@ export const StackTrace = ({
     <StackTraceContext.Provider value={contextValue}>
       <div
         className={cn(
-          "not-prose w-full overflow-hidden rounded-lg border bg-background font-mono text-sm",
+          "not-prose bg-background w-full overflow-hidden rounded-lg border font-mono text-sm",
           className
         )}
         {...props}
@@ -259,7 +259,7 @@ export const StackTraceHeader = ({
           // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- generic passthrough render-prop; accessible text comes from `children` below, merged into this button by CollapsibleTrigger's render prop
           <button
             className={cn(
-              "flex w-full cursor-pointer items-center gap-3 p-3 text-left transition-colors hover:bg-muted/50",
+              "hover:bg-muted/50 flex w-full cursor-pointer items-center gap-3 p-3 text-left transition-colors",
               className
             )}
             type="button"
@@ -284,7 +284,7 @@ export const StackTraceError = ({
     className={cn("flex flex-1 items-center gap-2 overflow-hidden", className)}
     {...props}
   >
-    <AlertTriangleIcon className="size-4 shrink-0 text-destructive" />
+    <AlertTriangleIcon className="text-destructive size-4 shrink-0" />
     {children}
   </div>
 );
@@ -300,7 +300,7 @@ export const StackTraceErrorType = ({
 
   return (
     <span
-      className={cn("shrink-0 font-semibold text-destructive", className)}
+      className={cn("text-destructive shrink-0 font-semibold", className)}
       {...props}
     >
       {children ?? trace.errorType}
@@ -318,7 +318,7 @@ export const StackTraceErrorMessage = ({
   const { trace } = useStackTrace();
 
   return (
-    <span className={cn("truncate text-foreground", className)} {...props}>
+    <span className={cn("text-foreground truncate", className)} {...props}>
       {children ?? trace.errorMessage}
     </span>
   );
@@ -375,6 +375,7 @@ export const StackTraceCopyButton = ({
 
   return (
     <Button
+      aria-label={isCopied ? "Copied" : "Copy stack trace"}
       className={cn("size-7", className)}
       onClick={() => copyToClipboard(raw)}
       size="icon"
@@ -401,7 +402,7 @@ export const StackTraceExpandButton = ({
     >
       <ChevronDownIcon
         className={cn(
-          "size-4 text-muted-foreground transition-transform",
+          "text-muted-foreground size-4 transition-transform",
           isOpen ? "rotate-180" : "rotate-0"
         )}
       />
@@ -426,7 +427,7 @@ export const StackTraceContent = ({
   return (
     <Collapsible open={isOpen}>
       <CollapsibleContent
-        className={cn("border-t bg-muted/30", className)}
+        className={cn("bg-muted/30 border-t", className)}
         {...props}
       >
         <div className="overflow-auto" style={{ maxHeight }}>
@@ -468,7 +469,7 @@ const FilePathButton = ({ frame, onFilePathClick }: FilePathButtonProps) => {
   return (
     <button
       className={cn(
-        "underline decoration-dotted hover:text-primary",
+        "hover:text-primary underline decoration-dotted",
         onFilePathClick && "cursor-pointer"
       )}
       disabled={!onFilePathClick}

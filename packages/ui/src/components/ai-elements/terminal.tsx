@@ -31,7 +31,7 @@ export const TerminalHeader = ({
 }: TerminalHeaderProps) => (
   <div
     className={cn(
-      "flex items-center justify-between border-zinc-800 border-b px-4 py-2",
+      "flex items-center justify-between border-b border-zinc-800 px-4 py-2",
       className
     )}
     {...props}
@@ -116,6 +116,7 @@ export const TerminalCopyButton = ({
 
   return (
     <Button
+      aria-label={isCopied ? "Copied" : "Copy output"}
       className={cn(
         "size-7 shrink-0 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100",
         className
@@ -145,6 +146,7 @@ export const TerminalClearButton = ({
 
   return (
     <Button
+      aria-label="Clear terminal"
       className={cn(
         "size-7 shrink-0 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100",
         className
@@ -185,7 +187,7 @@ export const TerminalContent = ({
       {...props}
     >
       {children ?? (
-        <pre className="whitespace-pre-wrap break-words">
+        <pre className="break-words whitespace-pre-wrap">
           <Ansi>{output}</Ansi>
           {isStreaming && (
             <span className="ml-0.5 inline-block h-4 w-2 animate-pulse bg-zinc-100" />

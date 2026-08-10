@@ -1420,7 +1420,7 @@ export const PromptInputButton = ({
       <TooltipContent side={side}>
         {content}
         {shortcut && (
-          <span className="ml-2 text-muted-foreground">{shortcut}</span>
+          <span className="text-muted-foreground ml-2">{shortcut}</span>
         )}
       </TooltipContent>
     </Tooltip>
@@ -1440,7 +1440,13 @@ export const PromptInputActionMenuTrigger = ({
   ...props
 }: PromptInputActionMenuTriggerProps) => (
   <DropdownMenuTrigger
-    render={<PromptInputButton className={className} {...props} />}
+    render={
+      <PromptInputButton
+        aria-label="More actions"
+        className={className}
+        {...props}
+      />
+    }
   >
     {children ?? <PlusIcon className="size-4" />}
   </DropdownMenuTrigger>
@@ -1564,7 +1570,7 @@ export const PromptInputSelectTrigger = ({
 }: PromptInputSelectTriggerProps) => (
   <SelectTrigger
     className={cn(
-      "border-none bg-transparent font-medium text-muted-foreground shadow-none transition-colors",
+      "text-muted-foreground border-none bg-transparent font-medium shadow-none transition-colors",
       "hover:bg-accent hover:text-foreground aria-expanded:bg-accent aria-expanded:text-foreground",
       className
     )}
@@ -1650,7 +1656,7 @@ export const PromptInputTabLabel = ({
   // oxlint-disable-next-line jsx-a11y/heading-has-content
   <h3
     className={cn(
-      "mb-2 px-3 font-medium text-muted-foreground text-xs",
+      "text-muted-foreground mb-2 px-3 text-xs font-medium",
       className
     )}
     {...props}
@@ -1674,7 +1680,7 @@ export const PromptInputTabItem = ({
 }: PromptInputTabItemProps) => (
   <div
     className={cn(
-      "flex items-center gap-2 px-3 py-2 text-xs hover:bg-accent",
+      "hover:bg-accent flex items-center gap-2 px-3 py-2 text-xs",
       className
     )}
     {...props}
