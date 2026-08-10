@@ -45,7 +45,7 @@ export const ModelSelectorContent = ({
     aria-describedby={undefined}
     showCloseButton={false}
     className={cn(
-      "outline! border-none! p-0 outline-border! outline-solid!",
+      "outline-border! border-none! p-0 outline! outline-solid!",
       className
     )}
     {...props}
@@ -208,7 +208,7 @@ export const ModelSelectorLogoGroup = ({
 }: ModelSelectorLogoGroupProps) => (
   <div
     className={cn(
-      "flex shrink-0 items-center -space-x-1 [&>img]:rounded-full [&>img]:bg-background [&>img]:p-px [&>img]:ring-1 dark:[&>img]:bg-foreground",
+      "[&>img]:bg-background dark:[&>img]:bg-foreground flex shrink-0 items-center -space-x-1 [&>img]:rounded-full [&>img]:p-px [&>img]:ring-1",
       className
     )}
     {...props}

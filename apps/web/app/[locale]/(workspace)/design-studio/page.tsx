@@ -15,7 +15,7 @@ export const metadata = {
  */
 const DesignStudioPage = () => (
   <div className="flex min-h-svh flex-col gap-4 p-6">
-    <h1 className="font-semibold text-lg">Design Studio</h1>
+    <h1 className="text-lg font-semibold">Design Studio</h1>
     <WorkspaceSessionStatus />
   </div>
 );

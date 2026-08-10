@@ -18,10 +18,10 @@ export const ShadcnUIGallery = () => {
   return (
     <main
       dir={dir}
-      className="min-h-screen bg-muted/30 px-4 py-6 text-foreground sm:px-6 lg:px-8"
+      className="bg-muted/30 text-foreground min-h-screen px-4 py-6 sm:px-6 lg:px-8"
     >
       <div className="mx-auto flex max-w-7xl flex-col gap-8">
-        <header className="flex flex-col gap-4 rounded-lg border bg-background p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between">
+        <header className="bg-background flex flex-col gap-4 rounded-lg border p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="outline">@cs/ui</Badge>
@@ -32,7 +32,7 @@ export const ShadcnUIGallery = () => {
               <h1 className="text-2xl font-semibold tracking-normal">
                 Shadcn UI Examples
               </h1>
-              <p className="max-w-3xl text-sm text-muted-foreground">
+              <p className="text-muted-foreground max-w-3xl text-sm">
                 A full component gallery for visual checks across responsive
                 widths, portals, focus states, and RTL layout.
               </p>

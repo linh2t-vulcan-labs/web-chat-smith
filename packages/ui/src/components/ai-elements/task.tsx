@@ -19,7 +19,7 @@ export const TaskItemFile = ({
 }: TaskItemFileProps) => (
   <div
     className={cn(
-      "inline-flex items-center gap-1 rounded-md border bg-secondary px-1.5 py-0.5 text-foreground text-xs",
+      "bg-secondary text-foreground inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-xs",
       className
     )}
     {...props}
@@ -68,7 +68,7 @@ export const TaskTrigger = ({
         // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- accessible text comes from the icon/title/chevron children below, merged into this button by CollapsibleTrigger's render prop
         <button
           className={cn(
-            "group flex w-full cursor-pointer items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground",
+            "group text-muted-foreground hover:text-foreground flex w-full cursor-pointer items-center gap-2 text-sm transition-colors",
             className
           )}
           type="button"
@@ -93,7 +93,7 @@ export const TaskContent = ({
     className={cn("text-popover-foreground outline-none", className)}
     {...props}
   >
-    <div className="mt-4 space-y-2 border-muted border-l-2 pl-4">
+    <div className="border-muted mt-4 space-y-2 border-l-2 pl-4">
       {children}
     </div>
   </CollapsibleContent>

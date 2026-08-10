@@ -52,7 +52,7 @@ export const OfflineBanner = () => {
   }
 
   return (
-    <output className="block w-full bg-destructive px-4 py-2 text-center text-destructive-foreground text-sm">
+    <output className="bg-destructive text-destructive-foreground block w-full px-4 py-2 text-center text-sm">
       {t({
         id: "Common.connectivity.offline",
         message: "You're offline — some features may not work.",

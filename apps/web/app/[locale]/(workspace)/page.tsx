@@ -13,7 +13,7 @@ export const metadata = {
  */
 const ChatPage = () => (
   <div className="flex min-h-svh flex-col gap-4 p-6">
-    <h1 className="font-semibold text-lg">Chat</h1>
+    <h1 className="text-lg font-semibold">Chat</h1>
     <WorkspaceSessionStatus />
   </div>
 );

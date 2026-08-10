@@ -112,7 +112,7 @@ const getSegmentClassName = (
   cn(
     "inline text-left",
     segmentTimeStateClasses[timeState],
-    isSeekable ? "cursor-pointer hover:text-foreground" : "cursor-default"
+    isSeekable ? "hover:text-foreground cursor-pointer" : "cursor-default"
   );
 
 export const TranscriptionSegment = ({

@@ -26,12 +26,12 @@ export const InlineError = ({
 }: InlineErrorProps) => (
   <div
     className={cn(
-      "flex flex-col gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm",
+      "border-destructive/30 bg-destructive/10 flex flex-col gap-3 rounded-lg border p-4 text-sm",
       className
     )}
     role="alert"
   >
-    <div className="flex items-center gap-2 font-medium text-destructive">
+    <div className="text-destructive flex items-center gap-2 font-medium">
       <TriangleAlertIcon aria-hidden="true" className="size-4 shrink-0" />
       <span>{title}</span>
     </div>

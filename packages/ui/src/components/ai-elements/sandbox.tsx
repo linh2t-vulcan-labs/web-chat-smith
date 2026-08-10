@@ -52,11 +52,11 @@ export const SandboxHeader = ({
     {...props}
   >
     <div className="flex items-center gap-2">
-      <Code className="size-4 text-muted-foreground" />
-      <span className="font-medium text-sm">{title}</span>
+      <Code className="text-muted-foreground size-4" />
+      <span className="text-sm font-medium">{title}</span>
       {getStatusBadge(state)}
     </div>
-    <ChevronDownIcon className="size-4 text-muted-foreground transition-transform group-data-open:rotate-180" />
+    <ChevronDownIcon className="text-muted-foreground size-4 transition-transform group-data-open:rotate-180" />
   </CollapsibleTrigger>
 );
 
@@ -83,7 +83,7 @@ export const SandboxTabsBar = ({
 }: SandboxTabsBarProps) => (
   <div
     className={cn(
-      "flex w-full items-center border-border border-t border-b",
+      "border-border flex w-full items-center border-t border-b",
       className
     )}
     {...props}
@@ -110,7 +110,7 @@ export const SandboxTabsTrigger = ({
 }: SandboxTabsTriggerProps) => (
   <TabsTrigger
     className={cn(
-      "rounded-none border-0 border-transparent border-b-2 px-4 py-2 font-medium text-muted-foreground text-sm transition-colors data-active:border-primary data-active:bg-transparent data-active:text-foreground data-active:shadow-none",
+      "text-muted-foreground data-active:border-primary data-active:text-foreground rounded-none border-0 border-b-2 border-transparent px-4 py-2 text-sm font-medium transition-colors data-active:bg-transparent data-active:shadow-none",
       className
     )}
     {...props}

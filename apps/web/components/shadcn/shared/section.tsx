@@ -14,7 +14,7 @@ export const ShadcnSection = ({
     <div className="space-y-1">
       <h2 className="text-xl font-semibold tracking-normal">{title}</h2>
       {description ? (
-        <p className="max-w-3xl text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground max-w-3xl text-sm">{description}</p>
       ) : null}
     </div>
     {children}
@@ -32,7 +32,7 @@ export const ShadcnPanel = ({
   <div
     {...props}
     className={cn(
-      "min-w-0 rounded-lg border bg-background p-4 shadow-xs",
+      "bg-background min-w-0 rounded-lg border p-4 shadow-xs",
       className
     )}
   >

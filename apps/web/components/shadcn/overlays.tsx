@@ -169,7 +169,7 @@ export const ShadcnOverlays = () => (
                     Modal content should stay centered and responsive.
                   </DialogDescription>
                 </DialogHeader>
-                <div className="rounded-lg border bg-muted/40 p-3 text-sm">
+                <div className="bg-muted/40 rounded-lg border p-3 text-sm">
                   Use this surface to inspect focus trapping and close button
                   placement.
                 </div>
@@ -223,7 +223,7 @@ export const ShadcnOverlays = () => (
           <ContextMenu>
             <ContextMenuTrigger
               render={
-                <div className="flex h-32 cursor-context-menu items-center justify-center rounded-lg border border-dashed text-sm text-muted-foreground">
+                <div className="text-muted-foreground flex h-32 cursor-context-menu items-center justify-center rounded-lg border border-dashed text-sm">
                   Right click or long press this area
                 </div>
               }
@@ -285,7 +285,7 @@ export const ShadcnOverlays = () => (
               <HoverCardContent className="w-72">
                 <div className="space-y-1">
                   <div className="font-medium">ChatSmith UI</div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Hover content checks pointer and keyboard behavior.
                   </p>
                 </div>

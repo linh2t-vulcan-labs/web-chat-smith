@@ -363,7 +363,7 @@ export const VoiceSelectorBullet = ({
 }: VoiceSelectorBulletProps) => (
   <span
     aria-hidden="true"
-    className={cn("select-none text-border", className)}
+    className={cn("text-border select-none", className)}
     {...props}
   >
     &bull;

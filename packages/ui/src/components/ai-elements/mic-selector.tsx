@@ -237,7 +237,7 @@ export const MicSelectorTrigger = ({
     <PopoverTrigger render={<Button variant="outline" {...props} ref={ref} />}>
       {children}
       <ChevronsUpDownIcon
-        className="shrink-0 text-muted-foreground"
+        className="text-muted-foreground shrink-0"
         size={16}
       />
     </PopoverTrigger>

@@ -121,7 +121,7 @@ export const ShadcnDataDisplay = () => (
           <div className="min-w-[42rem] p-4">
             <div className="grid grid-cols-6 gap-3 text-sm">
               {Array.from({ length: 30 }).map((_, index) => (
-                <div key={index} className="rounded-md border bg-muted/40 p-3">
+                <div key={index} className="bg-muted/40 rounded-md border p-3">
                   Cell {index + 1}
                 </div>
               ))}
@@ -155,7 +155,7 @@ export const ShadcnDataDisplay = () => (
           <CarouselContent>
             {["Draft", "Review", "Publish"].map((item) => (
               <CarouselItem key={item}>
-                <div className="flex h-40 items-center justify-center rounded-lg border bg-muted/40 text-sm font-medium">
+                <div className="bg-muted/40 flex h-40 items-center justify-center rounded-lg border text-sm font-medium">
                   {item}
                 </div>
               </CarouselItem>

@@ -68,7 +68,7 @@ export const WebPreview = ({
     <WebPreviewContext.Provider value={contextValue}>
       <div
         className={cn(
-          "flex size-full flex-col rounded-lg border bg-card",
+          "bg-card flex size-full flex-col rounded-lg border",
           className
         )}
         {...props}
@@ -110,7 +110,7 @@ export const WebPreviewNavigationButton = ({
       <TooltipTrigger
         render={
           <Button
-            className="h-8 w-8 p-0 hover:text-foreground"
+            className="hover:text-foreground h-8 w-8 p-0"
             disabled={disabled}
             onClick={onClick}
             size="sm"
@@ -219,7 +219,7 @@ export const WebPreviewConsole = ({
 
   return (
     <Collapsible
-      className={cn("border-t bg-muted/50 font-mono text-sm", className)}
+      className={cn("bg-muted/50 border-t font-mono text-sm", className)}
       onOpenChange={setConsoleOpen}
       open={consoleOpen}
       {...props}
@@ -227,7 +227,7 @@ export const WebPreviewConsole = ({
       <CollapsibleTrigger
         render={
           <Button
-            className="flex w-full items-center justify-between p-4 text-left font-medium hover:bg-muted/50"
+            className="hover:bg-muted/50 flex w-full items-center justify-between p-4 text-left font-medium"
             variant="ghost"
           />
         }

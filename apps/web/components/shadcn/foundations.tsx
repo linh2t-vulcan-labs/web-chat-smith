@@ -170,7 +170,7 @@ export const ShadcnFoundations = () => (
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-semibold">82%</div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Responsive text should remain readable in narrow columns.
             </p>
           </CardContent>
@@ -227,9 +227,9 @@ export const ShadcnFoundations = () => (
       <ShadcnPanel title="Aspect ratio, skeleton, spinner">
         <AspectRatio
           ratio={16 / 9}
-          className="overflow-hidden rounded-lg bg-muted"
+          className="bg-muted overflow-hidden rounded-lg"
         >
-          <div className="flex size-full items-center justify-center gap-2 text-muted-foreground">
+          <div className="text-muted-foreground flex size-full items-center justify-center gap-2">
             <HomeIcon className="size-5" />
             16:9 preview
           </div>

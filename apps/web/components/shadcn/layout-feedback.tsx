@@ -15,7 +15,7 @@ const ShadcnExplodingPreview = ({ enabled }: { enabled: boolean }) => {
   }
 
   return (
-    <div className="rounded-lg border border-dashed p-4 text-sm text-muted-foreground">
+    <div className="text-muted-foreground rounded-lg border border-dashed p-4 text-sm">
       Click the button to verify boundary fallback and reset behavior.
     </div>
   );
@@ -28,12 +28,12 @@ const ShadcnErrorBoundaryFallback = ({
   error: Error;
   onRecover: () => void;
 }) => (
-  <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm">
-    <div className="flex items-center gap-2 font-medium text-destructive">
+  <div className="border-destructive/30 bg-destructive/10 rounded-lg border p-4 text-sm">
+    <div className="text-destructive flex items-center gap-2 font-medium">
       <TriangleAlertIcon className="size-4" aria-hidden="true" />
       Example Error Boundary State
     </div>
-    <p className="mt-2 text-muted-foreground">{error.message}</p>
+    <p className="text-muted-foreground mt-2">{error.message}</p>
     <Button className="mt-3" size="sm" variant="outline" onClick={onRecover}>
       Reset Preview
     </Button>
@@ -64,7 +64,7 @@ export const ShadcnLayoutFeedback = () => {
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <div className="font-medium">RTL preview</div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Inline spacing, text alignment, and icons should flip.
                   </p>
                 </div>

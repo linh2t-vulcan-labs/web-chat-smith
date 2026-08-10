@@ -12,7 +12,7 @@ export const metadata = {
  */
 const LandingPage = () => (
   <div className="flex min-h-svh flex-col gap-4 p-6">
-    <h1 className="font-semibold text-lg">Landing</h1>
+    <h1 className="text-lg font-semibold">Landing</h1>
   </div>
 );
 

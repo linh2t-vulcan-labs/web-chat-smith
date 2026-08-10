@@ -100,10 +100,10 @@ const ShadcnSidebarPreviewContent = () => {
 
   return (
     <SidebarInset className="min-w-0 bg-transparent p-2 md:m-0! md:rounded-none! md:shadow-none!">
-      <div className="flex min-w-0 items-center justify-between gap-3 rounded-lg border bg-background px-3 py-2">
+      <div className="bg-background flex min-w-0 items-center justify-between gap-3 rounded-lg border px-3 py-2">
         <div className="min-w-0">
           <div className="truncate text-sm font-medium">Preview Workspace</div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             Sidebar state: <span className="font-medium">{state}</span>
           </p>
         </div>
@@ -115,8 +115,8 @@ const ShadcnSidebarPreviewContent = () => {
           ["Reviews", "4"],
           ["Published", "28"],
         ].map(([label, value]) => (
-          <div key={label} className="rounded-lg border bg-muted/20 px-3 py-2">
-            <div className="text-xs text-muted-foreground">{label}</div>
+          <div key={label} className="bg-muted/20 rounded-lg border px-3 py-2">
+            <div className="text-muted-foreground text-xs">{label}</div>
             <div className="text-lg font-semibold">{value}</div>
           </div>
         ))}
@@ -132,11 +132,11 @@ const ShadcnSidebarPreviewContent = () => {
           {["Navigation QA", "Form controls", "Overlay states"].map((item) => (
             <div key={item} className="flex items-center gap-2 px-3 py-2">
               <FileTextIcon
-                className="size-4 text-muted-foreground"
+                className="text-muted-foreground size-4"
                 aria-hidden="true"
               />
               <div className="min-w-0 flex-1 truncate text-sm">{item}</div>
-              <span className="text-xs text-muted-foreground">Today</span>
+              <span className="text-muted-foreground text-xs">Today</span>
             </div>
           ))}
         </div>
@@ -149,7 +149,7 @@ const ShadcnSidebarShell = () => {
   const [open, setOpen] = React.useState(true);
 
   return (
-    <div className="relative isolate h-[24rem] overflow-hidden rounded-xl border bg-muted/30 p-2">
+    <div className="bg-muted/30 relative isolate h-[24rem] overflow-hidden rounded-xl border p-2">
       <TooltipProvider delay={300}>
         <SidebarProvider
           open={open}
@@ -174,14 +174,14 @@ const ShadcnSidebarShell = () => {
                     className="h-8 gap-2 p-0 group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:p-0!"
                     tooltip="QA"
                   >
-                    <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
+                    <div className="bg-sidebar-primary text-sidebar-primary-foreground flex size-8 shrink-0 items-center justify-center rounded-md">
                       <HomeIcon className="size-4" aria-hidden="true" />
                     </div>
                     <div className="min-w-0 text-start">
                       <div className="truncate text-sm font-medium">
                         ChatSmith QA
                       </div>
-                      <div className="truncate text-xs text-sidebar-foreground/70">
+                      <div className="text-sidebar-foreground/70 truncate text-xs">
                         Component sandbox
                       </div>
                     </div>
@@ -331,11 +331,11 @@ export const ShadcnNavigation = () => (
           </TabsList>
           <TabsContent
             value="preview"
-            className="text-sm text-muted-foreground"
+            className="text-muted-foreground text-sm"
           >
             Preview panel content.
           </TabsContent>
-          <TabsContent value="code" className="text-sm text-muted-foreground">
+          <TabsContent value="code" className="text-muted-foreground text-sm">
             Code panel content.
           </TabsContent>
         </Tabs>
@@ -362,7 +362,7 @@ export const ShadcnNavigation = () => (
             <ChevronRightIcon className="rtl:rotate-180" />
             Toggle details
           </CollapsibleTrigger>
-          <CollapsibleContent className="pt-2 text-sm text-muted-foreground">
+          <CollapsibleContent className="text-muted-foreground pt-2 text-sm">
             Collapsible content should animate without shifting neighboring
             panels.
           </CollapsibleContent>
@@ -405,14 +405,14 @@ export const ShadcnNavigation = () => (
                 <div className="grid w-72 gap-1 p-2">
                   <a
                     href="#navigation-menu-example"
-                    className="flex items-center gap-2 rounded-md p-2 text-sm transition-colors outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
+                    className="hover:bg-muted focus:bg-muted focus-visible:ring-ring/50 flex items-center gap-2 rounded-md p-2 text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
                   >
                     <HomeIcon />
                     Dashboard
                   </a>
                   <a
                     href="#navigation-menu-example"
-                    className="flex items-center gap-2 rounded-md p-2 text-sm transition-colors outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
+                    className="hover:bg-muted focus:bg-muted focus-visible:ring-ring/50 flex items-center gap-2 rounded-md p-2 text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
                   >
                     <SettingsIcon />
                     Settings

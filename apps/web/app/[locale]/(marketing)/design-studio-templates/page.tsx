@@ -94,7 +94,7 @@ const TemplatesHydrator = async () => {
  */
 const DesignStudioTemplatesPage = () => (
   <div className="flex min-h-svh flex-col gap-4 p-6">
-    <h1 className="font-semibold text-lg">Design Studio templates</h1>
+    <h1 className="text-lg font-semibold">Design Studio templates</h1>
     <p className="text-muted-foreground text-xs">
       Server (&quot;use cache&quot; + HydrationBoundary)
     </p>
