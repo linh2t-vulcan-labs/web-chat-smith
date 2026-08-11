@@ -1,7 +1,7 @@
 "use client";
 
+import { IconChat } from "@cs/icons/chat";
 import { IconChevronDown } from "@cs/icons/chevron-down";
-import { IconMessageCircle } from "@cs/icons/message-circle";
 import { ExternalLinkIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { createContext, useContext } from "react";
@@ -163,7 +163,7 @@ const providers = {
       `https://t3.chat/new?${new URLSearchParams({
         q,
       })}`,
-    icon: <IconMessageCircle />,
+    icon: <IconChat />,
     title: "Open in T3 Chat",
   },
   v0: {
@@ -202,9 +202,9 @@ export type OpenInProps = ComponentProps<typeof DropdownMenu> & {
 
 export const OpenIn = ({ query, ...props }: OpenInProps) => (
   // oxlint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-  <OpenInContext.Provider value={{ query }}>
+  <OpenInContext value={{ query }}>
     <DropdownMenu {...props} />
-  </OpenInContext.Provider>
+  </OpenInContext>
 );
 
 export type OpenInContentProps = ComponentProps<typeof DropdownMenuContent>;

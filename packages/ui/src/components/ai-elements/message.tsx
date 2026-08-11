@@ -152,12 +152,12 @@ export const MessageBranch = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <MessageBranchContext.Provider value={contextValue}>
+    <MessageBranchContext value={contextValue}>
       <div
         className={cn("grid w-full gap-2 [&>div]:pb-0", className)}
         {...props}
       />
-    </MessageBranchContext.Provider>
+    </MessageBranchContext>
   );
 };
 

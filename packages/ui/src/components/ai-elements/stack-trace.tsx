@@ -227,7 +227,7 @@ export const StackTrace = ({
 
   return (
     // oxlint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <StackTraceContext.Provider value={contextValue}>
+    <StackTraceContext value={contextValue}>
       <div
         className={cn(
           "not-prose bg-background w-full overflow-hidden rounded-lg border font-mono text-sm",
@@ -237,7 +237,7 @@ export const StackTrace = ({
       >
         {children}
       </div>
-    </StackTraceContext.Provider>
+    </StackTraceContext>
   );
 };
 

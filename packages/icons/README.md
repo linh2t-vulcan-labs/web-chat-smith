@@ -1,18 +1,20 @@
 # @cs/icons
 
-Turns a raw Figma icon export into React components at `@cs/icons/<slug>`, consumed by `@cs/ui` and every app in the monorepo.
+Turns a raw Figma icon export into React components at `@cs/icons/<slug>` (icons) and `@cs/icons/graphics/<slug>` (graphics), consumed by `@cs/ui` and every app in the monorepo.
 
 ## Usage
 
 ```tsx
 import { IconChevronLeft } from "@cs/icons/chevron-left";
+import { IconBook } from "@cs/icons/graphics/book";
 
 <IconChevronLeft size={20} className="text-muted-foreground" />;
 ```
 
 - Import each icon from its own subpath (not a barrel) for tree-shaking.
+- `icons` is the default category and exports flat at `@cs/icons/<slug>`. Every other category (`graphics`, ...) gets its own named subpath, `@cs/icons/<category>/<slug>` — check `generated-icons/icons_v1/` if unsure which one an icon lives in.
 - Directional icons (`chevron-left`, `corner-down-right`, ...) auto-flip under `dir="rtl"` via a baked-in `rtl:` class — nothing to do at the call site.
-- `@cs/icons/latest/<slug>` and `@cs/icons/icons_v1/<slug>` also work, for pinning to a specific version after `.current` moves on.
+- `@cs/icons/latest/<slug>` and `@cs/icons/icons_v1/<slug>` also work (with `/<category>` inserted for non-default categories), for pinning to a specific version after `.current` moves on.
 
 ## How it works
 

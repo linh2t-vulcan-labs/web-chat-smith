@@ -59,11 +59,13 @@ export const ChainOfThought = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <ChainOfThoughtContext.Provider value={chainOfThoughtContext}>
-      <div className={cn("not-prose w-full space-y-4", className)} {...props}>
-        {children}
-      </div>
-    </ChainOfThoughtContext.Provider>
+    <ChainOfThoughtContext value={chainOfThoughtContext}>
+      <Collapsible onOpenChange={setIsOpen} open={isOpen}>
+        <div className={cn("not-prose w-full space-y-4", className)} {...props}>
+          {children}
+        </div>
+      </Collapsible>
+    </ChainOfThoughtContext>
   );
 };
 
@@ -76,29 +78,25 @@ export const ChainOfThoughtHeader = ({
   children,
   ...props
 }: ChainOfThoughtHeaderProps) => {
-  const { isOpen, setIsOpen } = useChainOfThought();
+  const { isOpen } = useChainOfThought();
 
   return (
-    <Collapsible onOpenChange={setIsOpen} open={isOpen}>
-      <CollapsibleTrigger
+    <CollapsibleTrigger
+      className={cn(
+        "text-muted-foreground hover:text-foreground flex w-full items-center gap-2 text-sm transition-colors",
+        className
+      )}
+      {...props}
+    >
+      <IconBrain className="size-4" />
+      <span className="flex-1 text-left">{children ?? "Chain of Thought"}</span>
+      <IconChevronDown
         className={cn(
-          "text-muted-foreground hover:text-foreground flex w-full items-center gap-2 text-sm transition-colors",
-          className
+          "size-4 transition-transform",
+          isOpen ? "rotate-180" : "rotate-0"
         )}
-        {...props}
-      >
-        <IconBrain className="size-4" />
-        <span className="flex-1 text-left">
-          {children ?? "Chain of Thought"}
-        </span>
-        <IconChevronDown
-          className={cn(
-            "size-4 transition-transform",
-            isOpen ? "rotate-180" : "rotate-0"
-          )}
-        />
-      </CollapsibleTrigger>
-    </Collapsible>
+      />
+    </CollapsibleTrigger>
   );
 };
 
@@ -183,24 +181,18 @@ export const ChainOfThoughtContent = ({
   className,
   children,
   ...props
-}: ChainOfThoughtContentProps) => {
-  const { isOpen } = useChainOfThought();
-
-  return (
-    <Collapsible open={isOpen}>
-      <CollapsibleContent
-        className={cn(
-          "mt-2 space-y-3",
-          "text-popover-foreground outline-none",
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </CollapsibleContent>
-    </Collapsible>
-  );
-};
+}: ChainOfThoughtContentProps) => (
+  <CollapsibleContent
+    className={cn(
+      "mt-2 space-y-3",
+      "text-popover-foreground outline-none",
+      className
+    )}
+    {...props}
+  >
+    {children}
+  </CollapsibleContent>
+);
 
 export type ChainOfThoughtImageProps = ComponentProps<"div"> & {
   caption?: string;

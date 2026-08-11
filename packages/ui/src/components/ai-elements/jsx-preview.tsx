@@ -1,6 +1,6 @@
 "use client";
 
-import { IconCirleAlert } from "@cs/icons/cirle-alert";
+import { IconCircleAlert } from "@cs/icons/circle-alert";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import type { TProps as JsxParserProps } from "react-jsx-parser";
@@ -186,11 +186,11 @@ export const JSXPreview = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <JSXPreviewContext.Provider value={contextValue}>
+    <JSXPreviewContext value={contextValue}>
       <div className={cn("relative", className)} {...props}>
         {children}
       </div>
-    </JSXPreviewContext.Provider>
+    </JSXPreviewContext>
   );
 };
 
@@ -302,7 +302,7 @@ export const JSXPreviewError = ({
         renderChildren(children, error)
       ) : (
         <>
-          <IconCirleAlert className="size-4 shrink-0" />
+          <IconCircleAlert className="size-4 shrink-0" />
           <span>{error.message}</span>
         </>
       )}

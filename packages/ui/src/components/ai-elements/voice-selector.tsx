@@ -94,7 +94,7 @@ export const VoiceSelector = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <VoiceSelectorContext.Provider value={voiceSelectorContext}>
+    <VoiceSelectorContext value={voiceSelectorContext}>
       <Dialog
         onOpenChange={(nextOpen) => setOpen(nextOpen)}
         open={open}
@@ -102,7 +102,7 @@ export const VoiceSelector = ({
       >
         {children}
       </Dialog>
-    </VoiceSelectorContext.Provider>
+    </VoiceSelectorContext>
   );
 };
 

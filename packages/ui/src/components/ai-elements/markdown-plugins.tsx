@@ -161,6 +161,20 @@ export const MarkdownCodeBlock = ({
   );
 };
 
+type MarkdownCheckboxProps = ComponentPropsWithoutRef<"input">;
+
+export const MarkdownCheckbox = ({
+  checked,
+  ...props
+}: MarkdownCheckboxProps) => (
+  <input
+    aria-label={checked ? "Completed task" : "Incomplete task"}
+    checked={checked}
+    readOnly
+    {...props}
+  />
+);
+
 type MarkdownAnchorProps = ComponentPropsWithoutRef<"a">;
 
 export const MarkdownAnchor = ({
@@ -203,6 +217,7 @@ export const markdownExtensions = [
 
 export const markdownComponents = {
   a: MarkdownAnchor,
+  input: MarkdownCheckbox,
   [CODE_BLOCK_COMPONENT_TAG]: MarkdownCodeBlock,
   [MATH_BLOCK_COMPONENT_TAG]: MathBlock,
   [MERMAID_COMPONENT_TAG]: MermaidDiagram,

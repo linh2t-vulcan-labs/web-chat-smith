@@ -179,7 +179,7 @@ export const Attachments = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <AttachmentsContext.Provider value={contextValue}>
+    <AttachmentsContext value={contextValue}>
       <div
         className={cn(
           "flex items-start",
@@ -191,7 +191,7 @@ export const Attachments = ({
       >
         {children}
       </div>
-    </AttachmentsContext.Provider>
+    </AttachmentsContext>
   );
 };
 
@@ -223,7 +223,7 @@ export const Attachment = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <AttachmentContext.Provider value={contextValue}>
+    <AttachmentContext value={contextValue}>
       <div
         className={cn(
           "group relative",
@@ -244,7 +244,7 @@ export const Attachment = ({
       >
         {children}
       </div>
-    </AttachmentContext.Provider>
+    </AttachmentContext>
   );
 };
 

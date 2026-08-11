@@ -1,7 +1,7 @@
 "use client";
 
-import { IconBook } from "@cs/icons/book";
 import { IconChevronDown } from "@cs/icons/chevron-down";
+import { IconBook } from "@cs/icons/graphics/book";
 import type { ComponentProps } from "react";
 
 import {

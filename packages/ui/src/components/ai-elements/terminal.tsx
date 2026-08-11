@@ -2,7 +2,7 @@
 
 import { IconCheck } from "@cs/icons/check";
 import { IconCopy } from "@cs/icons/copy";
-import { IconTrashbin } from "@cs/icons/trashbin";
+import { IconTrash } from "@cs/icons/trash";
 import Ansi from "ansi-to-react";
 import { TerminalIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
@@ -159,7 +159,7 @@ export const TerminalClearButton = ({
       variant="ghost"
       {...props}
     >
-      {children ?? <IconTrashbin size={14} />}
+      {children ?? <IconTrash size={14} />}
     </Button>
   );
 };
@@ -221,7 +221,7 @@ export const Terminal = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <TerminalContext.Provider value={contextValue}>
+    <TerminalContext value={contextValue}>
       <div
         className={cn(
           "flex flex-col overflow-hidden rounded-lg border bg-zinc-950 text-zinc-100",
@@ -245,6 +245,6 @@ export const Terminal = ({
           </>
         )}
       </div>
-    </TerminalContext.Provider>
+    </TerminalContext>
   );
 };

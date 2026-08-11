@@ -11,6 +11,8 @@ export default defineConfig({
   rules: {
     "no-inline-comments": "off",
     "react/function-component-definition": "off",
+    "react/jsx-no-constructed-context-values": "off",
+    "react/react-compiler": "off",
     "react-doctor/activity-wraps-effect-heavy-subtree": "error",
     "react-doctor/advanced-event-handler-refs": "error",
     "react-doctor/async-await-in-loop": "error",

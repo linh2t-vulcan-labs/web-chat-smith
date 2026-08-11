@@ -12,14 +12,14 @@ import type {
   ChangeEventHandler,
   ClipboardEventHandler,
   ComponentProps,
-  FormEvent,
-  FormEventHandler,
   HTMLAttributes,
   KeyboardEvent,
   KeyboardEventHandler,
   PropsWithChildren,
   ReactNode,
   RefObject,
+  SubmitEvent,
+  SubmitEventHandler,
 } from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
@@ -359,12 +359,12 @@ export const PromptInputProvider = ({
 
   return (
     // oxlint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <PromptInputController.Provider value={controller}>
+    <PromptInputController value={controller}>
       {/* oxlint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler */}
-      <ProviderAttachmentsContext.Provider value={attachments}>
+      <ProviderAttachmentsContext value={attachments}>
         {children}
-      </ProviderAttachmentsContext.Provider>
-    </PromptInputController.Provider>
+      </ProviderAttachmentsContext>
+    </PromptInputController>
   );
 };
 
@@ -405,7 +405,7 @@ export const usePromptInputReferencedSources = () => {
   const ctx = useContext(LocalReferencedSourcesContext);
   if (!ctx) {
     throw new Error(
-      "usePromptInputReferencedSources must be used within a LocalReferencedSourcesContext.Provider"
+      "usePromptInputReferencedSources must be used within a LocalReferencedSourcesContext"
     );
   }
   return ctx;
@@ -515,7 +515,7 @@ export type PromptInputProps = Omit<
   }) => void;
   onSubmit: (
     message: PromptInputMessage,
-    event: FormEvent<HTMLFormElement>
+    event: SubmitEvent<HTMLFormElement>
   ) => void | Promise<void>;
 };
 
@@ -983,7 +983,7 @@ const finalizeSubmission = (
 const submitConvertedMessage = async (
   onSubmit: PromptInputProps["onSubmit"],
   message: PromptInputMessage,
-  event: FormEvent<HTMLFormElement>,
+  event: SubmitEvent<HTMLFormElement>,
   controller: PromptInputControllerProps | null,
   clear: () => void
 ): Promise<void> => {
@@ -1073,7 +1073,7 @@ export const PromptInput = ({
     sources: referencedSources,
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+  const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -1129,17 +1129,17 @@ export const PromptInput = ({
 
   const withReferencedSources = (
     // oxlint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <LocalReferencedSourcesContext.Provider value={refsCtx}>
+    <LocalReferencedSourcesContext value={refsCtx}>
       {inner}
-    </LocalReferencedSourcesContext.Provider>
+    </LocalReferencedSourcesContext>
   );
 
   // Always provide LocalAttachmentsContext so children get validated add function
   return (
     // oxlint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <LocalAttachmentsContext.Provider value={attachmentsCtx}>
+    <LocalAttachmentsContext value={attachmentsCtx}>
       {withReferencedSources}
-    </LocalAttachmentsContext.Provider>
+    </LocalAttachmentsContext>
   );
 };
 

@@ -43,7 +43,7 @@ const Drawer = ({
 
   return (
     // oxlint-disable-next-line react/jsx-no-constructed-context-values
-    <DrawerContext.Provider value={contextValue}>
+    <DrawerContext value={contextValue}>
       <DrawerPrimitive.Root
         data-slot="drawer"
         modal={modal}
@@ -51,7 +51,7 @@ const Drawer = ({
         swipeDirection={swipeDirection}
         {...props}
       />
-    </DrawerContext.Provider>
+    </DrawerContext>
   );
 };
 

@@ -3,11 +3,10 @@
 import { getGuestTokenManager } from "@cs/api-client/core/token-manager";
 import { useApiAuth } from "@cs/api-client/providers/auth-provider";
 import { getRuntimeEnv } from "@cs/env/universal";
-import { Turnstile } from "@marsidev/react-turnstile";
-import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import type { ReactNode } from "react";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { createContext, useContext, useEffect, useState } from "react";
+
+import { GuestCaptchaWidget } from "./guest-captcha-widget";
 
 export interface GuestSessionInitialState {
   hasGuestSessionCookie: boolean;
@@ -17,9 +16,9 @@ interface GuestSessionState {
   isGuest: boolean;
   guestAccessToken: string | null;
   isInitializing: boolean;
-  /** True while a Turnstile challenge must resolve before a guest session can be created — see the invisible `<Turnstile>` render below. */
+  /** True while a Turnstile challenge must resolve before a guest session can be created — see `<GuestCaptchaWidget>` below. */
   needsCaptcha: boolean;
-  /** True once `MAX_CAPTCHA_ATTEMPTS` create-session attempts have all failed — stops retrying instead of looping forever on a persistent failure (e.g. a backend/config error unrelated to the captcha itself). */
+  /** True once `GuestCaptchaWidget` has given up retrying the challenge — stops retrying instead of looping forever on a persistent failure (e.g. a backend/config error unrelated to the captcha itself). */
   captchaFailed: boolean;
 }
 
@@ -56,20 +55,29 @@ const INITIAL_STATE: GuestSessionState = {
 };
 
 /**
- * A failure here (network error, or a create-session rejection unrelated to
- * the captcha's own validity — e.g. a misconfigured backend dependency) is
- * otherwise indistinguishable from "the challenge needs solving again," and
- * `.reset()` on an invisible/managed widget re-executes near-instantly — a
- * persistent failure would retry in a tight loop with no backoff. Confirmed
- * live: a missing-nonce bug on the server side alone produced dozens of
- * retries within milliseconds before this cap was added.
+ * Pending `ensureGuestAccessToken()` callers, module-scoped rather than a
+ * `useRef` — like `getGuestTokenManager()` itself, a caller waiting on a
+ * token has nothing to do with any particular `GuestSessionProvider`
+ * instance and must survive this provider's own remounts (a locale switch
+ * remounts everything under `[locale]/layout.tsx` — see the state
+ * initializer's comment below); a per-instance ref would silently drop
+ * whoever was waiting at the moment of remount.
  */
-const MAX_CAPTCHA_ATTEMPTS = 3;
+let guestTokenWaiters: TokenWaiter[] = [];
 
-interface CreateGuestSessionResponse {
-  accessToken: string;
-  accessTokenExpiresAt: number;
-}
+const flushGuestTokenWaiters = (
+  result: { token: string } | { error: Error }
+) => {
+  const waiters = guestTokenWaiters;
+  guestTokenWaiters = [];
+  for (const waiter of waiters) {
+    if ("token" in result) {
+      waiter.resolve(result.token);
+    } else {
+      waiter.reject(result.error);
+    }
+  }
+};
 
 /**
  * Provisions and tracks a guest session for the workspace route group
@@ -141,36 +149,6 @@ export const GuestSessionProvider = ({
         }
       : INITIAL_STATE;
   });
-  // The Turnstile widget's own `<div>` output can't render inline here — this
-  // provider mounts above `<body>`'s content but under the same `<body>`
-  // element (fine either way) — kept as a portal regardless so it always
-  // attaches directly to `document.body`. Portal happens once mounted
-  // client-side; `document` doesn't exist during SSR, so this renders
-  // nothing server-side, which is correct (the widget only ever runs
-  // client-side anyway).
-  const [isMounted, setIsMounted] = useState(false);
-  // oxlint-disable-next-line react-doctor/rendering-hydration-no-flicker -- deliberate two-pass "mounted" flag, not a bug: `document.body` (the portal target below) doesn't exist during SSR, and checking `typeof document` directly in render would mismatch between the SSR pass and the first client render — this pattern intentionally trades one post-mount render for a valid SSR pass
-  useEffect(() => {
-    // oxlint-disable-next-line react/react-compiler react-doctor/no-initialize-state -- deliberate SSR-safe "mounted" flag, see comment above: `document`/`document.body` doesn't exist server-side, so `createPortal` below would throw during SSR without this two-pass gate — can't be lazy-initialized because the client's first (hydration) render must still match the server's `null` output
-    setIsMounted(true);
-  }, []);
-  // oxlint-disable-next-line unicorn/no-useless-undefined -- this repo's @types/react has no zero-arg useRef overload, so an explicit initial value is required
-  const turnstileRef = useRef<TurnstileInstance | undefined>(undefined);
-  const captchaAttemptsRef = useRef(0);
-  const waitersRef = useRef<TokenWaiter[]>([]);
-
-  const flushWaiters = (result: { token: string } | { error: Error }) => {
-    const waiters = waitersRef.current;
-    waitersRef.current = [];
-    for (const waiter of waiters) {
-      if ("token" in result) {
-        waiter.resolve(result.token);
-      } else {
-        waiter.reject(result.error);
-      }
-    }
-  };
-
   /**
    * `guestTokenManager.addListener` callback below — reacts to a guest
    * access token appearing/disappearing (restored, created via the captcha
@@ -178,61 +156,68 @@ export const GuestSessionProvider = ({
    * expired/rotated refresh token).
    */
   const handleGuestAccessTokenChange = (accessToken: string | null) => {
-    if (accessToken === null) {
-      // Re-provisioning from scratch (a fresh Turnstile challenge, not a
-      // continuation of whatever attempt count an earlier session's
-      // provisioning left behind) — otherwise a single failure here could
-      // inherit an already-high count from months ago and hit
-      // `MAX_CAPTCHA_ATTEMPTS` after just one real retry.
-      captchaAttemptsRef.current = 0;
-    }
     setState((previous) => ({
       ...previous,
       guestAccessToken: accessToken,
       isGuest: accessToken !== null,
       // A session appearing (restored, or created via the captcha flow
-      // below) always means the challenge is no longer needed. The reverse —
-      // a token going away, e.g. the proactive-refresh timer hitting an
-      // expired/rotated guest refresh token — always means a NEW guest
-      // session must be provisioned, so re-arm the captcha instead of
-      // leaving `needsCaptcha` at its old (possibly `false`) value: without
-      // this, a guest session that silently expires mid-visit never
-      // recovers (no captcha ever shows again to re-provision one). Safe
-      // even during the authenticated-teardown path above: `value` below
-      // ignores `state` entirely whenever `isAuthenticated` is true.
+      // below) always means the challenge is no longer needed. The
+      // reverse — a token going away, e.g. the proactive-refresh timer
+      // hitting an expired/rotated guest refresh token — always means a
+      // NEW guest session must be provisioned, so re-arm the captcha
+      // instead of leaving `needsCaptcha` at its old (possibly `false`)
+      // value: without this, a guest session that silently expires
+      // mid-visit never recovers (no captcha ever shows again to
+      // re-provision one). Safe even during the authenticated-teardown
+      // path above: `value` below ignores `state` entirely whenever
+      // `isAuthenticated` is true.
       needsCaptcha: accessToken === null,
     }));
     if (accessToken !== null) {
-      flushWaiters({ token: accessToken });
+      flushGuestTokenWaiters({ token: accessToken });
     }
   };
 
-  // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- false positive: this rule only recognizes the Node EventEmitter addListener/removeListener(event, handler) shape, not TokenManager.addListener()'s React-idiomatic "returns its own disposer" contract — cleanup IS registered via the `return () => unsubscribe()` below.
+  // Server-read `guest_session` cookie presence — destructured to a
+  // primitive so the effect below can depend on it without re-running every
+  // time a caller passes a fresh `initialState` object.
+  const hasGuestSessionCookie = initialState?.hasGuestSessionCookie;
+
+  // Tear down any existing guest session once a real identity is
+  // authenticated — no state update needed here, `value` below already
+  // computes the logged-out-guest shape directly from `isAuthenticated` once
+  // it's true. Only actually calls the backend (`POST
+  // /api/anon/session/logout`) when a guest session could plausibly exist —
+  // per the server-read `initialState`, or unknown (`initialState ===
+  // undefined`, e.g. any other call site) — skipping it for the common
+  // steady-state case of an already-authenticated user reloading a page that
+  // never had a guest cookie to begin with.
   useEffect(() => {
-    // Wait for the authenticated identity to settle first so a
-    // still-restoring auth session doesn't cause a guest session to be
-    // provisioned and then immediately torn down a moment later.
-    if (isAuthInitializing) {
+    if (isAuthInitializing || !isAuthenticated) {
+      return;
+    }
+    if (initialState === undefined || hasGuestSessionCookie) {
+      void getGuestTokenManager().logout();
+    }
+  }, [
+    isAuthenticated,
+    isAuthInitializing,
+    initialState,
+    hasGuestSessionCookie,
+  ]);
+
+  // oxlint-disable-next-line react-doctor/effect-needs-cleanup
+  useEffect(() => {
+    // Wait for the authenticated identity to settle first — a still-restoring
+    // auth session shouldn't cause a guest session to be provisioned and
+    // then immediately torn down a moment later — and skip entirely once
+    // authenticated, since the effect above owns that teardown.
+    if (isAuthInitializing || isAuthenticated) {
       return;
     }
 
-    // Tear down any existing guest session — no state update needed here,
-    // `value` below already computes the logged-out-guest shape directly
-    // from `isAuthenticated` once it's true. Only actually calls the
-    // backend (`POST /api/anon/session/logout`) when a guest session could
-    // plausibly exist — per the server-read `initialState`, or unknown
-    // (`initialState === undefined`, e.g. any other call site) — skipping it
-    // for the common steady-state case of an already-authenticated user
-    // reloading a page that never had a guest cookie to begin with.
-    if (isAuthenticated) {
-      if (initialState === undefined || initialState.hasGuestSessionCookie) {
-        void getGuestTokenManager().logout();
-      }
-      return;
-    }
-
+    let restoreWasCancelled = false;
     const guestTokenManager = getGuestTokenManager();
-    // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- false positive: this rule only recognizes the Node EventEmitter addListener/removeListener(event, handler) shape, not TokenManager.addListener()'s React-idiomatic "returns its own disposer" contract — cleanup IS registered via the `return () => unsubscribe()` below.
     const unsubscribe = guestTokenManager.addListener({
       onAccessTokenChange: handleGuestAccessTokenChange,
     });
@@ -244,11 +229,14 @@ export const GuestSessionProvider = ({
     // see route.ts — so this is purely about not waiting on it, not about
     // dodging a failure) instead of blocking the captcha on it.
     const hasNoGuestCookie =
-      initialState !== undefined && !initialState.hasGuestSessionCookie;
+      initialState !== undefined && !hasGuestSessionCookie;
 
     const restore = async () => {
       if (!hasNoGuestCookie) {
         await guestTokenManager.restoreSessionOnce();
+      }
+      if (restoreWasCancelled) {
+        return;
       }
       setState((previous) => ({
         ...previous,
@@ -258,18 +246,20 @@ export const GuestSessionProvider = ({
     };
     void restore();
 
-    return () => unsubscribe();
-    // oxlint-disable-next-line react-hooks/exhaustive-deps -- `initialState` is a one-time server-read hint used only to decide the first run's fast path, not a value this effect should re-run for
-  }, [isAuthenticated, isAuthInitializing]);
+    return () => {
+      restoreWasCancelled = true;
+      unsubscribe();
+    };
+  }, [
+    isAuthenticated,
+    isAuthInitializing,
+    initialState,
+    hasGuestSessionCookie,
+  ]);
 
-  const retryOrGiveUp = () => {
-    captchaAttemptsRef.current += 1;
-    if (captchaAttemptsRef.current < MAX_CAPTCHA_ATTEMPTS) {
-      turnstileRef.current?.reset();
-      return;
-    }
+  const handleCaptchaGiveUp = () => {
     setState((previous) => ({ ...previous, captchaFailed: true }));
-    flushWaiters({ error: new Error("Guest verification failed") });
+    flushGuestTokenWaiters({ error: new Error("Guest verification failed") });
   };
 
   /** See `GuestSessionContextValue.ensureGuestAccessToken`'s doc comment. */
@@ -283,50 +273,25 @@ export const GuestSessionProvider = ({
       return Promise.reject(new Error("Guest verification failed"));
     }
 
-    // oxlint-disable-next-line promise/avoid-new -- bridging callback-based waiter registration (flushWaiters, resolved/rejected from elsewhere) into a Promise; there's no async operation here to `await` instead
-    return new Promise<string>((resolve, reject) => {
-      const waiter: TokenWaiter = { reject, resolve };
-      const timer = setTimeout(() => {
-        waitersRef.current = waitersRef.current.filter((w) => w !== waiter);
-        reject(new Error("Timed out waiting for guest session"));
-      }, timeoutMs);
+    const { promise, resolve, reject } = Promise.withResolvers<string>();
+    const waiter: TokenWaiter = { reject, resolve };
+    const timer = setTimeout(() => {
+      guestTokenWaiters = guestTokenWaiters.filter((w) => w !== waiter);
+      reject(new Error("Timed out waiting for guest session"));
+    }, timeoutMs);
 
-      waitersRef.current.push({
-        reject: (error) => {
-          clearTimeout(timer);
-          reject(error);
-        },
-        resolve: (token) => {
-          clearTimeout(timer);
-          resolve(token);
-        },
-      });
+    guestTokenWaiters.push({
+      reject: (error) => {
+        clearTimeout(timer);
+        reject(error);
+      },
+      resolve: (token) => {
+        clearTimeout(timer);
+        resolve(token);
+      },
     });
-  };
 
-  const handleCaptchaSuccess = async (captchaToken: string) => {
-    try {
-      const response = await fetch("/api/anon/session", {
-        body: JSON.stringify({ captchaToken }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-      });
-
-      if (!response.ok) {
-        retryOrGiveUp();
-        return;
-      }
-
-      const data = (await response.json()) as CreateGuestSessionResponse;
-      // Triggers the `onAccessTokenChange` callback above, which flips
-      // `needsCaptcha` off — no separate state update needed here.
-      getGuestTokenManager().setSession(
-        data.accessToken,
-        data.accessTokenExpiresAt
-      );
-    } catch {
-      retryOrGiveUp();
-    }
+    return promise;
   };
 
   const value: GuestSessionContextValue = isAuthenticated
@@ -342,28 +307,13 @@ export const GuestSessionProvider = ({
 
   const siteKey = getRuntimeEnv().CS_PUBLIC_TURNSTILE_CAPTCHA_SITEKEY;
 
-  const captchaWidgetPortal =
-    // oxlint-disable-next-line react/react-compiler -- `retryOrGiveUp`/`handleCaptchaSuccess` close over refs (turnstileRef, waitersRef) but are only ever invoked from event handlers or the Promise executor above, never during render itself; portaled (not rendered inline) because this provider now mounts above `<body>` — see `isMounted`'s comment
-    isMounted && value.needsCaptcha && !value.captchaFailed && siteKey
-      ? createPortal(
-          <Turnstile
-            onError={retryOrGiveUp}
-            onExpire={retryOrGiveUp}
-            onSuccess={(token) => handleCaptchaSuccess(token)}
-            options={{ size: "invisible" }}
-            ref={turnstileRef}
-            siteKey={siteKey}
-          />,
-          document.body
-        )
-      : null;
-
   return (
-    // oxlint-disable-next-line react/jsx-no-constructed-context-values -- React Compiler (enabled for this app) memoizes this automatically
-    <GuestSessionContext.Provider value={value}>
-      {captchaWidgetPortal}
+    <GuestSessionContext value={value}>
+      {value.needsCaptcha && !value.captchaFailed && siteKey ? (
+        <GuestCaptchaWidget onGiveUp={handleCaptchaGiveUp} siteKey={siteKey} />
+      ) : null}
       {children}
-    </GuestSessionContext.Provider>
+    </GuestSessionContext>
   );
 };
 

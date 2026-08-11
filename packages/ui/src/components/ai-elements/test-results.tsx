@@ -145,7 +145,7 @@ export const TestResults = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <TestResultsContext.Provider value={contextValue}>
+    <TestResultsContext value={contextValue}>
       <div
         className={cn("bg-background rounded-lg border", className)}
         {...props}
@@ -158,7 +158,7 @@ export const TestResults = ({
             </TestResultsHeader>
           ))}
       </div>
-    </TestResultsContext.Provider>
+    </TestResultsContext>
   );
 };
 
@@ -262,11 +262,11 @@ export const TestSuite = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <TestSuiteContext.Provider value={contextValue}>
+    <TestSuiteContext value={contextValue}>
       <Collapsible className={cn("rounded-lg border", className)} {...props}>
         {children}
       </Collapsible>
-    </TestSuiteContext.Provider>
+    </TestSuiteContext>
   );
 };
 
@@ -439,7 +439,7 @@ export const Test = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <TestContext.Provider value={contextValue}>
+    <TestContext value={contextValue}>
       <div
         className={cn("flex items-center gap-2 px-4 py-2 text-sm", className)}
         {...props}
@@ -452,7 +452,7 @@ export const Test = ({
           </>
         )}
       </div>
-    </TestContext.Provider>
+    </TestContext>
   );
 };
 

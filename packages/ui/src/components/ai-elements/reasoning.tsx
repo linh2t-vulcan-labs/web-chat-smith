@@ -128,7 +128,7 @@ export const Reasoning = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <ReasoningContext.Provider value={contextValue}>
+    <ReasoningContext value={contextValue}>
       <Collapsible
         className={cn("not-prose mb-4", className)}
         onOpenChange={handleOpenChange}
@@ -137,7 +137,7 @@ export const Reasoning = ({
       >
         {children}
       </Collapsible>
-    </ReasoningContext.Provider>
+    </ReasoningContext>
   );
 };
 

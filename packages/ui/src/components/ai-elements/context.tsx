@@ -66,9 +66,9 @@ export const Context = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <ContextContext.Provider value={contextValue}>
+    <ContextContext value={contextValue}>
       <HoverCard {...props} />
-    </ContextContext.Provider>
+    </ContextContext>
   );
 };
 

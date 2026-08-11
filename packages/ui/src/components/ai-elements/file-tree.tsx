@@ -73,7 +73,7 @@ export const FileTree = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <FileTreeContext.Provider value={contextValue}>
+    <FileTreeContext value={contextValue}>
       <div
         className={cn(
           "bg-background rounded-lg border font-mono text-sm",
@@ -84,7 +84,7 @@ export const FileTree = ({
       >
         <div className="p-2">{children}</div>
       </div>
-    </FileTreeContext.Provider>
+    </FileTreeContext>
   );
 };
 
@@ -212,7 +212,7 @@ export const FileTreeFolder = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <FileTreeFolderContext.Provider value={folderContextValue}>
+    <FileTreeFolderContext value={folderContextValue}>
       <Collapsible onOpenChange={handleOpenChange} open={isExpanded}>
         <div
           className={cn("", className)}
@@ -231,7 +231,7 @@ export const FileTreeFolder = ({
           </CollapsibleContent>
         </div>
       </Collapsible>
-    </FileTreeFolderContext.Provider>
+    </FileTreeFolderContext>
   );
 };
 
@@ -276,7 +276,7 @@ export const FileTreeFile = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <FileTreeFileContext.Provider value={fileContextValue}>
+    <FileTreeFileContext value={fileContextValue}>
       <div
         className={cn(
           "hover:bg-muted/50 flex cursor-pointer items-center gap-1 rounded px-2 py-1 transition-colors",
@@ -300,7 +300,7 @@ export const FileTreeFile = ({
           </>
         )}
       </div>
-    </FileTreeFileContext.Provider>
+    </FileTreeFileContext>
   );
 };
 

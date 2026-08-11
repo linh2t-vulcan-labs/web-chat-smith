@@ -166,7 +166,10 @@ const createSharedHighlighter = async () => {
   return createHighlighterCore({
     engine: createJavaScriptRegexEngine(),
     langs: [],
-    themes: [bundledThemes["github-light"](), bundledThemes["github-dark"]()],
+    themes: [
+      bundledThemes["github-light-high-contrast"](),
+      bundledThemes["github-dark-high-contrast"](),
+    ],
   }) as Promise<HighlighterGeneric<BundledLanguage, BundledTheme>>;
 };
 
@@ -257,8 +260,8 @@ const runHighlighting = async (
     const result = highlighter.codeToTokens(code, {
       lang: langToUse,
       themes: {
-        dark: "github-dark",
-        light: "github-light",
+        dark: "github-dark-high-contrast",
+        light: "github-light-high-contrast",
       },
     });
 
@@ -495,8 +498,7 @@ export const CodeBlock = ({
   const contextValue = { code };
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <CodeBlockContext.Provider value={contextValue}>
+    <CodeBlockContext value={contextValue}>
       <CodeBlockContainer className={className} language={language} {...props}>
         {children}
         <CodeBlockContent
@@ -505,7 +507,7 @@ export const CodeBlock = ({
           showLineNumbers={showLineNumbers}
         />
       </CodeBlockContainer>
-    </CodeBlockContext.Provider>
+    </CodeBlockContext>
   );
 };
 

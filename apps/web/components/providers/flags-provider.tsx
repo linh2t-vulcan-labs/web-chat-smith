@@ -24,7 +24,9 @@ export const FlagsProvider = ({ children }: { children: React.ReactNode }) => {
   const engine = flagsEngine();
 
   useEffect(() => {
-    initPromise ??= engine.init();
+    if (initPromise === undefined) {
+      initPromise = engine.init();
+    }
   }, [engine]);
 
   return <FlagsProviderImpl engine={engine}>{children}</FlagsProviderImpl>;

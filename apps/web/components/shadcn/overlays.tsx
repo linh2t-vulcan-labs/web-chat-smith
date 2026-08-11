@@ -2,7 +2,7 @@
 
 import { IconBell } from "@cs/icons/bell";
 import { IconSettings } from "@cs/icons/settings";
-import { IconTrashbin } from "@cs/icons/trashbin";
+import { IconTrash } from "@cs/icons/trash";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -143,7 +143,7 @@ const MenuItems = () => (
     </DropdownMenuRadioGroup>
     <DropdownMenuSeparator />
     <DropdownMenuItem variant="destructive">
-      <IconTrashbin />
+      <IconTrash />
       Delete
     </DropdownMenuItem>
   </>
@@ -186,7 +186,7 @@ export const ShadcnOverlays = () => (
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogMedia>
-                    <IconTrashbin />
+                    <IconTrash />
                   </AlertDialogMedia>
                   <AlertDialogTitle>Delete workspace?</AlertDialogTitle>
                   <AlertDialogDescription>

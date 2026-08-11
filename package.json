@@ -13,8 +13,8 @@
         "react-dom": "^19.2.8",
         "@types/react": "^19.2.18",
         "@types/react-dom": "^19.2.4",
-        "next": "16.3.1-canary.9",
-        "next-intl": "^4.13.5",
+        "next": "16.3.1-canary.10",
+        "next-intl": "^4.13.6",
         "server-only": "^0.0.1",
         "@swc/helpers": "^0.5.23"
       },
@@ -30,7 +30,7 @@
         "@tailwindcss/postcss": "^4.3.3",
         "@tailwindcss/typography": "^0.5.20",
         "shadcn": "^4.16.2",
-        "motion": "^13.0.0",
+        "motion": "^13.1.0",
         "@rive-app/react-webgl2": "^4.31.0",
         "@xyflow/react": "^12.11.2",
         "media-chrome": "^4.19.2",
@@ -49,20 +49,20 @@
       },
       "content": {
         "@tanstack/markdown": "^0.0.13",
-        "katex": "^0.18.3",
+        "katex": "^0.18.4",
         "mermaid": "^11.16.1",
         "ansi-to-react": "^6.2.6",
         "react-jsx-parser": "^2.4.1",
-        "shiki": "^4.4.2"
+        "shiki": "^4.4.3"
       },
       "integrations": {
         "firebase": "^12.17.1",
         "jose": "^6.2.8",
         "@marsidev/react-turnstile": "^1.5.5",
-        "ai": "^7.0.58"
+        "ai": "^7.0.59"
       },
       "utils": {
-        "eventsource-parser": "^3.1.0",
+        "eventsource-parser": "^4.0.0",
         "use-stick-to-bottom": "^1.1.6",
         "nanoid": "^6.0.1",
         "tokenlens": "^1.3.1"
@@ -71,16 +71,16 @@
         "typescript": "^7.0.2",
         "@types/node": "^26.2.0",
         "@types/bun": "^1.3.14",
-        "knip": "^6.32.0",
+        "knip": "^6.32.1",
         "lefthook": "^2.1.10",
-        "oxfmt": "^0.62.0",
-        "oxlint": "^1.77.0",
-        "oxlint-plugin-react-doctor": "^0.9.10",
+        "oxfmt": "^0.63.0",
+        "oxlint": "^1.78.0",
+        "oxlint-plugin-react-doctor": "^0.9.11",
         "turbo": "^2.10.9",
         "ultracite": "7.10.2",
         "vitest": "^4.1.10",
         "@testing-library/react": "^16.3.2",
-        "@testing-library/jest-dom": "^7.0.0",
+        "@testing-library/jest-dom": "^7.0.1",
         "@vitejs/plugin-react": "^6.0.5",
         "jsdom": "^30.0.1"
       }

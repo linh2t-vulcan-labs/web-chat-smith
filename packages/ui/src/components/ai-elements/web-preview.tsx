@@ -65,7 +65,7 @@ export const WebPreview = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <WebPreviewContext.Provider value={contextValue}>
+    <WebPreviewContext value={contextValue}>
       <div
         className={cn(
           "bg-card flex size-full flex-col rounded-lg border",
@@ -75,7 +75,7 @@ export const WebPreview = ({
       >
         {children}
       </div>
-    </WebPreviewContext.Provider>
+    </WebPreviewContext>
   );
 };
 

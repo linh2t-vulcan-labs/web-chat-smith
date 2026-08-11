@@ -37,11 +37,11 @@ export const Snippet = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <SnippetContext.Provider value={contextValue}>
+    <SnippetContext value={contextValue}>
       <InputGroup className={cn("font-mono", className)} {...props}>
         {children}
       </InputGroup>
-    </SnippetContext.Provider>
+    </SnippetContext>
   );
 };
 

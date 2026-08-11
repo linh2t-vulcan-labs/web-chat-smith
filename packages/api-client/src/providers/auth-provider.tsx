@@ -138,7 +138,7 @@ export const ApiAuthProvider = ({
   };
 
   // oxlint-disable-next-line react/jsx-no-constructed-context-values -- React Compiler (enabled for this app) memoizes this automatically
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext value={value}>{children}</AuthContext>;
 };
 
 export const useApiAuth = (): AuthContextValue => {

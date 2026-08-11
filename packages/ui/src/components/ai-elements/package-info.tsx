@@ -175,7 +175,7 @@ export const PackageInfo = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <PackageInfoContext.Provider value={contextValue}>
+    <PackageInfoContext value={contextValue}>
       <div
         className={cn("bg-background rounded-lg border p-4", className)}
         {...props}
@@ -190,7 +190,7 @@ export const PackageInfo = ({
           </>
         )}
       </div>
-    </PackageInfoContext.Provider>
+    </PackageInfoContext>
   );
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { IconChervonUpDown } from "@cs/icons/chervon-up-down";
+import { IconChevronUpDown } from "@cs/icons/chevron-up-down";
 import type { ComponentProps } from "react";
 import { createContext, useContext } from "react";
 
@@ -51,7 +51,7 @@ export const Plan = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <PlanContext.Provider value={contextValue}>
+    <PlanContext value={contextValue}>
       <Collapsible
         render={<Card className={cn("shadow-none", className)} />}
         data-slot="plan"
@@ -59,7 +59,7 @@ export const Plan = ({
       >
         {children}
       </Collapsible>
-    </PlanContext.Provider>
+    </PlanContext>
   );
 };
 
@@ -151,7 +151,7 @@ export const PlanTrigger = ({ className, ...props }: PlanTriggerProps) => (
     }
     {...props}
   >
-    <IconChervonUpDown className="size-4" />
+    <IconChevronUpDown className="size-4" />
     <span className="sr-only">Toggle plan</span>
   </CollapsibleTrigger>
 );

@@ -1,6 +1,6 @@
 "use client";
 
-import { IconChervonUpDown } from "@cs/icons/chervon-up-down";
+import { IconChevronUpDown } from "@cs/icons/chevron-up-down";
 import type { ComponentProps, ReactNode } from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
@@ -197,9 +197,9 @@ export const MicSelector = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <MicSelectorContext.Provider value={contextValue}>
+    <MicSelectorContext value={contextValue}>
       <Popover {...props} onOpenChange={onOpenChange} open={open} />
-    </MicSelectorContext.Provider>
+    </MicSelectorContext>
   );
 };
 
@@ -236,7 +236,7 @@ export const MicSelectorTrigger = ({
   return (
     <PopoverTrigger render={<Button variant="outline" {...props} ref={ref} />}>
       {children}
-      <IconChervonUpDown className="text-muted-foreground shrink-0" size={16} />
+      <IconChevronUpDown className="text-muted-foreground shrink-0" size={16} />
     </PopoverTrigger>
   );
 };

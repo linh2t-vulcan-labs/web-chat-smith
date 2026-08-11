@@ -47,7 +47,7 @@ export const metadata: Metadata = {
  * as before centralizing this validation.
  * https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/instant#disabling-static-shell-validation
  */
-export const instant = false;
+// export const instant = false;
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });

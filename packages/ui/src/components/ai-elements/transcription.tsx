@@ -67,7 +67,7 @@ export const Transcription = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <TranscriptionContext.Provider value={contextValue}>
+    <TranscriptionContext value={contextValue}>
       <div
         className={cn(
           "flex flex-wrap gap-1 text-sm leading-relaxed",
@@ -78,7 +78,7 @@ export const Transcription = ({
       >
         {rendered}
       </div>
-    </TranscriptionContext.Provider>
+    </TranscriptionContext>
   );
 };
 

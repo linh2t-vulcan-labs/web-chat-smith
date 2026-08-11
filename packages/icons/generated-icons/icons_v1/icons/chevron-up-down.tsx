@@ -3,7 +3,7 @@
 
 import type { IconProps } from "../../types";
 
-export const IconChervonUpDown = ({ size = 24, ...props }: IconProps) => (
+export const IconChevronUpDown = ({ size = 24, ...props }: IconProps) => (
   <svg
     aria-hidden={props["aria-label"] || props.role ? undefined : true}
     fill="none"

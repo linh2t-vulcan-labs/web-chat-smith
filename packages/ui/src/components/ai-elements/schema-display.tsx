@@ -472,7 +472,7 @@ export const SchemaDisplay = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <SchemaDisplayContext.Provider value={contextValue}>
+    <SchemaDisplayContext value={contextValue}>
       <div
         className={cn(
           "bg-background overflow-hidden rounded-lg border",
@@ -482,7 +482,7 @@ export const SchemaDisplay = ({
       >
         {children ?? <SchemaDisplayDefaultBody />}
       </div>
-    </SchemaDisplayContext.Provider>
+    </SchemaDisplayContext>
   );
 };
 

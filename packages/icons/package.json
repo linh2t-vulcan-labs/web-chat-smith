@@ -6,18 +6,12 @@
   "sideEffects": false,
   "exports": {
     ".": "./generated-icons/index.ts",
-    "./*": [
-      "./generated-icons/icons_v1/graphics/*.tsx",
-      "./generated-icons/icons_v1/icons/*.tsx"
-    ],
-    "./latest/*": [
-      "./generated-icons/icons_v1/graphics/*.tsx",
-      "./generated-icons/icons_v1/icons/*.tsx"
-    ],
-    "./icons_v1/*": [
-      "./generated-icons/icons_v1/graphics/*.tsx",
-      "./generated-icons/icons_v1/icons/*.tsx"
-    ]
+    "./graphics/*": "./generated-icons/icons_v1/graphics/*.tsx",
+    "./latest/graphics/*": "./generated-icons/icons_v1/graphics/*.tsx",
+    "./icons_v1/graphics/*": "./generated-icons/icons_v1/graphics/*.tsx",
+    "./*": "./generated-icons/icons_v1/icons/*.tsx",
+    "./latest/*": "./generated-icons/icons_v1/icons/*.tsx",
+    "./icons_v1/*": "./generated-icons/icons_v1/icons/*.tsx"
   },
   "scripts": {
     "gen": "bun run scripts/generate-icons.ts",

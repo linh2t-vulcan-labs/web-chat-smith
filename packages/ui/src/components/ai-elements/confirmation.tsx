@@ -74,9 +74,9 @@ export const Confirmation = ({
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values -- handled by React Compiler
-    <ConfirmationContext.Provider value={contextValue}>
+    <ConfirmationContext value={contextValue}>
       <Alert className={cn("flex flex-col gap-2", className)} {...props} />
-    </ConfirmationContext.Provider>
+    </ConfirmationContext>
   );
 };
 

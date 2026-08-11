@@ -8,8 +8,8 @@ import { Button } from "#components/shadcn/button";
 import { cn } from "#lib/utils";
 
 const MessageScrollerProvider = (
-  props: React.ComponentProps<typeof MessageScrollerPrimitive.Provider>
-) => <MessageScrollerPrimitive.Provider {...props} />;
+  props: React.ComponentProps<typeof MessageScrollerPrimitive>
+) => <MessageScrollerPrimitive {...props} />;
 
 const MessageScroller = ({
   className,
