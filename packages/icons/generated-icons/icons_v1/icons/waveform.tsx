@@ -3,7 +3,7 @@
 
 import type { IconProps } from "../../types";
 
-export const IconSeparator = ({ size = 24, ...props }: IconProps) => (
+export const IconWaveform = ({ size = 24, ...props }: IconProps) => (
   <svg
     aria-hidden={props["aria-label"] || props.role ? undefined : true}
     fill="none"

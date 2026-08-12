@@ -2,6 +2,7 @@
 import { run as runAudit } from "./commands/audit";
 import { run as runDiff } from "./commands/diff";
 import { run as runPreview } from "./commands/preview";
+import { run as runVerify } from "./commands/verify";
 import { run as runVersion } from "./commands/version";
 import { styleText } from "./lib/console-colors";
 
@@ -11,6 +12,7 @@ const COMMANDS: Record<string, Command> = {
   audit: runAudit,
   diff: runDiff,
   preview: runPreview,
+  verify: runVerify,
   version: runVersion,
 };
 
@@ -18,7 +20,10 @@ const HELP = `Usage: bun run icons <command> [...args]
 
 Commands:
   audit [version|--all]      Read-only: resolved/duplicate/unresolved counts per version
-  preview [version]          Read-only: writes _preview.html + names.json stub
+  preview [version]          Read-only: writes preview.html + names.json stub. Resolved shapes render the
+                              real generated component when one exists, else fall back to the raw dump SVG
+  verify [version]           Read-only, terminal-only: confirms every generated-icons/ component actually
+                              imports and renders, and that the count matches the dump. CI-friendly (exits 1 on failure)
   version init <icons_vX>    Create an empty figma-icons/icons_vX folder for a new Figma export
   version use <icons_vX>     Switch .current to an existing version
   diff [prev] [next]         Diff which icon slugs two versions resolve to (defaults to previous vs .current)
@@ -40,10 +45,11 @@ yet.
 Workflow for a new Figma export:
   1. bun run icons version init icons_v2
   2. Unzip each category's download into figma-icons/icons_v2/<category>/
-  3. bun run icons preview icons_v2     # writes _preview.html + names.json stub, touches nothing else
-  4. Fill in blanks in figma-icons/icons_v2/names.json, re-run step 3 until _preview.html looks right
+  3. bun run icons preview icons_v2     # writes preview.html + names.json stub, touches nothing else
+  4. Fill in blanks in figma-icons/icons_v2/names.json, re-run step 3 until preview.html looks right
   5. bun run icons version use icons_v2
-  6. bun run gen                        # generates generated-icons/**/*.tsx from .current`;
+  6. bun run gen                        # generates generated-icons/**/*.tsx from .current, re-writes preview.html
+                                         #   with the real rendered components instead of raw SVGs`;
 
 const isHelpToken = (command: string): boolean =>
   command === "help" || command === "--help";

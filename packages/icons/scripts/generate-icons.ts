@@ -13,7 +13,7 @@
  * path stays flat (`@cs/icons/<slug>`) via package.json's `./*` export
  * (an alias for `./latest/*`), kept in sync every time this runs — see
  * `lib/package-exports.ts`. Filling in `names.json` for whatever
- * `_preview.html` flags as unresolved/duplicate and running `bun run gen`
+ * `preview.html` flags as unresolved/duplicate and running `bun run gen`
  * again is the entire workflow.
  */
 import path from "node:path";
@@ -24,7 +24,10 @@ import type { Resolution } from "./lib/icon-importer";
 import { loadNamesOverride } from "./lib/names-override";
 import { toComponentName } from "./lib/naming";
 import { syncPackageExports } from "./lib/package-exports";
-import { writePreviewArtifacts } from "./lib/preview-gallery";
+import {
+  PREVIEW_GALLERY_FILENAME,
+  writePreviewArtifacts,
+} from "./lib/preview-gallery";
 import { tryParseEntry } from "./lib/svg-entry";
 
 const PACKAGE_ROOT = path.join(import.meta.dir, "..");
@@ -196,6 +199,7 @@ const main = async () => {
 
   await writePreviewArtifacts(
     dumpDir,
+    versionDirPath,
     resolutions,
     new Set(failedToParse.map((result) => result.relPath))
   );
@@ -205,7 +209,7 @@ const main = async () => {
   );
   if (failedToParse.length > 0) {
     console.log(
-      `Couldn't parse ${pluralize(failedToParse.length, "shape")} — markup beyond what lib/svg.ts understands. See "Named, but couldn't parse" in ${path.join(dumpDir, "_preview.html")}.`
+      `Couldn't parse ${pluralize(failedToParse.length, "shape")} — markup beyond what lib/svg.ts understands. See "Named, but couldn't parse" in ${path.join(dumpDir, PREVIEW_GALLERY_FILENAME)}.`
     );
   }
   if (duplicates.length > 0 || unresolved.length > 0) {
@@ -214,7 +218,7 @@ const main = async () => {
       0
     );
     console.log(
-      `Skipped ${pluralize(duplicateCount, "duplicate")}, ${pluralize(unresolved.length, "unresolved shape")} — open ${path.join(dumpDir, "_preview.html")}, fill in names.json, re-run "bun run gen".`
+      `Skipped ${pluralize(duplicateCount, "duplicate")}, ${pluralize(unresolved.length, "unresolved shape")} — open ${path.join(dumpDir, PREVIEW_GALLERY_FILENAME)}, fill in names.json, re-run "bun run gen".`
     );
   }
   if (unparsed.length > 0) {

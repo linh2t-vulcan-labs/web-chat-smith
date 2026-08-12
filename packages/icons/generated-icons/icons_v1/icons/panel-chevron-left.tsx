@@ -3,7 +3,7 @@
 
 import type { IconProps } from "../../types";
 
-export const IconPillChevronLeft = ({
+export const IconPanelChevronLeft = ({
   size = 24,
   className,
   ...props

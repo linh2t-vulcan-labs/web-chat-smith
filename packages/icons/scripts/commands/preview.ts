@@ -11,13 +11,19 @@ import {
 } from "../lib/preview-gallery";
 import { tryParseEntry } from "../lib/svg-entry";
 
-/** Read-only like `audit`, but also writes `_preview.html` plus the
+const PACKAGE_ROOT = path.join(import.meta.dir, "..", "..");
+const GENERATED_ICONS_ROOT = path.join(PACKAGE_ROOT, "generated-icons");
+
+/** Read-only like `audit`, but also writes `preview.html` plus the
  * `names.json` stub — lets you eyeball and start naming a dump before
- * switching `.current` to it. `bun run gen` is what actually writes into
- * `generated-icons/`. */
+ * switching `.current` to it. Resolved shapes render the real generated
+ * component when `bun run gen` has already produced one for this version
+ * (falls back to the raw dump SVG otherwise, e.g. before a version's first
+ * generate). */
 export const run = async (args: string[]): Promise<void> => {
   const version = args[0] ?? (await readCurrentVersion());
   const dumpDir = versionDir(version);
+  const generatedVersionDir = path.join(GENERATED_ICONS_ROOT, version);
   if (!existsSync(dumpDir)) {
     throw new Error(`figma-icons/${version} does not exist`);
   }
@@ -40,7 +46,12 @@ export const run = async (args: string[]): Promise<void> => {
     parseResults.filter((relPath): relPath is string => Boolean(relPath))
   );
 
-  await writePreviewArtifacts(dumpDir, resolutions, unparsedRelPaths);
+  await writePreviewArtifacts(
+    dumpDir,
+    generatedVersionDir,
+    resolutions,
+    unparsedRelPaths
+  );
 
   console.log(
     styleText(

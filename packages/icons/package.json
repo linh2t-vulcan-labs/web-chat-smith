@@ -25,6 +25,8 @@
     "@types/node": "catalog:tools",
     "@types/react": "catalog:framework",
     "@types/react-dom": "catalog:framework",
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework",
     "typescript": "catalog:tools"
   },
   "peerDependencies": {

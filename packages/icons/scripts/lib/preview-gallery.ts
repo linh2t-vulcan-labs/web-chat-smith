@@ -1,19 +1,48 @@
 import path from "node:path";
 
+import { tryRenderGenerated } from "./generated-render";
 import { escapeHtml } from "./html-escape";
 import { byKind } from "./icon-importer";
 import type { Entry, Resolution } from "./icon-importer";
 import { writeNamesStub } from "./names-override";
 
-export const PREVIEW_GALLERY_FILENAME = "_preview.html";
+export const PREVIEW_GALLERY_FILENAME = "preview.html";
 
-const svgCard = async (
+const rawSvgCard = async (
   dumpDir: string,
   relPath: string,
   caption: string
 ): Promise<string> => {
   const svg = await Bun.file(path.join(dumpDir, relPath)).text();
   return `<figure>${svg}<figcaption>${escapeHtml(caption)}</figcaption></figure>`;
+};
+
+/** One card for a resolved, generatable shape. Prefers the real generated
+ * component (imported and server-rendered — exactly what `@cs/icons/<slug>`
+ * hands a consumer) so a bug in the parse/JSX-emit pipeline shows up here
+ * even though the raw dump SVG would look fine. Falls back to the raw
+ * source only when nothing's been generated yet (e.g. previewing a version
+ * before its first `bun run gen`) — a real render error gets its own
+ * visible card instead of silently masking as the raw shape. */
+const generatedOrRawSvgCard = async (
+  dumpDir: string,
+  generatedVersionDir: string,
+  entry: Entry,
+  category: string,
+  slug: string
+): Promise<string> => {
+  const rendered = await tryRenderGenerated(
+    generatedVersionDir,
+    category,
+    slug
+  );
+  if (rendered.ok) {
+    return `<figure>${rendered.markup}<figcaption>${escapeHtml(slug)}</figcaption></figure>`;
+  }
+  if (rendered.reason === "error") {
+    return `<figure class="render-error"><p class="error-mark">⚠</p><figcaption>${escapeHtml(slug)}<br><span class="error-msg">${escapeHtml(rendered.message)}</span></figcaption></figure>`;
+  }
+  return rawSvgCard(dumpDir, entry.relPath, slug);
 };
 
 const grid = (cards: string[]): string =>
@@ -28,7 +57,7 @@ const buildUnresolvedGrid = async (
     return "";
   }
   const cards = await Promise.all(
-    entries.map((entry) => svgCard(dumpDir, entry.relPath, entry.relPath))
+    entries.map((entry) => rawSvgCard(dumpDir, entry.relPath, entry.relPath))
   );
   return `<h3>Unresolved (${entries.length})</h3>
 <p class="hint">No real name anywhere in this dump — fill in a slug per shape in names.json (same folder), then re-run "bun run gen".</p>
@@ -46,7 +75,7 @@ const buildDuplicateGrid = async (
     duplicates.map(async (resolution) => {
       const cards = await Promise.all(
         resolution.entries.map((entry) =>
-          svgCard(dumpDir, entry.relPath, entry.relPath)
+          rawSvgCard(dumpDir, entry.relPath, entry.relPath)
         )
       );
       return `<div class="dup-group">
@@ -65,6 +94,7 @@ ${groups.join("\n")}`;
 
 const buildResolvedGrid = async (
   dumpDir: string,
+  generatedVersionDir: string,
   resolved: Resolution[],
   unparsedRelPaths: Set<string>
 ): Promise<string> => {
@@ -82,13 +112,24 @@ const buildResolvedGrid = async (
     Promise.all(
       generatable.map((resolution) => {
         const entry = resolution.entries[0] as Entry;
-        return svgCard(dumpDir, entry.relPath, resolution.slug ?? entry.base);
+        const slug = resolution.slug ?? entry.base;
+        return generatedOrRawSvgCard(
+          dumpDir,
+          generatedVersionDir,
+          entry,
+          entry.category,
+          slug
+        );
       })
     ),
     Promise.all(
       unparsed.map((resolution) => {
         const entry = resolution.entries[0] as Entry;
-        return svgCard(dumpDir, entry.relPath, resolution.slug ?? entry.base);
+        return rawSvgCard(
+          dumpDir,
+          entry.relPath,
+          resolution.slug ?? entry.base
+        );
       })
     ),
   ]);
@@ -109,6 +150,7 @@ ${grid(unparsedCards)}`
 
 const buildCategorySection = async (
   dumpDir: string,
+  generatedVersionDir: string,
   category: string,
   resolutions: Resolution[],
   unparsedRelPaths: Set<string>
@@ -118,6 +160,7 @@ const buildCategorySection = async (
     buildDuplicateGrid(dumpDir, byKind(resolutions, "duplicate")),
     buildResolvedGrid(
       dumpDir,
+      generatedVersionDir,
       byKind(resolutions, "resolved"),
       unparsedRelPaths
     ),
@@ -147,6 +190,7 @@ const groupByCategory = (
 
 const buildPreviewGalleryHtml = async (
   dumpDir: string,
+  generatedVersionDir: string,
   resolutions: Resolution[],
   unparsedRelPaths: Set<string>
 ): Promise<string> => {
@@ -157,6 +201,7 @@ const buildPreviewGalleryHtml = async (
       .map(([category, categoryResolutions]) =>
         buildCategorySection(
           dumpDir,
+          generatedVersionDir,
           category,
           categoryResolutions,
           unparsedRelPaths
@@ -177,9 +222,12 @@ const buildPreviewGalleryHtml = async (
   figure { margin: 0; background: #1c1c1c; border-radius: 8px; padding: 1rem; text-align: center; }
   figure svg { width: 40px; height: 40px; }
   figcaption { margin-top: 0.5rem; font-size: 11px; color: #999; word-break: break-all; }
+  figure.render-error { background: #2a1414; border: 1px solid #722; }
+  .error-mark { margin: 0; font-size: 20px; color: #f66; }
+  .error-msg { color: #f99; font-size: 10px; }
 </style></head>
 <body>
-<h1>Every icon in this dump, grouped by category then status.</h1>
+<h1>Every icon in this dump, grouped by category then status. Resolved shapes render the real generated component when one exists.</h1>
 ${sections.join("\n")}
 </body></html>`;
 };
@@ -187,16 +235,25 @@ ${sections.join("\n")}
 /** Writes everything a human needs to review a dump: the preview gallery
  * (grouped by category, then by resolved/duplicate/unresolved, with
  * resolved further split against `unparsedRelPaths` so a shape that won't
- * actually generate shows up as such) plus the `names.json` stub. Read-only
- * w.r.t. the dump itself — safe to call before generating anything, and
- * it's what both `preview` and `gen` call. */
+ * actually generate shows up as such) plus the `names.json` stub. Resolved
+ * shapes prefer rendering the actual generated component from
+ * `generatedVersionDir` over the raw dump SVG — falls back to raw only when
+ * nothing's been generated yet, so this is still safe to call before
+ * generating anything (the whole dump just renders from source, same as
+ * before). It's what both `preview` and `gen` call. */
 export const writePreviewArtifacts = async (
   dumpDir: string,
+  generatedVersionDir: string,
   resolutions: Resolution[],
   unparsedRelPaths: Set<string>
 ): Promise<void> => {
   const [html] = await Promise.all([
-    buildPreviewGalleryHtml(dumpDir, resolutions, unparsedRelPaths),
+    buildPreviewGalleryHtml(
+      dumpDir,
+      generatedVersionDir,
+      resolutions,
+      unparsedRelPaths
+    ),
     writeNamesStub(dumpDir, resolutions),
   ]);
   await Bun.write(path.join(dumpDir, PREVIEW_GALLERY_FILENAME), html);
